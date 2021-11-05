@@ -1,15 +1,25 @@
 {
-  "name": "joi_ant_admin",
+  "name": "joi_auto_admin",
   "version": "0.1.0",
   "private": true,
+  "main": "src/lib.js",
   "dependencies": {
+    "antd": "^4.16.13",
+    "formik": "^2.2.9",
+    "formik-antd": "^2.0.1",
+    "joi": "^17.4.2",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
+    "nanoid": "^3.1.30",
+    "numeral": "^2.0.6",
+    "react": "^17.0.2"
+  },
+  "devDependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
-    "web-vitals": "^1.0.1"
+    "react-scripts": "4.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
