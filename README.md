@@ -26,7 +26,6 @@ const App = () => {
       const data = [];
       for (let i = 0; i < 100; i++)
         data.push({
-          _id: i,
           name: `Edward King ${i}`,
           purchased_value: 3000 + Math.round(10 * Math.random()),
           district: ["กรุงเทพมหานคร", "ยานนาวา"],
@@ -81,7 +80,6 @@ export default App;
     - `.meta({ placeholder })`
     - `.meta({ disabled })`
     - `.meta({ defaultValue })`
-    - `.meta({ autoFocus })`
     - The rest of the props can be found [here.](https://reactjs.org/docs/dom-elements.html)
   - There are certain keys you can use to customize `AutoAdmin` itself
     - `.meta({ fieldType: string | ReactComponent })`
@@ -94,20 +92,24 @@ export default App;
     - `.meta({ cellWidth: number })`
 
 - `.required(str)`
-  - For required fields.
 - `.default(value)`
-  - For providing the default value in data-creating form.
 - `.valid()`
   - For making dropdown inputs.
 
 
 ## Props API
-|Name|Description|Type|Required|Default|
-|---|---|---|---|---|
-|schema|[Joi Object] or async ()=> {Joi Object} |true
-|name|string|true
-|getMany| async (spec)=> [{rowData}]|true
-|createMany| async (arrayOfObject)=> null|false|null
-|updateOne| async (newObject)=> null|false|null
-|DeleteMany| async (arrayOfObject)=> null|false|null
-|actions|[{onClick: (data)=> null}]|false|[]
+|Name|Description|Type|DefaultValue|
+|---|---|---|---|
+|schema|specification on how the UI will render|{Joi Object} or async ()=> {Joi Object} |`required`|
+|name|name of this data|string|`required`|
+|getMany|the function connecting to back-end API. If you provide querySchema, query object will be provided|async (query)=> [{rowData}]|`required`|
+|createMany|if not provided, the createButton will not show|async ([rowData])=> null|null|
+|updateOne||if not provided, the updateButton will not show|async (newRowData)=> null|null|
+|deleteMany|if not provided, the rows can't be selected|async ([rowData])=> null|null|
+|rowActions|custom actions for each row|[{onClick: (rowData)=> null, icon: AntIcon, label: string}]|[]|
+|querySchema|specification of query for getMany operation|{Joi Object} or async ()=> {Joi Object}|null|
+|tableScroll|viewport size for scrolling|object|{ y: 600 }|
+|canDownloadExcel|show button for downloading all the data in this table to excel|boolean|true|
+|canUploadExcel|show both the uploadButton and uploadPreviewButton|boolean|true|
+|uploadPreviewUrl|if specified, the uploadPreviewButton will download file from this path instead of the first 3 rows of this table|string|null|
+
