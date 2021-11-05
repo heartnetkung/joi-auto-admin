@@ -74,7 +74,7 @@ export default App;
 
 ## Joi Object Explanation
 - `.label(str)` 
-  - Required for this field to appear in the UI. This field is used as table header and form label.
+  - Required for this field to appear in the UI. This field is used as table header, excel header, and form label.
 - `.meta(obj)`
   - The meta function allows you to customize each data field.
   - Object are parsed directly as a prop to input. Some of the most popular ones inlcude:
