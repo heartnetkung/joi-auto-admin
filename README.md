@@ -8,7 +8,8 @@ The idea is to provide a react component called `AutoAdmin` which take minimal o
   - this table can export data to excel format
   - this table can do pagination
   - this table can have their rows selected for DELETE operation
-- A form for creating and editing data
+  - this table is responsive
+- A form for CREATE and UPDATE operation
   - this form can validate input data by itself on front-end with all errors translated to Thai language
   - this form can import excel data
   - this form are rendered automatically from specified `Joi Object`.
@@ -71,7 +72,7 @@ const App = () => {
 export default App;
 ```
 
-## Joi Input Explanation
+## Joi Object Explanation
 - `.label(str)` 
   - Required for this field to appear in the UI. This field is used as table header and form label.
 - `.meta(obj)`
@@ -100,14 +101,14 @@ export default App;
 ## Props API
 |Name|Description|Type|DefaultValue|
 |---|---|---|---|
-|schema|specification on how the UI will render|{Joi Object} or async ()=> {Joi Object} |`required`|
+|schema|specification on how the UI will render|{Joi Object} or<br> async ()=> {Joi Object} |`required`|
 |name|name of this data|string|`required`|
-|getMany|the function connecting to back-end API. If you provide querySchema, query object will be provided|async (query)=> [{rowData}]|`required`|
+|getMany|the function connecting to back-end API. If `querySchema` is provided, query object will be derived from user input|async (query)=> [{rowData}]|`required`|
 |createMany|if not provided, the createButton will not show|async ([rowData])=> null|null|
 |updateOne|if not provided, the updateButton will not show|async (newRowData)=> null|null|
 |deleteMany|if not provided, the rows can't be selected|async ([rowData])=> null|null|
-|rowActions|custom actions for each row|[{onClick: (rowData)=> null, icon: AntIcon, label: string}]|[]|
-|querySchema|specification of query for getMany operation|{Joi Object} or async ()=> {Joi Object}|null|
+|rowActions|custom actions for each row|[{onClick: (rowData)=> null,<br> icon: AntIcon,<br> label: string}]|[]|
+|querySchema|specification of query for getMany operation|{Joi Object} or<br> async ()=> {Joi Object}|null|
 |tableScroll|viewport size for scrolling|object|{ y: 600 }|
 |canDownloadExcel|show button for downloading all the data in this table to excel|boolean|true|
 |canUploadExcel|show both the uploadButton and uploadPreviewButton|boolean|true|
