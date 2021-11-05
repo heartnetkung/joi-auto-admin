@@ -104,7 +104,7 @@ export default App;
 |name|name of this data|string|`required`|
 |getMany|the function connecting to back-end API. If you provide querySchema, query object will be provided|async (query)=> [{rowData}]|`required`|
 |createMany|if not provided, the createButton will not show|async ([rowData])=> null|null|
-|updateOne||if not provided, the updateButton will not show|async (newRowData)=> null|null|
+|updateOne|if not provided, the updateButton will not show|async (newRowData)=> null|null|
 |deleteMany|if not provided, the rows can't be selected|async ([rowData])=> null|null|
 |rowActions|custom actions for each row|[{onClick: (rowData)=> null, icon: AntIcon, label: string}]|[]|
 |querySchema|specification of query for getMany operation|{Joi Object} or async ()=> {Joi Object}|null|
