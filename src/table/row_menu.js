@@ -1,7 +1,7 @@
 import { Button, Space } from "antd";
 import PropTypes from "prop-types";
 
-const ActionComp = (props) => {
+const RowMenu = (props) => {
 	const { actions, record } = props;
 
 	return (
@@ -25,11 +25,11 @@ const ActionComp = (props) => {
 	);
 };
 
-ActionComp.propTypes = {
+RowMenu.propTypes = {
 	actions: PropTypes.array.isRequired,
 	record: PropTypes.any.isRequired,
 };
 
 const NOOP = () => {};
 
-export default ActionComp;
+export default RowMenu;

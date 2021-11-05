@@ -3,14 +3,15 @@ import { useState, useMemo } from "react";
 import _ from "lodash";
 import { EditOutlined } from "@ant-design/icons";
 import PropTypes from "prop-types";
-import RowAction from "./row_action";
-import TableAction from "./table_action";
+import RowMenu from "./row_menu";
+import TableMenu from "./table_menu";
 import { sorter, onFilter, formatColumn } from "./logic";
+import OtherMenu from "./other_menu";
 
 const TableComp = (props) => {
 	const { data, schema, actions, onEdit, paginationSize } = props;
-	const { onDelete, onCreate, customization, tableScroll } = props;
-	const { loading } = props;
+	const { onDelete, onCreate, tableScroll } = props;
+	const { loading, onDownloadExcel, onUploadExcel, onExampleExcel } = props;
 
 	const [selectedRows, setSelectedRows] = useState([]);
 
@@ -40,18 +41,14 @@ const TableComp = (props) => {
 
 		if (actions2.length) {
 			const render = (text, record) => (
-				<RowAction
-					{...customization}
-					actions={actions2}
-					record={record}
-				/>
+				<RowMenu actions={actions2} record={record} />
 			);
 			const width = 60 * actions2.length + 30;
 			ans2.push({ title: "เมนู", width, render });
 		}
 
 		return ans2;
-	}, [schema, data, actions, onEdit, customization]);
+	}, [schema, data, actions, onEdit]);
 
 	const rowSelection = !!onDelete && {
 		selectedRowKeys: selectedRows,
@@ -61,12 +58,22 @@ const TableComp = (props) => {
 	return (
 		<>
 			<div style={{ opacity: loading ? 0.5 : 1 }}>
-				<TableAction
-					{...customization}
+				<TableMenu
 					selectedRows={selectedRows}
 					setSelectedRows={setSelectedRows}
 					onDelete={onDelete}
 					onCreate={onCreate}
+					otherMenu={
+						!onDownloadExcel &&
+						!onUploadExcel &&
+						!onExampleExcel ? null : (
+							<OtherMenu
+								onDownloadExcel={onDownloadExcel}
+								onUploadExcel={onUploadExcel}
+								onExampleExcel={onExampleExcel}
+							/>
+						)
+					}
 				/>
 			</div>
 			<Row>
@@ -92,8 +99,10 @@ TableComp.propTypes = {
 	schema: PropTypes.object.isRequired,
 	paginationSize: PropTypes.number,
 	tableScroll: PropTypes.object,
-	customization: PropTypes.object,
 	loading: PropTypes.bool,
+	onDownloadExcel: PropTypes.func,
+	onUploadExcel: PropTypes.func,
+	onExampleExcel: PropTypes.func,
 };
 
 TableComp.defaultProps = {
@@ -103,8 +112,10 @@ TableComp.defaultProps = {
 	onEdit: null,
 	paginationSize: 20,
 	tableScroll: { y: 600 },
-	customization: {},
 	loading: false,
+	onDownloadExcel: null,
+	onUploadExcel: null,
+	onExampleExcel: null,
 };
 
 export default TableComp;
