@@ -9,7 +9,7 @@ import { sorter, onFilter, formatColumn } from "./logic";
 import OtherMenu from "./other_menu";
 
 const TableComp = (props) => {
-	const { data, schema, actions, onEdit, paginationSize } = props;
+	const { data, schema, rowMenus, onEdit, paginationSize } = props;
 	const { onDelete, onCreate, tableScroll } = props;
 	const { loading, onDownloadExcel, onUploadExcel, onExampleExcel } = props;
 
@@ -36,19 +36,19 @@ const TableComp = (props) => {
 				return ans;
 			});
 
-		var actions2 = [...actions];
-		if (onEdit) actions2.push({ icon: <EditOutlined />, onClick: onEdit });
+		var rowMenus2 = [...rowMenus];
+		if (onEdit) rowMenus2.push({ icon: <EditOutlined />, onClick: onEdit });
 
-		if (actions2.length) {
+		if (rowMenus2.length) {
 			const render = (text, record) => (
-				<RowMenu actions={actions2} record={record} />
+				<RowMenu buttons={rowMenus2} record={record} />
 			);
-			const width = 60 * actions2.length + 30;
+			const width = 60 * rowMenus2.length + 30;
 			ans2.push({ title: "เมนู", width, render });
 		}
 
 		return ans2;
-	}, [schema, data, actions, onEdit]);
+	}, [schema, data, rowMenus, onEdit]);
 
 	const rowSelection = !!onDelete && {
 		selectedRowKeys: selectedRows,
@@ -92,7 +92,7 @@ const TableComp = (props) => {
 };
 
 TableComp.propTypes = {
-	actions: PropTypes.array,
+	rowMenus: PropTypes.array,
 	onCreate: PropTypes.func,
 	onDelete: PropTypes.func,
 	onEdit: PropTypes.func,
@@ -106,7 +106,7 @@ TableComp.propTypes = {
 };
 
 TableComp.defaultProps = {
-	actions: [],
+	rowMenus: [],
 	onDelete: null,
 	onCreate: null,
 	onEdit: null,

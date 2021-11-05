@@ -2,11 +2,11 @@ import { Button, Space } from "antd";
 import PropTypes from "prop-types";
 
 const RowMenu = (props) => {
-	const { actions, record } = props;
+	const { buttons, record } = props;
 
 	return (
 		<Space>
-			{actions.map((action, index) => {
+			{buttons.map((action, index) => {
 				return (
 					<Button
 						{...action}
@@ -26,7 +26,7 @@ const RowMenu = (props) => {
 };
 
 RowMenu.propTypes = {
-	actions: PropTypes.array.isRequired,
+	buttons: PropTypes.array.isRequired,
 	record: PropTypes.any.isRequired,
 };
 

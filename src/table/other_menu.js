@@ -5,6 +5,7 @@ import {
 } from "@ant-design/icons";
 import PropTypes from "prop-types";
 import { Menu, Button } from "antd";
+import FileUpload from "./file_upload";
 
 const OtherMenu = (props) => {
 	const { onDownloadExcel, onUploadExcel, onExampleExcel } = props;
@@ -15,9 +16,10 @@ const OtherMenu = (props) => {
 			{onDownloadExcel && (
 				<Menu.Item key="1">
 					<Button
-						type="link"
+						type="text"
 						onClick={onDownloadExcel}
 						icon={<DownloadOutlined />}
+						block
 					>
 						{downloadExcelLabel}
 					</Button>
@@ -25,21 +27,24 @@ const OtherMenu = (props) => {
 			)}
 			{onUploadExcel && (
 				<Menu.Item key="2">
-					<Button
-						type="link"
-						onClick={onUploadExcel}
+					<FileUpload
+						type="text"
+						handleFile={onUploadExcel}
 						icon={<UploadOutlined />}
+						accept=".xlsx"
+						block
 					>
 						{uploadExcelLabel}
-					</Button>
+					</FileUpload>
 				</Menu.Item>
 			)}
 			{onExampleExcel && (
 				<Menu.Item key="3">
 					<Button
-						type="link"
+						type="text"
 						onClick={onExampleExcel}
 						icon={<EyeOutlined />}
+						block
 					>
 						{exampleExcelLabel}
 					</Button>
