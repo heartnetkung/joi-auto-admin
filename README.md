@@ -101,11 +101,12 @@ export default App;
     - `.meta({ cellEllipsis: boolean })`
     - `.meta({ cellTextFormat: (rowData)=>string })`
     - `.meta({ cellWidth: number })`
-
-- `.required(str)`
-- `.default(value)`
-- `.valid()`
-  - For making dropdown inputs.
+    - `.meta({ choice: [string] })`
+      - Required for `<Select>` type. The array length must be equal to input of `.valid([any])` as they will be rendered as key and value of `<Option>`
+- `.valid([any])`
+  - For making `<Select>` input.
+- `.required()`
+- `.default(value | ()=>value)`
 
 
 ## Props API
