@@ -98,8 +98,6 @@ export default App;
     - `.meta({ fieldValidation: ()=> string|null })`
     - `.meta({ twoColumn: boolean })`
       - show the form input in half size, so you can stack 2 fields in the same line.
-    - `.meta({ cellAlign: 'left'|'right'|'center' })`
-    - `.meta({ cellEditable: boolean })`
     - `.meta({ cellEllipsis: boolean })`
     - `.meta({ cellTextFormat: (rowData)=>string })`
     - `.meta({ cellWidth: number })`
