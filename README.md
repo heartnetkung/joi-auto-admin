@@ -111,7 +111,7 @@ export default App;
 |createMany|if not provided, the createButton will not show|async ([rowData])=> null|null|
 |updateOne|if not provided, the updateButton will not show|async (newRowData)=> null|null|
 |deleteMany|if not provided, the rows can't be selected|async ([rowData])=> null|null|
-|rowMenus|custom menu for each row|[{onClick: (rowData)=> null,<br> icon: AntIcon,<br> label: string}]|[]|
+|rowButtons|custom buttons for each row|[{onClick: (rowData)=> null,<br> icon: AntIcon,<br> label: string}]|[]|
 |querySchema|specification of query for getMany operation|{Joi Object} or<br> async ()=> {Joi Object}|null|
 |tableScroll|viewport size for scrolling|object|{ y: 600 }|
 |canDownloadExcel|show button for downloading all the data in this table to excel|boolean|true|
