@@ -1,5 +1,10 @@
-# Joi Auto Admin
+# joi-auto-admin
 Automatically create a full-featured web admin UI for CRUD operations using only a few props.
+
+## Installation
+```bash
+npm install joi-auto-admin
+```
 
 ## Overview
 As a developer in a company, we spend a lot of time writing web-based tools for our staffs and back office usage. This package aims to automate such work completely on the front-end side.
