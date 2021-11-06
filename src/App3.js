@@ -51,7 +51,7 @@ const App = () => {
 				.valid("m", "f")
 				.default("m")
 				.label("เพศ")
-				.meta({ choice: ["ชาย", "หญิง"], twoColumn: true }),
+				.meta({ validLabel: ["ชาย", "หญิง"], twoColumn: true }),
 		}),
 	};
 

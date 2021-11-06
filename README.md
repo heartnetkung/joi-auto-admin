@@ -101,7 +101,7 @@ export default App;
     - `.meta({ cellEllipsis: boolean })`
     - `.meta({ cellTextFormat: (rowData)=>string })`
     - `.meta({ cellWidth: number })`
-    - `.meta({ choice: [string] })`
+    - `.meta({ validLabel: [string] })`
       - Required for `<Select>` type. The array length must be equal to input of `.valid([any])` as they will be rendered as key and value of `<Option>`
 - `.valid([any])`
   - For making `<Select>` input.

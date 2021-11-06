@@ -57,6 +57,7 @@ class JoiField {
 
 		delete this.meta.twoColumn;
 		delete this.meta.fieldType;
+		delete this.meta.validLabel;
 	}
 
 	getMeta(field) {
@@ -70,15 +71,15 @@ class JoiField {
 		else if (defaultValue) ans.defaultValue = defaultValue;
 
 		if (field?.flags?.only && field?.allow) {
-			var { choice } = ans;
-			if (!choice || choice?.length !== field?.allow?.length)
+			var { validLabel } = ans;
+			if (!validLabel || validLabel?.length !== field?.allow?.length)
 				throw new Error(
-					"choice is required and must have the equal length"
+					"validLabel is required and must have the equal length"
 				);
 			var valid = (ans.valid = {});
 			var allow = field?.allow;
-			for (var i = 0, ii = choice.length; i < ii; i++)
-				valid[allow[i]] = choice[i];
+			for (var i = 0, ii = allow.length; i < ii; i++)
+				valid[allow[i]] = validLabel[i];
 		}
 
 		return ans;
