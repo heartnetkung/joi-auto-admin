@@ -14,6 +14,7 @@ const App = () => {
 					purchased_value: 3000 + Math.round(10 * Math.random()),
 					district: ["กรุงเทพมหานคร", "ยานนาวา"],
 					create_date: new Date(),
+					sex: "m",
 				});
 			return data;
 		},
@@ -46,6 +47,11 @@ const App = () => {
 				.default(Date.now)
 				.label("วันสมัคร")
 				.meta({ disabled: true, twoColumn: true }),
+			sex: Joi.string()
+				.valid("m", "f")
+				.default("m")
+				.label("เพศ")
+				.meta({ choice: ["ชาย", "หญิง"], twoColumn: true }),
 		}),
 	};
 

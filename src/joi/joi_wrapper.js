@@ -28,6 +28,7 @@ class JoiWrapper {
 				type: a.type,
 				fieldType: a.fieldType,
 				disabled: a.meta.disabled,
+				valid: a.meta.valid,
 			}));
 		}
 		return this.columns;
@@ -68,6 +69,18 @@ class JoiField {
 			ans.defaultValue = defaultValue();
 		else if (defaultValue) ans.defaultValue = defaultValue;
 
+		if (field?.flags?.only && field?.allow) {
+			var { choice } = ans;
+			if (!choice || choice?.length !== field?.allow?.length)
+				throw new Error(
+					"choice is required and must have the equal length"
+				);
+			var valid = (ans.valid = {});
+			var allow = field?.allow;
+			for (var i = 0, ii = choice.length; i < ii; i++)
+				valid[allow[i]] = choice[i];
+		}
+
 		return ans;
 	}
 
@@ -76,7 +89,7 @@ class JoiField {
 		if (field.type === "boolean") return "Checkbox";
 		if (field.type === "date") return "DatePicker";
 		if (field.type === "number") return "InputNumber";
-		if (Array.isArray(field.allow)) return "Select";
+		if (meta.valid) return "Select";
 		return "Input";
 	}
 

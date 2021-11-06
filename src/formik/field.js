@@ -60,7 +60,16 @@ const Field = (props) => {
 			)}
 			{fieldType === "InputPassword" && <Input.Password {...props2} />}
 			{fieldType === "TextArea" && <Input.TextArea {...props2} />}
-			{fieldType === "Select" && <Select {...props2} />}
+			{fieldType === "Select" && (
+				<Select {...props2}>
+					{props2.valid &&
+						Object.entries(props2.valid).map(([k, v]) => (
+							<Select.Option key={k} value={k}>
+								{v}
+							</Select.Option>
+						))}
+				</Select>
+			)}
 			{fieldType === "Switch" && <Switch {...props2} />}
 		</Form.Item>
 	);

@@ -24,5 +24,6 @@ export const formatColumn = (a) => {
 		};
 	if (a.fieldType === "AddressDistrict")
 		return { ...a, render: (a) => `${a[1]}, ${a[0]}`, ellipsis: true };
+	if (a.fieldType === "Select") return { ...a, render: (b) => a.valid[b] };
 	return a;
 };
