@@ -20,18 +20,21 @@ export const deserializeTable = (table, schema) => {
 		try {
 			ans.push(deserializeRow(table[i], schema, ""));
 		} catch (error) {
-			var newErrors = error.details.map((a) => ({
-				line: i + 1,
-				label: a.context?.label,
-				message: getErrorMessage(a),
-				type: a.type,
-			}));
-			errors = errors.concat(newErrors);
+			errors = [...errors, error.details.map(mapError(i))];
 		}
 	}
 
 	if (errors.length) throw new SerializeError(errors);
 	return ans;
+};
+
+const mapError = (i) => {
+	return (a) => ({
+		line: i + 2,
+		label: a.context?.label,
+		message: getErrorMessage(a),
+		type: a.type,
+	});
 };
 
 const deserializeRow = (excelRow, schema) => {
