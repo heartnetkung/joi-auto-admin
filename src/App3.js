@@ -27,7 +27,6 @@ const App = () => {
 		},
 		deleteMany: async (rowArray) => {
 			await wait(1000);
-			throw new Error('hello')
 		},
 		schema: Joi.object({
 			name: Joi.string()
