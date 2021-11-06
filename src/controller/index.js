@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import { useState, useEffect, useMemo } from "react";
 import Table from "../table";
-import { useModal, useAPI, alert, usePersistFn, appendId } from "./util";
+import { alert, appendId } from "./util";
+import { useModal, useAPI, usePersistFn } from "../shared/hook";
 import EditModal from "./edit_modal";
 import Header from "./header";
 import { JoiWrapper } from "../joi/joi_wrapper";
