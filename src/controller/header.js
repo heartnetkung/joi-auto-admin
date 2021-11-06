@@ -6,7 +6,9 @@ const { Title, Paragraph } = Typography;
 const Header = (props) => {
 	const { title, description, name, small, icon } = props;
 	const { headerContainerStyle, titleStyle, descriptionStyle } = props;
-	const title2 = title || `ข้อมูล${name}`;
+
+	const name2 = name.length && /[a-z]/i.test(name[0]) ? " " + name : name;
+	const title2 = title || `ข้อมูล${name2}`;
 
 	return (
 		<div style={headerContainerStyle}>
