@@ -2,9 +2,10 @@ import { useState, useRef } from "react";
 import { Modal } from "antd";
 import { nanoid } from "nanoid";
 
-export const modalSuccess = (content) => Modal.success({ content });
-
-export const modalError = (e) => Modal.error({ content: e.message || e + "" });
+export const alert = {
+	success: (content) => Modal.success({ content }),
+	error: (e) => Modal.error({ content: e.message || e + "" }),
+};
 
 export const useAPI = (func, loadingInit, manualComplete) => {
 	const [apiState, setApiState] = useState({
