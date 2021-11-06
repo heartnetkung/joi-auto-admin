@@ -11,7 +11,6 @@ const COLUMNS = [
 
 const ExcelErrorModal = (props) => {
 	const { visible, onClose, errors, title } = props;
-
 	const dataSource = errors.map((a, i) => ({ ...a, key: i }));
 
 	return (
