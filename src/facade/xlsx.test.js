@@ -29,4 +29,13 @@ describe("xlsx", () => {
 			expect(ret).toEqual(output);
 		});
 	});
+
+	describe("parseExcelDate()", () => {
+		it("normal case", () => {
+			var input = 44506.42558618056;
+			var output = new Date('2021-11-06T03:12:50.000Z');
+			var ret = lib.parseExcelDate(input);
+			expect(ret).toEqual(output);
+		});
+	});
 });

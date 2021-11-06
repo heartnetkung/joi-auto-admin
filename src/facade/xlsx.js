@@ -1,5 +1,6 @@
-import { utils, writeFile, read } from "xlsx";
+import { utils, writeFile, read, SSF } from "xlsx";
 import _ from "lodash";
+import moment from "moment";
 
 export const tableToExcel = (dataArray, fileName) => {
 	dataArray = dataArray.map(handleNested);
@@ -11,6 +12,14 @@ export const tableToExcel = (dataArray, fileName) => {
 	writeFile(workbook, fileName);
 };
 
+export const parseExcelDate = (date) => {
+	if(typeof date === 'string')
+		return moment(date).parseZone(new Date()).toDate();
+	var a = SSF.parse_date_code(date);
+	var momentInput = { y: a.y, M: a.m - 1, d: a.d, h: a.H, m: a.M, s: a.S };
+	return moment(momentInput).parseZone(new Date()).toDate();
+};
+
 export const excelToTable = (fileObject) =>
 	new Promise((res, rej) => {
 		var reader = new FileReader();
@@ -19,8 +28,8 @@ export const excelToTable = (fileObject) =>
 				var data = e.target.result;
 				var workbook = read(data, { type: "binary" });
 				var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-				var ans = utils.sheet_to_json(firstSheet, { header: "A" });
-				res(ans);
+				var ans = utils.sheet_to_json(firstSheet);
+				res(ans.map(parse));
 			} catch (error) {
 				rej(error);
 			}
@@ -28,6 +37,10 @@ export const excelToTable = (fileObject) =>
 		reader.onerror = () => rej(reader.error);
 		reader.readAsBinaryString(fileObject);
 	});
+
+const parse = (a) => {
+	return _.omit(a, "__rowNum__");
+};
 
 const handleNested = (obj) => {
 	var paths = listPaths(obj);
