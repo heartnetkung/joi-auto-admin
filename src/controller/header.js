@@ -4,14 +4,14 @@ import PropTypes from "prop-types";
 const { Title, Paragraph } = Typography;
 
 const Header = (props) => {
-	const { title, description, name, small } = props;
+	const { title, description, name, small, icon } = props;
 	const { headerContainerStyle, titleStyle, descriptionStyle } = props;
 	const title2 = title || `ข้อมูล${name}`;
 
 	return (
 		<div style={headerContainerStyle}>
 			<Title level={small ? 3 : 2} style={titleStyle}>
-				{title2}
+				{icon} {title2}
 			</Title>
 			{description && (
 				<Paragraph style={descriptionStyle}>{description}</Paragraph>
@@ -26,6 +26,7 @@ Header.propTypes = {
 	name: PropTypes.string,
 	headerContainerStyle: PropTypes.object,
 	small: PropTypes.bool,
+	icon: PropTypes.node,
 };
 
 Header.defaultProps = {
@@ -36,6 +37,7 @@ Header.defaultProps = {
 	titleStyle: {},
 	descriptionStyle: { textAlign: "left" },
 	small: false,
+	icon: null,
 };
 
 export default Header;
