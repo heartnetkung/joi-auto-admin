@@ -14,7 +14,7 @@ const INITIAL_FORM_STATUS = { isEdit: false, initialValue: {} };
 const Controller = (props) => {
 	const { getMany, createMany, updateOne, deleteMany } = props;
 	const { canExportCsv, canImportCsv, name, description } = props;
-	const { schema, querySchema, rowMenus } = props;
+	const { schema, querySchema, rowMenus, tableScroll } = props;
 	const { canDownloadExcel, canUploadExcel, uploadPreviewUrl } = props;
 
 	const [editModalData, setEditModalData] = useState(INITIAL_FORM_STATUS);
@@ -112,6 +112,7 @@ const Controller = (props) => {
 				onDownloadExcel={canDownloadExcel ? onDownloadExcel : null}
 				onUploadExcel={canUploadExcel ? onUploadExcel : null}
 				onExampleExcel={canUploadExcel ? onExampleExcel : null}
+				tableScroll={tableScroll}
 			/>
 			<EditModal
 				{...editModalControl}
@@ -134,6 +135,7 @@ Controller.propTypes = {
 	// modifier
 	name: PropTypes.string.isRequired,
 	description: PropTypes.string,
+	tableScroll: PropTypes.object,
 
 	// form
 	schema: PropTypes.object.isRequired,
@@ -152,6 +154,7 @@ Controller.defaultProps = {
 	updateOne: null,
 	deleteMany: null,
 	description: "",
+	tableScroll: undefined,
 	rowMenus: [],
 	querySchema: null,
 	canDownloadExcel: true,
