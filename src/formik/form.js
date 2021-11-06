@@ -15,7 +15,7 @@ const CombinedForm = (props) => {
 		<Formik initialValues={initialValues} onSubmit={onSubmit}>
 			{() => (
 				<Form labelCol={{ span: 4 }} wrapperCol={{ span: 18 }}>
-					<Row>
+					<Row gutter={8}>
 						{formSpec.map((a, i) => (
 							<Col key={a.name} span={a.colSpan || 24}>
 								<Field {...a} isFirst={i === 0} />
