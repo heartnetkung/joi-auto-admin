@@ -11,19 +11,19 @@ As a developer in a company, we spend a lot of time writing web-based tools for 
 
 The idea is to provide a `react component` called `AutoAdmin` which take minimal output and automatically render a complete UI. It's mainly composed of 2 components:
 1. A table for GET operation with the following features:
-  - sort, filter, pagination
-  - export data to excel format
-  - select rows for DELETE operation
-  - responsive
-  - support customizable button for each row
-  - expandable row
+    - sort, filter, pagination
+    - export data to excel format
+    - select rows for DELETE operation
+    - responsive
+    - support customizable button for each row
+    - expandable row
 2. A form for CREATE and UPDATE operation
-  - render automatically from specified `Joi Object`.
-  - import excel data
-  - automatically validate form data and excel data before sending it to server
-    - all errors are pre-translated into Thai language
-  - support multiple pre-configure inputs such as image uploader, address input, heirarchical dropdown, ajax dropdown, and date picker
-  - support custom react input
+    - render automatically from specified `Joi Object`.
+    - import excel data
+    - automatically validate form data and excel data before sending it to server
+      - all errors are pre-translated into Thai language
+    - support multiple pre-configure inputs such as image uploader, address input, heirarchical dropdown, ajax dropdown, and date picker
+    - support custom react input
 
 ## Example
 ```jsx
