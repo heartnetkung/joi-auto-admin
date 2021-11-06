@@ -44,7 +44,7 @@ const deserializeRow = (excelRow, schema) => {
 	var ans = {};
 	for (var x in excelRow) {
 		var column = schema.columnCache[x];
-		if (!column) continue;
+		if (!column || column.disabled) continue;
 
 		var current = excelRow[x];
 		if (column.type === "array" && typeof current === "string")
@@ -58,12 +58,13 @@ const deserializeRow = (excelRow, schema) => {
 	return Joi.attempt(ans, schema.joiObj, { abortEarly: false });
 };
 
-export const serializeTable = (table, schema) => {
+export const serializeTable = (table, schema, showDisabled) => {
 	var columns = schema.toColumns();
 	var ans = [];
 	for (var rowData of table) {
 		var newRow = {};
 		for (var column of columns) {
+			if (!showDisabled && column.disabled) continue;
 			var current = _.get(rowData, column.dataIndex);
 
 			if (column.type === "array") current += "";

@@ -27,6 +27,7 @@ class JoiWrapper {
 				key: a.name,
 				type: a.type,
 				fieldType: a.fieldType,
+				disabled: a.meta.disabled,
 			}));
 		}
 		return this.columns;

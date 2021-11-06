@@ -81,7 +81,7 @@ const Controller = (props) => {
 
 	const onDownloadExcel = usePersistFn(() => {
 		if (!getManyStatus.data) return;
-		var table = serializeTable(getManyStatus.data, schema2);
+		var table = serializeTable(getManyStatus.data, schema2, true);
 		tableToExcel(table, "export.xlsx");
 	});
 	const onExampleExcel = usePersistFn(() => {
@@ -95,11 +95,11 @@ const Controller = (props) => {
 		try {
 			var rawExcel = await excelToTable(a);
 			var newRows = deserializeTable(rawExcel, schema2);
-			var returnData = await createMany(newRows);
-			if (!Array.isArray(returnData) || returnData.length !== a.length)
+			var newData = await createMany(newRows);
+			if (!Array.isArray(newData) || newData.length !== newRows.length)
 				return alert.error("ข้อมูลจากเซิฟเวอร์ไม่ถูกต้อง");
 
-			setData([...returnData.map(appendId), ...getManyStatus.data]);
+			setData([...newData.map(appendId), ...getManyStatus.data]);
 			alert.success("อัพโหลดเรียบร้อย");
 		} catch (e) {
 			if (e.name !== "SerializeError") return alert.error(e);
