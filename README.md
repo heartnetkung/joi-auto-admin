@@ -1,15 +1,18 @@
-## Description
+# Joi Auto Admin
+Automatically create a full-featured web admin UI for CRUD operations using only a few props.
+
+## Overview
 As a developer in a company, we spend a lot of time writing web-based tools for our staffs and back office usage. This package aims to automate such work completely on the front-end side.
 
-The idea is to provide a react component called `AutoAdmin` which take minimal output and automatically render a complete UI. Some of the features include:
-- A table for GET operation with the following features:
+The idea is to provide a `react component` called `AutoAdmin` which take minimal output and automatically render a complete UI. It's mainly composed of 2 components:
+1. A table for GET operation with the following features:
   - sort, filter, pagination
   - export data to excel format
   - select rows for DELETE operation
   - responsive
   - support customizable button for each row
   - expandable row
-- A form for CREATE and UPDATE operation
+2. A form for CREATE and UPDATE operation
   - render automatically from specified `Joi Object`.
   - import excel data
   - automatically validate form data and excel data before sending it to server
