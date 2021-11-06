@@ -1,25 +1,29 @@
-import XLSX from "xlsx";
+import { utils, writeFile, read } from "xlsx";
 import _ from "lodash";
 
 export const tableToExcel = (dataArray, fileName) => {
 	dataArray = dataArray.map(handleNested);
-	var worksheet = XLSX.utils.json_to_sheet(dataArray);
+	var worksheet = utils.json_to_sheet(dataArray, { dateNF: "yyyy-mm-dd" });
 	if (!fileName) return worksheet;
 
-	var workbook = XLSX.utils.book_new();
-	XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet 1");
-	XLSX.writeFile(workbook, fileName);
+	var workbook = utils.book_new();
+	utils.book_append_sheet(workbook, worksheet, "Sheet 1");
+	writeFile(workbook, fileName);
 };
 
 export const excelToTable = (fileObject) =>
 	new Promise((res, rej) => {
 		var reader = new FileReader();
 		reader.onload = (e) => {
-			var data = e.target.result;
-			var workbook = XLSX.read(data, { type: "binary" });
-			var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-			var ans = XLSX.utils.sheet_to_json(firstSheet, { header: "A" });
-			res(ans);
+			try {
+				var data = e.target.result;
+				var workbook = read(data, { type: "binary" });
+				var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+				var ans = utils.sheet_to_json(firstSheet, { header: "A" });
+				res(ans);
+			} catch (error) {
+				rej(error);
+			}
 		};
 		reader.onerror = () => rej(reader.error);
 		reader.readAsBinaryString(fileObject);
