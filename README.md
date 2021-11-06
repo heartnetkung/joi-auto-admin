@@ -115,7 +115,7 @@ export default App;
 |schema|specification on how the UI will render|{Joi Object} or<br> async ()=> {Joi Object} |`required`|
 |name|name of this data|string|`required`|
 |getMany|the function connecting to back-end API. If `querySchema` is provided, query object will be derived from user input|async (query)=> [{rowData}]|`required`|
-|createMany|if not provided, the createButton will not show|async ([rowData])=> null|null|
+|createMany|if not provided, the createButton will not show. The return value should be mostly the same as the argument except that it has primary key generated from the server|async ([rowData])=> [rowData]|null|
 |updateOne|if not provided, the updateButton will not show|async (newRowData)=> null|null|
 |deleteMany|if not provided, the rows can't be selected|async ([rowData])=> null|null|
 |rowButtons|custom buttons for each row|[{onClick: (rowData)=> null,<br> icon: AntIcon,<br> label: string}]|[]|
