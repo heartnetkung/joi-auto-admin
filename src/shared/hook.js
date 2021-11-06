@@ -41,13 +41,14 @@ export const usePersistFn = (fn) => {
 	return persistFn.current;
 };
 
-export const useMediaQuery = (query, debounce = 200) => {
-	const [isMatch, setMatch] = useState(null);
+export const useMaxWidth = (width) => {
+	const [isMatch, setMatch] = useState(window.innerWidth <= width);
+	const listener = (a) => setMatch(a.matches);
 	/* eslint-disable react-hooks/exhaustive-deps */
 	useEffect(() => {
-		var mediaQuery = window.matchMedia(query);
-		mediaQuery.addListener(setMatch);
-		return () => mediaQuery.removeListener(setMatch);
+		var mediaQuery = window.matchMedia(`(max-width: ${width}px)`);
+		mediaQuery.addListener(listener);
+		return () => mediaQuery.removeListener(listener);
 	}, []);
 	return isMatch;
 };

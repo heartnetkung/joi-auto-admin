@@ -7,6 +7,7 @@ import RowMenu from "./row_menu";
 import TableMenu from "./table_menu";
 import { sorter, onFilter, formatColumn } from "./logic";
 import OtherMenu from "./other_menu";
+import { useMaxWidth } from "../shared/hook";
 
 const TableComp = (props) => {
 	const { data, schema, rowButtons, onEdit, paginationSize } = props;
@@ -37,7 +38,8 @@ const TableComp = (props) => {
 			});
 
 		var rowButtons2 = [...rowButtons];
-		if (onEdit) rowButtons2.push({ icon: <EditOutlined />, onClick: onEdit });
+		if (onEdit)
+			rowButtons2.push({ icon: <EditOutlined />, onClick: onEdit });
 
 		if (rowButtons2.length) {
 			const render = (text, record) => (
@@ -54,6 +56,9 @@ const TableComp = (props) => {
 		selectedRowKeys: selectedRows,
 		onChange: setSelectedRows,
 	};
+
+	const smallScreen = useMaxWidth(575);
+	const tableScroll2 = smallScreen ? { x: true, y: true } : tableScroll;
 
 	return (
 		<>
@@ -82,7 +87,7 @@ const TableComp = (props) => {
 					columns={columns}
 					dataSource={data}
 					pagination={{ defaultPageSize: paginationSize }}
-					scroll={tableScroll}
+					scroll={tableScroll2}
 					rowSelection={rowSelection}
 					rowKey="_id"
 				/>
