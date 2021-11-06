@@ -1,5 +1,5 @@
 # joi-auto-admin
-Automatically create a full-featured web admin UI for CRUD operations using only a few props.
+Automatically create a full-featured web admin UI for CRUD operations using only a few react props.
 
 ## Installation
 ```bash
