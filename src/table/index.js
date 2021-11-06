@@ -41,9 +41,9 @@ const TableComp = (props) => {
 
 		if (rowButtons2.length) {
 			const render = (text, record) => (
-				<RowMenu buttons={rowButtons} record={record} />
+				<RowMenu buttons={rowButtons2} record={record} />
 			);
-			const width = 60 * rowButtons.length + 30;
+			const width = 60 * rowButtons2.length + 30;
 			ans2.push({ title: "เมนู", width, render });
 		}
 
