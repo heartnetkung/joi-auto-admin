@@ -3,7 +3,7 @@ import _ from "lodash";
 import moment from "moment";
 
 export const tableToExcel = (dataArray, fileName) => {
-	dataArray = dataArray.map(handleNested);
+	dataArray.forEach(handleNested);
 	var worksheet = utils.json_to_sheet(dataArray, { dateNF: "yyyy-mm-dd" });
 	if (!fileName) return worksheet;
 
@@ -13,7 +13,7 @@ export const tableToExcel = (dataArray, fileName) => {
 };
 
 export const parseExcelDate = (date) => {
-	if(typeof date === 'string')
+	if (typeof date === "string")
 		return moment(date).parseZone(new Date()).toDate();
 	var a = SSF.parse_date_code(date);
 	var momentInput = { y: a.y, M: a.m - 1, d: a.d, h: a.H, m: a.M, s: a.S };
@@ -43,25 +43,11 @@ const parse = (a) => {
 };
 
 const handleNested = (obj) => {
-	var paths = listPaths(obj);
-	var ans = {};
-	for (var path of paths) {
-		var current = _.get(obj, path);
-		if (Array.isArray(current)) current += "";
-		ans[path] = current;
+	for (var key in obj) {
+		var value = obj[key];
+		if (isObject(value)) throw new Error("XLSX layer does not support object");
+		if (Array.isArray(value)) throw new Error("XLSX layer does not support array");
 	}
-	return ans;
-};
-
-const listPaths = (obj, prefix) => {
-	var keys = Object.keys(obj);
-	prefix = prefix ? prefix + "." : "";
-	return keys.reduce(function (result, key) {
-		if (isObject(obj[key]))
-			return result.concat(listPaths(obj[key], prefix + key));
-		result.push(prefix + key);
-		return result;
-	}, []);
 };
 
 const isObject = (x) => Object.prototype.toString.call(x) === "[object Object]";
