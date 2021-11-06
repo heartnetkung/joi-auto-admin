@@ -34,14 +34,17 @@ const App = () => {
 				.required()
 				.label("ชื่อ")
 				.meta({ placeholder: "ชื่อภาษาไทย" }),
-			purchased_value: Joi.number().integer().label("เงิน"),
+			purchased_value: Joi.number()
+				.integer()
+				.label("เงิน")
+				.meta({ twoColumn: true }),
 			district: Joi.array()
 				.label("เขต")
-				.meta({ fieldType: "AddressDistrict" }),
+				.meta({ fieldType: "AddressDistrict", twoColumn: true }),
 			create_date: Joi.date()
 				.default(Date.now)
 				.label("วันสมัคร")
-				.meta({ disabled: true }),
+				.meta({ disabled: true, twoColumn: true }),
 		}),
 	};
 

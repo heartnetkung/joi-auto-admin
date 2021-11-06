@@ -1,20 +1,27 @@
 import { Form, SubmitButton, ResetButton } from "formik-antd";
 import { Formik } from "formik";
 import PropTypes from "prop-types";
-import { Space } from "antd";
+import { Space, Row, Col } from "antd";
 import Field from "./field";
+import { calculateSpan } from "./logic";
 
 const CombinedForm = (props) => {
 	const { initialValues, canReset, onSubmit } = props;
 	const { resetButtonLabel, submitButtonLabel, schema } = props;
 
+	const formSpec = calculateSpan(schema.formSpec);
+
 	return (
 		<Formik initialValues={initialValues} onSubmit={onSubmit}>
 			{() => (
 				<Form labelCol={{ span: 4 }} wrapperCol={{ span: 18 }}>
-					{schema.formSpec.map((a, i) => (
-						<Field key={a.name} {...a} isFirst={i === 0} />
-					))}
+					<Row>
+						{formSpec.map((a, i) => (
+							<Col key={a.name} span={a.colSpan || 24}>
+								<Field {...a} isFirst={i === 0} />
+							</Col>
+						))}
+					</Row>
 					<center>
 						<Space>
 							{canReset && (

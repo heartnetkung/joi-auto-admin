@@ -51,7 +51,9 @@ class JoiField {
 		this._extractedSchema = joiObj.extract(path);
 		this.validate = this.validate.bind(this);
 		this.type = field.type;
+		this.twoColumn = !!this.meta.twoColumn;
 
+		delete this.meta.twoColumn;
 		delete this.meta.fieldType;
 	}
 

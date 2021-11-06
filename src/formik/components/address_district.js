@@ -6,20 +6,23 @@ import { getErrorMessage } from "../../joi/error_message";
 import Joi from "joi/lib/index";
 
 const Component = (props) => {
-	const { name, label, required, meta } = props;
-	const validate = useCallback((value) => {
-		var schema = Joi.array();
-		if (required) schema = schema.required();
+	const { name, label, required, meta, labelCol, wrapperCol } = props;
+	const validate = useCallback(
+		(value) => {
+			var schema = Joi.array();
+			if (required) schema = schema.required();
 
-		var rawError = schema.validate(value);
-		if (!rawError.error || !Array.isArray(rawError.error.details))
+			var rawError = schema.validate(value);
+			if (!rawError.error || !Array.isArray(rawError.error.details))
+				return null;
+
+			for (var errorObj of rawError.error.details)
+				return getErrorMessage(errorObj, label);
+
 			return null;
-
-		for (var errorObj of rawError.error.details)
-			return getErrorMessage(errorObj, label);
-
-		return null;
-	}, [label, required]);
+		},
+		[label, required]
+	);
 
 	return (
 		<Form.Item
@@ -27,6 +30,8 @@ const Component = (props) => {
 			required={required}
 			name={name}
 			validate={validate}
+			labelCol={labelCol}
+			wrapperCol={wrapperCol}
 		>
 			<Cascader
 				options={getDistrict()}
@@ -43,6 +48,12 @@ Component.propTypes = {
 	label: PropTypes.string.isRequired,
 	required: PropTypes.bool.isRequired,
 	meta: PropTypes.object.isRequired,
+	labelCol: PropTypes.object,
+	wrapperCol: PropTypes.object,
+};
+Component.defaultProps = {
+	labelCol: undefined,
+	wrapperCol: undefined,
 };
 
 const provinceFilter = (inputValue, path) =>

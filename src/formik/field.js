@@ -17,6 +17,7 @@ const { WeekPicker, RangePicker, MonthPicker } = DatePicker;
 
 const Field = (props) => {
 	const { fieldType, label, required, name, validate, meta, isFirst } = props;
+	const { labelCol, wrapperCol } = props;
 
 	const ref = useRef(null);
 	useEffect(() => {
@@ -34,6 +35,8 @@ const Field = (props) => {
 			required={required}
 			name={name}
 			validate={validate}
+			labelCol={labelCol}
+			wrapperCol={wrapperCol}
 		>
 			{fieldType === "Checkbox" && <Checkbox {...props2}></Checkbox>}
 			{fieldType === "DatePicker" && (
@@ -42,13 +45,16 @@ const Field = (props) => {
 					defaultValue={
 						props2.defaultValue && moment(props2.defaultValue)
 					}
+					style={{ width: "100%" }}
 				/>
 			)}
 			{fieldType === "WeekPicker" && <WeekPicker {...props2} />}
 			{fieldType === "RangePicker" && <RangePicker {...props2} />}
 			{fieldType === "MonthPicker" && <MonthPicker {...props2} />}
 			{fieldType === "Input" && <Input {...props2} />}
-			{fieldType === "InputNumber" && <InputNumber {...props2} />}
+			{fieldType === "InputNumber" && (
+				<InputNumber {...props2} style={{ width: "100%" }} />
+			)}
 			{fieldType === "InputPhone" && (
 				<Input {...props2} type="tel" pattern="\d+" />
 			)}
@@ -83,6 +89,12 @@ Field.propTypes = {
 	required: PropTypes.bool.isRequired,
 	meta: PropTypes.object.isRequired,
 	isFirst: PropTypes.bool.isRequired,
+	labelCol: PropTypes.object,
+	wrapperCol: PropTypes.object,
+};
+Field.defaultProps = {
+	labelCol: undefined,
+	wrapperCol: undefined,
 };
 
 export default Field;
