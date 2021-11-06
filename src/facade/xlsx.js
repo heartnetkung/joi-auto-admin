@@ -13,8 +13,6 @@ export const tableToExcel = (dataArray, fileName) => {
 };
 
 export const parseExcelDate = (date) => {
-	if (typeof date === "string")
-		return moment(date).parseZone(new Date()).toDate();
 	var a = SSF.parse_date_code(date);
 	var momentInput = { y: a.y, M: a.m - 1, d: a.d, h: a.H, m: a.M, s: a.S };
 	return moment(momentInput).parseZone(new Date()).toDate();
@@ -45,8 +43,10 @@ const parse = (a) => {
 const handleNested = (obj) => {
 	for (var key in obj) {
 		var value = obj[key];
-		if (isObject(value)) throw new Error("XLSX layer does not support object");
-		if (Array.isArray(value)) throw new Error("XLSX layer does not support array");
+		if (isObject(value))
+			throw new Error("XLSX layer does not support object");
+		if (Array.isArray(value))
+			throw new Error("XLSX layer does not support array");
 	}
 };
 
