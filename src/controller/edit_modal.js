@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
-import { Modal } from "antd";
+import { Modal, Alert } from "antd";
 import Form from "../formik/form";
 import Header from "./header";
 
 const EditModal = (props) => {
 	const { visible, onClose, isEdit, schema, initialValue, onSubmit } = props;
-	const { createHeader, editHeader } = props;
+	const { createHeader, editHeader, error } = props;
 
 	//need to unmount in order for initialValue and autoFocus to work
 	if (!visible) return null;
@@ -20,6 +20,14 @@ const EditModal = (props) => {
 			maskClosable={false}
 		>
 			<Header title={isEdit ? editHeader : createHeader} small />
+			{error && (
+				<Alert
+					message={error.message || error}
+					type="error"
+					showIcon
+					style={{ margin: 30, marginBottom: 20, marginTop: -10 }}
+				/>
+			)}
 			<Form
 				schema={schema}
 				initialValues={initialValue}
@@ -37,11 +45,13 @@ EditModal.propTypes = {
 	initialValue: PropTypes.object.isRequired,
 	editHeader: PropTypes.string,
 	createHeader: PropTypes.string,
+	error: PropTypes.instanceOf(Error),
 };
 
 EditModal.defaultProps = {
 	createHeader: "เพิ่มข้อมูลใหม่",
 	editHeader: "แก้ไขข้อมูล",
+	error: null,
 };
 
 export default EditModal;

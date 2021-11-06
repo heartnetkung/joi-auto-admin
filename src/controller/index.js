@@ -9,7 +9,7 @@ import { tableToExcel, excelToTable } from "../facade/xlsx";
 import { deserializeTable, serializeTable } from "../joi/serialize";
 import ExcelErrorModal from "./excel_error_modal";
 
-const INITIAL_FORM_STATUS = { isEdit: false, initialValue: {} };
+const INITIAL_FORM_STATUS = { isEdit: false, initialValue: {}, error: null };
 
 const Controller = (props) => {
 	const { getMany, createMany, updateOne, deleteMany } = props;
@@ -32,39 +32,50 @@ const Controller = (props) => {
 	});
 
 	const onEdit = usePersistFn((obj) => {
-		setEditModalData({ isEdit: true, initialValue: obj });
+		setEditModalData({ isEdit: true, initialValue: obj, error: null });
 		editModalControl.setVisible(true);
 	});
 
 	const onSubmit = usePersistFn(async (data) => {
-		if (editModalData.isEdit) {
-			await doUpdate(data);
-			var tableData = getManyStatus.data;
-			setData(tableData.map((a) => (a._id === data._id ? data : a)));
-			alert.success("แก้ไขข้อมูลเรียบร้อย");
-		} else {
-			await doCreate([data]);
-			data = appendId(data);
-			setData([data, ...getManyStatus.data]);
-			alert.success("สร้างข้อมูลเรียบร้อย");
+		setEditModalData((a) => ({ ...a, error: null }));
+		try {
+			if (editModalData.isEdit) {
+				await doUpdate(data);
+				var tableData = getManyStatus.data;
+				setData(tableData.map((a) => (a._id === data._id ? data : a)));
+				alert.success("แก้ไขข้อมูลเรียบร้อย");
+				editModalControl.setVisible(false);
+			} else {
+				var returnData = await doCreate([data]);
+				if (!Array.isArray(returnData) || returnData.length !== 1)
+					return alert.error("ข้อมูลจากเซิฟเวอร์ไม่ถูกต้อง");
+				data = appendId(returnData[0]);
+				setData([data, ...getManyStatus.data]);
+				alert.success("สร้างข้อมูลเรียบร้อย");
+				editModalControl.setVisible(false);
+			}
+		} catch (e) {
+			setEditModalData((a) => ({ ...a, error: e }));
 		}
-		editModalControl.setVisible(false);
 	});
 
 	const onDelete = usePersistFn(async (selectedKeys) => {
-		var selectedSet = new Set(selectedKeys);
-		var values = getManyStatus.data.filter((a) => selectedSet.has(a._id));
-		var [error] = await doDelete(values);
-		if (error) return alert.error(error);
-		setData(getManyStatus.data.filter((a) => !selectedSet.has(a._id)));
+		try {
+			var { data } = getManyStatus;
+			var selectedSet = new Set(selectedKeys);
+			var values = data.filter((a) => selectedSet.has(a._id));
+			await doDelete(values);
+			setData(data.filter((a) => !selectedSet.has(a._id)));
+		} catch (e) {
+			alert.error(e);
+		}
 	});
 
 	/* eslint-disable react-hooks/exhaustive-deps */
 	useEffect(() => {
-		doGetMany().then(([error, data]) => {
-			if (error) return alert.error(error);
-			setData(data.map(appendId));
-		});
+		doGetMany()
+			.then((data) => setData(data.map(appendId)))
+			.catch((error) => alert.error(error));
 	}, []);
 
 	const schema2 = useMemo(() => new JoiWrapper(schema), [schema]);
@@ -83,8 +94,11 @@ const Controller = (props) => {
 		try {
 			var rawExcel = await excelToTable(a);
 			var newRows = deserializeTable(rawExcel, schema2);
-			await doCreate(newRows);
-			setData([...newRows.map(appendId), ...getManyStatus.data]);
+			var returnData = await doCreate(newRows);
+			if (!Array.isArray(returnData) || returnData.length !== a.length)
+				return alert.error("ข้อมูลจากเซิฟเวอร์ไม่ถูกต้อง");
+
+			setData([...returnData.map(appendId), ...getManyStatus.data]);
 			alert.success("อัพโหลดเรียบร้อย");
 		} catch (e) {
 			if (e.name !== "SerializeError") return alert.error(e);

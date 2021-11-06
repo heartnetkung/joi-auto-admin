@@ -11,20 +11,18 @@ export const useAPI = (func, loadingInit, manualComplete) => {
 	const [apiState, setApiState] = useState({
 		loading: !!loadingInit,
 		data: null,
-		error: null,
 	});
-	const setData = (data) =>
-		setApiState({ loading: false, data, error: null });
+	const setData = (data) => setApiState({ loading: false, data });
 
 	const doRun = async function (a, b) {
-		setApiState((a) => ({ loading: true, data: a.data, error: null }));
+		setApiState((a) => ({ loading: true, data: a.data }));
 		try {
 			var data = await func.apply(null, arguments);
 			if (!manualComplete) setData(data);
-			return [null, data];
+			return data;
 		} catch (e) {
-			setApiState((a) => ({ loading: false, data: null, error: e }));
-			return [e, null];
+			setApiState((a) => ({ loading: false, data: null }));
+			throw e;
 		}
 	};
 
