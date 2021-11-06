@@ -20,7 +20,7 @@ export const deserializeTable = (table, schema) => {
 		try {
 			ans.push(deserializeRow(table[i], schema, ""));
 		} catch (error) {
-			errors = [...errors, error.details.map(mapError(i))];
+			errors = [...errors, ...error.details.map(mapError(i))];
 		}
 	}
 
