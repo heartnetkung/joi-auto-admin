@@ -5,7 +5,7 @@ import { useModal, useAPI, alert, usePersistFn, appendId } from "./util";
 import EditModal from "./edit_modal";
 import Header from "./header";
 import { JoiWrapper } from "../joi/joi_wrapper";
-import { tableToExcel, excelToTable } from "../facade/xlsx";
+import { tableToExcel, excelToTable } from "../shared/xlsx";
 import { deserializeTable, serializeTable } from "../joi/serialize";
 import ExcelErrorModal from "./excel_error_modal";
 

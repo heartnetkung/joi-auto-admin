@@ -5,7 +5,7 @@ import {
 } from "@ant-design/icons";
 import PropTypes from "prop-types";
 import { Menu, Button } from "antd";
-import FileUpload from "./file_upload";
+import FileUpload from "../shared/file_upload";
 
 const OtherMenu = (props) => {
 	const { onDownloadExcel, onUploadExcel, onExampleExcel } = props;
@@ -20,7 +20,7 @@ const OtherMenu = (props) => {
 						onClick={onDownloadExcel}
 						icon={<DownloadOutlined />}
 						block
-						style={{textAlign:'left'}}
+						style={{ textAlign: "left" }}
 					>
 						{downloadExcelLabel}
 					</Button>
@@ -34,7 +34,7 @@ const OtherMenu = (props) => {
 						icon={<UploadOutlined />}
 						accept=".xlsx"
 						block
-						style={{textAlign:'left'}}
+						style={{ textAlign: "left" }}
 					>
 						{uploadExcelLabel}
 					</FileUpload>
@@ -47,7 +47,7 @@ const OtherMenu = (props) => {
 						onClick={onExampleExcel}
 						icon={<EyeOutlined />}
 						block
-						style={{textAlign:'left'}}
+						style={{ textAlign: "left" }}
 					>
 						{exampleExcelLabel}
 					</Button>
