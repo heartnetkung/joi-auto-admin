@@ -17,12 +17,12 @@ The idea is to provide a `react component` called `AutoAdmin` which take minimal
     - responsive
     - support customizable button for each row
     - expandable row
-2. A form for CREATE and UPDATE operation
+2. A form for CREATE and UPDATE operation with the following features:
     - render automatically from specified `Joi Object`.
     - import excel data
     - automatically validate form data and excel data before sending it to server
       - all errors are pre-translated into Thai language
-    - support multiple pre-configure inputs such as image uploader, address input, heirarchical dropdown, ajax dropdown, and date picker
+    - support multiple pre-configured inputs such as image uploader, address input, heirarchical dropdown, ajax dropdown, and date picker
     - support custom react input
 
 ## Example
