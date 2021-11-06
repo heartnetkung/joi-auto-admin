@@ -2,17 +2,20 @@
 As a developer in a company, we spend a lot of time writing web-based tools for our staffs and back office usage. This package aims to automate such work completely on the front-end side.
 
 The idea is to provide a react component called `AutoAdmin` which take minimal output and automatically render a complete UI. Some of the features include:
-- A table for GET operation
-  - this table can sort 
-  - this table can filter
-  - this table can export data to excel format
-  - this table can do pagination
-  - this table can have their rows selected for DELETE operation
-  - this table is responsive
+- A table for GET operation with the following features:
+  - sort, filter, pagination
+  - export data to excel format
+  - select rows for DELETE operation
+  - responsive
+  - support customizable button for each row
+  - expandable row
 - A form for CREATE and UPDATE operation
-  - this form can validate input data by itself on front-end with all errors translated to Thai language
-  - this form can import excel data
-  - this form are rendered automatically from specified `Joi Object`.
+  - render automatically from specified `Joi Object`.
+  - import excel data
+  - automatically validate form data and excel data before sending it to server
+    - all errors are pre-translated into Thai language
+  - support multiple pre-configure inputs such as image uploader, address input, heirarchical dropdown, ajax dropdown, and date picker
+  - support custom react input
 
 ## Example
 ```jsx
@@ -84,8 +87,9 @@ export default App;
     - The rest of the props can be found [here.](https://reactjs.org/docs/dom-elements.html)
   - There are certain keys you can use to customize `AutoAdmin` itself
     - `.meta({ fieldType: string | ReactComponent })`
-    - `.meta({ fieldInline: boolean })`
     - `.meta({ fieldValidation: ()=> string|null })`
+    - `.meta({ twoColumn: boolean })`
+      - show the form input in half size, so you can stack 2 fields in the same line.
     - `.meta({ cellAlign: 'left'|'right'|'center' })`
     - `.meta({ cellEditable: boolean })`
     - `.meta({ cellEllipsis: boolean })`
