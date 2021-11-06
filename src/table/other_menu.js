@@ -20,6 +20,7 @@ const OtherMenu = (props) => {
 						onClick={onDownloadExcel}
 						icon={<DownloadOutlined />}
 						block
+						style={{textAlign:'left'}}
 					>
 						{downloadExcelLabel}
 					</Button>
@@ -33,6 +34,7 @@ const OtherMenu = (props) => {
 						icon={<UploadOutlined />}
 						accept=".xlsx"
 						block
+						style={{textAlign:'left'}}
 					>
 						{uploadExcelLabel}
 					</FileUpload>
@@ -45,6 +47,7 @@ const OtherMenu = (props) => {
 						onClick={onExampleExcel}
 						icon={<EyeOutlined />}
 						block
+						style={{textAlign:'left'}}
 					>
 						{exampleExcelLabel}
 					</Button>
