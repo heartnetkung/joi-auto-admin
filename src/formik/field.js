@@ -11,12 +11,19 @@ import {
 import AddressDistrict from "./components/address_district";
 import AddressProvince from "./components/address_province";
 import moment from "moment";
+import { useRef, useEffect } from "react";
 
 const { WeekPicker, RangePicker, MonthPicker } = DatePicker;
 
 const Field = (props) => {
-	const { fieldType, label, required, name, validate, meta } = props;
-	const props2 = { ...meta, name };
+	const { fieldType, label, required, name, validate, meta, isFirst } = props;
+
+	const ref = useRef(null);
+	useEffect(() => {
+		if (ref.current) ref.current.focus();
+	}, []);
+
+	const props2 = { ...meta, name, ref: isFirst ? ref : null };
 
 	if (fieldType === "AddressProvince") return <AddressProvince {...props} />;
 	if (fieldType === "AddressDistrict") return <AddressDistrict {...props} />;
@@ -75,6 +82,7 @@ Field.propTypes = {
 	label: PropTypes.string.isRequired,
 	required: PropTypes.bool.isRequired,
 	meta: PropTypes.object.isRequired,
+	isFirst: PropTypes.bool.isRequired,
 };
 
 export default Field;

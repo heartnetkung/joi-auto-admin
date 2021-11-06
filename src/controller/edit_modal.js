@@ -7,6 +7,9 @@ const EditModal = (props) => {
 	const { visible, onClose, isEdit, schema, initialValue, onSubmit } = props;
 	const { createHeader, editHeader } = props;
 
+	//need to unmount in order for initialValue and autoFocus to work
+	if (!visible) return null;
+
 	return (
 		<Modal
 			centered

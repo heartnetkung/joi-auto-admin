@@ -9,11 +9,11 @@ const CombinedForm = (props) => {
 	const { resetButtonLabel, submitButtonLabel, schema } = props;
 
 	return (
-		<Formik initialValues={initialValues} onSubmit={onSubmit} enableReinitialize>
+		<Formik initialValues={initialValues} onSubmit={onSubmit}>
 			{() => (
 				<Form labelCol={{ span: 4 }} wrapperCol={{ span: 18 }}>
-					{schema.formSpec.map((a) => (
-						<Field key={a.name} {...a} />
+					{schema.formSpec.map((a, i) => (
+						<Field key={a.name} {...a} isFirst={i === 0} />
 					))}
 					<center>
 						<Space>
