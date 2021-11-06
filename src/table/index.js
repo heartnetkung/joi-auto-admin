@@ -90,6 +90,7 @@ const TableComp = (props) => {
 					scroll={tableScroll2}
 					rowSelection={rowSelection}
 					rowKey="_id"
+					style={{ minWidth: Math.min(columns.length * 130, 800) }}
 				/>
 			</Row>
 		</>
@@ -116,7 +117,7 @@ TableComp.defaultProps = {
 	onCreate: null,
 	onEdit: null,
 	paginationSize: 20,
-	tableScroll: { y: 600 },
+	tableScroll: { y: 600, x: true },
 	loading: false,
 	onDownloadExcel: null,
 	onUploadExcel: null,
