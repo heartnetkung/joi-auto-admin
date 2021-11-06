@@ -20,8 +20,6 @@ const Controller = (props) => {
 	const [editModalData, setEditModalData] = useState(INITIAL_FORM_STATUS);
 	const [excelError, setExcelError] = useState([]);
 	const [getManyStatus, doGetMany, setData] = useAPI(getMany, true, true);
-	const [createStatus, doCreate] = useAPI(createMany);
-	const [updateStatus, doUpdate] = useAPI(updateOne);
 	const [deleteStatus, doDelete] = useAPI(deleteMany);
 	const editModalControl = useModal();
 	const excelModalControl = useModal();
@@ -40,13 +38,13 @@ const Controller = (props) => {
 		setEditModalData((a) => ({ ...a, error: null }));
 		try {
 			if (editModalData.isEdit) {
-				await doUpdate(data);
+				await updateOne(data);
 				var tableData = getManyStatus.data;
 				setData(tableData.map((a) => (a._id === data._id ? data : a)));
 				alert.success("แก้ไขข้อมูลเรียบร้อย");
 				editModalControl.setVisible(false);
 			} else {
-				var returnData = await doCreate([data]);
+				var returnData = await createMany([data]);
 				if (!Array.isArray(returnData) || returnData.length !== 1)
 					return alert.error("ข้อมูลจากเซิฟเวอร์ไม่ถูกต้อง");
 				data = appendId(returnData[0]);
@@ -86,6 +84,8 @@ const Controller = (props) => {
 		tableToExcel(table, "export.xlsx");
 	});
 	const onExampleExcel = usePersistFn(() => {
+		if (uploadPreviewUrl)
+			return window.open(uploadPreviewUrl, "_blank").focus();
 		if (!getManyStatus.data) return;
 		var table = serializeTable(getManyStatus.data.slice(0, 3), schema2);
 		tableToExcel(table, "example.xlsx");
@@ -94,7 +94,7 @@ const Controller = (props) => {
 		try {
 			var rawExcel = await excelToTable(a);
 			var newRows = deserializeTable(rawExcel, schema2);
-			var returnData = await doCreate(newRows);
+			var returnData = await createMany(newRows);
 			if (!Array.isArray(returnData) || returnData.length !== a.length)
 				return alert.error("ข้อมูลจากเซิฟเวอร์ไม่ถูกต้อง");
 
