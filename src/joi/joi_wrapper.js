@@ -72,12 +72,13 @@ class JoiField {
 
 		if (field?.flags?.only && field?.allow) {
 			var { validLabel } = ans;
-			if (!validLabel || validLabel?.length !== field?.allow?.length)
+			var allow = field?.allow;
+			if (!Array.isArray(validLabel)) validLabel = allow;
+			else if (validLabel?.length !== field?.allow?.length)
 				throw new Error(
 					"validLabel is required and must have the equal length"
 				);
 			var valid = (ans.valid = {});
-			var allow = field?.allow;
 			for (var i = 0, ii = allow.length; i < ii; i++)
 				valid[allow[i]] = validLabel[i];
 		}
