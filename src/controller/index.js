@@ -9,6 +9,7 @@ import { JoiWrapper } from "../joi/joi_wrapper";
 import { tableToExcel, excelToTable } from "../shared/xlsx";
 import { deserializeTable, serializeTable } from "../joi/serialize";
 import ExcelErrorModal from "./excel_error_modal";
+import Form from "../formik/form";
 
 const INITIAL_FORM_STATUS = { isEdit: false, initialValue: {}, error: null };
 
@@ -72,12 +73,24 @@ const Controller = (props) => {
 
 	/* eslint-disable react-hooks/exhaustive-deps */
 	useEffect(() => {
-		doGetMany()
+		doGetMany({})
 			.then((data) => setData(data.map(appendId)))
 			.catch((error) => alert.error(error));
 	}, []);
 
 	const schema2 = useMemo(() => new JoiWrapper(schema), [schema]);
+	const querySchema2 = useMemo(
+		() => querySchema && new JoiWrapper(querySchema),
+		[querySchema]
+	);
+	const onQuery = usePersistFn(async (query) => {
+		try {
+			var data = await doGetMany(query);
+			setData(data.map(appendId));
+		} catch (e) {
+			alert.error(e);
+		}
+	});
 
 	const onDownloadExcel = usePersistFn(() => {
 		if (!getManyStatus.data) return;
@@ -111,6 +124,15 @@ const Controller = (props) => {
 	return (
 		<>
 			<Header name={name} />
+			{querySchema && (
+				<Form
+					schema={querySchema2}
+					onSubmit={onQuery}
+					submitButtonLabel="ดึงข้อมูล"
+					initialValues={{ purchased_value: "3000-3004" }}
+					inline
+				/>
+			)}
 			<Table
 				{...getManyStatus}
 				loading={getManyStatus.loading || deleteStatus.loading}

@@ -1,4 +1,6 @@
-export const calculateSpan = (formSpec) => {
+export const calculateSpan = (formSpec, isInline) => {
+	if (isInline) return formSpec.map((a) => ({ ...a, colSpan: 6 }));
+
 	var ans = [];
 	var isPreviousLeft = false;
 	for (var i = 0, ii = formSpec.length; i < ii; i++) {

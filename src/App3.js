@@ -7,6 +7,7 @@ const App = () => {
 	const props = {
 		name: "ลูกค้า",
 		getMany: async (query) => {
+			await wait(500);
 			const data = [];
 			for (let i = 0; i < 100; i++)
 				data.push({
@@ -52,6 +53,11 @@ const App = () => {
 				.default("m")
 				.label("เพศ")
 				.meta({ validLabel: ["ชาย", "หญิง"], twoColumn: true }),
+		}),
+		querySchema: Joi.object({
+			purchased_value: Joi.string()
+				.valid("3000-3004", "3005-3009")
+				.label("เงิน"),
 		}),
 	};
 
