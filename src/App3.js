@@ -60,8 +60,8 @@ const App = () => {
 		}),
 		querySchema: Joi.object({
 			purchased_value: Joi.string()
-				.valid("3000-3004", "3005-3009")
-				.default("3000-3004")
+				.valid("ทั้งหมด", "3000-3004", "3005-3009")
+				.default("ทั้งหมด")
 				.label("เงิน"),
 		}),
 	};

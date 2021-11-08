@@ -5,7 +5,7 @@ import Header from "./header";
 
 const EditModal = (props) => {
 	const { visible, onClose, isEdit, schema, onSubmit } = props;
-	const { createHeader, editHeader, error } = props;
+	const { createHeader, editHeader, error, initialValue } = props;
 
 	//need to unmount in order for initialValue and autoFocus to work
 	if (!visible) return null;
@@ -29,6 +29,7 @@ const EditModal = (props) => {
 				/>
 			)}
 			<Form
+				initialValues={initialValue}
 				schema={schema}
 				onSubmit={onSubmit}
 			/>
@@ -44,6 +45,7 @@ EditModal.propTypes = {
 	editHeader: PropTypes.string,
 	createHeader: PropTypes.string,
 	error: PropTypes.instanceOf(Error),
+	initialValue: PropTypes.object.isRequired,
 };
 
 EditModal.defaultProps = {
