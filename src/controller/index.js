@@ -10,6 +10,7 @@ import { tableToExcel, excelToTable } from "../shared/xlsx";
 import { deserializeTable, serializeTable } from "../joi/serialize";
 import ExcelErrorModal from "./excel_error_modal";
 import Form from "../formik/form";
+import Joi from "joi/lib/index";
 
 const INITIAL_FORM_STATUS = { isEdit: false, initialValue: {}, error: null };
 
@@ -25,6 +26,11 @@ const Controller = (props) => {
 	const [deleteStatus, doDelete] = useAPI(deleteMany);
 	const editModalControl = useModal();
 	const excelModalControl = useModal();
+	const schema2 = useMemo(() => new JoiWrapper(schema), [schema]);
+	const querySchema2 = useMemo(
+		() => querySchema && new JoiWrapper(querySchema),
+		[querySchema]
+	);
 
 	const onCreate = usePersistFn(() => {
 		setEditModalData(INITIAL_FORM_STATUS);
@@ -40,12 +46,14 @@ const Controller = (props) => {
 		setEditModalData((a) => ({ ...a, error: null }));
 		try {
 			if (editModalData.isEdit) {
+				data = Joi.attempt(data, schema2.joiObj);
 				await updateOne(data);
 				var tableData = getManyStatus.data;
 				setData(tableData.map((a) => (a._id === data._id ? data : a)));
 				alert.success("แก้ไขข้อมูลเรียบร้อย");
 				editModalControl.setVisible(false);
 			} else {
+				data = Joi.attempt(data, schema2.joiObj);
 				var returnData = await createMany([data]);
 				if (!Array.isArray(returnData) || returnData.length !== 1)
 					return alert.error("ข้อมูลจากเซิฟเวอร์ไม่ถูกต้อง");
@@ -78,13 +86,9 @@ const Controller = (props) => {
 			.catch((error) => alert.error(error));
 	}, []);
 
-	const schema2 = useMemo(() => new JoiWrapper(schema), [schema]);
-	const querySchema2 = useMemo(
-		() => querySchema && new JoiWrapper(querySchema),
-		[querySchema]
-	);
 	const onQuery = usePersistFn(async (query) => {
 		try {
+			query = Joi.attempt(query, querySchema2.joiObj);
 			var data = await doGetMany(query);
 			setData(data.map(appendId));
 		} catch (e) {
