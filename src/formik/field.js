@@ -61,7 +61,7 @@ const Field = (props) => {
 			{fieldType === "InputPassword" && <Input.Password {...props2} />}
 			{fieldType === "TextArea" && <Input.TextArea {...props2} />}
 			{fieldType === "Select" && (
-				<Select {...props2}>
+				<Select {...props2} ref={undefined}>
 					{props2.valid &&
 						Object.entries(props2.valid).map(([k, v]) => (
 							<Select.Option key={k} value={k}>
