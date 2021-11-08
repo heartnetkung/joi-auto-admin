@@ -133,7 +133,6 @@ const Controller = (props) => {
 					schema={querySchema2}
 					onSubmit={onQuery}
 					submitButtonLabel="ดึงข้อมูล"
-					initialValues={{ purchased_value: "3000-3004" }}
 					inline
 				/>
 			)}

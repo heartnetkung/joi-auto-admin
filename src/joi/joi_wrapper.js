@@ -1,5 +1,6 @@
 import Joi from "joi/lib/index";
 import { getErrorMessage } from "./error_message";
+import _ from "lodash";
 
 class JoiWrapper {
 	constructor(joiObj) {
@@ -17,6 +18,7 @@ class JoiWrapper {
 		this.formSpec = [];
 		traverse(this.describe, [], this.formSpec, this.joiObj);
 		this.toColumns = this.toColumns.bind(this);
+		this.toDefaultValues = this.toDefaultValues.bind(this);
 	}
 
 	toColumns() {
@@ -32,6 +34,18 @@ class JoiWrapper {
 			}));
 		}
 		return this.columns;
+	}
+
+	toDefaultValues() {
+		if (!this.defaultValues) {
+			var ans = (this.defaultValues = {});
+			for (var { name, defaultValue } of this.formSpec) {
+				if (typeof defaultValue === "function")
+					defaultValue = defaultValue();
+				if (defaultValue !== undefined) _.set(ans, name, defaultValue);
+			}
+		}
+		return this.defaultValues;
 	}
 }
 
@@ -54,6 +68,7 @@ class JoiField {
 		this.validate = this.validate.bind(this);
 		this.type = field.type;
 		this.twoColumn = !!this.meta.twoColumn;
+		this.defaultValue = field?.flags?.default;
 
 		delete this.meta.twoColumn;
 		delete this.meta.fieldType;
@@ -64,11 +79,6 @@ class JoiField {
 		var metas = field?.metas;
 		var ans = {};
 		if (Array.isArray(metas) && metas.length === 1) ans = { ...metas[0] };
-
-		var defaultValue = field?.flags?.default;
-		if (defaultValue && typeof defaultValue === "function")
-			ans.defaultValue = defaultValue();
-		else if (defaultValue) ans.defaultValue = defaultValue;
 
 		if (field?.flags?.only && field?.allow) {
 			var { validLabel } = ans;

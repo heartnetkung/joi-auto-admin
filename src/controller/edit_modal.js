@@ -4,7 +4,7 @@ import Form from "../formik/form";
 import Header from "./header";
 
 const EditModal = (props) => {
-	const { visible, onClose, isEdit, schema, initialValue, onSubmit } = props;
+	const { visible, onClose, isEdit, schema, onSubmit } = props;
 	const { createHeader, editHeader, error } = props;
 
 	//need to unmount in order for initialValue and autoFocus to work
@@ -30,7 +30,6 @@ const EditModal = (props) => {
 			)}
 			<Form
 				schema={schema}
-				initialValues={initialValue}
 				onSubmit={onSubmit}
 			/>
 		</Modal>
@@ -42,7 +41,6 @@ EditModal.propTypes = {
 	visible: PropTypes.bool.isRequired,
 	onClose: PropTypes.func.isRequired,
 	schema: PropTypes.object.isRequired,
-	initialValue: PropTypes.object.isRequired,
 	editHeader: PropTypes.string,
 	createHeader: PropTypes.string,
 	error: PropTypes.instanceOf(Error),

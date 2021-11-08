@@ -6,13 +6,12 @@ import Field from "./field";
 import { calculateSpan } from "./logic";
 
 const CombinedForm = (props) => {
-	const { initialValues, onSubmit, inline } = props;
+	const { onSubmit, inline } = props;
 	const { resetButtonLabel, submitButtonLabel, schema } = props;
-
 	const formSpec = calculateSpan(schema.formSpec, inline);
 
 	return (
-		<Formik initialValues={initialValues} onSubmit={onSubmit}>
+		<Formik initialValues={schema.toDefaultValues()} onSubmit={onSubmit}>
 			{() => (
 				<Form
 					labelCol={{ span: 4 }}
@@ -58,7 +57,6 @@ const CombinedForm = (props) => {
 };
 
 CombinedForm.propTypes = {
-	initialValues: PropTypes.any,
 	onSubmit: PropTypes.func.isRequired,
 	resetButtonLabel: PropTypes.string,
 	submitButtonLabel: PropTypes.string,
@@ -67,7 +65,6 @@ CombinedForm.propTypes = {
 };
 
 CombinedForm.defaultProps = {
-	initialValues: null,
 	resetButtonLabel: "ล้างค่า",
 	submitButtonLabel: "ยืนยัน",
 	schema: null,
