@@ -15,6 +15,7 @@ class JoiWrapper {
 				throw new Error("Invalid Joi Object");
 			}
 		}
+		this.joiObj = this.joiObj.append({ _id: Joi.any() });
 		this.formSpec = [];
 		traverse(this.describe, [], this.formSpec, this.joiObj);
 		this.toColumns = this.toColumns.bind(this);
@@ -31,6 +32,7 @@ class JoiWrapper {
 				fieldType: a.fieldType,
 				disabled: a.meta.disabled,
 				valid: a.meta.valid,
+				tableHide: a.meta.tableHide,
 			}));
 		}
 		return this.columns;
@@ -92,6 +94,8 @@ class JoiField {
 			for (var i = 0, ii = allow.length; i < ii; i++)
 				valid[allow[i]] = validLabel[i];
 		}
+
+		if (ans.cascader) ans.formHide = true;
 
 		return ans;
 	}

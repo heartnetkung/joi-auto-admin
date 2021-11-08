@@ -22,15 +22,17 @@ const CombinedForm = (props) => {
 					colon={!inline}
 				>
 					<Row gutter={8} justify={inline ? "center" : undefined}>
-						{formSpec.map((a, i) => (
-							<Col
-								key={a.name}
-								span={a.colSpan || 24}
-								offset={a.offset}
-							>
-								<Field {...a} isFirst={i === 0} />
-							</Col>
-						))}
+						{formSpec
+							.filter((a) => !a.meta.formHide)
+							.map((a, i) => (
+								<Col
+									key={a.name}
+									span={a.colSpan || 24}
+									offset={a.offset}
+								>
+									<Field {...a} isFirst={i === 0} />
+								</Col>
+							))}
 						{inline && (
 							<Col span={4}>
 								<SubmitButton
