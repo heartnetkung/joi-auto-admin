@@ -17,6 +17,10 @@ const App = () => {
 					create_date: new Date(),
 					sex: "m",
 				});
+			if (query.purchased_value === "3000-3004")
+				return data.filter((a) => a.purchased_value < 3005);
+			else if (query.purchased_value === "3005-3009")
+				return data.filter((a) => a.purchased_value >= 3005);
 			return data;
 		},
 		createMany: async (rowArray) => {
