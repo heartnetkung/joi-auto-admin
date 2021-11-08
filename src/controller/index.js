@@ -42,7 +42,7 @@ const Controller = (props) => {
 		editModalControl.setVisible(true);
 	});
 
-	const onSubmit = usePersistFn(async (data) => {
+	const onSubmit = usePersistFn(async (data, actions) => {
 		setEditModalData((a) => ({ ...a, error: null }));
 		try {
 			if (editModalData.isEdit) {
@@ -64,6 +64,7 @@ const Controller = (props) => {
 			}
 		} catch (e) {
 			setEditModalData((a) => ({ ...a, error: e }));
+			actions.setSubmitting(false);
 		}
 	});
 
