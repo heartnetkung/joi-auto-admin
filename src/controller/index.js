@@ -12,7 +12,7 @@ import ExcelErrorModal from "./excel_error_modal";
 import Form from "../formik/form";
 import Joi from "joi/lib/index";
 
-const INITIAL_FORM_STATUS = { isEdit: false, initialValue: {}, error: null };
+const INITIAL_FORM_STATUS = { isEdit: false, initialValue: null, error: null };
 
 const Controller = (props) => {
 	const { getMany, createMany, updateOne, deleteMany } = props;

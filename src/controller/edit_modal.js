@@ -45,13 +45,14 @@ EditModal.propTypes = {
 	editHeader: PropTypes.string,
 	createHeader: PropTypes.string,
 	error: PropTypes.instanceOf(Error),
-	initialValue: PropTypes.object.isRequired,
+	initialValue: PropTypes.object,
 };
 
 EditModal.defaultProps = {
 	createHeader: "เพิ่มข้อมูลใหม่",
 	editHeader: "แก้ไขข้อมูล",
 	error: null,
+	initialValue: undefined,
 };
 
 export default EditModal;
