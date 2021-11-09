@@ -97,10 +97,14 @@ export default App;
     - `.meta({ fieldType: string | ReactComponent })`
     - `.meta({ fieldValidation: ()=> string|null })`
     - `.meta({ twoColumn: boolean })`
-      - show the form input in half size, so you can stack 2 fields in the same line.
+      - Show the form input in half size, so you can stack 2 fields in the same line.
     - `.meta({ cellEllipsis: boolean })`
     - `.meta({ cellTextFormat: (rowData)=>string })`
     - `.meta({ cellWidth: number })`
+    - `.meta({ tableHide: boolean })`
+    - `.meta({ formHide: boolean })`
+    - `.meta({ cascader: { labels, options, loadData, fieldNames } })`
+      - Required for `<Cascader>` type. It's a wrapper for Ant Design component with the same name. There is one difference is that the state data is backed by multiple fields instead of a single array field.  [reference](https://ant.design/components/cascader/)
     - `.meta({ validLabel: [string] })`
       - Required for `<Select>` type. The array length must be equal to input of `.valid([any])` as they will be rendered as key and value of `<Option>`
 - `.valid([any])`
@@ -125,3 +129,7 @@ export default App;
 |canUploadExcel|show both the uploadButton and the uploadPreviewButton|boolean|true|
 |uploadPreviewUrl|if specified, the uploadPreviewButton will download file from this path instead of the first 3 rows of this table|string|null|
 
+## Cascader Example
+```jsx
+//TODO
+```
