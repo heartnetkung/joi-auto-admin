@@ -1,5 +1,6 @@
 import Joi from "joi/lib/index";
 import AutoAdmin from "./controller";
+import options from "./assets/district.json";
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -13,7 +14,6 @@ const App = () => {
 				data.push({
 					name: `Edward King ${i}`,
 					purchased_value: 3000 + Math.round(10 * Math.random()),
-					district: ["กรุงเทพมหานคร", "ยานนาวา"],
 					create_date: new Date(),
 					sex: "m",
 				});
@@ -45,9 +45,6 @@ const App = () => {
 				.integer()
 				.label("เงิน")
 				.meta({ twoColumn: true }),
-			district: Joi.array()
-				.label("เขต")
-				.meta({ fieldType: "AddressDistrict", twoColumn: true }),
 			create_date: Joi.date()
 				.default(Date.now)
 				.label("วันสมัคร")
@@ -57,6 +54,36 @@ const App = () => {
 				.default("m")
 				.label("เพศ")
 				.meta({ validLabel: ["ชาย", "หญิง"], twoColumn: true }),
+			province2: Joi.string()
+				.label("province")
+				.meta({
+					cascader: {
+						label: "abc",
+						index: 0,
+						fieldNames: { label: "l", value: "l", children: "c" },
+						options,
+						asyncLoad: async (selected) => {
+							await wait(500);
+							var last = selected[selected.length - 1];
+							last.c = [{ l: 1 }, { l: 2 }];
+						},
+					},
+				}),
+			district2: Joi.string()
+				.label("district")
+				.meta({
+					cascader: {
+						label: "abc",
+						index: 1,
+						fieldNames: { label: "l", value: "l", children: "c" },
+						options,
+						asyncLoad: async (selected) => {
+							await wait(500);
+							var last = selected[selected.length - 1];
+							last.c = [{ l: 1 }, { l: 2 }];
+						},
+					},
+				}),
 		}),
 		querySchema: Joi.object({
 			purchased_value: Joi.string()
