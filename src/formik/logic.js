@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 export const calculateSpan = (formSpec, isInline) => {
 	if (isInline) return formSpec.map((a) => ({ ...a, colSpan: 6 }));
 
@@ -30,4 +32,57 @@ export const calculateSpan = (formSpec, isInline) => {
 		}
 	}
 	return ans;
+};
+
+const filter = function (inputValue, path) {
+	return path.some(
+		(option) =>
+			option[this._labelField]
+				.toLowerCase()
+				.indexOf(inputValue.toLowerCase()) > -1
+	);
+};
+
+export const handleCascader = (formSpec) => {
+	var ans = [];
+	var allCascader = {};
+
+	for (var spec of formSpec) {
+		ans.push(spec);
+
+		var { cascader } = spec.meta;
+		if (!cascader) continue;
+
+		if (!allCascader[cascader.label]) {
+			var newCascader = {
+				fieldType: "Cascader",
+				_labelField: cascader.fieldNames?.label || "label",
+				meta: { ...cascader, showSearch: {} },
+				name: cascader.label,
+				label: cascader.label,
+				targets: [],
+				required: !!cascader.required,
+				validate: _.noop,
+			};
+			newCascader.meta.showSearch.filter = filter.bind(newCascader);
+			allCascader[cascader.label] = newCascader;
+			ans.push(newCascader);
+		}
+		allCascader[cascader.label].targets[cascader.index] = spec;
+	}
+
+	var cascaderHook = (data) => {
+		var result = { ...data };
+		for (var label in data) {
+			if (!allCascader[label]) continue;
+
+			var { targets } = allCascader[label];
+			for (var i = 0, ii = targets.length; i < ii; i++)
+				_.set(result, targets[i].name, data[label][i]);
+			delete result[label];
+		}
+		return result;
+	};
+
+	return { formSpec: ans, cascaderHook };
 };

@@ -3,17 +3,32 @@ import { Formik } from "formik";
 import PropTypes from "prop-types";
 import { Space, Row, Col, Divider } from "antd";
 import Field from "./field";
-import { calculateSpan } from "./logic";
+import { calculateSpan, handleCascader } from "./logic";
+import { useMemo } from "react";
 
 const CombinedForm = (props) => {
 	const { onSubmit, inline, initialValues } = props;
 	const { resetButtonLabel, submitButtonLabel, schema } = props;
-	const formSpec = calculateSpan(schema.formSpec, inline);
+
+	const { formSpec, onSubmit2 } = useMemo(() => {
+		const formSpec2 = calculateSpan(schema.formSpec, inline);
+		const { formSpec, cascaderHook } = handleCascader(formSpec2);
+		const onSubmitHooks = formSpec
+			.map((a) => a?.meta?.onSubmitHook)
+			.filter((a) => !!a)
+			.concat(cascaderHook);
+		const onSubmit2 = (postData, actions) => {
+			for (var hook of onSubmitHooks) postData = hook(postData);
+			onSubmit(postData, actions);
+		};
+
+		return { formSpec, onSubmit2 };
+	}, [schema, inline, onSubmit]);
 
 	return (
 		<Formik
 			initialValues={initialValues || schema.toDefaultValues()}
-			onSubmit={onSubmit}
+			onSubmit={onSubmit2}
 		>
 			{() => (
 				<Form

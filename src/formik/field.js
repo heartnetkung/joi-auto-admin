@@ -8,6 +8,7 @@ import {
 	Select,
 	Switch,
 } from "formik-antd";
+import Cascader from "./components/cascader";
 import AddressDistrict from "./components/address_district";
 import AddressProvince from "./components/address_province";
 import moment from "moment";
@@ -38,6 +39,7 @@ const Field = (props) => {
 			labelCol={labelCol}
 			wrapperCol={wrapperCol}
 		>
+			{fieldType === "Cascader" && <Cascader {...props2} />}
 			{fieldType === "Checkbox" && <Checkbox {...props2}></Checkbox>}
 			{fieldType === "DatePicker" && (
 				<DatePicker
@@ -79,6 +81,7 @@ Field.propTypes = {
 	fieldType: PropTypes.oneOf([
 		"AddressProvince",
 		"AddressDistrict",
+		"Cascader",
 		"Checkbox",
 		"DatePicker",
 		"WeekPicker",
