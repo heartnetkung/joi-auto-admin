@@ -16,7 +16,7 @@ The idea is to provide a `react component` called `AutoAdmin` which take minimal
     - select rows for DELETE operation
     - responsive
     - support customizable button for each row
-    - expandable row
+    - ~~expandable row~~
 2. A form for CREATE and UPDATE operation with the following features:
     - render automatically from specified `Joi Object`.
     - import excel data
