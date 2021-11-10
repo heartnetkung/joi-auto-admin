@@ -1,8 +1,9 @@
-import React from "react";
 import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
-import "./index.css";
-import App from "./App3";
+import "./lib/index.css";
+// import App from "./App3";
+import App from "./App4";
+import React from 'react';
 
 // strict mode disabled because antd doesn't support it
 // https://github.com/ant-design/ant-design/issues/22493

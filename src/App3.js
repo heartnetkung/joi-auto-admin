@@ -1,6 +1,6 @@
 import Joi from "joi/lib/index";
-import AutoAdmin from "./controller";
-import options from "./assets/district.json";
+import AutoAdmin from "./lib/controller";
+import options from "./lib/assets/district.json";
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
