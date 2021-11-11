@@ -97,6 +97,7 @@ export default App;
   - Object are parsed directly as a prop to input. Some of the most popular ones inlcude:
     - `.meta({ placeholder })`
     - `.meta({ disabled })`
+    - `.meta({ style })`
     - The rest of the props can be found [here.](https://reactjs.org/docs/dom-elements.html)
   - To customize `AutoAdmin` _form_, use the following fields:
     - `.meta({ fieldType: string | ReactComponent })`
