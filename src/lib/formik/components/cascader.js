@@ -3,8 +3,7 @@ import { Cascader } from "formik-antd";
 import { useState } from "react";
 import { usePersistFn } from "../../shared/hook";
 import _ from "lodash";
-import React from 'react'
-;
+import React from "react";
 const CASCADER_OMIT = ["compLabels", "label", "asyncLoad"];
 
 const MyCascader = (props) => {
@@ -28,6 +27,7 @@ const MyCascader = (props) => {
 			showSearch={
 				typeof asyncLoad === "function" ? undefined : showSearch
 			}
+			placeholder={props2.placeholder || "เลือก" + props.label}
 		></Cascader>
 	);
 };
