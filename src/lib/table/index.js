@@ -17,7 +17,7 @@ const TableComp = (props) => {
 	const [selectedRows, setSelectedRows] = useState([]);
 
 	const columns = useMemo(() => {
-		var ans2 = schema.columns
+		var ans = schema.columns
 			.map(addFilter(data))
 			.filter((column) => !column.cellHide);
 
@@ -30,10 +30,10 @@ const TableComp = (props) => {
 				<RowMenu buttons={rowButtons2} record={record} />
 			);
 			const width = 60 * rowButtons2.length + 20;
-			ans2.push({ title: "เมนู", width, render });
+			ans.push({ title: "เมนู", width, render });
 		}
 
-		return ans2;
+		return ans;
 	}, [schema, data, rowButtons, onEdit]);
 
 	const rowSelection = !!onDelete && {
