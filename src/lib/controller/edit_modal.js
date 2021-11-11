@@ -2,10 +2,10 @@ import PropTypes from "prop-types";
 import { Modal, Alert } from "antd";
 import Form from "../formik/form";
 import Header from "./header";
-import React from 'react';
+import React from "react";
 
 const EditModal = (props) => {
-	const { visible, onClose, isEdit, schema, onSubmit } = props;
+	const { visible, onClose, isEdit, schema, onSubmit, steps } = props;
 	const { createHeader, editHeader, error, initialValue } = props;
 
 	//need to unmount in order for initialValue and autoFocus to work
@@ -33,6 +33,7 @@ const EditModal = (props) => {
 				initialValues={initialValue}
 				schema={schema}
 				onSubmit={onSubmit}
+				steps={steps}
 			/>
 		</Modal>
 	);
@@ -43,6 +44,7 @@ EditModal.propTypes = {
 	visible: PropTypes.bool.isRequired,
 	onClose: PropTypes.func.isRequired,
 	schema: PropTypes.object.isRequired,
+	steps: PropTypes.array.isRequired,
 	editHeader: PropTypes.string,
 	createHeader: PropTypes.string,
 	error: PropTypes.instanceOf(Error),

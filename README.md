@@ -100,7 +100,8 @@ export default App;
     - The rest of the props can be found [here.](https://reactjs.org/docs/dom-elements.html)
   - To customize `AutoAdmin` _form_, use the following fields:
     - `.meta({ fieldType: string | ReactComponent })`
-    - `.meta({ fieldHide: boolean })`
+    - `.meta({ fieldHide: boolean | (formValue, currentStep)=>boolean })`
+      - Hide the current field. Useful for making interactive or multi-step form.
     - `.meta({ twoColumn: boolean })`
       - Show the form input in half size, so you can stack 2 fields in the same line.
     - `.meta({ cascader: { label, compLabels, options, fieldNames, asyncLoad } })`
@@ -139,6 +140,7 @@ export default App;
 | canUploadExcel   | show both the uploadButton and the uploadPreviewButton                                                                                                               | boolean                                                             | true         |
 | uploadPreviewUrl | if specified, the uploadPreviewButton will download file from this path instead of the first 3 rows of this table                                                    | string                                                              | null         |
 | description      | description of this table, displayed under title                                                                                                                     | string                                                              | ''           |
+| steps            | break form into multi steps using `<Steps>` component from antd.                                                                                                     | [string]                                                            | []           |
 
 ## Cascader Example
 

@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { useState } from "react";
 
 export const calculateSpan = (formSpec, isInline) => {
 	if (isInline) return formSpec.map((a) => ({ ...a, colSpan: 6 }));
@@ -91,4 +92,12 @@ export const handleCascader = (formSpec) => {
 	};
 
 	return { formSpec: ans, cascaderHook };
+};
+
+export const useSteps = (steps) => {
+	const [currentStep, setStep] = useState(0);
+	const nextStep = () =>
+		currentStep < steps.length - 1 && setStep(currentStep + 1);
+	const prevStep = () => currentStep > 0 && setStep(currentStep - 1);
+	return { nextStep, prevStep, currentStep };
 };

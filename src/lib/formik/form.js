@@ -1,14 +1,16 @@
 import { Form, SubmitButton, ResetButton } from "formik-antd";
 import { Formik } from "formik";
 import PropTypes from "prop-types";
-import { Space, Row, Col, Divider } from "antd";
+import { Space, Row, Col, Divider, Steps, Button } from "antd";
 import Field from "./field";
-import { calculateSpan, handleCascader } from "./logic";
+import { calculateSpan, handleCascader, useSteps } from "./logic";
 import { useMemo } from "react";
 import React from "react";
 
+const { Step } = Steps;
+
 const CombinedForm = (props) => {
-	const { onSubmit, inline, initialValues } = props;
+	const { onSubmit, inline, initialValues, steps } = props;
 	const { resetButtonLabel, submitButtonLabel, schema } = props;
 
 	const { formSpec, onSubmit2 } = useMemo(() => {
@@ -18,15 +20,14 @@ const CombinedForm = (props) => {
 			.map((a) => a?.meta?.onSubmitHook)
 			.filter((a) => !!a)
 			.concat(cascaderHook);
-
-		return {
-			formSpec: formSpec.filter((a) => !a.meta.fieldHide),
-			onSubmit2: (postData, actions) => {
-				for (var hook of onSubmitHooks) postData = hook(postData);
-				onSubmit(postData, actions);
-			},
+		const onSubmit2 = (postData, actions) => {
+			for (var hook of onSubmitHooks) postData = hook(postData);
+			onSubmit(postData, actions);
 		};
+		return { formSpec, onSubmit2 };
 	}, [schema, inline, onSubmit]);
+
+	const { nextStep, prevStep, currentStep } = useSteps(steps);
 
 	return (
 		<Formik
@@ -39,15 +40,25 @@ const CombinedForm = (props) => {
 					wrapperCol={{ span: 18 }}
 					colon={!inline}
 				>
+					{steps.length ? (
+						<Row style={{ marginBottom: 40 }}>
+							<Col offset={2} span={20}>
+								<Steps size="small" current={currentStep}>
+									{steps.map((a) => (
+										<Step key={a} title={a} />
+									))}
+								</Steps>
+							</Col>
+						</Row>
+					) : null}
+
 					<Row gutter={8} justify={inline ? "center" : undefined}>
 						{formSpec.map((a, i) => (
-							<Col
+							<Field
+								{...a}
 								key={a.name}
-								span={a.colSpan || 24}
-								offset={a.offset}
-							>
-								<Field {...a} />
-							</Col>
+								currentStep={currentStep}
+							/>
 						))}
 						{inline && (
 							<Col span={4}>
@@ -62,12 +73,27 @@ const CombinedForm = (props) => {
 					</Row>
 					{inline && <Divider style={{ marginTop: 10 }} />}
 					{!inline && (
-						<center>
+						<center style={steps.length ? { marginTop: 10 } : null}>
 							<Space>
-								<ResetButton>{resetButtonLabel}</ResetButton>
-								<SubmitButton type="primary">
-									{submitButtonLabel}
-								</SubmitButton>
+								{steps.length && currentStep ? (
+									<Button onClick={prevStep}>ย้อนกลับ</Button>
+								) : null}
+								{steps.length &&
+								steps.length - 1 > currentStep ? (
+									<Button type="primary" onClick={nextStep}>
+										ถ้ดไป
+									</Button>
+								) : null}
+								{!steps.length ? (
+									<ResetButton>
+										{resetButtonLabel}
+									</ResetButton>
+								) : null}
+								{steps.length - 1 <= currentStep ? (
+									<SubmitButton type="primary">
+										{submitButtonLabel}
+									</SubmitButton>
+								) : null}
 							</Space>
 						</center>
 					)}
@@ -84,6 +110,7 @@ CombinedForm.propTypes = {
 	submitButtonLabel: PropTypes.string,
 	schema: PropTypes.object,
 	inline: PropTypes.bool,
+	steps: PropTypes.array,
 };
 
 CombinedForm.defaultProps = {
@@ -92,6 +119,7 @@ CombinedForm.defaultProps = {
 	submitButtonLabel: "ยืนยัน",
 	schema: null,
 	inline: false,
+	steps: [],
 };
 
 export default CombinedForm;

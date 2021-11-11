@@ -11,14 +11,14 @@ import { deserializeTable, serializeTable } from "../joi/serialize";
 import ExcelErrorModal from "./excel_error_modal";
 import Form from "../formik/form";
 import Joi from "joi/lib/index";
-import React from 'react';
+import React from "react";
 
 const INITIAL_FORM_STATUS = { isEdit: false, initialValue: null, error: null };
 
 const Controller = (props) => {
 	const { getMany, createMany, updateOne, deleteMany } = props;
 	const { canExportCsv, canImportCsv, name, description } = props;
-	const { schema, querySchema, rowButtons, tableScroll } = props;
+	const { schema, querySchema, rowButtons, tableScroll, steps } = props;
 	const { canDownloadExcel, canUploadExcel, uploadPreviewUrl } = props;
 
 	const [editModalData, setEditModalData] = useState(INITIAL_FORM_STATUS);
@@ -161,6 +161,7 @@ const Controller = (props) => {
 				{...editModalData}
 				schema={schema2}
 				onSubmit={onSubmit}
+				steps={steps}
 			/>
 			<ExcelErrorModal {...excelModalControl} errors={excelError} />
 		</>
@@ -178,11 +179,12 @@ Controller.propTypes = {
 	name: PropTypes.string.isRequired,
 	description: PropTypes.string,
 	tableScroll: PropTypes.object,
+	rowButtons: PropTypes.array,
 
 	// form
 	schema: PropTypes.object.isRequired,
 	querySchema: PropTypes.object,
-	rowButtons: PropTypes.array,
+	steps: PropTypes.array,
 
 	//excel
 	canDownloadExcel: PropTypes.bool,
@@ -202,6 +204,7 @@ Controller.defaultProps = {
 	canDownloadExcel: true,
 	canUploadExcel: true,
 	uploadPreviewUrl: null,
+	steps: [],
 };
 
 export default Controller;

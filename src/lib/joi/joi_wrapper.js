@@ -12,7 +12,8 @@ const OMIT_META = [
 	"cellTextFormat",
 	"cellWidth",
 	"cellEllipsis",
-	"cellHide"
+	"cellHide",
+	"fieldHide",
 ];
 
 class JoiWrapper {
@@ -70,7 +71,7 @@ class JoiField {
 		this.twoColumn = !!meta.twoColumn;
 		this.defaultValue = field?.flags?.default;
 		this.column = this.getColumn(meta, this);
-
+		this.fieldHide = meta.fieldHide;
 		this.meta = _.omit(meta, OMIT_META);
 	}
 
