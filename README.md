@@ -138,6 +138,7 @@ export default App;
 | canDownloadExcel | show button for downloading all the data in this table to excel                                                                                                      | boolean                                                             | true         |
 | canUploadExcel   | show both the uploadButton and the uploadPreviewButton                                                                                                               | boolean                                                             | true         |
 | uploadPreviewUrl | if specified, the uploadPreviewButton will download file from this path instead of the first 3 rows of this table                                                    | string                                                              | null         |
+| description      | description of this table, displayed under title                                                                                                                     | string                                                              | ''           |
 
 ## Cascader Example
 
