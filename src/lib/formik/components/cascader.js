@@ -5,7 +5,7 @@ import { usePersistFn } from "../../shared/hook";
 import _ from "lodash";
 import React from 'react'
 ;
-const CASCADER_OMIT = ["compLabels", "label", "loadData"];
+const CASCADER_OMIT = ["compLabels", "label", "asyncLoad"];
 
 const MyCascader = (props) => {
 	const { asyncLoad, options, showSearch } = props;
