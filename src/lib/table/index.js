@@ -31,7 +31,7 @@ const TableComp = (props) => {
 					.value();
 				var ans = { ...column };
 				ans.sorter = sorter.bind(ans);
-				if (filters.length < 50) {
+				if (filters.length < 50 && filters.length) {
 					ans.onFilter = onFilter.bind(ans);
 					ans.filters = filters;
 				}
