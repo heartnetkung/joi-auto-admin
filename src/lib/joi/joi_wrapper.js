@@ -12,6 +12,7 @@ const OMIT_META = [
 	"cellTextFormat",
 	"cellWidth",
 	"cellEllipsis",
+	"cellHide"
 ];
 
 class JoiWrapper {
@@ -84,6 +85,7 @@ class JoiField {
 			key: name,
 			type,
 			fieldType,
+			cellHide: meta.cellHide,
 		};
 
 		if (!ans.width) {
