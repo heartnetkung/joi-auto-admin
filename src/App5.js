@@ -21,7 +21,17 @@ const App = () => {
 				.meta({ fieldHide: (value, currentStep) => currentStep !== 0 }),
 			b: Joi.string()
 				.label("b")
-				.meta({ fieldHide: (value, currentStep) => currentStep !== 1 }),
+				.meta({
+					fieldHide: (value, currentStep) => currentStep !== 1,
+					twoColumn: true,
+				}),
+			interactive: Joi.string()
+				.label("interactive")
+				.meta({
+					fieldHide: (value, currentStep) =>
+						!value.b || currentStep !== 1,
+					twoColumn: true,
+				}),
 		}),
 		steps: ["c", "d"],
 	};
