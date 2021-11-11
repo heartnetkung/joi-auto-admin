@@ -39,7 +39,7 @@ const CombinedForm = (props) => {
 				>
 					<Row gutter={8} justify={inline ? "center" : undefined}>
 						{formSpec
-							.filter((a) => !a.meta.formHide)
+							.filter((a) => !a.meta.fieldHide)
 							.map((a, i) => (
 								<Col
 									key={a.name}

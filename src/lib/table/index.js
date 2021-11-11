@@ -37,7 +37,7 @@ const TableComp = (props) => {
 				}
 				return ans;
 			})
-			.filter((column) => !column.tableHide);
+			.filter((column) => !column.cellHide);
 
 		var rowButtons2 = [...rowButtons];
 		if (onEdit)

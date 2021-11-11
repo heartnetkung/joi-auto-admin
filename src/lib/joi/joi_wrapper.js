@@ -32,7 +32,7 @@ class JoiWrapper {
 				fieldType: a.fieldType,
 				disabled: a.meta.disabled,
 				valid: a.meta.valid,
-				tableHide: a.meta.tableHide,
+				cellHide: a.meta.cellHide,
 			}));
 		}
 		return this.columns;

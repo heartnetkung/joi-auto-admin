@@ -90,18 +90,16 @@ export default App;
   - Object are parsed directly as a prop to input. Some of the most popular ones inlcude:
     - `.meta({ placeholder })`
     - `.meta({ disabled })`
-    - `.meta({ defaultValue })`
     - The rest of the props can be found [here.](https://reactjs.org/docs/dom-elements.html)
   - There are certain keys you can use to customize `AutoAdmin` itself
     - `.meta({ fieldType: string | ReactComponent })`
-    - `.meta({ fieldValidation: ()=> string|null })`
+    - `.meta({ fieldHide: boolean })`
     - `.meta({ twoColumn: boolean })`
       - Show the form input in half size, so you can stack 2 fields in the same line.
     - `.meta({ cellEllipsis: boolean })`
     - `.meta({ cellTextFormat: (rowData)=>string })`
     - `.meta({ cellWidth: number })`
     - `.meta({ tableHide: boolean })`
-    - `.meta({ formHide: boolean })`
     - `.meta({ cascader: { labels, options, loadData, fieldNames } })`
       - Required for `<Cascader>` type. It's a wrapper for Ant Design component with the same name. There is one difference is that the state data is backed by multiple fields instead of a single array field.  [reference](https://ant.design/components/cascader/)
     - `.meta({ validLabel: [string] })`
