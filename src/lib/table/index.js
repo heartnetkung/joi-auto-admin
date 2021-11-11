@@ -4,7 +4,7 @@ import { EditOutlined } from "@ant-design/icons";
 import PropTypes from "prop-types";
 import RowMenu from "./row_menu";
 import TableMenu from "./table_menu";
-import { formatColumn, addFilter } from "./logic";
+import { addFilter } from "./logic";
 import OtherMenu from "./other_menu";
 import { useMaxWidth } from "../shared/hook";
 import React from "react";
@@ -17,9 +17,7 @@ const TableComp = (props) => {
 	const [selectedRows, setSelectedRows] = useState([]);
 
 	const columns = useMemo(() => {
-		var ans2 = schema
-			.toColumns()
-			.map(formatColumn)
+		var ans2 = schema.columns
 			.map(addFilter(data))
 			.filter((column) => !column.cellHide);
 

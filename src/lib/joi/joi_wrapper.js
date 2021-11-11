@@ -1,6 +1,18 @@
 import Joi from "joi/lib/index";
 import { getErrorMessage } from "./error_message";
 import _ from "lodash";
+import numeral from "numeral";
+import moment from "moment";
+
+const OMIT_META = [
+	"twoColumn",
+	"defaultValue",
+	"fieldType",
+	"validLabel",
+	"cellTextFormat",
+	"cellWidth",
+	"cellEllipsis",
+];
 
 class JoiWrapper {
 	constructor(joiObj) {
@@ -18,24 +30,8 @@ class JoiWrapper {
 		this.joiObj = this.joiObj.append({ _id: Joi.any() });
 		this.formSpec = [];
 		traverse(this.describe, [], this.formSpec, this.joiObj);
-		this.toColumns = this.toColumns.bind(this);
+		this.columns = this.formSpec.map((a) => a.column);
 		this.toDefaultValues = this.toDefaultValues.bind(this);
-	}
-
-	toColumns() {
-		if (!this.columns) {
-			this.columns = this.formSpec.map((a) => ({
-				title: a.label,
-				dataIndex: a.name.split("."),
-				key: a.name,
-				type: a.type,
-				fieldType: a.fieldType,
-				disabled: a.meta.disabled,
-				valid: a.meta.valid,
-				cellHide: a.meta.cellHide,
-			}));
-		}
-		return this.columns;
 	}
 
 	toDefaultValues() {
@@ -61,20 +57,48 @@ const traverse = (node, path, ans, joiObj) => {
 
 class JoiField {
 	constructor(field, path, joiObj) {
+		var meta = this.getMeta(field);
+
 		this.required = field?.flags?.presence === "required";
 		this.label = field?.flags?.label;
 		this.name = path.join(".");
-		this.meta = this.getMeta(field);
-		this.fieldType = this.guessFieldType(field, this.meta);
+		this.fieldType = this.guessFieldType(field, meta);
 		this._extractedSchema = joiObj.extract(path);
 		this.validate = this.validate.bind(this);
 		this.type = field.type;
-		this.twoColumn = !!this.meta.twoColumn;
+		this.twoColumn = !!meta.twoColumn;
 		this.defaultValue = field?.flags?.default;
+		this.column = this.getColumn(meta, this);
 
-		delete this.meta.twoColumn;
-		delete this.meta.fieldType;
-		delete this.meta.validLabel;
+		this.meta = _.omit(meta, OMIT_META);
+	}
+
+	getColumn(meta, $this) {
+		var { fieldType, type, label, name } = $this;
+		var ans = {
+			ellipsis: meta.cellEllipsis,
+			render: meta.cellTextFormat,
+			width: meta.cellWidth,
+			title: label,
+			dataIndex: name.split("."),
+			key: name,
+			type,
+			fieldType,
+		};
+
+		if (!ans.width) {
+			if (type === "number") ans.width = 80;
+			else if (type === "date") ans.width = 130;
+		}
+
+		if (!ans.render) {
+			if (type === "number") ans.render = (a) => numeral(a).format("0,0");
+			else if (type === "date")
+				ans.render = (a) => moment(a).format("YYYY-MM-DD");
+			else if (fieldType === "Select") ans.render = (a) => meta.valid[a];
+		}
+
+		return ans;
 	}
 
 	getMeta(field) {

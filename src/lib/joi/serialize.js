@@ -39,7 +39,7 @@ const mapError = (i) => {
 
 const deserializeRow = (excelRow, schema) => {
 	if (!schema.columnCache)
-		schema.columnCache = _.keyBy(schema.toColumns(), "title");
+		schema.columnCache = _.keyBy(schema.columns, "title");
 
 	var ans = {};
 	for (var x in excelRow) {
@@ -59,7 +59,7 @@ const deserializeRow = (excelRow, schema) => {
 };
 
 export const serializeTable = (table, schema, showDisabled) => {
-	var columns = schema.toColumns();
+	var columns = schema.columns();
 	var ans = [];
 	for (var rowData of table) {
 		var newRow = {};
