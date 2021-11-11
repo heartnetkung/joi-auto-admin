@@ -1,6 +1,6 @@
 {
   "name": "joi-auto-admin",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -15,6 +15,7 @@
     "moment": "^2.29.1",
     "nanoid": "^3.1.30",
     "numeral": "^2.0.6",
+    "prop-types": "^15.7.2",
     "xlsx": "^0.17.3"
   },
   "devDependencies": {
@@ -32,7 +33,7 @@
     "react-dom": "16.13.1",
     "react-scripts": "4.0.3"
   },
-  "peerDependencies":{
+  "peerDependencies": {
     "react": "16.x||17.x"
   },
   "scripts": {
