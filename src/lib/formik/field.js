@@ -10,21 +10,15 @@ import {
 } from "formik-antd";
 import Cascader from "./components/cascader";
 import moment from "moment";
-import { useRef, useEffect } from "react";
 import React from "react";
 
 const { WeekPicker, RangePicker, MonthPicker } = DatePicker;
 
 const Field = (props) => {
-	const { fieldType, label, required, name, validate, meta, isFirst } = props;
+	const { fieldType, label, required, name, validate, meta } = props;
 	const { labelCol, wrapperCol } = props;
 
-	const ref = useRef(null);
-	useEffect(() => {
-		if (ref.current) ref.current.focus();
-	}, []);
-
-	const props2 = { ...meta, name, ref: isFirst ? ref : null };
+	const props2 = { ...meta, name };
 
 	return (
 		<Form.Item
@@ -36,7 +30,7 @@ const Field = (props) => {
 			wrapperCol={wrapperCol}
 		>
 			{fieldType === "Cascader" && (
-				<Cascader {...props2} ref={undefined} />
+				<Cascader {...props2} />
 			)}
 			{fieldType === "Checkbox" && <Checkbox {...props2}></Checkbox>}
 			{fieldType === "DatePicker" && (
@@ -61,7 +55,7 @@ const Field = (props) => {
 			{fieldType === "InputPassword" && <Input.Password {...props2} />}
 			{fieldType === "TextArea" && <Input.TextArea {...props2} />}
 			{fieldType === "Select" && (
-				<Select {...props2} ref={undefined}>
+				<Select {...props2} style={{ textAlign: "left" }}>
 					{props2.valid &&
 						Object.entries(props2.valid).map(([k, v]) => (
 							<Select.Option key={k} value={k}>
@@ -98,7 +92,6 @@ Field.propTypes = {
 	label: PropTypes.string.isRequired,
 	required: PropTypes.bool.isRequired,
 	meta: PropTypes.object.isRequired,
-	isFirst: PropTypes.bool.isRequired,
 	labelCol: PropTypes.object,
 	wrapperCol: PropTypes.object,
 };

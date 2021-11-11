@@ -46,7 +46,7 @@ const CombinedForm = (props) => {
 									span={a.colSpan || 24}
 									offset={a.offset}
 								>
-									<Field {...a} isFirst={i === 0} />
+									<Field {...a} />
 								</Col>
 							))}
 						{inline && (
