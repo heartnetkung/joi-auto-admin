@@ -1,11 +1,12 @@
-import { Form, SubmitButton, ResetButton } from "formik-antd";
+import { Form, SubmitButton } from "formik-antd";
 import { Formik } from "formik";
 import PropTypes from "prop-types";
-import { Space, Row, Col, Divider, Steps, Button } from "antd";
+import { Row, Col, Divider, Steps } from "antd";
 import Field from "./field";
 import { calculateSpan, handleCascader, useSteps } from "./logic";
 import { useMemo } from "react";
 import React from "react";
+import SubmitLine from "./submit_line";
 
 const { Step } = Steps;
 
@@ -73,29 +74,14 @@ const CombinedForm = (props) => {
 					</Row>
 					{inline && <Divider style={{ marginTop: 10 }} />}
 					{!inline && (
-						<center style={steps.length ? { marginTop: 10 } : null}>
-							<Space>
-								{steps.length && currentStep ? (
-									<Button onClick={prevStep}>ย้อนกลับ</Button>
-								) : null}
-								{steps.length &&
-								steps.length - 1 > currentStep ? (
-									<Button type="primary" onClick={nextStep}>
-										ถ้ดไป
-									</Button>
-								) : null}
-								{!steps.length ? (
-									<ResetButton>
-										{resetButtonLabel}
-									</ResetButton>
-								) : null}
-								{steps.length - 1 <= currentStep ? (
-									<SubmitButton type="primary">
-										{submitButtonLabel}
-									</SubmitButton>
-								) : null}
-							</Space>
-						</center>
+						<SubmitLine
+							steps={steps}
+							currentStep={currentStep}
+							prevStep={prevStep}
+							nextStep={nextStep}
+							submitButtonLabel={submitButtonLabel}
+							resetButtonLabel={resetButtonLabel}
+						/>
 					)}
 				</Form>
 			)}
@@ -106,8 +92,6 @@ const CombinedForm = (props) => {
 CombinedForm.propTypes = {
 	initialValues: PropTypes.any,
 	onSubmit: PropTypes.func.isRequired,
-	resetButtonLabel: PropTypes.string,
-	submitButtonLabel: PropTypes.string,
 	schema: PropTypes.object,
 	inline: PropTypes.bool,
 	steps: PropTypes.array,
@@ -115,8 +99,6 @@ CombinedForm.propTypes = {
 
 CombinedForm.defaultProps = {
 	initialValues: null,
-	resetButtonLabel: "ล้างค่า",
-	submitButtonLabel: "ยืนยัน",
 	schema: null,
 	inline: false,
 	steps: [],

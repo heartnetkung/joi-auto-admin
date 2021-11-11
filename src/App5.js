@@ -18,6 +18,8 @@ const App = () => {
 		schema: Joi.object({
 			a: Joi.string()
 				.label("a")
+				.required()
+				.min(2)
 				.meta({ fieldHide: (value, currentStep) => currentStep !== 0 }),
 			b: Joi.string()
 				.label("b")
