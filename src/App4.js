@@ -1,7 +1,7 @@
 import Joi from "joi/lib/index";
 import AutoAdmin from "./lib/controller";
 import options from "./lib/assets/district.json";
-import React from 'react';
+import React from "react";
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 

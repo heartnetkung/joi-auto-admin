@@ -61,7 +61,6 @@ const App = () => {
         .required()
         .label("ชื่อ")
         .meta({ placeholder: "ชื่อภาษาไทย" }),
-
       purchased_value: Joi.number().integer().label("เงิน"),
       district: Joi.array()
         .label("เขต")
