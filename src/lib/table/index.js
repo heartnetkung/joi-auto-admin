@@ -1,14 +1,13 @@
 import { Table, Row } from "antd";
 import { useState, useMemo } from "react";
-import _ from "lodash";
 import { EditOutlined } from "@ant-design/icons";
 import PropTypes from "prop-types";
 import RowMenu from "./row_menu";
 import TableMenu from "./table_menu";
-import { sorter, onFilter, formatColumn } from "./logic";
+import { formatColumn, addFilter } from "./logic";
 import OtherMenu from "./other_menu";
 import { useMaxWidth } from "../shared/hook";
-import React from 'react';
+import React from "react";
 
 const TableComp = (props) => {
 	const { data, schema, rowButtons, onEdit, paginationSize } = props;
@@ -21,27 +20,12 @@ const TableComp = (props) => {
 		var ans2 = schema
 			.toColumns()
 			.map(formatColumn)
-			.map((column) => {
-				var filters = _.chain(data)
-					.map(column.dataIndex.join("."))
-					.map(column.render || _.identity)
-					.uniq()
-					.sortBy()
-					.map((a) => ({ text: a, value: a }))
-					.value();
-				var ans = { ...column };
-				ans.sorter = sorter.bind(ans);
-				if (filters.length < 50 && filters.length) {
-					ans.onFilter = onFilter.bind(ans);
-					ans.filters = filters;
-				}
-				return ans;
-			})
+			.map(addFilter(data))
 			.filter((column) => !column.cellHide);
 
 		var rowButtons2 = [...rowButtons];
 		if (onEdit)
-			rowButtons2.push({ icon: <EditOutlined />, onClick: onEdit });
+			rowButtons2.unshift({ icon: <EditOutlined />, onClick: onEdit });
 
 		if (rowButtons2.length) {
 			const render = (text, record) => (
