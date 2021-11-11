@@ -5,7 +5,7 @@ import { Space, Row, Col, Divider } from "antd";
 import Field from "./field";
 import { calculateSpan, handleCascader } from "./logic";
 import { useMemo } from "react";
-import React from 'react';
+import React from "react";
 
 const CombinedForm = (props) => {
 	const { onSubmit, inline, initialValues } = props;
@@ -18,12 +18,14 @@ const CombinedForm = (props) => {
 			.map((a) => a?.meta?.onSubmitHook)
 			.filter((a) => !!a)
 			.concat(cascaderHook);
-		const onSubmit2 = (postData, actions) => {
-			for (var hook of onSubmitHooks) postData = hook(postData);
-			onSubmit(postData, actions);
-		};
 
-		return { formSpec, onSubmit2 };
+		return {
+			formSpec: formSpec.filter((a) => !a.meta.fieldHide),
+			onSubmit2: (postData, actions) => {
+				for (var hook of onSubmitHooks) postData = hook(postData);
+				onSubmit(postData, actions);
+			},
+		};
 	}, [schema, inline, onSubmit]);
 
 	return (
@@ -38,17 +40,15 @@ const CombinedForm = (props) => {
 					colon={!inline}
 				>
 					<Row gutter={8} justify={inline ? "center" : undefined}>
-						{formSpec
-							.filter((a) => !a.meta.fieldHide)
-							.map((a, i) => (
-								<Col
-									key={a.name}
-									span={a.colSpan || 24}
-									offset={a.offset}
-								>
-									<Field {...a} />
-								</Col>
-							))}
+						{formSpec.map((a, i) => (
+							<Col
+								key={a.name}
+								span={a.colSpan || 24}
+								offset={a.offset}
+							>
+								<Field {...a} />
+							</Col>
+						))}
 						{inline && (
 							<Col span={4}>
 								<SubmitButton

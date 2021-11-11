@@ -58,7 +58,7 @@ export const handleCascader = (formSpec) => {
 			var newCascader = (allCascader[cascader.label] = {
 				fieldType: "Cascader",
 				_labelField: cascader.fieldNames?.label || "label",
-				meta: { ..._.omit(cascader, ["compLabels"]), showSearch: {} },
+				meta: { ...cascader, showSearch: {} },
 				name: cascader.label,
 				label: cascader.label,
 				targets: [spec, ...cascader.compLabels.map((a) => allSpecs[a])],

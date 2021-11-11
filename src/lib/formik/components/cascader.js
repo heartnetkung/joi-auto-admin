@@ -3,12 +3,14 @@ import { Cascader } from "formik-antd";
 import { useState } from "react";
 import { usePersistFn } from "../../shared/hook";
 import _ from "lodash";
-import React from 'react';
+import React from 'react'
+;
+const CASCADER_OMIT = ["compLabels", "label", "loadData"];
 
 const MyCascader = (props) => {
 	const { asyncLoad, options, showSearch } = props;
 	const [options2, setOptions] = useState(options);
-	const props2 = _.omit(props, "asyncLoad");
+	const props2 = _.omit(props, CASCADER_OMIT);
 
 	const loadData = usePersistFn(async (selected) => {
 		var lastRow = selected[selected.length - 1];
