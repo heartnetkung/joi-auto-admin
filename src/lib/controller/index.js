@@ -150,10 +150,18 @@ const Controller = (props) => {
 				onEdit={updateOne && onEdit}
 				onCreate={createMany && onCreate}
 				onDelete={deleteMany && onDelete}
-				data={getManyStatus.data}
-				onDownloadExcel={canDownloadExcel ? onDownloadExcel : null}
+				onDownloadExcel={
+					canDownloadExcel && getManyStatus.data?.length
+						? onDownloadExcel
+						: null
+				}
 				onUploadExcel={canUploadExcel ? onUploadExcel : null}
-				onExampleExcel={canUploadExcel ? onExampleExcel : null}
+				onExampleExcel={
+					canUploadExcel &&
+					(uploadPreviewUrl || getManyStatus.data?.length)
+						? onExampleExcel
+						: null
+				}
 				tableScroll={tableScroll}
 			/>
 			<EditModal
