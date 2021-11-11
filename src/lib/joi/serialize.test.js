@@ -10,7 +10,6 @@ const schema = Joi.object({
 		.label("ชื่อ")
 		.meta({ placeholder: "ชื่อภาษาไทย" }),
 	purchased_value: Joi.number().integer().label("เงิน"),
-	district: Joi.array().label("เขต").meta({ fieldType: "AddressDistrict" }),
 	create_date: Joi.date()
 		.default(Date.now)
 		.label("วันสมัคร")

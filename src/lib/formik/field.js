@@ -71,8 +71,6 @@ const Field = (props) => {
 
 Field.propTypes = {
 	fieldType: PropTypes.oneOf([
-		"AddressProvince",
-		"AddressDistrict",
 		"Cascader",
 		"Checkbox",
 		"DatePicker",

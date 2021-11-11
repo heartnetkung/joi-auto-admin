@@ -22,8 +22,6 @@ export const formatColumn = (a) => {
 			width: 130,
 			render: (a) => moment(a).format("YYYY-MM-DD"),
 		};
-	if (a.fieldType === "AddressDistrict")
-		return { ...a, render: (a) => `${a[1]}, ${a[0]}`, ellipsis: true };
 	if (a.fieldType === "Select") return { ...a, render: (b) => a.valid[b] };
 	return a;
 };
