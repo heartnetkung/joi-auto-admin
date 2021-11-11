@@ -114,7 +114,7 @@ export default App;
       - Required for `<Select>` type. The array length must be equal to input of `.valid([ any ])` as they will be rendered as key and value of `<Option>`
   - To customize `AutoAdmin` _table_, use the following fields:
     - `.meta({ cellEllipsis: boolean })`
-    - `.meta({ cellTextFormat: (rowData)=>string })`
+    - `.meta({ cellTextFormat: (cellData)=>string })`
     - `.meta({ cellWidth: number })`
     - `.meta({ cellHide: boolean })`
 - `.valid([ any ])`

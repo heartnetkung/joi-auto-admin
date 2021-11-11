@@ -80,12 +80,12 @@ class JoiField {
 			ellipsis: meta.cellEllipsis,
 			render: meta.cellTextFormat,
 			width: meta.cellWidth,
+			cellHide: meta.cellHide,
 			title: label,
 			dataIndex: name.split("."),
 			key: name,
 			type,
 			fieldType,
-			cellHide: meta.cellHide,
 		};
 
 		if (!ans.width) {
