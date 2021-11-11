@@ -26,8 +26,9 @@ export const calculateSpan = (formSpec, isInline) => {
 			ans.push({
 				...current,
 				colSpan: 12,
-				labelCol: { span: 4 },
-				wrapperCol: { span: 16 },
+				labelCol: { span: 5 },
+				wrapperCol: { span: 15 },
+				className: 'right-column-label'
 			});
 			isPreviousLeft = false;
 		}

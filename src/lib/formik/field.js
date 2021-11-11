@@ -18,7 +18,7 @@ const { WeekPicker, RangePicker, MonthPicker } = DatePicker;
 
 const Field = (props) => {
 	const { fieldType, label, required, name, validate, meta } = props;
-	const { labelCol, wrapperCol, colSpan, offset } = props;
+	const { labelCol, wrapperCol, colSpan, offset, className } = props;
 	const { fieldHide, currentStep } = props;
 
 	const props2 = { ...meta, name };
@@ -29,7 +29,7 @@ const Field = (props) => {
 	} else if (fieldHide) return null;
 
 	return (
-		<Col span={colSpan || 24} offset={offset}>
+		<Col span={colSpan || 24} offset={offset} className={className}>
 			<Form.Item
 				label={label}
 				required={required}
@@ -106,6 +106,7 @@ Field.propTypes = {
 	labelCol: PropTypes.object,
 	wrapperCol: PropTypes.object,
 	fieldHide: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+	className: PropTypes.string,
 };
 Field.defaultProps = {
 	labelCol: undefined,
@@ -113,6 +114,7 @@ Field.defaultProps = {
 	fieldHide: undefined,
 	colSpan: undefined,
 	offset: undefined,
+	className: undefined,
 };
 
 export default Field;

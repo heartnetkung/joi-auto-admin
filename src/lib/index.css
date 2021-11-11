@@ -25,3 +25,17 @@ h1,h2,h3,h4,h5,h6{
     height: 20px;
   }
 }
+
+.right-column-label .ant-form-item-label{
+  overflow: visible;
+}
+
+.right-column-label .ant-form-item-label > label{
+  z-index: 10;
+  margin-left: -30px;
+  max-width: none;
+}
+
+.right-column-label .ant-form-item-control{
+  z-index: 11;
+}
