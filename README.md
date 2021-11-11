@@ -91,23 +91,29 @@ export default App;
     - `.meta({ placeholder })`
     - `.meta({ disabled })`
     - The rest of the props can be found [here.](https://reactjs.org/docs/dom-elements.html)
-  - There are certain keys you can use to customize `AutoAdmin` itself
+  - To customize `AutoAdmin` _form_, use the following fields:
     - `.meta({ fieldType: string | ReactComponent })`
     - `.meta({ fieldHide: boolean })`
     - `.meta({ twoColumn: boolean })`
       - Show the form input in half size, so you can stack 2 fields in the same line.
+    - `.meta({ cascader: { label, compLabels, options, loadData, fieldNames } })`
+      - Required for `<Cascader>` type. It's a wrapper for Ant Design component with the same name. There is one difference is that the state data is backed by multiple fields instead of a single array field. See the example below.  [reference](https://ant.design/components/cascader/)
+      - `label` string - label for the cascader component
+      - `compLabels` [string] - labels of other fields used to store input result
+      - `options` [node] - all possible choices for cascader, see ant design API
+      - `fieldNames` [{ label: string, value: string, children }] - fieldname for options, see ant design API
+      - `loadData` async([selectedNode])=>{} - only for async load. Disable field search once this field is provided. 
+  - To customize `AutoAdmin` _table_, use the following fields:
     - `.meta({ cellEllipsis: boolean })`
     - `.meta({ cellTextFormat: (rowData)=>string })`
     - `.meta({ cellWidth: number })`
-    - `.meta({ tableHide: boolean })`
-    - `.meta({ cascader: { labels, options, loadData, fieldNames } })`
-      - Required for `<Cascader>` type. It's a wrapper for Ant Design component with the same name. There is one difference is that the state data is backed by multiple fields instead of a single array field.  [reference](https://ant.design/components/cascader/)
+    - `.meta({ cellHide: boolean })`
     - `.meta({ validLabel: [string] })`
-      - Required for `<Select>` type. The array length must be equal to input of `.valid([any])` as they will be rendered as key and value of `<Option>`
-- `.valid([any])`
+      - Required for `<Select>` type. The array length must be equal to input of `.valid([ any ])` as they will be rendered as key and value of `<Option>`
+- `.valid([ any ])`
   - For making `<Select>` input.
 - `.required()`
-- `.default(value | ()=>value)`
+- `.default(value | ()=>value )`
 
 
 ## Props API
