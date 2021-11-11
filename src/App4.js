@@ -50,12 +50,6 @@ const App = () => {
 				}),
 			brand: Joi.string().label("brand"),
 		}),
-		querySchema: Joi.object({
-			purchased_value: Joi.string()
-				.valid("ทั้งหมด", "3000-3004", "3005-3009")
-				.default("ทั้งหมด")
-				.label("เงิน"),
-		}),
 	};
 
 	return (
