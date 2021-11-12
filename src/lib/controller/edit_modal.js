@@ -49,6 +49,7 @@ EditModal.propTypes = {
 	createHeader: PropTypes.string,
 	error: PropTypes.instanceOf(Error),
 	initialValue: PropTypes.object,
+	onSubmit: PropTypes.func.isRequired,
 };
 
 EditModal.defaultProps = {
