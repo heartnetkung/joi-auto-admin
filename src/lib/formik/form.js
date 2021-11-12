@@ -21,9 +21,9 @@ const CombinedForm = (props) => {
 			.map((a) => a?.meta?.onSubmitHook)
 			.filter((a) => !!a)
 			.concat(cascaderHook);
-		const onSubmit2 = (postData, actions) => {
+		const onSubmit2 = async (postData, actions) => {
 			for (var hook of onSubmitHooks) postData = hook(postData);
-			onSubmit(postData, actions);
+			await onSubmit(postData, actions);
 		};
 		return { formSpec, onSubmit2 };
 	}, [schema, inline, onSubmit]);
