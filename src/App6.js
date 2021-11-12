@@ -1,13 +1,12 @@
 import Joi from "joi/lib/index";
 import React from "react";
-import { Button } from "antd";
 import { openFormModal } from "./lib/controller/open_form_modal";
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
 const App = () => {
 	const props = {
-		title: "ลูกค้า",
+		title: "เพิ่มข้อมูล",
 		onSubmit: async (formData) => {
 			await wait(1000);
 		},
@@ -20,7 +19,7 @@ const App = () => {
 
 	return (
 		<center style={{ maxWidth: 800, margin: "auto", marginTop: 40 }}>
-			<Button onClick={onClick}>เปิดฟอร์ม</Button>
+			<button onClick={onClick}>เปิดฟอร์ม</button>
 		</center>
 	);
 };

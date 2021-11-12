@@ -55,12 +55,12 @@ const FormModal = (props) => {
 FormModal.propTypes = {
 	onClose: PropTypes.func.isRequired,
 	schema: PropTypes.object.isRequired,
-	title: PropTypes.string,
 	onSubmit: PropTypes.func.isRequired,
+	title: PropTypes.string,
 	steps: PropTypes.array,
 };
 
 FormModal.defaultProps = {
 	steps: [],
-	title: undefined,
+	title: "เพิ่มข้อมูล",
 };

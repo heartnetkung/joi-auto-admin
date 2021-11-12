@@ -88,6 +88,13 @@ const App = () => {
 export default App;
 ```
 
+## More Examples
+
+- [cascader](https://www.google.com)
+- [multi-step / interactive form](https://www.google.com)
+- [barcode input](https://www.google.com)
+- [FormModal](https://www.google.com)
+
 ## Joi Object Explanation
 
 - `.label(str)`
@@ -123,13 +130,6 @@ export default App;
 - `.required()`
 - `.default(value | ()=>value )`
 
-## More Examples
-
-- [cascader](https://www.google.com)
-- [multi-step / interactive form](https://www.google.com)
-- [barcode input](https://www.google.com)
-- [FormModal](https://www.google.com)
-
 ## AutoAdmin Props API
 
 | Name             | Description                                                                                                                                                          | Type                                                                | DefaultValue |
@@ -150,3 +150,37 @@ export default App;
 | steps            | break form into multi steps using `<Steps>` component from antd.                                                                                                     | [string]                                                            | []           |
 
 ## FormModal Props API
+
+```jsx
+import { Joi, openFormModal } from "joi-auto-admin";
+
+const wait = (ms) => new Promise((res) => setTimeout(res, ms));
+
+const App = () => {
+  const props = {
+    onSubmit: async (formData) => {
+      await wait(1000);
+    },
+    schema: Joi.object({
+      a: Joi.string().label("a").required().min(2),
+      b: Joi.string().label("b"),
+    }),
+  };
+  const onClick = () => openFormModal(props);
+
+  return (
+    <center style={{ maxWidth: 800, margin: "auto", marginTop: 40 }}>
+      <button onClick={onClick}>เปิดฟอร์ม</button>
+    </center>
+  );
+};
+
+export default App;
+```
+
+| Name     | Description                                                      | Type                                        | DefaultValue  |
+| -------- | ---------------------------------------------------------------- | ------------------------------------------- | ------------- |
+| schema   | specification on how the UI will render                          | {Joi Object} or<br> async ()=> {Joi Object} | `required`    |
+| onSubmit | form handler                                                     | async(formData)=>any                        | `required`    |
+| title    | title of this form                                               | string                                      | "เพิ่มข้อมูล" |
+| steps    | break form into multi steps using `<Steps>` component from antd. | [string]                                    | []            |
