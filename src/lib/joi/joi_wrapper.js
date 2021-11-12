@@ -98,6 +98,7 @@ class JoiField {
 			if (type === "number") ans.render = (a) => numeral(a).format("0,0");
 			else if (type === "date")
 				ans.render = (a) => moment(a).format("YYYY-MM-DD");
+			else if (type === "array") ans.render = (a) => a.join(", ");
 			else if (fieldType === "Select") ans.render = (a) => meta.valid[a];
 		}
 
