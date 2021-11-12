@@ -122,7 +122,8 @@ export default App;
       - Required for `<Select>` type. The array length must be equal to input of `.valid([ any ])` as they will be rendered as key and value of `<Option>`
   - To customize `AutoAdmin` _table_, use the following fields:
     - `.meta({ cellEllipsis: boolean })`
-    - `.meta({ cellTextFormat: (cellData)=>string })`
+    - `.meta({ cellTextFormat: (cellData)=> string | ReactDomNode })`
+      - for formating number, date, etc. on the table.
     - `.meta({ cellWidth: number })`
     - `.meta({ cellHide: boolean })`
 - `.valid([ any ])`
