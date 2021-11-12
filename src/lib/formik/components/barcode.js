@@ -82,7 +82,7 @@ const BarcodeLine = memo((props) => {
 	useEffect(() => {
 		loadItemName(value)
 			.then((a) => setItemName(a || "ไม่พบข้อมูล"))
-			.catch(()=>setItemName("ไม่พบข้อมูล"));
+			.catch(() => setItemName("ไม่พบข้อมูล"));
 	}, []);
 
 	return (
