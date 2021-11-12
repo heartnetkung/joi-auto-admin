@@ -2,6 +2,8 @@ const fs = require("fs");
 const _ = require("lodash");
 const input = require("./data");
 
+// src: https://github.com/niawjunior/thai-data/blob/master/data.json
+
 console.stringify = (a) => console.log(JSON.stringify(a, null, 2));
 
 const makeObjectBased = (data) => {
@@ -22,8 +24,7 @@ const makeObjectBased = (data) => {
 		for (var s of zipCode.subDistrictList)
 			if (!ans[s.provinceId].c[s.districtId].c[s.subDistrictId])
 				ans[s.provinceId].c[s.districtId].c[s.subDistrictId] = {
-					l: s.subDistrictName,
-					c: [{ l: zipCode.zipCode }],
+					l: s.subDistrictName + " " + zipCode.zipCode,
 				};
 	}
 	return ans;
@@ -54,7 +55,8 @@ const main = () => {
 	data = makeListBased(data);
 	fs.writeFileSync(
 		"out.json",
-		"module.exports=" + JSON.stringify(data).replace(/"l"/g, "l").replace(/"c"/g, "c")
+		"module.exports=" +
+			JSON.stringify(data).replace(/"l"/g, "l").replace(/"c"/g, "c")
 	);
 };
 main();

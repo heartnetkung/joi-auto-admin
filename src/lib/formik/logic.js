@@ -2,7 +2,7 @@ import _ from "lodash";
 import { useState } from "react";
 import { setNestedObjectValues } from "formik";
 //TODO maybe code split this
-import thAddress from "../assets/th-address";
+import thAddress from "../assets/th-address.js";
 
 export const calculateSpan = (formSpec, isInline) => {
 	if (isInline) return formSpec.map((a) => ({ ...a, colSpan: 6 }));
