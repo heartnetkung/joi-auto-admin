@@ -110,7 +110,6 @@ export default App;
       - `label` string - label for the cascader component
       - `compLabels` [string] - labels of other fields used to store input result
       - `options` [node] - all possible choices for cascader, see ant design API
-      - `fieldNames` [{ label: string, value: string, children }] - fieldname for options, see ant design API
       - `asyncLoad` async([selectedNode])=>{} - only for async load. Disable field search once this field is provided.
     - `.meta({ validLabel: [string] })`
       - Required for `<Select>` type. The array length must be equal to input of `.valid([ any ])` as they will be rendered as key and value of `<Option>`
