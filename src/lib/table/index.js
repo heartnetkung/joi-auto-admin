@@ -42,7 +42,12 @@ const TableComp = (props) => {
 	};
 
 	const smallScreen = useMaxWidth(575);
-	const tableScroll2 = smallScreen ? { x: true, y: true } : tableScroll;
+	const tableScroll2 = smallScreen
+		? { x: true, y: true }
+		: tableScroll;
+	const tableStyle = smallScreen
+		? undefined
+		: { minWidth: Math.min(columns.length * 130, 800) };
 
 	return (
 		<>
@@ -74,7 +79,7 @@ const TableComp = (props) => {
 					scroll={tableScroll2}
 					rowSelection={rowSelection}
 					rowKey="_id"
-					style={{ minWidth: Math.min(columns.length * 130, 800) }}
+					style={tableStyle}
 				/>
 			</Row>
 		</>
