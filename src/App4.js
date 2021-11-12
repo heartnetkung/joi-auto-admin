@@ -1,6 +1,5 @@
 import Joi from "joi/lib/index";
 import AutoAdmin from "./lib/controller";
-import options from "./lib/assets/district.json";
 import React from "react";
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
@@ -23,8 +22,7 @@ const App = () => {
 					cascader: {
 						label: "จังหวัด",
 						compLabels: ["district2"],
-						fieldNames: { label: "l", value: "l", children: "c" },
-						options,
+						options: "th-address",
 					},
 				}),
 			district2: Joi.string().label("district2"),

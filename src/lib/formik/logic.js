@@ -1,6 +1,8 @@
 import _ from "lodash";
 import { useState } from "react";
 import { setNestedObjectValues } from "formik";
+//TODO maybe code split this
+import thAddress from "../assets/th-address";
 
 export const calculateSpan = (formSpec, isInline) => {
 	if (isInline) return formSpec.map((a) => ({ ...a, colSpan: 6 }));
@@ -46,6 +48,16 @@ const filter = function (inputValue, path) {
 	);
 };
 
+const lookupOptionsEnum = (cascader) => {
+	if (cascader.options === "th-address")
+		return {
+			...cascader,
+			options: thAddress,
+			fieldNames: { label: "l", value: "l", children: "c" },
+		};
+	return cascader;
+};
+
 export const handleCascader = (formSpec) => {
 	var ans = [];
 	var allCascader = {};
@@ -58,6 +70,7 @@ export const handleCascader = (formSpec) => {
 		if (!cascader) continue;
 
 		if (!allCascader[cascader.label]) {
+			cascader = lookupOptionsEnum(cascader);
 			var newCascader = (allCascader[cascader.label] = {
 				fieldType: "Cascader",
 				_labelField: cascader.fieldNames?.label || "label",
