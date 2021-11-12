@@ -36,7 +36,11 @@ const SubmitLine = (props) => {
 				{!steps.length ? (
 					<ResetButton>{resetButtonLabel}</ResetButton>
 				) : null}
-				<SubmitButton type="primary" style={submitStyle}>
+				<SubmitButton
+					type="primary"
+					style={submitStyle}
+					disabled={false}
+				>
 					{submitButtonLabel}
 				</SubmitButton>
 			</Space>
