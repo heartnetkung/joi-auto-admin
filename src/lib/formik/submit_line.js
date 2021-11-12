@@ -1,22 +1,26 @@
 import React from "react";
 import { SubmitButton, ResetButton } from "formik-antd";
-import { useFormikContext, setNestedObjectValues } from "formik";
+import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
 import { Space, Button } from "antd";
+import { useRef } from "react";
+import { touchAll, touchFirstSubmit } from "./logic";
 
 const SubmitLine = (props) => {
 	const { steps, currentStep, prevStep, nextStep } = props;
 	const { submitButtonLabel, resetButtonLabel } = props;
 
 	const context = useFormikContext();
+	const touch = useRef({ executed: false });
 	const submitStyle =
 		steps.length - 1 <= currentStep ? undefined : { display: "none" };
 
 	const next = async () => {
-		const errors = await context.validateForm();
-		if (Object.keys(errors).length === 0) nextStep();
-		else context.setTouched(setNestedObjectValues(errors, true));
+		const success = await touchAll(context);
+		if (success) nextStep();
 	};
+
+	touchFirstSubmit(context, touch);
 
 	return (
 		<center style={steps.length ? { marginTop: 10 } : null}>

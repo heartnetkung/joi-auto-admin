@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { useState } from "react";
+import { setNestedObjectValues } from "formik";
 
 export const calculateSpan = (formSpec, isInline) => {
 	if (isInline) return formSpec.map((a) => ({ ...a, colSpan: 6 }));
@@ -28,7 +29,7 @@ export const calculateSpan = (formSpec, isInline) => {
 				colSpan: 12,
 				labelCol: { span: 5 },
 				wrapperCol: { span: 15 },
-				className: 'right-column-label'
+				className: "right-column-label",
 			});
 			isPreviousLeft = false;
 		}
@@ -101,4 +102,21 @@ export const useSteps = (steps) => {
 		currentStep < steps.length - 1 && setStep(currentStep + 1);
 	const prevStep = () => currentStep > 0 && setStep(currentStep - 1);
 	return { nextStep, prevStep, currentStep };
+};
+
+export const touchAll = async (context) => {
+	const errors = await context.validateForm();
+	if (Object.keys(errors).length === 0) return true;
+	else context.setTouched(setNestedObjectValues(errors, true));
+};
+
+export const touchFirstSubmit = (context, ref) => {
+	const { executed } = ref.current;
+	if (!context.submitCount || executed) return;
+	if (context.isValid || context.isSubmitting) return;
+
+	ref.current.executed = true;
+	setTimeout(() =>
+		context.setTouched(setNestedObjectValues(context.errors, true))
+	);
 };
