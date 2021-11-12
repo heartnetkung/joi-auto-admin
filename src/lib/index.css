@@ -39,3 +39,23 @@ h1,h2,h3,h4,h5,h6{
 .right-column-label .ant-form-item-control{
   z-index: 11;
 }
+
+.hnk-small .ant-cascader-picker-label{
+  font-size: 11px;
+}
+
+.hnk-small .ant-cascader-menu-item{
+  font-size: 11px;
+  padding: 5px;
+}
+
+.hnk-small .ant-cascader-menu-item-expand-icon{
+  right: 2px;
+}
+.hnk-small .ant-cascader-menu:last-child{
+  min-width: 120px;
+}
+.hnk-small .ant-cascader-menu, .hnk-small .ant-cascader-menu:first-child{
+  min-width: 95px;
+  max-width: 95px;
+}

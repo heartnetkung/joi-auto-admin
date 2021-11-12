@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { useState } from "react";
 import { setNestedObjectValues } from "formik";
+import React from "react";
 //TODO maybe code split this
 import thAddress from "../assets/th-address.js";
 
@@ -48,17 +49,23 @@ const filter = function (inputValue, path) {
 	);
 };
 
-const lookupOptionsEnum = (cascader) => {
-	if (cascader.options === "th-address")
-		return {
+const lookupOptionsEnum = (cascader, isSmall) => {
+	if (cascader.options === "th-address") {
+		var ans = {
 			...cascader,
 			options: thAddress,
 			fieldNames: { label: "l", value: "l", children: "c" },
 		};
+		if (isSmall) {
+			ans.className = "hnk-small";
+			ans.dropdownRender = (Menu) => <div className="hnk-small">{Menu}</div>;
+		}
+		return ans;
+	}
 	return cascader;
 };
 
-export const handleCascader = (formSpec) => {
+export const handleCascader = (formSpec, isSmall) => {
 	var ans = [];
 	var allCascader = {};
 	var allSpecs = _.keyBy(formSpec, "label");
@@ -70,7 +77,7 @@ export const handleCascader = (formSpec) => {
 		if (!cascader) continue;
 
 		if (!allCascader[cascader.label]) {
-			cascader = lookupOptionsEnum(cascader);
+			cascader = lookupOptionsEnum(cascader, isSmall);
 			var newCascader = (allCascader[cascader.label] = {
 				fieldType: "Cascader",
 				_labelField: cascader.fieldNames?.label || "label",

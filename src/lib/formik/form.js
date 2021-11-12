@@ -7,16 +7,18 @@ import { calculateSpan, handleCascader, useSteps } from "./logic";
 import { useMemo } from "react";
 import React from "react";
 import SubmitLine from "./submit_line";
+import { useMaxWidth } from "../shared/hook";
 
 const { Step } = Steps;
 
 const CombinedForm = (props) => {
 	const { onSubmit, inline, initialValues, steps } = props;
 	const { resetButtonLabel, submitButtonLabel, schema } = props;
+	const isSmall = useMaxWidth(575);
 
 	const { formSpec, onSubmit2 } = useMemo(() => {
 		const formSpec2 = calculateSpan(schema.formSpec, inline);
-		const { formSpec, cascaderHook } = handleCascader(formSpec2);
+		const { formSpec, cascaderHook } = handleCascader(formSpec2, isSmall);
 		const onSubmitHooks = formSpec
 			.map((a) => a?.meta?.onSubmitHook)
 			.filter((a) => !!a)
@@ -26,7 +28,7 @@ const CombinedForm = (props) => {
 			await onSubmit(postData, actions);
 		};
 		return { formSpec, onSubmit2 };
-	}, [schema, inline, onSubmit]);
+	}, [schema, inline, onSubmit, isSmall]);
 
 	const { nextStep, prevStep, currentStep } = useSteps(steps);
 
