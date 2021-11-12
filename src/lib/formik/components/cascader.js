@@ -19,6 +19,10 @@ const MyCascader = (props) => {
 		setOptions([...options2]);
 	});
 
+	var placeholder =
+		props.placeholder ||
+		(asyncLoad ? "เลือก" : "เลือก/ค้นหา") + props.label;
+
 	return (
 		<Cascader
 			{...props2}
@@ -27,7 +31,7 @@ const MyCascader = (props) => {
 			showSearch={
 				typeof asyncLoad === "function" ? undefined : showSearch
 			}
-			placeholder={props2.placeholder || "เลือก" + props.label}
+			placeholder={placeholder}
 		></Cascader>
 	);
 };
