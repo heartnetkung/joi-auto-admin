@@ -124,7 +124,14 @@ export default App;
 - `.required()`
 - `.default(value | ()=>value )`
 
-## Props API
+## More Examples
+
+- [cascader](https://www.google.com)
+- [multi-step / interactive form](https://www.google.com)
+- [barcode input](https://www.google.com)
+- [FormModal](https://www.google.com)
+
+## AutoAdmin Props API
 
 | Name             | Description                                                                                                                                                          | Type                                                                | DefaultValue |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------ |
@@ -143,8 +150,4 @@ export default App;
 | description      | description of this table, displayed under title                                                                                                                     | string                                                              | ''           |
 | steps            | break form into multi steps using `<Steps>` component from antd.                                                                                                     | [string]                                                            | []           |
 
-## Cascader Example
-
-```jsx
-//TODO
-```
+## FormModal Props API
