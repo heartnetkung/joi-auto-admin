@@ -4,8 +4,6 @@ const input = require("./data");
 
 // src: https://github.com/niawjunior/thai-data/blob/master/data.json
 
-console.stringify = (a) => console.log(JSON.stringify(a, null, 2));
-
 const makeObjectBased = (data) => {
 	var ans = {};
 	for (var zipCode of data) {
