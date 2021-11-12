@@ -131,6 +131,7 @@ class JoiField {
 		if (field.type === "date") return "DatePicker";
 		if (field.type === "number") return "InputNumber";
 		if (meta.valid) return "Select";
+		if (meta.loadBarcodeName) return "Barcode";
 		return "Input";
 	}
 

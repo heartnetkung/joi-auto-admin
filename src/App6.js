@@ -12,7 +12,17 @@ const App = () => {
 		},
 		schema: Joi.object({
 			a: Joi.string().label("a").required().min(2),
-			b: Joi.string().label("b"),
+			barcode: Joi.array()
+				.label("บาร์โค้ด")
+				.meta({
+					placeholder:
+						"ยิงบาร์โค้ดหรือพิมพ์แล้วกด Enter เพื่อเพิ่มแถว (ลอง 001 / 002)",
+					loadBarcodeName: async (barcode) => {
+						await wait(500);
+						if (barcode === "001") return "iPhone";
+						if (barcode === "002") return "Samsung";
+					},
+				}),
 		}),
 	};
 	const onClick = () => openFormModal(props);

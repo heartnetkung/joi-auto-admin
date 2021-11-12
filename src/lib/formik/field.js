@@ -9,6 +9,7 @@ import {
 	Switch,
 } from "formik-antd";
 import Cascader from "./components/cascader";
+import Barcode from "./components/barcode";
 import moment from "moment";
 import React from "react";
 import { useFormikContext } from "formik";
@@ -38,6 +39,7 @@ const Field = (props) => {
 				labelCol={labelCol}
 				wrapperCol={wrapperCol}
 			>
+				{fieldType === "Barcode" && <Barcode {...props2} />}
 				{fieldType === "Cascader" && <Cascader {...props2} />}
 				{fieldType === "Checkbox" && <Checkbox {...props2}></Checkbox>}
 				{fieldType === "DatePicker" && (
@@ -81,6 +83,7 @@ const Field = (props) => {
 
 Field.propTypes = {
 	fieldType: PropTypes.oneOf([
+		"Barcode",
 		"Cascader",
 		"Checkbox",
 		"DatePicker",

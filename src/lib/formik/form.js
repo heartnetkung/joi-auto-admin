@@ -25,7 +25,10 @@ const CombinedForm = (props) => {
 			.concat(cascaderHook);
 		const onSubmit2 = async (postData, actions) => {
 			for (var hook of onSubmitHooks) postData = hook(postData);
-			await onSubmit(postData, actions);
+			var ans = {};
+			for (var key in postData)
+				if (!/^\$/.test(key)) ans[key] = postData[key];
+			await onSubmit(ans, actions);
 		};
 		return { formSpec, onSubmit2 };
 	}, [schema, inline, onSubmit, isSmall]);
