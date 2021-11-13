@@ -11,7 +11,11 @@ const App = () => {
 			await wait(1000);
 		},
 		schema: Joi.object({
-			a: Joi.string().label("a").required().min(2),
+			a: Joi.string()
+				.label("a")
+				.required()
+				.min(2)
+				.meta({ containerStyle: { marginBottom: 20 } }),
 			barcode: Joi.array()
 				.label("บาร์โค้ด")
 				.meta({

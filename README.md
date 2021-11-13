@@ -123,6 +123,8 @@ export default App;
       - Required for `<Select>` type. The array length must be equal to input of `.valid([ any ])` as they will be rendered as key and value of `<Option>`
     - `.meta({ loadBarcodeName: async(barcode)=> string })`
       - Required for `<Barcode>` type. Used to fetch human-readable data of the barcode.
+    - `.meta({ containerStyle: styleObj })`
+      - Customize style of the field container, useful for adding margins or padding.
   - To customize `AutoAdmin` _table_, use the following fields:
     - `.meta({ cellEllipsis: boolean })`
     - `.meta({ cellTextFormat: (cellData)=> string | ReactDomNode })`

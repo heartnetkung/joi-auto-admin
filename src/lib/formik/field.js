@@ -20,17 +20,23 @@ const { WeekPicker, RangePicker, MonthPicker } = DatePicker;
 const Field = (props) => {
 	const { fieldType, label, required, name, validate, meta } = props;
 	const { labelCol, wrapperCol, colSpan, offset, className } = props;
-	const { fieldHide, currentStep } = props;
+	const { fieldHide, currentStep, containerStyle } = props;
 
 	const props2 = { ...meta, name };
 	const { values } = useFormikContext();
+	console.log(containerStyle)
 
 	if (typeof fieldHide === "function") {
 		if (fieldHide(values, currentStep)) return null;
 	} else if (fieldHide) return null;
 
 	return (
-		<Col span={colSpan || 24} offset={offset} className={className}>
+		<Col
+			span={colSpan || 24}
+			offset={offset}
+			className={className}
+			style={containerStyle}
+		>
 			<Form.Item
 				label={label}
 				required={required}
@@ -110,6 +116,7 @@ Field.propTypes = {
 	wrapperCol: PropTypes.object,
 	fieldHide: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
 	className: PropTypes.string,
+	containerStyle: PropTypes.object,
 };
 Field.defaultProps = {
 	labelCol: undefined,
@@ -118,6 +125,7 @@ Field.defaultProps = {
 	colSpan: undefined,
 	offset: undefined,
 	className: undefined,
+	containerStyle: undefined,
 };
 
 export default Field;

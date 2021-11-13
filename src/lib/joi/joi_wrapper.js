@@ -14,6 +14,7 @@ const OMIT_META = [
 	"cellEllipsis",
 	"cellHide",
 	"fieldHide",
+	"containerStyle",
 ];
 
 class JoiWrapper {
@@ -73,6 +74,7 @@ class JoiField {
 		this.column = this.getColumn(meta, this);
 		this.fieldHide = meta.fieldHide;
 		this.meta = _.omit(meta, OMIT_META);
+		this.containerStyle = meta.containerStyle;
 	}
 
 	getColumn(meta, $this) {
