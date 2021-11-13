@@ -8,7 +8,7 @@ const EditModal = (props) => {
 	const { visible, onClose, isEdit, schema, onSubmit, steps } = props;
 	const { createHeader, editHeader, error, initialValue } = props;
 
-	//need to unmount in order for initialValue and autoFocus to work
+	//need to unmount in order for initialValue to work
 	if (!visible) return null;
 
 	return (
