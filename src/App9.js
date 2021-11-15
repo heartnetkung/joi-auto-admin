@@ -19,7 +19,7 @@ const App = () => {
 			return [record];
 		},
 		schema: Joi.object({
-			call_date: Joi.date().label("วันที่ติดต่อ"),
+			call_date: Joi.date().label("วันที่โทร"),
 			customer_id: Joi.string().label("รหัสลูกค้า"),
 			call_received: Joi.boolean()
 				.label("รับสาย")
