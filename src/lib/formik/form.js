@@ -19,10 +19,9 @@ const CombinedForm = (props) => {
 	const { formSpec, onSubmit2 } = useMemo(() => {
 		const formSpec2 = calculateSpan(schema.formSpec, inline);
 		const { formSpec, cascaderHook } = handleCascader(formSpec2, isSmall);
-		const onSubmitHooks = formSpec
-			.map((a) => a?.meta?.onSubmitHook)
-			.filter((a) => !!a)
-			.concat(cascaderHook);
+		const onSubmitHooks = [cascaderHook].concat(
+			formSpec.map((a) => a?.meta?.onSubmitHook).filter((a) => !!a)
+		);
 		const onSubmit2 = async (postData, actions) => {
 			for (var hook of onSubmitHooks) postData = hook(postData);
 			var ans = {};

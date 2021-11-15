@@ -49,16 +49,27 @@ const filter = function (inputValue, path) {
 	);
 };
 
-const lookupOptionsEnum = (cascader, isSmall) => {
+const lookupOptionsEnum = (cascader, isSmall, allTargets) => {
 	if (cascader.options === "th-address") {
 		var ans = {
 			...cascader,
 			options: thAddress,
 			fieldNames: { label: "l", value: "l", children: "c" },
+			onSubmitHook: (a) => {
+				var thirdNames = allTargets.value[cascader.compLabels[1]].name;
+				var forthNames = allTargets.value[cascader.compLabels[2]].name;
+				var thirdValue = _.get(a, thirdNames);
+				var ans = { ...a };
+				_.set(ans, thirdNames, thirdValue.split(" ")[0]);
+				_.set(ans, forthNames, thirdValue.split(" ")[1]);
+				return ans;
+			},
 		};
 		if (isSmall) {
 			ans.className = "hnk-small";
-			ans.dropdownRender = (Menu) => <div className="hnk-small">{Menu}</div>;
+			ans.dropdownRender = (Menu) => (
+				<div className="hnk-small">{Menu}</div>
+			);
 		}
 		return ans;
 	}
@@ -69,6 +80,7 @@ export const handleCascader = (formSpec, isSmall) => {
 	var ans = [];
 	var allCascader = {};
 	var allSpecs = _.keyBy(formSpec, "label");
+	var allTargetsHolder = {};
 
 	for (var spec of formSpec) {
 		ans.push(spec);
@@ -77,7 +89,7 @@ export const handleCascader = (formSpec, isSmall) => {
 		if (!cascader) continue;
 
 		if (!allCascader[cascader.label]) {
-			cascader = lookupOptionsEnum(cascader, isSmall);
+			cascader = lookupOptionsEnum(cascader, isSmall, allTargetsHolder);
 			var newCascader = (allCascader[cascader.label] = {
 				fieldType: "Cascader",
 				_labelField: cascader.fieldNames?.label || "label",
@@ -93,11 +105,11 @@ export const handleCascader = (formSpec, isSmall) => {
 		}
 	}
 
-	var allTargets = _.chain(allCascader)
+	var allTargets = (allTargetsHolder.value = _.chain(allCascader)
 		.map("targets")
 		.flatten()
 		.keyBy("label")
-		.value();
+		.value());
 	ans = ans.filter((a) => !allTargets[a.label]);
 
 	var cascaderHook = (data) => {
