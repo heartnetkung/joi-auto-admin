@@ -106,6 +106,7 @@ export const handleCascader = (formSpec, isSmall) => {
 				required: !!cascader.required,
 				validate: _.noop,
 				fieldHide: cascader.fieldHide,
+				step: cascader.step,
 			});
 			newCascader.meta.showSearch.filter = filter.bind(newCascader);
 			ans.push(newCascader);

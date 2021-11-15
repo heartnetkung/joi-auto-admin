@@ -10,6 +10,7 @@ const CASCADER_OMIT = [
 	"asyncLoad",
 	"onSubmitHook",
 	"fieldHide",
+	"step"
 ];
 
 const MyCascader = (props) => {
