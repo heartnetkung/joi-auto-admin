@@ -7,6 +7,7 @@ import React from "react";
 const EditModal = (props) => {
 	const { visible, onClose, isEdit, schema, onSubmit, steps } = props;
 	const { createHeader, editHeader, error, initialValue } = props;
+	const title = isEdit ? editHeader : createHeader;
 
 	//need to unmount in order for initialValue to work
 	if (!visible) return null;
@@ -20,7 +21,7 @@ const EditModal = (props) => {
 			onCancel={onClose}
 			maskClosable={false}
 		>
-			<Header title={isEdit ? editHeader : createHeader} small />
+			{title && <Header title={title} small />}
 			{error && (
 				<Alert
 					message={error.message || error}

@@ -47,7 +47,7 @@ const CombinedForm = (props) => {
 					colon={!inline}
 				>
 					{steps.length ? (
-						<Row style={{ marginBottom: 40 }}>
+						<Row style={{ marginBottom: 40, marginTop: 20 }}>
 							<Col offset={2} span={20}>
 								<Steps size="small" current={currentStep}>
 									{steps.map((a) => (
