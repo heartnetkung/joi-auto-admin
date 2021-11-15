@@ -90,10 +90,11 @@ export default App;
 
 ## More Examples
 
-- [cascader](https://www.google.com)
+- [ajax dropdown, searchable heirarchical dropdown](https://codesandbox.io/s/pedantic-violet-8qeh0?file=/src/App.js)
 - [multi-step / interactive form](https://www.google.com)
 - [barcode input](https://www.google.com)
 - [FormModal](https://www.google.com)
+- [email input, tel input, url input](https://www.google.com)
 
 ## Joi Object Explanation
 
