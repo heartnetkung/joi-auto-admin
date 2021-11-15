@@ -33,6 +33,7 @@ class JoiWrapper {
 		this.joiObj = this.joiObj.append({ _id: Joi.any() });
 		this.formSpec = [];
 		traverse(this.describe, [], this.formSpec, this.joiObj);
+		handleCellShow(this.formSpec);
 		this.columns = this.formSpec.map((a) => a.column);
 		this.toDefaultValues = this.toDefaultValues.bind(this);
 	}
@@ -56,6 +57,20 @@ const traverse = (node, path, ans, joiObj) => {
 	var keys = node.keys;
 	if (keys)
 		for (var key in keys) traverse(keys[key], [...path, key], ans, joiObj);
+};
+
+const handleCellShow = (formSpec) => {
+	var hasCellShow = false;
+	for (var item of formSpec)
+		if (item.meta.cellShow) {
+			hasCellShow = true;
+			break;
+		}
+
+	if (hasCellShow)
+		for (var spec of formSpec)
+			if (spec.meta.cellShow) delete spec.meta.cellShow;
+			else spec.column.cellHide = true;
 };
 
 class JoiField {
