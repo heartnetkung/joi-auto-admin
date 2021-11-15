@@ -11,12 +11,6 @@ import { usePersistFn } from "../../shared/hook";
 const OMIT_FIELDS = ["loadBarcodeName"];
 const { Text } = Typography;
 
-const removeAt = (a, index) => {
-	var ans = [...a];
-	ans.splice(index, 1);
-	return ans;
-};
-
 const Barcode = (props) => {
 	const { loadBarcodeName, name } = props;
 
@@ -35,7 +29,7 @@ const Barcode = (props) => {
 
 	const remove = usePersistFn((index) => {
 		if (ref.current) ref.current.remove(index);
-		setBarcodes((a) => removeAt(a, index));
+		setBarcodes((a) => a.filter((a, i) => i !== index));
 	});
 
 	const render = usePersistFn((helpers) => {
