@@ -9,7 +9,7 @@ const OMIT_META = [
 	"defaultValue",
 	"fieldType",
 	"validLabel",
-	"cellTextFormat",
+	"cellFormat",
 	"cellWidth",
 	"cellEllipsis",
 	"cellHide",
@@ -96,7 +96,7 @@ class JoiField {
 		var { fieldType, type, label, name } = $this;
 		var ans = {
 			ellipsis: meta.cellEllipsis,
-			render: meta.cellTextFormat,
+			render: meta.cellFormat,
 			width: meta.cellWidth,
 			cellHide: meta.cellHide,
 			title: label,

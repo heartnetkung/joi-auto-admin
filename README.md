@@ -127,7 +127,7 @@ export default App;
       - Customize style of the field container, useful for adding margins or padding.
   - To customize `AutoAdmin` _table_, use the following fields:
     - `.meta({ cellEllipsis: boolean })`
-    - `.meta({ cellTextFormat: (cellData)=> string | ReactDomNode })`
+    - `.meta({ cellFormat: (cellData)=> string | ReactDomNode })`
       - for formating number, date, etc. on the table.
     - `.meta({ cellWidth: number })`
     - `.meta({ cellHide: boolean })`
