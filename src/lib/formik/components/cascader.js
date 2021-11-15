@@ -4,7 +4,13 @@ import { useState } from "react";
 import { usePersistFn } from "../../shared/hook";
 import _ from "lodash";
 import React from "react";
-const CASCADER_OMIT = ["compLabels", "label", "asyncLoad", "onSubmitHook"];
+const CASCADER_OMIT = [
+	"compLabels",
+	"label",
+	"asyncLoad",
+	"onSubmitHook",
+	"fieldHide",
+];
 
 const MyCascader = (props) => {
 	const { asyncLoad, options, showSearch } = props;
