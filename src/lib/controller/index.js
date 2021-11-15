@@ -159,9 +159,12 @@ const Controller = (props) => {
 						? onDownloadExcel
 						: null
 				}
-				onUploadExcel={canUploadExcel ? onUploadExcel : null}
+				onUploadExcel={
+					canUploadExcel && createMany ? onUploadExcel : null
+				}
 				onExampleExcel={
 					canUploadExcel &&
+					createMany &&
 					(uploadPreviewUrl || getManyStatus.data?.length)
 						? onExampleExcel
 						: null
