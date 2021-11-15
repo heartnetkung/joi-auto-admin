@@ -10,8 +10,8 @@ export const calculateSpan = (formSpec, isInline) => {
 		return formSpec.map((a) => ({
 			...a,
 			colSpan: 6,
-			labelCol: 8,
-			wrapperCol: 12,
+			labelCol: { span: 10 },
+			wrapperCol: { span: 14 },
 		}));
 
 	var ans = [];
