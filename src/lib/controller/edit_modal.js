@@ -7,7 +7,7 @@ import React from "react";
 const EditModal = (props) => {
 	const { visible, onClose, isEdit, schema, onSubmit, steps } = props;
 	const { createHeader, editHeader, error, initialValue } = props;
-	const title = isEdit ? editHeader : createHeader;
+	const title = steps.length ? "" : isEdit ? editHeader : createHeader;
 
 	//need to unmount in order for initialValue to work
 	if (!visible) return null;

@@ -62,5 +62,5 @@ FormModal.propTypes = {
 
 FormModal.defaultProps = {
 	steps: [],
-	title: "เพิ่มข้อมูล",
+	title: null,
 };
