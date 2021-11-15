@@ -99,6 +99,7 @@ export const handleCascader = (formSpec, isSmall) => {
 				targets: [spec, ...cascader.compLabels.map((a) => allSpecs[a])],
 				required: !!cascader.required,
 				validate: _.noop,
+				fieldHide: cascader.fieldHide,
 			});
 			newCascader.meta.showSearch.filter = filter.bind(newCascader);
 			ans.push(newCascader);
