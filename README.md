@@ -107,7 +107,8 @@ export default App;
     - `.meta({ style })`
     - The rest of the props can be found [here.](https://reactjs.org/docs/dom-elements.html)
   - To customize `AutoAdmin` _form_, use the following fields:
-    - `.meta({ fieldType: string | ReactComponent })`
+    - `.meta({ fieldType: string })`
+      - Useful ones are `InputPhone`, `InputEmail`, `InputURL`. The rest are automatic depending on other parameters, for example, boolean would be checkbox.
     - `.meta({ fieldHide: boolean | (formValue, currentStep)=>boolean })`
       - Hide the current field. Useful for making interactive or multi-step form.
     - `.meta({ twoColumn: boolean })`
