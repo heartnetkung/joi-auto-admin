@@ -6,7 +6,13 @@ import React from "react";
 import thAddress from "../assets/th-address.js";
 
 export const calculateSpan = (formSpec, isInline) => {
-	if (isInline) return formSpec.map((a) => ({ ...a, colSpan: 6 }));
+	if (isInline)
+		return formSpec.map((a) => ({
+			...a,
+			colSpan: 6,
+			labelCol: 8,
+			wrapperCol: 12,
+		}));
 
 	var ans = [];
 	var isPreviousLeft = false;
