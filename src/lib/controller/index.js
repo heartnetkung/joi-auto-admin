@@ -43,14 +43,18 @@ const Controller = (props) => {
 		editModalControl.setVisible(true);
 	});
 
+	const updateDataAtRow = usePersistFn((rowData) => {
+		var tableData = getManyStatus.data;
+		setData(tableData.map((a) => (a._id === rowData._id ? rowData : a)));
+	});
+
 	const onSubmit = usePersistFn(async (data, actions) => {
 		setEditModalData((a) => ({ ...a, error: null }));
 		try {
 			if (editModalData.isEdit) {
 				data = Joi.attempt(data, schema2.joiObj);
 				await updateOne(data);
-				var tableData = getManyStatus.data;
-				setData(tableData.map((a) => (a._id === data._id ? data : a)));
+				updateDataAtRow(data);
 				alert.success("แก้ไขข้อมูลเรียบร้อย");
 				editModalControl.setVisible(false);
 			} else {
@@ -163,6 +167,7 @@ const Controller = (props) => {
 						: null
 				}
 				tableScroll={tableScroll}
+				updateDataAtRow={updateDataAtRow}
 			/>
 			<EditModal
 				{...editModalControl}

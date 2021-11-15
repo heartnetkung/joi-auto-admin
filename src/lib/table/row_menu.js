@@ -1,9 +1,9 @@
 import { Button, Space } from "antd";
 import PropTypes from "prop-types";
-import React from 'react';
+import React from "react";
 
 const RowMenu = (props) => {
-	const { buttons, record } = props;
+	const { buttons, record, updateDataAtRow } = props;
 
 	return (
 		<Space>
@@ -14,7 +14,7 @@ const RowMenu = (props) => {
 						key={index}
 						onClick={
 							action.onClick
-								? (event) => action.onClick(record, event)
+								? () => action.onClick(record, updateDataAtRow)
 								: NOOP
 						}
 					>
@@ -29,6 +29,11 @@ const RowMenu = (props) => {
 RowMenu.propTypes = {
 	buttons: PropTypes.array.isRequired,
 	record: PropTypes.any.isRequired,
+	updateDataAtRow: PropTypes.func,
+};
+
+RowMenu.defaultProps = {
+	updateDataAtRow: null,
 };
 
 const NOOP = () => {};

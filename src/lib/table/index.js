@@ -11,7 +11,7 @@ import React from "react";
 
 const TableComp = (props) => {
 	const { data, schema, rowButtons, onEdit, paginationSize } = props;
-	const { onDelete, onCreate, tableScroll } = props;
+	const { onDelete, onCreate, tableScroll, updateDataAtRow } = props;
 	const { loading, onDownloadExcel, onUploadExcel, onExampleExcel } = props;
 
 	const [selectedRows, setSelectedRows] = useState([]);
@@ -27,14 +27,18 @@ const TableComp = (props) => {
 
 		if (rowButtons2.length) {
 			const render = (text, record) => (
-				<RowMenu buttons={rowButtons2} record={record} />
+				<RowMenu
+					buttons={rowButtons2}
+					record={record}
+					updateDataAtRow={updateDataAtRow}
+				/>
 			);
 			const width = 60 * rowButtons2.length + 20;
 			ans.push({ title: "เมนู", width, render });
 		}
 
 		return ans;
-	}, [schema, data, rowButtons, onEdit]);
+	}, [schema, data, rowButtons, onEdit, updateDataAtRow]);
 
 	const rowSelection = !!onDelete && {
 		selectedRowKeys: selectedRows,
@@ -96,6 +100,7 @@ TableComp.propTypes = {
 	onDownloadExcel: PropTypes.func,
 	onUploadExcel: PropTypes.func,
 	onExampleExcel: PropTypes.func,
+	updateDataAtRow: PropTypes.func,
 };
 
 TableComp.defaultProps = {
@@ -109,6 +114,7 @@ TableComp.defaultProps = {
 	onDownloadExcel: null,
 	onUploadExcel: null,
 	onExampleExcel: null,
+	updateDataAtRow: null,
 };
 
 export default TableComp;
