@@ -10,7 +10,12 @@ const step1b = (a, step) => step !== 1 || a.customer.job_cat !== "student";
 const step2 = (a, step) => step !== 2;
 const step3 = (a, step) => step !== 3;
 
-const customer = Joi.object({
+export const customer = Joi.object({
+	//tableOnly
+	customer_id: Joi.string()
+		.label("รหัสลูกค้า")
+		.meta({ fieldHide: true, cellShow: true, cellWidth: 60 }),
+
 	//step0
 	$cardReader: Joi.string()
 		.label("เครื่องอ่านบัตร")
@@ -18,11 +23,11 @@ const customer = Joi.object({
 	firstname: Joi.string()
 		// .required()
 		.label("ชื่อจริง")
-		.meta({ twoColumn: true, fieldHide: step0 }),
+		.meta({ twoColumn: true, fieldHide: step0, cellShow: true }),
 	lastname: Joi.string()
 		// .required()
 		.label("นามสกุล")
-		.meta({ twoColumn: true, fieldHide: step0 }),
+		.meta({ twoColumn: true, fieldHide: step0, cellShow: true }),
 	gender: Joi.string()
 		.valid("m", "f")
 		// .required()
@@ -56,9 +61,12 @@ const customer = Joi.object({
 	zipcode: Joi.string().label("รหัสไปรษณีย์"),
 
 	//step1
-	phone: Joi.string()
-		.label("เบอร์โทรศัพท์")
-		.meta({ fieldHide: step1, twoColumn: true }),
+	tel: Joi.string().label("เบอร์โทรศัพท์").meta({
+		fieldHide: step1,
+		twoColumn: true,
+		cellShow: true,
+		cellWidth: 120,
+	}),
 	facebook: Joi.string()
 		.label("เฟซบุ๊ค")
 		.meta({ fieldHide: step1, twoColumn: true }),
@@ -194,6 +202,24 @@ const customer = Joi.object({
 				containerStyle: { marginBottom: 30 },
 			}),
 	}),
+
+	//tableOnly
+	otp: Joi.string()
+		.label("OTP")
+		.meta({ fieldHide: true, cellShow: true, cellWidth: 100 }),
+	contracts: Joi.array()
+		.label("สัญญา")
+		.meta({
+			fieldHide: true,
+			cellShow: true,
+			cellWidth: 80,
+			cellFormat: (data) =>
+				data.map((a, i) => (
+					<a key={a} href={"https://www.google.com?q=" + a}>
+						{"สัญญา" + (i + 1)}
+					</a>
+				)),
+		}),
 });
 
 const contract = Joi.object({
