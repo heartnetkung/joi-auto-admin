@@ -24,7 +24,6 @@ const Field = (props) => {
 
 	const props2 = { ...meta, name };
 	const { values } = useFormikContext();
-	console.log(containerStyle)
 
 	if (typeof fieldHide === "function") {
 		if (fieldHide(values, currentStep)) return null;
