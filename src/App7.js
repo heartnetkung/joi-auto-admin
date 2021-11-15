@@ -66,6 +66,7 @@ export const customer = Joi.object({
 		twoColumn: true,
 		cellShow: true,
 		cellWidth: 120,
+		fieldType: "InputPhone",
 	}),
 	facebook: Joi.string()
 		.label("เฟซบุ๊ค")
@@ -104,7 +105,7 @@ export const customer = Joi.object({
 		.meta({ fieldHide: step1a, twoColumn: true }),
 	company_tel: Joi.string()
 		.label("เบอร์โทรที่ทำงาน")
-		.meta({ fieldHide: step1a, twoColumn: true }),
+		.meta({ fieldHide: step1a, twoColumn: true, fieldType: "InputPhone" }),
 	company_address: Joi.string()
 		.label("ที่อยู่บริษัท")
 		.meta({ fieldHide: step1a }),
@@ -151,7 +152,11 @@ export const customer = Joi.object({
 		tel: Joi.string()
 			// .required()
 			.label("เบอร์โทรศัพท์1")
-			.meta({ twoColumn: true, fieldHide: step2 }),
+			.meta({
+				twoColumn: true,
+				fieldHide: step2,
+				fieldType: "InputPhone",
+			}),
 		relationship: Joi.string()
 			.label("ความสัมพันธ์1")
 			.meta({
@@ -172,7 +177,11 @@ export const customer = Joi.object({
 		tel: Joi.string()
 			// .required()
 			.label("เบอร์โทรศัพท์2")
-			.meta({ twoColumn: true, fieldHide: step2 }),
+			.meta({
+				twoColumn: true,
+				fieldHide: step2,
+				fieldType: "InputPhone",
+			}),
 		relationship: Joi.string()
 			.label("ความสัมพันธ์2")
 			.meta({
@@ -193,7 +202,11 @@ export const customer = Joi.object({
 		tel: Joi.string()
 			// .required()
 			.label("เบอร์โทรศัพท์3")
-			.meta({ twoColumn: true, fieldHide: step2 }),
+			.meta({
+				twoColumn: true,
+				fieldHide: step2,
+				fieldType: "InputPhone",
+			}),
 		relationship: Joi.string()
 			.label("ความสัมพันธ์3")
 			.meta({
@@ -248,6 +261,11 @@ const contract = Joi.object({
 		.min(0)
 		.label("เงินดาวน์")
 		.meta({ fieldHide: step3, twoColumn: true }),
+	promotion_code: Joi.string()
+		.valid("none")
+		.default("none")
+		.label("รหัสโปรโมชั่น")
+		.meta({ fieldHide: step3, twoColumn: true, validLabel: ["ไม่มี"] }),
 });
 
 const App = () => {
