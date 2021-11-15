@@ -21,11 +21,13 @@ const App = () => {
 				.meta({
 					cascader: {
 						label: "จังหวัด",
-						compLabels: ["district2"],
+						compLabels: ["district2", "subdistrict2", "zipcode2"],
 						options: "th-address",
 					},
 				}),
 			district2: Joi.string().label("district2"),
+			subdistrict2: Joi.string().label("subdistrict2"),
+			zipcode2: Joi.string().label("zipcode2"),
 			category: Joi.string()
 				.label("category")
 				.meta({

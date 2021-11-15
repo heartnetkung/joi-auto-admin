@@ -17,22 +17,16 @@ const App = () => {
 			return rowArray.map((a) => ({ ...a, _id: Math.random() }));
 		},
 		schema: Joi.object({
-			a: Joi.string()
-				.label("a")
-				.required()
-				.min(2)
-				.meta({ fieldHide: (value, currentStep) => currentStep !== 0 }),
-			b: Joi.string()
-				.label("b")
-				.meta({
-					fieldHide: (value, currentStep) => currentStep !== 1,
-					twoColumn: true,
-				}),
+			a: Joi.string().label("a").required().min(2).meta({ step: 0 }),
+			b: Joi.string().label("b").meta({
+				step: 1,
+				twoColumn: true,
+			}),
 			interactive: Joi.string()
 				.label("interactive")
 				.meta({
-					fieldHide: (value, currentStep) =>
-						!value.b || currentStep !== 1,
+					fieldHide: (value) => !value.b,
+					step: 1,
 					twoColumn: true,
 				}),
 		}),
@@ -49,6 +43,7 @@ const App = () => {
 							wait(500);
 							setRowData({ ...rowData, ...formData });
 						},
+						title: 'แก้ไขข้อมูล'
 					});
 				},
 			},
