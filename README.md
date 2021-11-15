@@ -113,13 +113,14 @@ export default App;
       - Hide the current field. Useful for making interactive or multi-step form.
     - `.meta({ twoColumn: boolean })`
       - Show the form input in half size, so you can stack 2 fields in the same line.
-    - `.meta({ cascader: { label, compLabels, options, fieldNames, asyncLoad } })`
+    - `.meta({ cascader: { label, compLabels, options, asyncLoad, fieldHide } })`
       - Required for `<Cascader>` type. It's a wrapper for Ant Design component with the same name. There is one difference is that the state data is backed by multiple fields instead of a single array field. See the example below. [reference](https://ant.design/components/cascader/)
       - `label` string - label for the cascader component
       - `compLabels` [string] - labels of other fields used to store input result
       - `options` [node] | enum - all possible choices for cascader, see ant design API
         - enum can be 'th-address' for thai province/district/tumbon/zipcode data
       - `asyncLoad` async([selectedNode])=>{} - only for async load. Disable field search once this field is provided.
+      - `fieldHide` boolean | (formValue, currentStep)=>boolean - same as above.
     - `.meta({ validLabel: [string] })`
       - Required for `<Select>` type. The array length must be equal to input of `.valid([ any ])` as they will be rendered as key and value of `<Option>`
     - `.meta({ loadBarcodeName: async(barcode)=> string })`
