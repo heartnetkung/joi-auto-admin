@@ -136,7 +136,7 @@ export const handleCascader = (formSpec, isSmall) => {
 };
 
 export const useSteps = (steps) => {
-	const [currentStep, setStep] = useState(0);
+	const [currentStep, setStep] = useState(steps.length ? 0 : -1);
 	const nextStep = () =>
 		currentStep < steps.length - 1 && setStep(currentStep + 1);
 	const prevStep = () => currentStep > 0 && setStep(currentStep - 1);

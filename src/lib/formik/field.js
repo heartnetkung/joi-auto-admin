@@ -20,14 +20,15 @@ const { WeekPicker, RangePicker, MonthPicker } = DatePicker;
 const Field = (props) => {
 	const { fieldType, label, required, name, validate, meta } = props;
 	const { labelCol, wrapperCol, colSpan, offset, className } = props;
-	const { fieldHide, currentStep, containerStyle } = props;
+	const { fieldHide, currentStep, containerStyle, step } = props;
 
 	const props2 = { ...meta, name };
 	const { values } = useFormikContext();
 
 	if (typeof fieldHide === "function") {
-		if (fieldHide(values, currentStep)) return null;
+		if (fieldHide(values)) return null;
 	} else if (fieldHide) return null;
+	if (currentStep !== -1 && currentStep !== step) return null;
 
 	return (
 		<Col
@@ -66,9 +67,7 @@ const Field = (props) => {
 				{fieldType === "InputNumber" && (
 					<InputNumber {...props2} style={{ width: "100%" }} />
 				)}
-				{fieldType === "InputURL" && (
-					<Input {...props2} type="url" />
-				)}
+				{fieldType === "InputURL" && <Input {...props2} type="url" />}
 				{fieldType === "InputPhone" && (
 					<Input placeholder="ไม่ต้องใส่ขีด" {...props2} type="tel" />
 				)}
@@ -122,6 +121,7 @@ Field.propTypes = {
 	fieldHide: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
 	className: PropTypes.string,
 	containerStyle: PropTypes.object,
+	step: PropTypes.number,
 };
 Field.defaultProps = {
 	labelCol: undefined,
@@ -131,6 +131,7 @@ Field.defaultProps = {
 	offset: undefined,
 	className: undefined,
 	containerStyle: undefined,
+	step: undefined,
 };
 
 export default Field;
