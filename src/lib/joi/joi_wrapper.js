@@ -81,7 +81,7 @@ class JoiField {
 		this.label = field?.flags?.label;
 		this.name = path.join(".");
 		this.fieldType = this.guessFieldType(field, meta);
-		this._extractedSchema = joiObj.extract(path);
+		this._extractedSchema = this.getExtractedSchema(joiObj, path);
 		this.validate = this.validate.bind(this);
 		this.type = field.type;
 		this.twoColumn = !!meta.twoColumn;
@@ -90,6 +90,17 @@ class JoiField {
 		this.fieldHide = meta.fieldHide;
 		this.meta = _.omit(meta, OMIT_META);
 		this.containerStyle = meta.containerStyle;
+	}
+
+	getExtractedSchema(joiObj, path) {
+		var { fieldType } = this;
+		var ans = joiObj.extract(path);
+		if (fieldType === "InputPhone")
+			return ans.pattern(/^0([2]|[6]|[0-9][0-9])[0-9]{7}$/);
+		if (fieldType === "InputEmail") return ans.email();
+		if (fieldType === "InputURL")
+			return ans.uri({ scheme: ["http", "https"] });
+		return ans;
 	}
 
 	getColumn(meta, $this) {

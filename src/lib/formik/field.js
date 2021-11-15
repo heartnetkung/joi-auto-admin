@@ -60,11 +60,17 @@ const Field = (props) => {
 				{fieldType === "RangePicker" && <RangePicker {...props2} />}
 				{fieldType === "MonthPicker" && <MonthPicker {...props2} />}
 				{fieldType === "Input" && <Input {...props2} />}
+				{fieldType === "InputEmail" && (
+					<Input {...props2} type="email" />
+				)}
 				{fieldType === "InputNumber" && (
 					<InputNumber {...props2} style={{ width: "100%" }} />
 				)}
+				{fieldType === "InputURL" && (
+					<Input {...props2} type="url" />
+				)}
 				{fieldType === "InputPhone" && (
-					<Input {...props2} type="tel" pattern="\d+" />
+					<Input placeholder="ไม่ต้องใส่ขีด" {...props2} type="tel" />
 				)}
 				{fieldType === "InputPassword" && (
 					<Input.Password {...props2} />
