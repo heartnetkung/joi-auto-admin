@@ -14,21 +14,31 @@ import moment from "moment";
 import React from "react";
 import { useFormikContext } from "formik";
 import { Col } from "antd";
+import { useRef } from "react";
 
 const { WeekPicker, RangePicker, MonthPicker } = DatePicker;
 
 const Field = (props) => {
 	const { fieldType, label, required, name, validate, meta } = props;
 	const { labelCol, wrapperCol, colSpan, offset, className } = props;
-	const { fieldHide, currentStep, containerStyle, step } = props;
+	const { fieldHide, currentStep, containerStyle, step, onFormik } = props;
 
 	const props2 = { ...meta, name };
-	const { values } = useFormikContext();
+	const ctx = useFormikContext();
+	const ref = useRef(undefined);
 
 	if (typeof fieldHide === "function") {
-		if (fieldHide(values)) return null;
+		if (fieldHide(ctx.values)) return null;
 	} else if (fieldHide) return null;
 	if (currentStep !== -1 && currentStep !== step) return null;
+
+	if (onFormik) {
+		var newValue = ctx.values;
+		if (newValue !== ref.current) {
+			onFormik(ctx);
+			ref.current = newValue;
+		}
+	}
 
 	return (
 		<Col
@@ -122,6 +132,7 @@ Field.propTypes = {
 	className: PropTypes.string,
 	containerStyle: PropTypes.object,
 	step: PropTypes.number,
+	onFormik: PropTypes.func,
 };
 Field.defaultProps = {
 	labelCol: undefined,
@@ -132,6 +143,7 @@ Field.defaultProps = {
 	className: undefined,
 	containerStyle: undefined,
 	step: undefined,
+	onFormik: undefined,
 };
 
 export default Field;

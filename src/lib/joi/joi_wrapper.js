@@ -16,6 +16,7 @@ const OMIT_META = [
 	"fieldHide",
 	"containerStyle",
 	"step",
+	"onFormik",
 ];
 
 class JoiWrapper {
@@ -92,6 +93,7 @@ class JoiField {
 		this.meta = _.omit(meta, OMIT_META);
 		this.containerStyle = meta.containerStyle;
 		this.step = meta.step;
+		this.onFormik = meta.onFormik;
 	}
 
 	getExtractedSchema(joiObj, path) {
