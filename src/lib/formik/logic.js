@@ -65,6 +65,8 @@ const lookupOptionsEnum = (cascader, isSmall, allTargets) => {
 				var thirdNames = allTargets.value[cascader.compLabels[1]].name;
 				var forthNames = allTargets.value[cascader.compLabels[2]].name;
 				var thirdValue = _.get(a, thirdNames);
+				if (!thirdValue) return a;
+
 				var ans = { ...a };
 				_.set(ans, thirdNames, thirdValue.split(" ")[0]);
 				_.set(ans, forthNames, thirdValue.split(" ")[1]);
