@@ -15,6 +15,7 @@ import React from "react";
 import { useFormikContext } from "formik";
 import { Col } from "antd";
 import { useRef } from "react";
+import _ from "lodash";
 
 const { WeekPicker, RangePicker, MonthPicker } = DatePicker;
 
@@ -24,18 +25,18 @@ const Field = (props) => {
 	const { fieldHide, currentStep, containerStyle, step, onFormik } = props;
 
 	const props2 = { ...meta, name };
-	const ctx = useFormikContext();
+	const { values, setFieldError, setFieldValue } = useFormikContext();
 	const ref = useRef(undefined);
 
 	if (typeof fieldHide === "function") {
-		if (fieldHide(ctx.values)) return null;
+		if (fieldHide(values)) return null;
 	} else if (fieldHide) return null;
 	if (currentStep !== -1 && currentStep !== step) return null;
 
 	if (onFormik) {
-		var newValue = ctx.values;
+		var newValue = _.get(values, name);
 		if (newValue !== ref.current) {
-			onFormik(ctx);
+			onFormik({ setFieldError, setFieldValue, values, value: newValue });
 			ref.current = newValue;
 		}
 	}
