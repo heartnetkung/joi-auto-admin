@@ -10,111 +10,109 @@ import { useMaxWidth } from "../shared/hook";
 import React from "react";
 
 const TableComp = (props) => {
-	const { data, schema, rowButtons, onEdit, paginationSize } = props;
-	const { onDelete, onCreate, tableScroll, updateDataAtRow } = props;
-	const { loading, onDownloadExcel, onUploadExcel, onExampleExcel } = props;
+  const { data, schema, rowButtons, onEdit, paginationSize } = props;
+  const { onDelete, onCreate, tableScroll, updateDataAtRow } = props;
+  const { loading, onDownloadExcel, onUploadExcel, onExampleExcel } = props;
 
-	const [selectedRows, setSelectedRows] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
 
-	const columns = useMemo(() => {
-		var ans = schema.columns
-			.map(addFilter(data))
-			.filter((column) => !column.cellHide);
+  const columns = useMemo(() => {
+    var ans = schema.columns
+      .map(addFilter(data))
+      .filter((column) => !column.cellHide);
 
-		var rowButtons2 = [...rowButtons];
-		if (onEdit)
-			rowButtons2.unshift({ icon: <EditOutlined />, onClick: onEdit });
+    var rowButtons2 = [...rowButtons];
+    if (onEdit)
+      rowButtons2.unshift({ icon: <EditOutlined />, onClick: onEdit });
 
-		if (rowButtons2.length) {
-			const render = (text, record) => (
-				<RowMenu
-					buttons={rowButtons2}
-					record={record}
-					updateDataAtRow={updateDataAtRow}
-				/>
-			);
-			const width = 60 * rowButtons2.length + 20;
-			ans.push({ title: "เมนู", width, render });
-		}
+    if (rowButtons2.length) {
+      const render = (text, record) => (
+        <RowMenu
+          buttons={rowButtons2}
+          record={record}
+          updateDataAtRow={updateDataAtRow}
+        />
+      );
+      const width = 60 * rowButtons2.length + 20;
+      ans.push({ title: "เมนู", width, render });
+    }
 
-		return ans;
-	}, [schema, data, rowButtons, onEdit, updateDataAtRow]);
+    return ans;
+  }, [schema, data, rowButtons, onEdit, updateDataAtRow]);
 
-	const rowSelection = !!onDelete && {
-		selectedRowKeys: selectedRows,
-		onChange: setSelectedRows,
-	};
+  const rowSelection = !!onDelete && {
+    selectedRowKeys: selectedRows,
+    onChange: setSelectedRows,
+  };
 
-	const smallScreen = useMaxWidth(575);
-	const tableScroll2 = smallScreen ? { x: true, y: true } : tableScroll;
-	const tableStyle = smallScreen
-		? undefined
-		: { minWidth: Math.min(columns.length * 130, 800) };
+  const smallScreen = useMaxWidth(575);
+  const tableScroll2 = smallScreen ? { x: true, y: true } : tableScroll;
+  const tableStyle = smallScreen
+    ? undefined
+    : { minWidth: Math.min(columns.length * 130, 800) };
 
-	return (
-		<>
-			<div style={{ opacity: loading ? 0.5 : 1 }}>
-				<TableMenu
-					selectedRows={selectedRows}
-					setSelectedRows={setSelectedRows}
-					onDelete={onDelete}
-					onCreate={onCreate}
-					otherMenu={
-						!onDownloadExcel &&
-						!onUploadExcel &&
-						!onExampleExcel ? null : (
-							<OtherMenu
-								onDownloadExcel={onDownloadExcel}
-								onUploadExcel={onUploadExcel}
-								onExampleExcel={onExampleExcel}
-							/>
-						)
-					}
-				/>
-			</div>
-			<Row>
-				<Table
-					loading={loading}
-					columns={columns}
-					dataSource={data}
-					pagination={{ defaultPageSize: paginationSize }}
-					scroll={tableScroll2}
-					rowSelection={rowSelection}
-					rowKey="_id"
-					style={tableStyle}
-				/>
-			</Row>
-		</>
-	);
+  return (
+    <>
+      <div style={{ opacity: loading ? 0.5 : 1 }}>
+        <TableMenu
+          selectedRows={selectedRows}
+          setSelectedRows={setSelectedRows}
+          onDelete={onDelete}
+          onCreate={onCreate}
+          otherMenu={
+            !onDownloadExcel && !onUploadExcel && !onExampleExcel ? null : (
+              <OtherMenu
+                onDownloadExcel={onDownloadExcel}
+                onUploadExcel={onUploadExcel}
+                onExampleExcel={onExampleExcel}
+              />
+            )
+          }
+        />
+      </div>
+      <Row>
+        <Table
+          loading={loading}
+          columns={columns}
+          dataSource={data}
+          pagination={{ defaultPageSize: paginationSize }}
+          scroll={tableScroll2}
+          rowSelection={rowSelection}
+          rowKey="_id"
+          style={tableStyle}
+        />
+      </Row>
+    </>
+  );
 };
 
 TableComp.propTypes = {
-	rowButtons: PropTypes.array,
-	onCreate: PropTypes.func,
-	onDelete: PropTypes.func,
-	onEdit: PropTypes.func,
-	schema: PropTypes.object.isRequired,
-	paginationSize: PropTypes.number,
-	tableScroll: PropTypes.object,
-	loading: PropTypes.bool,
-	onDownloadExcel: PropTypes.func,
-	onUploadExcel: PropTypes.func,
-	onExampleExcel: PropTypes.func,
-	updateDataAtRow: PropTypes.func,
+  rowButtons: PropTypes.array,
+  onCreate: PropTypes.func,
+  onDelete: PropTypes.func,
+  onEdit: PropTypes.func,
+  schema: PropTypes.object.isRequired,
+  paginationSize: PropTypes.number,
+  tableScroll: PropTypes.object,
+  loading: PropTypes.bool,
+  onDownloadExcel: PropTypes.func,
+  onUploadExcel: PropTypes.func,
+  onExampleExcel: PropTypes.func,
+  updateDataAtRow: PropTypes.func,
 };
 
 TableComp.defaultProps = {
-	rowButtons: [],
-	onDelete: null,
-	onCreate: null,
-	onEdit: null,
-	paginationSize: 20,
-	tableScroll: { y: 600, x: true },
-	loading: false,
-	onDownloadExcel: null,
-	onUploadExcel: null,
-	onExampleExcel: null,
-	updateDataAtRow: null,
+  rowButtons: [],
+  onDelete: null,
+  onCreate: null,
+  onEdit: null,
+  paginationSize: 20,
+  tableScroll: { y: 600, x: true },
+  loading: false,
+  onDownloadExcel: null,
+  onUploadExcel: null,
+  onExampleExcel: null,
+  updateDataAtRow: null,
 };
 
 export default TableComp;

@@ -1,6 +1,6 @@
 {
-  "name": "joi-auto-admin",
-  "version": "0.18.0",
+  "name": "zet-admin-fmk",
+  "version": "0.1.0",
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -8,6 +8,7 @@
   "dependencies": {
     "@babel/runtime": "^7.9.2",
     "antd": "^4.16.13",
+    "axios": "^0.24.0",
     "formik": "^2.2.9",
     "formik-antd": "^2.0.1",
     "joi": "^17.4.2",
@@ -15,6 +16,7 @@
     "moment": "^2.29.1",
     "nanoid": "^3.1.30",
     "numeral": "^2.0.6",
+    "probe-image-size": "^7.2.2",
     "prop-types": "^15.7.2",
     "xlsx": "^0.17.3"
   },
