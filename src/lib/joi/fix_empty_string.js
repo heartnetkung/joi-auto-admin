@@ -1,4 +1,5 @@
 // https://stackoverflow.com/questions/42370881/allow-string-to-be-null-or-empty-in-joi-and-express-validation
+// https://github.com/sideway/joi/issues/482
 
 const traverse = (node, path, ans) => {
 	if (node?.flags?.label && node?.type === "string")
