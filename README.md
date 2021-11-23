@@ -123,7 +123,7 @@ export default App;
       - `options` [node] | enum - all possible choices for cascader, see ant design API
         - The enum can be 'th-address' for thai province/district/tumbon/zipcode data
       - `asyncLoad` async([selectedNode])=>{} - only for async load. Disable field search once this field is provided.
-      - `fieldHide` boolean | (formValue, currentStep)=>boolean - same as above.
+      - `fieldHide` true | (formValue, currentStep)=>boolean - same as above.
       - `step` number - same as above.
     - `.meta({ validLabel: [string] })`
       - Required for `<Select>` type. The array length must be equal to input of `.valid([ any ])` as they will be rendered as key and value of `<Option>`
@@ -138,7 +138,7 @@ export default App;
       - `setFieldValue(name, value)` set value of any field in the form. Name can be represented with dot notation for nested field.
       - `setFieldError(name, error)` set error of any field in the form. Name can be represented with dot notation for nested field.
   - To customize `AutoAdmin` _table_, use the following fields:
-    - `.meta({ cellEllipsis: boolean })`
+    - `.meta({ cellEllipsis: true })`
     - `.meta({ cellFormat: (cellData)=> string | ReactDomNode })`
       - For formating number, date, etc. on the table.
     - `.meta({ cellWidth: number })`
