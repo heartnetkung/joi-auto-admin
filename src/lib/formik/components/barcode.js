@@ -90,7 +90,7 @@ const BarcodeLine = memo((props) => {
 						name={name + `[${index}]`}
 					/>
 				</Col>
-				<Col span={8}>
+				<Col span={16}>
 					<Button
 						icon={<CloseOutlined />}
 						size="small"
