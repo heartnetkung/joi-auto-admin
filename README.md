@@ -121,7 +121,7 @@ export default App;
       - `label` string - label for the cascader component
       - `compLabels` [string] - labels of other fields used to store input result
       - `options` [node] | enum - all possible choices for cascader, see ant design API
-        - enum can be 'th-address' for thai province/district/tumbon/zipcode data
+        - The enum can be 'th-address' for thai province/district/tumbon/zipcode data
       - `asyncLoad` async([selectedNode])=>{} - only for async load. Disable field search once this field is provided.
       - `fieldHide` boolean | (formValue, currentStep)=>boolean - same as above.
       - `step` number - same as above.
@@ -134,9 +134,14 @@ export default App;
   - To customize `AutoAdmin` _table_, use the following fields:
     - `.meta({ cellEllipsis: boolean })`
     - `.meta({ cellFormat: (cellData)=> string | ReactDomNode })`
-      - for formating number, date, etc. on the table.
+      - For formating number, date, etc. on the table.
     - `.meta({ cellWidth: number })`
-    - `.meta({ cellHide: boolean })`
+    - `.meta({ cellHide: true })` and `.meta({ cellShow: true })`
+      - For selectively show or hide certain fields from table view
+    - `.meta({ disableSorting: true })`
+      - For disabling column sorting
+    - `.meta({ disableFilter: true })`
+      - For disabling column filter
 - `.valid([ any ])`
   - For making `<Select>` input.
 - `.required()`
