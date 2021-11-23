@@ -18,6 +18,8 @@ const OMIT_META = [
 	"containerStyle",
 	"step",
 	"onFormik",
+	"disableSorting",
+	"disableFilter",
 ];
 
 class JoiWrapper {
@@ -80,9 +82,11 @@ class JoiField {
 		this._extractedSchema = this.getExtractedSchema(joiObj, path);
 		this.validate = this.validate.bind(this);
 		this.type = field.type;
-		this.twoColumn = !!meta.twoColumn;
 		this.defaultValue = field?.flags?.default;
 		this.column = this.getColumn(meta, this);
+
+		//remove excess data from meta
+		this.twoColumn = meta.twoColumn;
 		this.fieldHide = meta.fieldHide;
 		this.containerStyle = meta.containerStyle;
 		this.step = meta.step;
@@ -108,6 +112,8 @@ class JoiField {
 			render: meta.cellFormat,
 			width: meta.cellWidth,
 			cellHide: meta.cellHide,
+			disableSorting: meta.disableSorting,
+			disableFilter: meta.disableFilter,
 			title: label,
 			dataIndex: name.split("."),
 			key: name,

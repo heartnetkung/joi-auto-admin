@@ -21,8 +21,8 @@ export const addFilter = (data) => {
 			.map((a) => ({ text: a, value: a }))
 			.value();
 		var ans = { ...column };
-		ans.sorter = sorter.bind(ans);
-		if (filters.length < 50 && filters.length) {
+		if (!column.disableSorting) ans.sorter = sorter.bind(ans);
+		if (filters.length < 50 && filters.length && !column.disableFilter) {
 			ans.onFilter = onFilter.bind(ans);
 			ans.filters = filters;
 		}
