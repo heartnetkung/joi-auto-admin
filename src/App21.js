@@ -64,12 +64,10 @@ const App = () => {
           imagePreview: true,
           getUploadUrl: async (fileType) => {
             await wait(500);
-            return "https://storage.googleapis.com/ufriend-payment_slip/slip_CT21AH473W_1637645670038.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=ufriend-gcp%40ufriend-328114.iam.gserviceaccount.com%2F20211123%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20211123T053430Z&X-Goog-Expires=900&X-Goog-SignedHeaders=content-type%3Bhost&X-Goog-Signature=21eed197faba052c9142824006b6e8c0825b948a58fc329e3b1ae1049e8486a3ad33eec60f335954de74af2bb147d85a0e8fe7b40abf00e229cdd0645b70057721f75f45a0a44284bcb3742bf0b6140cd27201a494775925703b735d5adda222eb08da9503966b247ec04afc2125bd2f0a9035904e69bb9f5fb35d64a6d691cc181ad9ce5b172c043e138bf031ffbd3f2a29807b2334d3fbb2c06238090b36d36c34ab0d1ff59a4d18e27c7abf57ff94ba7f44b367ebd77d14b34dcd220c5c556b5083b3632e5cdf2550abdd93fd021739c130afc7d12aa65bf968f62ee4b0c9ed91d16b72bae6ffb5e40feb6d62bc00d7520316ab6bdf372f19f1d183406dc8";
+            return "https://storage.googleapis.com/ufriend-payment_slip/slip_1411700133025_1637750262301.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=ufriend-gcp%40ufriend-328114.iam.gserviceaccount.com%2F20211124%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20211124T103742Z&X-Goog-Expires=900&X-Goog-SignedHeaders=content-type%3Bhost&X-Goog-Signature=6f74456b63ba806c3a4422f85842004bf0529876d7a92e729e1dbd831e78544abdc60f4b55b5929b41746750227b03477416899a6a78437c8f93e070d30e509c8fbcb53cdcb4aacf76c85ff53a6441bceaed70fbce3d42d66679bed915b11a83b5d23b5c166645ffcdb026b30fd8fef06cdb166302453419fde792ea6ff0c202270a497782ee75717f4072df1048fcfc1ccd9d1e68658faa35970278fb2ade75a278b1a8f682ae9b6d94d5ba3714a3299c67c75c40e2eeae8a4d3c35ca3db5e9925fec4165b7ec341c285b863c1886ee7647bc23c605240f63a3373c6894906516baf0405ad38144ddfec3ebd60e42757976ad8f1a974dc14be2c68354d00933";
           },
           cellWidth: 150,
-          cellFormat: (cellData) => (
-            <ColImage src={cellData} keyUrl="renderUrl" />
-          ),
+          cellFormat: (cellData) => <ColImage src={cellData} />,
         }),
     }),
     querySchema: Joi.object({

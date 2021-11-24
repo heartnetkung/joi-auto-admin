@@ -166,7 +166,7 @@ class JoiField {
     if (field.type === "number") return "InputNumber";
     if (meta.valid) return "Select";
     if (meta.loadBarcodeName) return "Barcode";
-    if (meta.getUploadUrl) return "GCSUpload";
+    if (meta.getUploadUrl || meta.gcsCredentials) return "GCSUpload";
     if (meta.firebaseConfig) return "FirebaseUpload";
     return "Input";
   }

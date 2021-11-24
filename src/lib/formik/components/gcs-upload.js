@@ -8,8 +8,6 @@ import { alert } from "../../controller/util";
 import { usePersistFn } from "../../shared/hook";
 import _ from "lodash";
 
-const cacheImageRef = React.createRef(null);
-
 const GCSUpload = (props) => {
   const {
     name,
@@ -78,8 +76,8 @@ const GCSUpload = (props) => {
       const res = {
         status: 200,
         message: "ok",
-        url: url.origin + url.pathname,
-        renderUrl: URL.createObjectURL(file),
+        uri: url.origin + url.pathname,
+        url: URL.createObjectURL(file),
       };
       if (uploadFileType === "image" && requireImageSize) {
         const { width, height } = await getImageSize(file);
@@ -91,14 +89,13 @@ const GCSUpload = (props) => {
       onError({
         message: error?.response || "Upload failed!",
       });
-      console.log(error, "err-xx");
       alert.error("อัพโหลดไฟล์ไม่สำเร็จ");
     }
   });
 
   const onEventSetFormik = usePersistFn((newState) => {
     const listFile = newState.map((elem) => {
-      const item = { url: elem.url, renderUrl: elem.renderUrl };
+      const item = { url: elem.uri };
       if (uploadFileType !== "image") {
         return item;
       }
@@ -113,26 +110,13 @@ const GCSUpload = (props) => {
     setFieldValue(name, [...listFile], false);
   });
 
-  const onEventSetCacheImage = usePersistFn((url, renderUrl) => {
-    if (!url || !renderUrl) {
-      return;
-    }
-    if (!_.isEmpty(cacheImageRef.current)) {
-      cacheImageRef.current[url] = renderUrl;
-    } else {
-      cacheImageRef.current = {};
-      cacheImageRef.current[url] = renderUrl;
-    }
-  });
-
   const onChangeFile = usePersistFn((info) => {
     let newFileList = [...info.fileList];
     newFileList = newFileList.slice(multiple ? 0 : -1);
     newFileList = newFileList.map((file) => {
       if (file.response) {
-        file.renderUrl = file.response.renderUrl;
+        file.uri = file.response.uri;
         file.url = file.response.url;
-        onEventSetCacheImage(file.url, file.renderUrl);
       }
       return file;
     });
@@ -180,5 +164,10 @@ GCSUpload.defaultProps = {
   imagePreview: false,
   requireImageSize: false,
 };
+
+/**
+ *
+ *
+ */
 
 export default GCSUpload;
