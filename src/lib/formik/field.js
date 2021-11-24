@@ -11,6 +11,7 @@ import {
 import Cascader from "./components/cascader";
 import Barcode from "./components/barcode";
 import GCSUpload from "./components/gcs-upload";
+import FirebaseUpload from "./components/firebase-upload";
 import moment from "moment";
 import React from "react";
 import { useFormikContext } from "formik";
@@ -82,6 +83,7 @@ const Field = (props) => {
         )}
         {fieldType === "Switch" && <Switch {...props2} />}
         {fieldType === "GCSUpload" && <GCSUpload {...props2} />}
+        {fieldType === "FirebaseUpload" && <FirebaseUpload {...props2} />}
       </Form.Item>
     </Col>
   );
@@ -104,6 +106,7 @@ Field.propTypes = {
     "Select",
     "Switch",
     "GCSUpload",
+    "FirebaseUpload",
   ]).isRequired,
   name: PropTypes.string.isRequired,
   validate: PropTypes.func.isRequired,

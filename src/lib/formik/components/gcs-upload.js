@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FieldArray, useFormikContext } from "formik";
 import PropTypes from "prop-types";
-import probe from "probe-image-size";
 import { Upload, Button } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
@@ -20,7 +19,7 @@ const GCSUpload = (props) => {
     getUploadUrl,
     imagePreview,
     uploadFileType,
-    isRequireImageSize,
+    requireImageSize,
   } = props;
   const [fileListState, setFileListState] = useState([]);
   const { values, setFieldValue } = useFormikContext();
@@ -47,6 +46,22 @@ const GCSUpload = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values, name]);
 
+  const getImageSize = usePersistFn((file) => {
+    const promise = new Promise((resolve, reject) => {
+      let img = new Image();
+      img.src = URL.createObjectURL(file);
+      img.onload = () => {
+        const width = img.width;
+        const height = img.height;
+        resolve({ width, height });
+      };
+      img.onerror = () => {
+        reject(new Error("can't get image size"));
+      };
+    });
+    return promise;
+  });
+
   const onEventUploadGetUrl = usePersistFn(async (options) => {
     const { onSuccess, onError, file } = options;
 
@@ -66,8 +81,8 @@ const GCSUpload = (props) => {
         url: url.origin + url.pathname,
         renderUrl: URL.createObjectURL(file),
       };
-      if (uploadFileType === "image" && isRequireImageSize) {
-        const { width, height } = await probe(res.url);
+      if (uploadFileType === "image" && requireImageSize) {
+        const { width, height } = await getImageSize(file);
         res.width = width;
         res.height = height;
       }
@@ -154,7 +169,7 @@ GCSUpload.propTypes = {
   getUploadUrl: PropTypes.func,
   imagePreview: PropTypes.bool,
   uploadFileType: PropTypes.oneOf(["image", "file"]).isRequired,
-  isRequireImageSize: PropTypes.bool,
+  requireImageSize: PropTypes.bool,
 };
 
 GCSUpload.defaultProps = {
@@ -163,7 +178,7 @@ GCSUpload.defaultProps = {
   accept: "*",
   getUploadUrl: null,
   imagePreview: false,
-  isRequireImageSize: false,
+  requireImageSize: false,
 };
 
 export default GCSUpload;

@@ -60,20 +60,12 @@ const App = () => {
         .label("รูป")
         .meta({
           multiple: true,
-          imagePreview: true,
           uploadFileType: "image",
-          firebaseConfig: {
-            apiKey: "AIzaSyAIIhMVd5TKY39kmjv1t75EAD5FOGBoR2A",
-            authDomain: "fir-storage-9c648.firebaseapp.com",
-            projectId: "fir-storage-9c648",
-            storageBucket: "fir-storage-9c648.appspot.com",
-            messagingSenderId: "153919352272",
-            appId: "1:153919352272:web:47d2fc082bdc031ed91dd5",
-            measurementId: "G-V7GVPCB5XX",
+          imagePreview: true,
+          getUploadUrl: async (fileType) => {
+            await wait(500);
+            return "https://storage.googleapis.com/ufriend-payment_slip/slip_CT21AH473W_1637645670038.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=ufriend-gcp%40ufriend-328114.iam.gserviceaccount.com%2F20211123%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20211123T053430Z&X-Goog-Expires=900&X-Goog-SignedHeaders=content-type%3Bhost&X-Goog-Signature=21eed197faba052c9142824006b6e8c0825b948a58fc329e3b1ae1049e8486a3ad33eec60f335954de74af2bb147d85a0e8fe7b40abf00e229cdd0645b70057721f75f45a0a44284bcb3742bf0b6140cd27201a494775925703b735d5adda222eb08da9503966b247ec04afc2125bd2f0a9035904e69bb9f5fb35d64a6d691cc181ad9ce5b172c043e138bf031ffbd3f2a29807b2334d3fbb2c06238090b36d36c34ab0d1ff59a4d18e27c7abf57ff94ba7f44b367ebd77d14b34dcd220c5c556b5083b3632e5cdf2550abdd93fd021739c130afc7d12aa65bf968f62ee4b0c9ed91d16b72bae6ffb5e40feb6d62bc00d7520316ab6bdf372f19f1d183406dc8";
           },
-          collectionName: "products",
-          prefixFileName: "iPhone",
-          requireImageSize: true,
           cellWidth: 150,
           cellFormat: (cellData) => (
             <ColImage src={cellData} keyUrl="renderUrl" />

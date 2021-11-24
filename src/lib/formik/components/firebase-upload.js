@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { FieldArray, useFormikContext } from "formik";
 import PropTypes from "prop-types";
-import probe from "probe-image-size";
 import { Upload, Button } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import axios from "axios";
 import { alert } from "../../controller/util";
 import { usePersistFn } from "../../shared/hook";
 import _ from "lodash";
 import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { nanoid } from "nanoid";
 
 let firebaseApp = null;
 let firebaseStorage = null;
@@ -22,8 +21,10 @@ const FirebaseUpload = (props) => {
     accept,
     imagePreview,
     uploadFileType,
-    isRequireImageSize,
+    requireImageSize,
     firebaseConfig,
+    collectionName,
+    prefixFileName,
   } = props;
   const [fileListState, setFileListState] = useState([]);
   const { values, setFieldValue } = useFormikContext();
@@ -58,29 +59,45 @@ const FirebaseUpload = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values, name]);
 
-  console.log(firebaseStorage, "storage");
+  const getImageSize = usePersistFn((file) => {
+    const promise = new Promise((resolve, reject) => {
+      let img = new Image();
+      img.src = URL.createObjectURL(file);
+      img.onload = () => {
+        const width = img.width;
+        const height = img.height;
+        resolve({ width, height });
+      };
+      img.onerror = () => {
+        reject(new Error("can't get image size"));
+      };
+    });
+    return promise;
+  });
 
   const onEventUpload = usePersistFn(async (options) => {
     const { onSuccess, onError, file } = options;
-
-    if (typeof getUploadUrl !== "function" || !file) {
+    if (!file || !firebaseStorage) {
       return;
     }
     try {
-      const uploadURL = "https://www.google.com";
-      const headerConfig = {
-        headers: { "Content-Type": file.type },
-      };
-      await axios.put(uploadURL, file, headerConfig);
-      const url = new URL(uploadURL);
+      const fileName = prefixFileName
+        ? `${prefixFileName}-${nanoid()}`
+        : nanoid();
+      const pathReference = collectionName
+        ? `${collectionName}/${fileName}`
+        : `defaultCollections/${fileName}`;
+      const storageRef = ref(firebaseStorage, pathReference);
+      await uploadBytes(storageRef, file);
+      const uploadUrl = await getDownloadURL(storageRef);
       const res = {
         status: 200,
         message: "ok",
-        uri: url.origin + url.pathname,
+        uri: uploadUrl,
         url: URL.createObjectURL(file),
       };
-      if (uploadFileType === "image" && isRequireImageSize) {
-        const { width, height } = await probe(res.uri);
+      if (uploadFileType === "image" && requireImageSize) {
+        const { width, height } = await getImageSize(file);
         res.width = width;
         res.height = height;
       }
@@ -135,6 +152,9 @@ const FirebaseUpload = (props) => {
           fileList={fileListState}
           onChange={onChangeFile}
           customRequest={onEventUpload}
+          onDownload={(event) => {
+            console.log(event);
+          }}
         >
           <Button icon={<UploadOutlined />}>{label}</Button>
         </Upload>
@@ -152,27 +172,20 @@ FirebaseUpload.propTypes = {
   accept: PropTypes.string,
   imagePreview: PropTypes.bool,
   uploadFileType: PropTypes.oneOf(["image", "file"]).isRequired,
-  isRequireImageSize: PropTypes.bool,
-
-  /* firebase storage keys */
+  requireImageSize: PropTypes.bool,
   firebaseConfig: PropTypes.object.isRequired,
+  collectionName: PropTypes.string,
+  prefixFileName: PropTypes.string,
 };
 
 FirebaseUpload.defaultProps = {
   label: "อัพโหลดไฟล์",
   multiple: false,
   accept: "*",
-  getUploadUrl: null,
   imagePreview: false,
-  isRequireImageSize: false,
+  requireImageSize: false,
+  collectionName: "",
+  prefixFileName: "",
 };
 
 export default FirebaseUpload;
-
-// "apiKey": "AIzaSyAXkEyUzjwZRfbOGtP9XkJcR4-E9ecoZWQ",
-//   "authDomain": "jobfinfin-dev.firebaseapp.com",
-//   "projectId": "jobfinfin-dev",
-//   "storageBucket": "jobfinfin-dev.appspot.com",
-//   "messagingSenderId": "646571522180",
-//   "appId": "1:646571522180:web:f7f749a1a15985fc2c2ad1",
-//   "measurementId": "G-KWZ5JHSJ58"
