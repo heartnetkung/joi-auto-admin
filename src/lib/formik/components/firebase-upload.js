@@ -152,9 +152,6 @@ const FirebaseUpload = (props) => {
           fileList={fileListState}
           onChange={onChangeFile}
           customRequest={onEventUpload}
-          onDownload={(event) => {
-            console.log(event);
-          }}
         >
           <Button icon={<UploadOutlined />}>{label}</Button>
         </Upload>
@@ -189,3 +186,14 @@ FirebaseUpload.defaultProps = {
 };
 
 export default FirebaseUpload;
+
+// Example firebaseConfig
+// firebaseConfig: {
+//   apiKey: "",
+//   authDomain: "",
+//   projectId: "",
+//   storageBucket: "",
+//   messagingSenderId: "",
+//   appId: "",
+//   measurementId: "",
+// },
