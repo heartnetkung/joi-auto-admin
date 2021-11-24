@@ -3,6 +3,7 @@ import { getErrorMessage } from "./error_message";
 import _ from "lodash";
 import numeral from "numeral";
 import moment from "moment";
+import { fixEmptyString } from "./fix_empty_string";
 
 const OMIT_META = [
   "twoColumn",
@@ -16,21 +17,17 @@ const OMIT_META = [
   "fieldHide",
   "containerStyle",
   "step",
+  "onFormik",
+  "disableSorting",
+  "disableFilter",
 ];
 
 class JoiWrapper {
   constructor(joiObj) {
-    if (Joi.isSchema(joiObj)) {
-      this.joiObj = joiObj;
-      this.describe = joiObj.describe();
-    } else {
-      try {
-        this.joiObj = Joi.build(joiObj);
-        this.describe = joiObj;
-      } catch (e) {
-        throw new Error("Invalid Joi Object");
-      }
-    }
+    if (!Joi.isSchema(joiObj)) throw new Error("Invalid Joi Object");
+
+    this.describe = joiObj.describe();
+    this.joiObj = fixEmptyString(joiObj, this.describe);
     this.joiObj = this.joiObj.append({ _id: Joi.any() });
     this.formSpec = [];
     traverse(this.describe, [], this.formSpec, this.joiObj);
@@ -84,13 +81,16 @@ class JoiField {
     this._extractedSchema = this.getExtractedSchema(joiObj, path);
     this.validate = this.validate.bind(this);
     this.type = field.type;
-    this.twoColumn = !!meta.twoColumn;
     this.defaultValue = field?.flags?.default;
     this.column = this.getColumn(meta, this);
+
+    //remove excess data from meta
+    this.twoColumn = meta.twoColumn;
     this.fieldHide = meta.fieldHide;
-    this.meta = _.omit(meta, OMIT_META);
     this.containerStyle = meta.containerStyle;
     this.step = meta.step;
+    this.onFormik = meta.onFormik;
+    this.meta = _.omit(meta, OMIT_META);
   }
 
   getExtractedSchema(joiObj, path) {
@@ -110,6 +110,8 @@ class JoiField {
       render: meta.cellFormat,
       width: meta.cellWidth,
       cellHide: meta.cellHide,
+      disableSorting: meta.disableSorting,
+      disableFilter: meta.disableFilter,
       title: label,
       dataIndex: name.split("."),
       key: name,

@@ -53,7 +53,12 @@ const App = () => {
 				.valid("m", "f")
 				.default("m")
 				.label("เพศ")
-				.meta({ validLabel: ["ชาย", "หญิง"], twoColumn: true }),
+				.meta({
+					validLabel: ["ชาย", "หญิง"],
+					twoColumn: true,
+					disableFilter: true,
+					disableSorting: true
+				}),
 		}),
 		querySchema: Joi.object({
 			purchased_value: Joi.string()

@@ -14,20 +14,23 @@ As a developer in a company, we spend a lot of time writing web-based tools for 
 
 The idea is to provide a `react component` called `AutoAdmin` which take minimal output and automatically render a complete UI. It's mainly composed of 2 components:
 
-1. A table for GET operation with the following features:
-   - sort, filter, pagination
-   - export data to excel format
-   - select rows for DELETE operation
-   - responsive
-   - support customizable button for each row
-   - ~~expandable row~~
-2. A form for CREATE and UPDATE operation with the following features:
-   - render automatically from specified `Joi Object`.
-   - import excel data
-   - automatically validate form data and excel data before sending it to server
-     - all errors are pre-translated into Thai language
-   - support multiple pre-configured inputs such as image uploader, address input, heirarchical dropdown, ajax dropdown, and date picker
-   - support custom react input
+1\. A table for GET operation with the following features:
+
+- sort, filter, pagination
+- export data to excel format
+- select rows for DELETE operation
+- responsive
+- support customizable button for each row
+- ~~expandable row~~
+
+2\. A form for CREATE and UPDATE operation with the following features:
+
+- render automatically from specified `Joi Object`.
+- import excel data
+- automatically validate form data and excel data before sending it to server
+  - all errors are pre-translated into Thai language
+- support multiple pre-configured inputs such as image uploader, address input, heirarchical dropdown, ajax dropdown, and date picker
+- support custom react input
 
 ## Example
 
@@ -121,9 +124,9 @@ export default App;
       - `label` string - label for the cascader component
       - `compLabels` [string] - labels of other fields used to store input result
       - `options` [node] | enum - all possible choices for cascader, see ant design API
-        - enum can be 'th-address' for thai province/district/tumbon/zipcode data
+        - The enum can be 'th-address' for thai province/district/tumbon/zipcode data
       - `asyncLoad` async([selectedNode])=>{} - only for async load. Disable field search once this field is provided.
-      - `fieldHide` boolean | (formValue, currentStep)=>boolean - same as above.
+      - `fieldHide` true | (formValue, currentStep)=>boolean - same as above.
       - `step` number - same as above.
     - `.meta({ validLabel: [string] })`
       - Required for `<Select>` type. The array length must be equal to input of `.valid([ any ])` as they will be rendered as key and value of `<Option>`
@@ -131,12 +134,23 @@ export default App;
       - Required for `<Barcode>` type. Used to fetch human-readable data of the barcode.
     - `.meta({ containerStyle: styleObj })`
       - Customize style of the field container, useful for adding margins or padding.
+    - `.meta({ onFormik: ({ value, values, setFieldValue, setFieldError })=> null })`
+      - \[Advanced\] For writing interactive field. The given function will be called when input value change, you'll be given helper functions to modify the internal state of [formik](https://formik.org/) form.
+      - `values` represents the whole form data
+      - `value` represents this input data
+      - `setFieldValue(name, value)` set value of any field in the form. Name can be represented with dot notation for nested field.
+      - `setFieldError(name, error)` set error of any field in the form. Name can be represented with dot notation for nested field.
   - To customize `AutoAdmin` _table_, use the following fields:
-    - `.meta({ cellEllipsis: boolean })`
+    - `.meta({ cellEllipsis: true })`
     - `.meta({ cellFormat: (cellData)=> string | ReactDomNode })`
-      - for formating number, date, etc. on the table.
+      - For formating number, date, etc. on the table.
     - `.meta({ cellWidth: number })`
-    - `.meta({ cellHide: boolean })`
+    - `.meta({ cellHide: true })` and `.meta({ cellShow: true })`
+      - For selectively show or hide certain fields from table view
+    - `.meta({ disableSorting: true })`
+      - For disabling column sorting
+    - `.meta({ disableFilter: true })`
+      - For disabling column filter
 - `.valid([ any ])`
   - For making `<Select>` input.
 - `.required()`

@@ -16,21 +16,32 @@ import moment from "moment";
 import React from "react";
 import { useFormikContext } from "formik";
 import { Col } from "antd";
+import { useRef } from "react";
+import _ from "lodash";
 
 const { WeekPicker, RangePicker, MonthPicker } = DatePicker;
 
 const Field = (props) => {
   const { fieldType, label, required, name, validate, meta } = props;
   const { labelCol, wrapperCol, colSpan, offset, className } = props;
-  const { fieldHide, currentStep, containerStyle, step } = props;
+  const { fieldHide, currentStep, containerStyle, step, onFormik } = props;
 
   const props2 = { ...meta, name };
-  const { values } = useFormikContext();
+  const { values, setFieldError, setFieldValue } = useFormikContext();
+  const ref = useRef(undefined);
 
   if (typeof fieldHide === "function") {
     if (fieldHide(values)) return null;
   } else if (fieldHide) return null;
   if (currentStep !== -1 && currentStep !== step) return null;
+
+  if (onFormik) {
+    var newValue = _.get(values, name);
+    if (newValue !== ref.current) {
+      onFormik({ setFieldError, setFieldValue, values, value: newValue });
+      ref.current = newValue;
+    }
+  }
 
   return (
     <Col
@@ -105,8 +116,6 @@ Field.propTypes = {
     "TextArea",
     "Select",
     "Switch",
-    "GCSUpload",
-    "FirebaseUpload",
   ]).isRequired,
   name: PropTypes.string.isRequired,
   validate: PropTypes.func.isRequired,
@@ -122,6 +131,7 @@ Field.propTypes = {
   className: PropTypes.string,
   containerStyle: PropTypes.object,
   step: PropTypes.number,
+  onFormik: PropTypes.func,
 };
 Field.defaultProps = {
   labelCol: undefined,
@@ -132,6 +142,7 @@ Field.defaultProps = {
   className: undefined,
   containerStyle: undefined,
   step: undefined,
+  onFormik: undefined,
 };
 
 export default Field;
