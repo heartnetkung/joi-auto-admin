@@ -14,15 +14,13 @@ import moment from "moment";
 import React from "react";
 import { useFormikContext } from "formik";
 import { Col } from "antd";
-import { useRef } from "react";
-import _ from "lodash";
 
 const { WeekPicker, RangePicker, MonthPicker } = DatePicker;
 
 const Field = (props) => {
 	const { fieldType, label, required, name, validate, meta } = props;
 	const { labelCol, wrapperCol, colSpan, offset, className } = props;
-	const { fieldHide, currentStep, containerStyle, step, onFormik } = props;
+	const { fieldHide, currentStep, containerStyle, step } = props;
 	const { onFieldRender } = props;
 
 	const props2 = { ...meta, name };
