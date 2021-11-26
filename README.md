@@ -134,6 +134,8 @@ export default App;
       - Required for `<Barcode>` type. Used to fetch human-readable data of the barcode.
     - `.meta({ containerStyle: styleObj })`
       - Customize style of the field container, useful for adding margins or padding.
+    - `.meta({ onFieldRender: (props)=>ReactDomNode })`
+      - \[Advanced\] fully customize the form component. The function usually implements with `import { useFormikContext } from "formik";` to get/set internal value of the form. See the example for more information.
   - To customize `AutoAdmin` _table_, use the following fields:
     - `.meta({ cellEllipsis: true })`
     - `.meta({ cellFormat: (cellData)=> string | ReactDomNode })`
