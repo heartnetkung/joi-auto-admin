@@ -27,10 +27,13 @@ const Controller = (props) => {
 	const [deleteStatus, doDelete] = useAPI(deleteMany);
 	const editModalControl = useModal();
 	const excelModalControl = useModal();
-	const schema2 = useMemo(() => new JoiWrapper(schema), [schema]);
+	const schema2 = useMemo(() => new JoiWrapper(schema, devMode), [
+		schema,
+		devMode,
+	]);
 	const querySchema2 = useMemo(
 		() => querySchema && new JoiWrapper(querySchema, devMode),
-		[querySchema]
+		[querySchema, devMode]
 	);
 
 	const onCreate = usePersistFn(() => {
