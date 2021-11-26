@@ -26,21 +26,12 @@ const Field = (props) => {
 	const { onFieldRender } = props;
 
 	const props2 = { ...meta, name };
-	const { values, setFieldError, setFieldValue } = useFormikContext();
-	const ref = useRef(undefined);
+	const { values} = useFormikContext();
 
 	if (typeof fieldHide === "function") {
 		if (fieldHide(values)) return null;
 	} else if (fieldHide) return null;
 	if (currentStep !== -1 && currentStep !== step) return null;
-
-	if (onFormik) {
-		var newValue = _.get(values, name);
-		if (newValue !== ref.current) {
-			onFormik({ setFieldError, setFieldValue, values, value: newValue });
-			ref.current = newValue;
-		}
-	}
 
 	return (
 		<Col
@@ -138,7 +129,6 @@ Field.propTypes = {
 	className: PropTypes.string,
 	containerStyle: PropTypes.object,
 	step: PropTypes.number,
-	onFormik: PropTypes.func,
 	onFieldRender: PropTypes.func,
 };
 Field.defaultProps = {
@@ -150,7 +140,6 @@ Field.defaultProps = {
 	className: undefined,
 	containerStyle: undefined,
 	step: undefined,
-	onFormik: undefined,
 	onFieldRender: undefined,
 };
 

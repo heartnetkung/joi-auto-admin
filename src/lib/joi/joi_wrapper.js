@@ -17,7 +17,6 @@ const OMIT_META = [
 	"fieldHide",
 	"containerStyle",
 	"step",
-	"onFormik",
 	"disableSorting",
 	"disableFilter",
 	"onFieldRender",
@@ -91,7 +90,6 @@ class JoiField {
 		this.fieldHide = meta.fieldHide;
 		this.containerStyle = meta.containerStyle;
 		this.step = meta.step;
-		this.onFormik = meta.onFormik;
 		this.onFieldRender = meta.onFieldRender;
 		this.meta = _.omit(meta, OMIT_META);
 	}
