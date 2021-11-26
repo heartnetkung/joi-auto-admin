@@ -20,6 +20,7 @@ const OMIT_META = [
 	"onFormik",
 	"disableSorting",
 	"disableFilter",
+	"onFieldRender",
 ];
 
 class JoiWrapper {
@@ -91,6 +92,7 @@ class JoiField {
 		this.containerStyle = meta.containerStyle;
 		this.step = meta.step;
 		this.onFormik = meta.onFormik;
+		this.onFieldRender = meta.onFieldRender;
 		this.meta = _.omit(meta, OMIT_META);
 	}
 
@@ -167,6 +169,7 @@ class JoiField {
 		if (field.type === "number") return "InputNumber";
 		if (meta.valid) return "Select";
 		if (meta.loadBarcodeName) return "Barcode";
+		if (meta.onFieldRender) return "Custom";
 		return "Input";
 	}
 

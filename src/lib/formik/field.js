@@ -23,6 +23,7 @@ const Field = (props) => {
 	const { fieldType, label, required, name, validate, meta } = props;
 	const { labelCol, wrapperCol, colSpan, offset, className } = props;
 	const { fieldHide, currentStep, containerStyle, step, onFormik } = props;
+	const { onFieldRender } = props;
 
 	const props2 = { ...meta, name };
 	const { values, setFieldError, setFieldValue } = useFormikContext();
@@ -56,6 +57,9 @@ const Field = (props) => {
 				labelCol={labelCol}
 				wrapperCol={wrapperCol}
 			>
+				{fieldType === "Custom" &&
+					onFieldRender &&
+					onFieldRender(props2)}
 				{fieldType === "Barcode" && <Barcode {...props2} />}
 				{fieldType === "Cascader" && <Cascader {...props2} />}
 				{fieldType === "Checkbox" && <Checkbox {...props2}></Checkbox>}
@@ -118,6 +122,7 @@ Field.propTypes = {
 		"TextArea",
 		"Select",
 		"Switch",
+		"Custom",
 	]).isRequired,
 	name: PropTypes.string.isRequired,
 	validate: PropTypes.func.isRequired,
@@ -134,6 +139,7 @@ Field.propTypes = {
 	containerStyle: PropTypes.object,
 	step: PropTypes.number,
 	onFormik: PropTypes.func,
+	onFieldRender: PropTypes.func,
 };
 Field.defaultProps = {
 	labelCol: undefined,
@@ -145,6 +151,7 @@ Field.defaultProps = {
 	containerStyle: undefined,
 	step: undefined,
 	onFormik: undefined,
+	onFieldRender: undefined,
 };
 
 export default Field;
