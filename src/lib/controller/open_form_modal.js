@@ -17,7 +17,7 @@ export const openFormModal = (props) => {
 	};
 
 	document.body.appendChild(div);
-	const props2 = { ...props, onClose, schema: new JoiWrapper(props.schema) };
+	const props2 = { ...props, onClose, schema: new JoiWrapper(props.schema, props.devMode) };
 	setTimeout(() => ReactDOM.render(<FormModal {...props2} />, div));
 };
 

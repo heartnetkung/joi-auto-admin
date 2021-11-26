@@ -16,7 +16,7 @@ import React from "react";
 const INITIAL_FORM_STATUS = { isEdit: false, initialValue: null, error: null };
 
 const Controller = (props) => {
-	const { getMany, createMany, updateOne, deleteMany } = props;
+	const { getMany, createMany, updateOne, deleteMany, devMode } = props;
 	const { canExportCsv, canImportCsv, name, description } = props;
 	const { schema, querySchema, rowButtons, tableScroll, steps } = props;
 	const { canDownloadExcel, canUploadExcel, uploadPreviewUrl } = props;
@@ -29,7 +29,7 @@ const Controller = (props) => {
 	const excelModalControl = useModal();
 	const schema2 = useMemo(() => new JoiWrapper(schema), [schema]);
 	const querySchema2 = useMemo(
-		() => querySchema && new JoiWrapper(querySchema),
+		() => querySchema && new JoiWrapper(querySchema, devMode),
 		[querySchema]
 	);
 
@@ -201,6 +201,7 @@ Controller.propTypes = {
 	schema: PropTypes.object.isRequired,
 	querySchema: PropTypes.object,
 	steps: PropTypes.array,
+	devMode: PropTypes.bool,
 
 	//excel
 	canDownloadExcel: PropTypes.bool,
@@ -221,6 +222,7 @@ Controller.defaultProps = {
 	canUploadExcel: true,
 	uploadPreviewUrl: null,
 	steps: [],
+	devMode: false,
 };
 
 export default Controller;

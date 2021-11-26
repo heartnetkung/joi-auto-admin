@@ -23,7 +23,7 @@ const OMIT_META = [
 ];
 
 class JoiWrapper {
-	constructor(joiObj) {
+	constructor(joiObj, devMode) {
 		if (!Joi.isSchema(joiObj)) throw new Error("Invalid Joi Object");
 
 		this.describe = joiObj.describe();
@@ -32,6 +32,7 @@ class JoiWrapper {
 		this.formSpec = [];
 		traverse(this.describe, [], this.formSpec, this.joiObj);
 		handleCellShow(this.formSpec);
+		handleDevMode(this.formSpec, devMode);
 		this.columns = this.formSpec.map((a) => a.column);
 		this.toDefaultValues = this.toDefaultValues.bind(this);
 	}
@@ -55,6 +56,10 @@ const traverse = (node, path, ans, joiObj) => {
 	var keys = node.keys;
 	if (keys)
 		for (var key in keys) traverse(keys[key], [...path, key], ans, joiObj);
+};
+
+const handleDevMode = (formSpec, devMode) => {
+	if (devMode) for (var item of formSpec) delete item.required;
 };
 
 const handleCellShow = (formSpec) => {
