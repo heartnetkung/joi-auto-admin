@@ -30,7 +30,7 @@ const FormModal = (props) => {
 		try {
 			data = Joi.attempt(data, schema.joiObj);
 			await onSubmit(data);
-			alert.success("แก้ไขข้อมูลเรียบร้อย");
+			alert.success("บันทึกข้อมูลเรียบร้อย");
 			onClose();
 		} catch (e) {
 			setError(e);
