@@ -51,18 +51,18 @@ const Controller = (props) => {
 		setData(tableData.map((a) => (a._id === rowData._id ? rowData : a)));
 	});
 
-	const onSubmit = usePersistFn(async (data, actions) => {
+	const onSubmit = usePersistFn(async (data, actions, originalData) => {
 		setEditModalData((a) => ({ ...a, error: null }));
 		try {
 			if (editModalData.isEdit) {
 				data = Joi.attempt(data, schema2.joiObj);
-				await updateOne(data);
-				updateDataAtRow(data);
+				await updateOne(data, originalData);
+				updateDataAtRow(originalData);
 				alert.success("แก้ไขข้อมูลเรียบร้อย");
 				editModalControl.setVisible(false);
 			} else {
 				data = Joi.attempt(data, schema2.joiObj);
-				var returnData = await createMany([data]);
+				var returnData = await createMany([data], [originalData]);
 				if (!Array.isArray(returnData) || returnData.length !== 1)
 					return alert.error("ข้อมูลจากเซิฟเวอร์ไม่ถูกต้อง");
 				data = appendId(returnData[0]);
@@ -121,7 +121,7 @@ const Controller = (props) => {
 		try {
 			var rawExcel = await excelToTable(a);
 			var newRows = deserializeTable(rawExcel, schema2);
-			var newData = await createMany(newRows);
+			var newData = await createMany(newRows, newRows);
 			if (!Array.isArray(newData) || newData.length !== newRows.length)
 				return alert.error("ข้อมูลจากเซิฟเวอร์ไม่ถูกต้อง");
 

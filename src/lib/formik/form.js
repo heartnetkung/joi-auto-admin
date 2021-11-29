@@ -25,11 +25,11 @@ const CombinedForm = (props) => {
 		);
 		const onSubmit2 = async (postData, actions) => {
 			for (var hook of onSubmitHooks) postData = hook(postData);
-			var ans = _.omit(
+			var ans = _.pick(
 				postData,
-				formSpec2.map((a) => a.name).filter((a) => /^\$|\.\$/.test(a))
+				formSpec2.map((a) => a.name).filter((a) => !/^\$|\.\$/.test(a))
 			);
-			await onSubmit(ans, actions);
+			await onSubmit(ans, actions, postData);
 		};
 		return { formSpec, onSubmit2 };
 	}, [schema, inline, onSubmit, isSmall]);
