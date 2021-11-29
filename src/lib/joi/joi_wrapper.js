@@ -27,12 +27,12 @@ class JoiWrapper {
 		if (!Joi.isSchema(joiObj)) throw new Error("Invalid Joi Object");
 
 		this.describe = joiObj.describe();
+		joiObj = handleDevMode(this.describe, devMode, joiObj);
 		this.joiObj = fixEmptyString(joiObj, this.describe);
 		this.joiObj = this.joiObj.append({ _id: Joi.any() });
 		this.formSpec = [];
 		traverse(this.describe, [], this.formSpec, this.joiObj);
 		handleCellShow(this.formSpec);
-		handleDevMode(this.formSpec, devMode);
 		this.columns = this.formSpec.map((a) => a.column);
 		this.toDefaultValues = this.toDefaultValues.bind(this);
 	}
@@ -58,8 +58,21 @@ const traverse = (node, path, ans, joiObj) => {
 		for (var key in keys) traverse(keys[key], [...path, key], ans, joiObj);
 };
 
-const handleDevMode = (formSpec, devMode) => {
-	if (devMode) for (var item of formSpec) delete item.required;
+const handleDevMode = (describeObj, devMode, joiObj) => {
+	if (!devMode) return joiObj;
+
+	const paths = [];
+	const traverse = (node, path) => {
+		if (node?.flags?.label && node?.flags?.presence) {
+			delete node.flags.presence;
+			paths.push(path);
+		}
+
+		var keys = node.keys;
+		if (keys) for (var key in keys) traverse(keys[key], [...path, key]);
+	};
+	traverse(describeObj, []);
+	return joiObj.fork(paths, (a) => a.optional());
 };
 
 const handleCellShow = (formSpec) => {
