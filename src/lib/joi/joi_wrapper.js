@@ -3,7 +3,7 @@ import { getErrorMessage } from "./error_message";
 import _ from "lodash";
 import numeral from "numeral";
 import moment from "moment";
-import { fixEmptyString } from "./fix_empty_string";
+import { prepare } from "./prepare_joi";
 
 const OMIT_META = [
 	"twoColumn",
@@ -27,9 +27,7 @@ class JoiWrapper {
 		if (!Joi.isSchema(joiObj)) throw new Error("Invalid Joi Object");
 
 		this.describe = joiObj.describe();
-		joiObj = handleDevMode(this.describe, devMode, joiObj);
-		this.joiObj = fixEmptyString(joiObj, this.describe);
-		this.joiObj = this.joiObj.append({ _id: Joi.any() });
+		this.joiObj = prepare(joiObj, this.describe, devMode);
 		this.formSpec = [];
 		traverse(this.describe, [], this.formSpec, this.joiObj);
 		handleCellShow(this.formSpec);
@@ -56,23 +54,6 @@ const traverse = (node, path, ans, joiObj) => {
 	var keys = node.keys;
 	if (keys)
 		for (var key in keys) traverse(keys[key], [...path, key], ans, joiObj);
-};
-
-const handleDevMode = (describeObj, devMode, joiObj) => {
-	if (!devMode) return joiObj;
-
-	const paths = [];
-	const traverse = (node, path) => {
-		if (node?.flags?.label && node?.flags?.presence) {
-			delete node.flags.presence;
-			paths.push(path);
-		}
-
-		var keys = node.keys;
-		if (keys) for (var key in keys) traverse(keys[key], [...path, key]);
-	};
-	traverse(describeObj, []);
-	return joiObj.fork(paths, (a) => a.optional());
 };
 
 const handleCellShow = (formSpec) => {
@@ -191,6 +172,12 @@ class JoiField {
 
 	validate(value) {
 		var rawError = this._extractedSchema.validate(value);
+		if (this.required && !value)
+			return getErrorMessage(
+				{ type: "any.required", message: "" },
+				this.label
+			);
+
 		if (!rawError.error || !Array.isArray(rawError.error.details))
 			return null;
 
