@@ -2,8 +2,6 @@ import _ from "lodash";
 import { useState } from "react";
 import { setNestedObjectValues } from "formik";
 import React from "react";
-//TODO maybe code split this
-import thAddress from "../assets/th-address.js";
 
 export const calculateSpan = (formSpec, isInline) => {
 	if (isInline)
@@ -56,10 +54,9 @@ const filter = function (inputValue, path) {
 };
 
 const lookupOptionsEnum = (cascader, isSmall, allTargets) => {
-	if (cascader.options === "th-address") {
+	if (cascader?.options?.[0]?.c?.[0]?.c?.[0]?.l === "คลองต้นไทร 10600") {
 		var ans = {
 			...cascader,
-			options: thAddress,
 			fieldNames: { label: "l", value: "l", children: "c" },
 			onSubmitHook: (a) => {
 				var thirdNames = allTargets.value[cascader.compLabels[1]].name;
