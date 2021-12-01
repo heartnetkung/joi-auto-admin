@@ -8,7 +8,7 @@ import { useMemo } from "react";
 import React from "react";
 import SubmitLine from "./submit_line";
 import { useMaxWidth } from "../shared/hook";
-import _ from 'lodash';
+import _ from "lodash";
 
 const { Step } = Steps;
 
@@ -24,11 +24,16 @@ const CombinedForm = (props) => {
 			formSpec.map((a) => a?.meta?.onSubmitHook).filter((a) => !!a)
 		);
 		const onSubmit2 = async (postData, actions) => {
+			postData = _.cloneDeep(postData);
 			for (var hook of onSubmitHooks) postData = hook(postData);
+			var names = formSpec2.map((a) => a.name);
 			var ans = _.pick(
 				postData,
-				formSpec2.map((a) => a.name).filter((a) => !/^\$|\.\$/.test(a))
+				names.filter((a) => !/^\$|\.\$/.test(a))
 			);
+			names
+				.filter((a) => /^\$|\.\$/.test(a))
+				.forEach((a) => _.unset(postData, a));
 			await onSubmit(ans, actions, postData);
 		};
 		return { formSpec, onSubmit2 };
