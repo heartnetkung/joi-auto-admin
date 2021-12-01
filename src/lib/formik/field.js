@@ -24,7 +24,7 @@ const Field = (props) => {
 	const { onFieldRender } = props;
 
 	const props2 = { ...meta, name };
-	const { values} = useFormikContext();
+	const { values } = useFormikContext();
 
 	if (typeof fieldHide === "function") {
 		if (fieldHide(values)) return null;
