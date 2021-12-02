@@ -136,7 +136,7 @@ const Controller = (props) => {
 
 	return (
 		<>
-			<Header name={name} />
+			<Header name={name} description={description} />
 			{querySchema && (
 				<Form
 					schema={querySchema2}
@@ -153,7 +153,6 @@ const Controller = (props) => {
 				schema={schema2}
 				querySchema={querySchema}
 				rowButtons={rowButtons}
-				description={description}
 				onEdit={updateOne && onEdit}
 				onCreate={createMany && onCreate}
 				onDelete={deleteMany && onDelete}
