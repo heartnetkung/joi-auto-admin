@@ -1,6 +1,6 @@
 jest.mock("../../lib/shared/xlsx");
 
-import { render, fireEvent, screen, act } from "../boilerplate";
+import { render, fireEvent, screen } from "../boilerplate";
 import { AutoAdmin, Joi } from "../../lib";
 import { prop1 } from "../mock";
 import React from "react";
