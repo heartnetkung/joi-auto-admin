@@ -17,9 +17,9 @@ const INITIAL_FORM_STATUS = { isEdit: false, initialValue: null, error: null };
 
 const Controller = (props) => {
 	const { getMany, createMany, updateOne, deleteMany, devMode } = props;
-	const { canExportCsv, canImportCsv, name, description } = props;
+	const { name, description } = props;
 	const { schema, querySchema, rowButtons, tableScroll, steps } = props;
-	const { disableExcelDownload, canUploadExcel, uploadPreviewUrl } = props;
+	const { disableExcelDownload, disableExcelUpload, uploadPreviewUrl } = props;
 
 	const [editModalData, setEditModalData] = useState(INITIAL_FORM_STATUS);
 	const [excelError, setExcelError] = useState([]);
@@ -148,8 +148,6 @@ const Controller = (props) => {
 			<Table
 				{...getManyStatus}
 				loading={getManyStatus.loading || deleteStatus.loading}
-				canExportCsv={canExportCsv}
-				canImportCsv={canImportCsv}
 				schema={schema2}
 				querySchema={querySchema}
 				rowButtons={rowButtons}
@@ -162,10 +160,10 @@ const Controller = (props) => {
 						: null
 				}
 				onUploadExcel={
-					canUploadExcel && createMany ? onUploadExcel : null
+					!disableExcelUpload && createMany ? onUploadExcel : null
 				}
 				onExampleExcel={
-					canUploadExcel &&
+					!disableExcelUpload &&
 					createMany &&
 					(uploadPreviewUrl || getManyStatus.data?.length)
 						? onExampleExcel
@@ -207,7 +205,7 @@ Controller.propTypes = {
 
 	//excel
 	disableExcelDownload: PropTypes.bool,
-	canUploadExcel: PropTypes.bool,
+	disableExcelUpload: PropTypes.bool,
 	uploadPreviewUrl: PropTypes.string,
 };
 
@@ -221,7 +219,7 @@ Controller.defaultProps = {
 	rowButtons: [],
 	querySchema: null,
 	disableExcelDownload: false,
-	canUploadExcel: true,
+	disableExcelUpload: false,
 	uploadPreviewUrl: null,
 	steps: [],
 	devMode: false,
