@@ -4,7 +4,7 @@ import { prop1 } from "../mock";
 import React from "react";
 
 it("basic case", async () => {
-	act(() => render(<AutoAdmin {...prop1} />));
+	render(<AutoAdmin {...prop1} />);
 	await screen.findByText(/bar/);
 	await screen.findByText(/fooName/);
 	await screen.findByText(/ข้อมูล dataName/);
