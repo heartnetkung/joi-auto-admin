@@ -59,11 +59,10 @@ const deserializeRow = (excelRow, schema) => {
 };
 
 export const serializeTable = (table, schema, showDisabled) => {
-	var columns = schema.columns();
 	var ans = [];
 	for (var rowData of table) {
 		var newRow = {};
-		for (var column of columns) {
+		for (var column of schema.columns) {
 			if (!showDisabled && column.disabled) continue;
 			var current = _.get(rowData, column.dataIndex);
 
