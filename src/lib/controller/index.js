@@ -19,7 +19,7 @@ const Controller = (props) => {
 	const { getMany, createMany, updateOne, deleteMany, devMode } = props;
 	const { canExportCsv, canImportCsv, name, description } = props;
 	const { schema, querySchema, rowButtons, tableScroll, steps } = props;
-	const { canDownloadExcel, canUploadExcel, uploadPreviewUrl } = props;
+	const { disableExcelDownload, canUploadExcel, uploadPreviewUrl } = props;
 
 	const [editModalData, setEditModalData] = useState(INITIAL_FORM_STATUS);
 	const [excelError, setExcelError] = useState([]);
@@ -157,7 +157,7 @@ const Controller = (props) => {
 				onCreate={createMany && onCreate}
 				onDelete={deleteMany && onDelete}
 				onDownloadExcel={
-					canDownloadExcel && getManyStatus.data?.length
+					!disableExcelDownload && getManyStatus.data?.length
 						? onDownloadExcel
 						: null
 				}
@@ -206,7 +206,7 @@ Controller.propTypes = {
 	devMode: PropTypes.bool,
 
 	//excel
-	canDownloadExcel: PropTypes.bool,
+	disableExcelDownload: PropTypes.bool,
 	canUploadExcel: PropTypes.bool,
 	uploadPreviewUrl: PropTypes.string,
 };
@@ -220,7 +220,7 @@ Controller.defaultProps = {
 	tableScroll: undefined,
 	rowButtons: [],
 	querySchema: null,
-	canDownloadExcel: true,
+	disableExcelDownload: false,
 	canUploadExcel: true,
 	uploadPreviewUrl: null,
 	steps: [],
