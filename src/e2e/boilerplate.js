@@ -36,7 +36,7 @@ const getCss = () => {
 };
 
 // launch pupeteer for visual debug
-export const pupeteer = () => {
+global.pupeteer = () => {
 	var style = document.createElement("style");
 	style.innerHTML = getCss();
 	document.body.appendChild(style);
@@ -47,3 +47,5 @@ export const pupeteer = () => {
 		},
 	});
 };
+
+export const wait = (ms) => new Promise((res) => setTimeout(res, ms));
