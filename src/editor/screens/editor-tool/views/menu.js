@@ -1,0 +1,32 @@
+import React from "react";
+import PropTypes from "prop-types";
+import { Menu } from "antd";
+import { MENU } from "../constants";
+
+const MenuView = (props) => {
+  const { currentMenu, setCurrentMenu } = props;
+
+  const onEventClick = (e) => {
+    setCurrentMenu({ current: e.key });
+  };
+
+  return (
+    <Menu
+      onClick={onEventClick}
+      selectedKeys={[currentMenu.current]}
+      mode="horizontal"
+      style={{ float: "right" }}
+    >
+      <Menu.Item key={MENU.form}>{MENU.form}</Menu.Item>
+      <Menu.Item key={MENU.table}>{MENU.table}</Menu.Item>
+      <Menu.Item key={MENU.code}>{MENU.code}</Menu.Item>
+    </Menu>
+  );
+};
+
+MenuView.propTypes = {
+  currentMenu: PropTypes.object.isRequired,
+  setCurrentMenu: PropTypes.func.isRequired,
+};
+
+export default MenuView;
