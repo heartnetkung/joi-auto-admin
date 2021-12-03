@@ -9,10 +9,10 @@ export const LayoutContainer = {
 };
 
 export const panelContainer = {
+  flex: 1,
   display: "flex",
   justifyContent: "space-between",
   width: "100%",
-  height: "100%",
 };
 
 export const resizableContainer = {
@@ -22,13 +22,23 @@ export const resizableContainer = {
 };
 
 export const leftPanelContainer = {
-  height: "100%",
-  backgroundColor: panelColor,
+  backgroundColor: "white",
   padding: "1rem",
+  marginLeft: 6,
+  marginBottom: 6,
+  borderRadius: 8,
+  border: `1px solid ${panelColor}`,
 };
 
 export const rightPanelContainer = {
   flex: 1,
+  borderRadius: 8,
+  marginRight: 6,
+  marginBottom: 6,
   backgroundColor: panelColor,
   padding: "2rem 1rem",
+};
+
+export const LeftContent = {
+  height: "100%",
 };

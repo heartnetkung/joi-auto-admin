@@ -15,5 +15,4 @@ export const SETTINGS = {
   canDelete: "canDelete",
   canDownloadExcel: "canDownloadExcel",
   canUploadExcel: "canUploadExcel",
-  uploadPreviewUrl: "uploadPreviewUrl",
 };

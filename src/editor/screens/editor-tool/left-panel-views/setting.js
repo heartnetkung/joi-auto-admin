@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import { Input, Form, Checkbox } from "antd";
 import { SETTINGS } from "../constants";
 import * as styles from "./styles";
 
-const RenderSetting = () => {
-  const [settingState, setSettingState] = useState({});
+const RenderSetting = (props) => {
+  const { settingState, setSettingState } = props;
 
   const onChangeCheckbox = (type) => {
     const newSettings = { ...settingState };
@@ -16,10 +17,26 @@ const RenderSetting = () => {
     setSettingState(newSettings);
   };
 
+  const onChangeField = (key, value) => {
+    const newSettings = { ...settingState };
+    newSettings[key] = value;
+    setSettingState(newSettings);
+  };
+
   return (
     <Form>
-      <Input style={styles.input} placeholder="name" />
-      <Input style={styles.input} placeholder="description" />
+      <Input
+        style={styles.input}
+        placeholder="name"
+        value={settingState?.name}
+        onChange={(event) => onChangeField("name", event.target.value)}
+      />
+      <Input
+        style={styles.input}
+        placeholder="description"
+        value={settingState?.description}
+        onChange={(event) => onChangeField("description", event.target.value)}
+      />
       <div style={styles.layoutMargin}>
         <Checkbox
           checked={settingState[SETTINGS.canCreate]}
@@ -55,18 +72,14 @@ const RenderSetting = () => {
         >
           {SETTINGS.canUploadExcel}
         </Checkbox>
-        <Checkbox
-          style={styles.checkbox}
-          checked={settingState[SETTINGS.uploadPreviewUrl]}
-          onChange={() => onChangeCheckbox(SETTINGS.uploadPreviewUrl)}
-        >
-          {SETTINGS.uploadPreviewUrl}
-        </Checkbox>
       </div>
     </Form>
   );
 };
 
-RenderSetting.propTypes = {};
+RenderSetting.propTypes = {
+  formState: PropTypes.array.isRequired,
+  setSettingState: PropTypes.func.isRequired,
+};
 
 export default RenderSetting;
