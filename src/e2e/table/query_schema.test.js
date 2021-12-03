@@ -39,4 +39,5 @@ it("getMany error", async () => {
 	var error = await screen.findByText("omg");
 	expect(error.className).toMatch("modal");
 	await screen.findByText("No Data");
+	expect(console.error.mock.calls.length).toBe(0);
 });
