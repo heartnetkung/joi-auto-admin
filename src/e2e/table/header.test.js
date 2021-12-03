@@ -21,3 +21,15 @@ it("handle description", async () => {
 	await screen.findByText(/desc/);
 	expect(console.error.mock.calls.length).toBe(0);
 });
+
+it("has create button when createMany is provided", async () => {
+	render(<AutoAdmin {...prop1} createMany={() => []} />);
+	await screen.findByText(/dataName/);
+	expect(typeof screen.queryByText("สร้าง")).toBe('object');
+});
+
+it("has no create button by default", async () => {
+	render(<AutoAdmin {...prop1} />);
+	await screen.findByText(/dataName/);
+	expect(screen.queryByText("สร้าง")).toBe(null);
+});
