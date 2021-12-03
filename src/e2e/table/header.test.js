@@ -9,7 +9,7 @@ it("handle thai name", async () => {
 	expect(console.error.mock.calls.length).toBe(0);
 });
 
-it("handle en name", async () => {
+it("handle en name (adding proper space)", async () => {
 	render(<AutoAdmin {...prop1} name="english" />);
 	await screen.findByText(/ข้อมูล english/);
 	expect(console.error.mock.calls.length).toBe(0);
