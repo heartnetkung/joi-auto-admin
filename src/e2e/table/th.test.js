@@ -1,4 +1,4 @@
-import { render, fireEvent, screen } from "../boilerplate";
+import { render, fireEvent, screen, act } from "../boilerplate";
 import { AutoAdmin, Joi } from "../../lib";
 import { prop1 } from "../mock";
 import React from "react";
@@ -24,33 +24,39 @@ it("basic case", async () => {
 	expect(allRows[2].textContent).toMatch("1");
 	expect(allRows[3].textContent).toMatch("2");
 
-	fireEvent.click(sortUps[0]);
-	await wait(10);
+	act(() => {
+		fireEvent.click(sortUps[0]);
+	});
 	var allRows = $$("tr");
 	expect(allRows.length).toBe(4);
 	expect(allRows[2].textContent).toMatch("2");
 	expect(allRows[3].textContent).toMatch("1");
 
-	fireEvent.click(sortDowns[0]);
-	await wait(10);
+	act(() => {
+		fireEvent.click(sortDowns[0]);
+	});
 	var allRows = $$("tr");
 	expect(allRows.length).toBe(4);
 	expect(allRows[2].textContent).toMatch("1");
 	expect(allRows[3].textContent).toMatch("2");
 
-	fireEvent.click(filters[0]);
-	await wait(10);
-	var dropdown = $$(".ant-dropdown:not(.ant-dropdown-hidden) [type='checkbox']");
-	fireEvent.click(dropdown[1]);
-	await wait(10);
-	var button = $(".ant-dropdown:not(.ant-dropdown-hidden) button", /OK/);
-	fireEvent.click(button);
-	await wait(10);
+	act(() => {
+		fireEvent.click(filters[0]);
+	});
+	act(() => {
+		var dropdown = $$(
+			".ant-dropdown:not(.ant-dropdown-hidden) [type='checkbox']"
+		);
+		fireEvent.click(dropdown[1]);
+	});
+	act(() => {
+		var button = $(".ant-dropdown:not(.ant-dropdown-hidden) button", /OK/);
+		fireEvent.click(button);
+	});
 	var allRows = $$("tr");
 	expect(allRows.length).toBe(3);
 	expect(allRows[2].textContent).toMatch("2");
-	// test warning
-	// expect(console.error.mock.calls.length).toBe(0);
+	expect(console.error.mock.calls.length).toBe(0);
 });
 
 it("disableSorting", async () => {
