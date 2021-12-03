@@ -35,6 +35,19 @@ const getCss = () => {
 	return css;
 };
 
+export const wait = (ms) => new Promise((res) => setTimeout(res, ms));
+
+// quick chrome-style API
+global.$$ = (query, regexp) => {
+	var ans = Array.from(document.querySelectorAll(query));
+	if (regexp instanceof RegExp)
+		return ans.filter((a) => regexp.test(a.textContent));
+	return ans;
+};
+global.$ = (query, regexp) => $$(query, regexp)[0];
+console.$$ = (query, regexp) =>
+	$$(query, regexp).map((a) => console.log(a.outerHTML));
+console.stringify = (a) => console.log(JSON.stringify(a, null, 2));
 // launch pupeteer for visual debug
 global.pupeteer = () => {
 	var style = document.createElement("style");
@@ -47,9 +60,3 @@ global.pupeteer = () => {
 		},
 	});
 };
-
-export const wait = (ms) => new Promise((res) => setTimeout(res, ms));
-
-// quick chrome-style API
-global.$ = document.querySelector.bind(document);
-global.$$ = document.querySelectorAll.bind(document);

@@ -6,9 +6,9 @@ import React from "react";
 const getColumnButtons = async () => {
 	await screen.findByText(/fooName/);
 	return {
-		filters: $$(".ant-table-filter-trigger"),
-		sortUps: $$(".ant-table-column-sorter-up"),
-		sortDowns: $$(".ant-table-column-sorter-down"),
+		filters: $$(".anticon-filter"),
+		sortUps: $$(".anticon-caret-up"),
+		sortDowns: $$(".anticon-caret-down"),
 	};
 };
 
@@ -40,10 +40,10 @@ it("basic case", async () => {
 
 	fireEvent.click(filters[0]);
 	await wait(10);
-	var dropdown = $$(".ant-table-filter-dropdown [type='checkbox']");
+	var dropdown = $$(".ant-dropdown:not(.ant-dropdown-hidden) [type='checkbox']");
 	fireEvent.click(dropdown[1]);
 	await wait(10);
-	var button = $(".ant-table-filter-dropdown .ant-btn-primary");
+	var button = $(".ant-dropdown:not(.ant-dropdown-hidden) button", /OK/);
 	fireEvent.click(button);
 	await wait(10);
 	var allRows = $$("tr");
