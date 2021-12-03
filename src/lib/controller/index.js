@@ -17,9 +17,9 @@ const INITIAL_FORM_STATUS = { isEdit: false, initialValue: null, error: null };
 
 const Controller = (props) => {
 	const { getMany, createMany, updateOne, deleteMany, devMode } = props;
-	const { name, description } = props;
+	const { name, description, uploadPreviewUrl } = props;
 	const { schema, querySchema, rowButtons, tableScroll, steps } = props;
-	const { disableExcelDownload, disableExcelUpload, uploadPreviewUrl } = props;
+	const { disableExcelDownload, disableExcelUpload } = props;
 
 	const [editModalData, setEditModalData] = useState(INITIAL_FORM_STATUS);
 	const [excelError, setExcelError] = useState([]);
@@ -62,7 +62,7 @@ const Controller = (props) => {
 				editModalControl.setVisible(false);
 			} else {
 				data = Joi.attempt(data, schema2.joiObj);
-				var returnData = await createMany([data], [originalData]);
+				var returnData = await createMany([data]);
 				if (!Array.isArray(returnData) || returnData.length !== 1)
 					return alert.error("ข้อมูลจากเซิฟเวอร์ไม่ถูกต้อง");
 				data = appendId(returnData[0]);
