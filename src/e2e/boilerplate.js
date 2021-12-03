@@ -28,14 +28,12 @@ export const render = (func) => {
 	originalRender(func);
 };
 
-var css = null;
-const getCss = () => {
-	if (!css)
-		css = fs.readFileSync(require.resolve("antd/dist/antd.css"), "utf8");
-	return css;
-};
+// ==============================
+//          global macro
+// ==============================
 
-export const wait = (ms) => new Promise((res) => setTimeout(res, ms));
+global.wait = (ms) => new Promise((res) => setTimeout(res, ms));
+console.stringify = (a) => console.log(JSON.stringify(a, null, 2));
 
 // quick chrome-style API
 global.$$ = (query, regexp) => {
@@ -47,16 +45,18 @@ global.$$ = (query, regexp) => {
 global.$ = (query, regexp) => $$(query, regexp)[0];
 console.$$ = (query, regexp) =>
 	$$(query, regexp).map((a) => console.log(a.outerHTML));
-console.stringify = (a) => console.log(JSON.stringify(a, null, 2));
+
+
 // launch pupeteer for visual debug
+var css = null;
+const getCss = () => {
+	if (!css)
+		css = fs.readFileSync(require.resolve("antd/dist/antd.css"), "utf8");
+	return css;
+};
 global.pupeteer = () => {
 	var style = document.createElement("style");
 	style.innerHTML = getCss();
 	document.body.appendChild(style);
-	generateImage({
-		launch: {
-			devtools: true,
-			headless: false,
-		},
-	});
+	generateImage({ launch: { devtools: true, headless: false } });
 };

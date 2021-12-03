@@ -1,4 +1,4 @@
-import { render, fireEvent, screen, wait } from "../boilerplate";
+import { render, fireEvent, screen } from "../boilerplate";
 import { AutoAdmin, Joi } from "../../lib";
 import { prop1 } from "../mock";
 import React from "react";
