@@ -126,13 +126,24 @@ class JoiField {
 		}
 
 		if (!ans.render) {
-			if (type === "number") ans.render = (a) => numeral(a).format("0,0");
+			if (type === "number")
+				ans.render = (a) => (a == null ? "" : numeral(a).format("0,0"));
 			else if (type === "boolean")
-				ans.render = (a) => (a ? "ใช่" : "ไม่ใช่");
+				ans.render = (a) => (a == null ? "" : a ? "ใช่" : "ไม่ใช่");
 			else if (type === "date")
-				ans.render = (a) => moment(a).format("YYYY-MM-DD");
-			else if (type === "array") ans.render = (a) => a.join(", ");
+				ans.render = (a) =>
+					a == null ? "" : moment(a).format("YYYY-MM-DD");
+			else if (type === "array")
+				ans.render = (a) => (a == null ? "" : a.join(", "));
 			else if (fieldType === "Select") ans.render = (a) => meta.valid[a];
+			else if (fieldType === "InputPhone")
+				ans.render = (a) => {
+					if (typeof a !== "string") return a;
+					return a.replace(
+						/(\d{2,3})(\d{3})(\d{4})/,
+						(m, p1, p2, p3) => [p1, p2, p3].join("-")
+					);
+				};
 		}
 
 		return ans;
