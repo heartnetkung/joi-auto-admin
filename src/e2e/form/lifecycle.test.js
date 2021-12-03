@@ -1,4 +1,3 @@
-// handle callback error
 import { render, screen, fireEvent, waitFor, act } from "../boilerplate";
 import { AutoAdmin, Joi } from "../../lib";
 import { prop1 } from "../mock";

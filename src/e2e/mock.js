@@ -10,3 +10,8 @@ export const prop2 = {
 	...prop1,
 	createMany: async () => {},
 };
+
+export const prop3 = {
+	...prop1,
+	createMany: async (a) => a,
+};
