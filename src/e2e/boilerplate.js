@@ -46,7 +46,6 @@ global.$ = (query, regexp) => $$(query, regexp)[0];
 console.$$ = (query, regexp) =>
 	$$(query, regexp).map((a) => console.log(a.outerHTML));
 
-
 // launch pupeteer for visual debug
 var css = null;
 const getCss = () => {
@@ -54,7 +53,8 @@ const getCss = () => {
 		css = fs.readFileSync(require.resolve("antd/dist/antd.css"), "utf8");
 	return css;
 };
-global.pupeteer = () => {
+global.pupeteer = async () => {
+	await wait(500);
 	var style = document.createElement("style");
 	style.innerHTML = getCss();
 	document.body.appendChild(style);
