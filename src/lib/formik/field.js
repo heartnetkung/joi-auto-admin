@@ -69,7 +69,10 @@ const Field = (props) => {
 					<Input {...props2} type="email" />
 				)}
 				{fieldType === "InputNumber" && (
-					<InputNumber {...props2} style={{ width: "100%" }} />
+					<InputNumber
+						{...props2}
+						style={{ ...props2.style, width: "100%" }}
+					/>
 				)}
 				{fieldType === "InputURL" && <Input {...props2} type="url" />}
 				{fieldType === "InputPhone" && (
@@ -107,6 +110,8 @@ Field.propTypes = {
 		"Input",
 		"InputNumber",
 		"InputPhone",
+		"InputEmail",
+		"InputURL",
 		"InputPassword",
 		"TextArea",
 		"Select",
