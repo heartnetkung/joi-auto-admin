@@ -49,3 +49,7 @@ global.pupeteer = () => {
 };
 
 export const wait = (ms) => new Promise((res) => setTimeout(res, ms));
+
+// quick chrome-style API
+global.$ = document.querySelector.bind(document);
+global.$$ = document.querySelectorAll.bind(document);

@@ -6,9 +6,9 @@ import React from "react";
 const getColumnButtons = async () => {
 	await screen.findByText(/fooName/);
 	return {
-		filters: document.querySelectorAll(".ant-table-filter-trigger"),
-		sortUps: document.querySelectorAll(".ant-table-column-sorter-up"),
-		sortDowns: document.querySelectorAll(".ant-table-column-sorter-down"),
+		filters: $$(".ant-table-filter-trigger"),
+		sortUps: $$(".ant-table-column-sorter-up"),
+		sortDowns: $$(".ant-table-column-sorter-down"),
 	};
 };
 
@@ -19,38 +19,34 @@ it("basic case", async () => {
 	expect(filters.length).toBe(1);
 	expect(sortUps.length).toBe(1);
 	expect(sortDowns.length).toBe(1);
-	var allRows = document.querySelectorAll("tr");
+	var allRows = $$("tr");
 	expect(allRows.length).toBe(4);
 	expect(allRows[2].textContent).toMatch("1");
 	expect(allRows[3].textContent).toMatch("2");
 
 	fireEvent.click(sortUps[0]);
 	await wait(10);
-	var allRows = document.querySelectorAll("tr");
+	var allRows = $$("tr");
 	expect(allRows.length).toBe(4);
 	expect(allRows[2].textContent).toMatch("2");
 	expect(allRows[3].textContent).toMatch("1");
 
 	fireEvent.click(sortDowns[0]);
 	await wait(10);
-	var allRows = document.querySelectorAll("tr");
+	var allRows = $$("tr");
 	expect(allRows.length).toBe(4);
 	expect(allRows[2].textContent).toMatch("1");
 	expect(allRows[3].textContent).toMatch("2");
 
 	fireEvent.click(filters[0]);
 	await wait(10);
-	var dropdown = document.querySelectorAll(
-		".ant-table-filter-dropdown [type='checkbox']"
-	);
+	var dropdown = $$(".ant-table-filter-dropdown [type='checkbox']");
 	fireEvent.click(dropdown[1]);
 	await wait(10);
-	var button = document.querySelector(
-		".ant-table-filter-dropdown .ant-btn-primary"
-	);
+	var button = $(".ant-table-filter-dropdown .ant-btn-primary");
 	fireEvent.click(button);
 	await wait(10);
-	var allRows = document.querySelectorAll("tr");
+	var allRows = $$("tr");
 	expect(allRows.length).toBe(3);
 	expect(allRows[2].textContent).toMatch("2");
 	// test warning
@@ -85,7 +81,7 @@ it("cellWidth", async () => {
 	});
 	render(<AutoAdmin {...prop1} schema={schema} />);
 	await screen.findByText("fooName");
-	var col = document.querySelectorAll("col");
+	var col = $$("col");
 	expect(col.length).toBe(1);
 	expect(col[0].style.width).toMatch("112px");
 	expect(console.error.mock.calls.length).toBe(0);
