@@ -29,7 +29,9 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "babel-plugin-lodash": "^3.3.4",
+    "esm": "^3.2.25",
     "jsdom-screenshot": "^4.0.0",
+    "prettier": "^2.5.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-scripts": "4.0.3"
