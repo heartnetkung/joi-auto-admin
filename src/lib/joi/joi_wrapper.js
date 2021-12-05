@@ -146,11 +146,7 @@ class JoiField {
 				fieldType === "GCSUpload" ||
 				fieldType === "FirebaseUpload"
 			)
-				ans.render = (a) => {
-					var temp = <ColImage src={a} keyUrl={meta.keyUrl} />;
-					console.log(a, temp, meta);
-					return temp;
-				};
+				ans.render = (a) => <ColImage src={a} keyUrl={meta.keyUrl} />;
 			else if (type === "number")
 				ans.render = (a) => (a == null ? "" : numeral(a).format("0,0"));
 			else if (type === "boolean")
