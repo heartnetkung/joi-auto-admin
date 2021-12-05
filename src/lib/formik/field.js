@@ -114,6 +114,8 @@ Field.propTypes = {
 		"TextArea",
 		"Select",
 		"Switch",
+		"GCSUpload",
+		"FirebaseUpload",
 		"Custom",
 	]).isRequired,
 	name: PropTypes.string.isRequired,
