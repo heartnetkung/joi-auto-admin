@@ -45,8 +45,8 @@ const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 const schema = Joi.object({
   hello: Joi.object({
     abc: Joi.string()
-      .label(helloName)
-      .default(a, 2)
+      .label("helloName")
+      .default(["a", 2])
       .meta({ containerStyle: { marginBottom: 20 }, step: 0 }),
   }),
 });
@@ -73,7 +73,7 @@ export default App;
 					{
 						name: "hello.abc",
 						label: "helloName",
-						defaultValue: ["a", 2],
+						defaultValue: '["a", 2]',
 						extraMargin: true,
 					},
 				],

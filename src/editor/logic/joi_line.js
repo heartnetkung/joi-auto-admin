@@ -1,6 +1,7 @@
 import { Joi } from "../../lib";
 import _ from "lodash";
 import { raw } from "./util";
+import toSource from "tosource";
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -23,7 +24,12 @@ const makeObject = (joiList) => {
 
 const makeString = (joiList) => {
 	var ans = "Joi";
-	for (var joi of joiList) ans += `.${joi.name}(${joi.args || ""})`;
+	for (var joi of joiList) {
+		var args = joi.args || [];
+		ans += `.${joi.name}(${args.map((a) =>
+			toSource(a).replace(/\n/g, "")
+		)})`;
+	}
 	return ans;
 };
 
