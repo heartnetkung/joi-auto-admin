@@ -15,7 +15,6 @@ const GCSUpload = (props) => {
     multiple,
     accept,
     getUploadUrl,
-    imagePreview,
     uploadFileType,
     requireImageSize,
   } = props;
@@ -129,7 +128,7 @@ const GCSUpload = (props) => {
       <>
         <Upload
           name={name}
-          listType={imagePreview ? "picture" : null}
+          listType={uploadFileType === "image" ? "picture" : null}
           multiple={multiple}
           accept={accept}
           fileList={fileListState}
@@ -151,7 +150,6 @@ GCSUpload.propTypes = {
   multiple: PropTypes.bool,
   accept: PropTypes.string,
   getUploadUrl: PropTypes.func,
-  imagePreview: PropTypes.bool,
   uploadFileType: PropTypes.oneOf(["image", "file"]).isRequired,
   requireImageSize: PropTypes.bool,
 };
@@ -161,7 +159,6 @@ GCSUpload.defaultProps = {
   multiple: false,
   accept: "*",
   getUploadUrl: null,
-  imagePreview: false,
   requireImageSize: false,
 };
 

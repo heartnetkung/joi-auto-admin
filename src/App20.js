@@ -59,7 +59,6 @@ const App = () => {
         .label("รูป")
         .meta({
           multiple: true,
-          imagePreview: true,
           uploadFileType: "image",
           firebaseConfig: {
             apiKey: "",
