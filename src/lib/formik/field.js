@@ -10,6 +10,8 @@ import {
 } from "formik-antd";
 import Cascader from "./components/cascader";
 import Barcode from "./components/barcode";
+import GCSUpload from "./components/gcs-upload";
+import FirebaseUpload from "./components/firebase-upload";
 import moment from "moment";
 import React from "react";
 import { useFormikContext } from "formik";
@@ -55,9 +57,7 @@ const Field = (props) => {
 				{fieldType === "DatePicker" && (
 					<DatePicker
 						{...props2}
-						defaultValue={
-							props2.defaultValue && moment(props2.defaultValue)
-						}
+						defaultValue={props2.defaultValue && moment(props2.defaultValue)}
 						style={{ width: "100%" }}
 					/>
 				)}
@@ -65,9 +65,7 @@ const Field = (props) => {
 				{fieldType === "RangePicker" && <RangePicker {...props2} />}
 				{fieldType === "MonthPicker" && <MonthPicker {...props2} />}
 				{fieldType === "Input" && <Input {...props2} />}
-				{fieldType === "InputEmail" && (
-					<Input {...props2} type="email" />
-				)}
+				{fieldType === "InputEmail" && <Input {...props2} type="email" />}
 				{fieldType === "InputNumber" && (
 					<InputNumber
 						{...props2}
@@ -78,9 +76,7 @@ const Field = (props) => {
 				{fieldType === "InputPhone" && (
 					<Input placeholder="ไม่ต้องใส่ขีด" {...props2} type="tel" />
 				)}
-				{fieldType === "InputPassword" && (
-					<Input.Password {...props2} />
-				)}
+				{fieldType === "InputPassword" && <Input.Password {...props2} />}
 				{fieldType === "TextArea" && <Input.TextArea {...props2} />}
 				{fieldType === "Select" && (
 					<Select {...props2} style={{ textAlign: "left" }}>
@@ -93,6 +89,8 @@ const Field = (props) => {
 					</Select>
 				)}
 				{fieldType === "Switch" && <Switch {...props2} />}
+				{fieldType === "GCSUpload" && <GCSUpload {...props2} />}
+				{fieldType === "FirebaseUpload" && <FirebaseUpload {...props2} />}
 			</Form.Item>
 		</Col>
 	);

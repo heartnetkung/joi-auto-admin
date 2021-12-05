@@ -39,8 +39,7 @@ class JoiWrapper {
 		if (!this.defaultValues) {
 			var ans = (this.defaultValues = {});
 			for (var { name, defaultValue } of this.formSpec) {
-				if (typeof defaultValue === "function")
-					defaultValue = defaultValue();
+				if (typeof defaultValue === "function") defaultValue = defaultValue();
 				if (defaultValue !== undefined) _.set(ans, name, defaultValue);
 			}
 		}
@@ -99,8 +98,7 @@ class JoiField {
 		if (fieldType === "InputPhone")
 			return ans.pattern(/^0([2]|[6]|[0-9][0-9])[0-9]{7}$/);
 		if (fieldType === "InputEmail") return ans.email();
-		if (fieldType === "InputURL")
-			return ans.uri({ scheme: ["http", "https"] });
+		if (fieldType === "InputURL") return ans.uri({ scheme: ["http", "https"] });
 		return ans;
 	}
 
@@ -177,6 +175,8 @@ class JoiField {
 		if (field.type === "number") return "InputNumber";
 		if (meta.valid) return "Select";
 		if (meta.loadBarcodeName) return "Barcode";
+		if (meta.getUploadUrl || meta.gcsCredentials) return "GCSUpload";
+		if (meta.firebaseConfig) return "FirebaseUpload";
 		if (meta.onFieldRender) return "Custom";
 		return "Input";
 	}
