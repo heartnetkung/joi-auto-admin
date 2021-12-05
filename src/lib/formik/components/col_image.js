@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Image } from "antd";
-import { IMAGE_FALLBACK } from "../assets/fallback_image";
+import { IMAGE_FALLBACK } from "../../assets/fallback_image";
 import _ from "lodash";
 
 const ColImage = (props) => {

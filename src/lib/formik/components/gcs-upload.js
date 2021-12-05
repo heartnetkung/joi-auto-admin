@@ -165,9 +165,4 @@ GCSUpload.defaultProps = {
   requireImageSize: false,
 };
 
-/**
- *
- *
- */
-
 export default GCSUpload;
