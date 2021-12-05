@@ -1,14 +1,16 @@
 import { Joi } from "../../lib";
 import _ from "lodash";
-import { raw, showRaw } from "./util";
+import { raw } from "./util";
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
-const softEval = (a) => {
+const softEval = (a, type) => {
 	try {
+		// eslint-disable-next-line
 		var ans = Function('"use strict";return (' + a + ")")();
 		return ans == null ? a : ans;
 	} catch (e) {
+		if (type === "array") return a.split(/\s*,\s*/);
 		return a;
 	}
 };
@@ -74,7 +76,10 @@ export const makeJoiLine = (editor, settings, isObj) => {
 
 	if (editor.require) ans.push({ name: "required" });
 	if (editor.defaultValue)
-		ans.push({ name: "default", args: [softEval(editor.defaultValue)] });
+		ans.push({
+			name: "default",
+			args: [softEval(editor.defaultValue, type)],
+		});
 	if (suffix) ans.push(suffix);
 
 	var meta = _.omit(editor, [
