@@ -184,14 +184,14 @@ class JoiField {
 
 	guessFieldType(field, meta) {
 		if (meta.fieldType) return meta.fieldType;
+		if (meta.onFieldRender) return "Custom";
+		if (meta.loadBarcodeName) return "Barcode";
+		if (meta.getUploadUrl) return "GCSUpload";
+		if (meta.firebaseConfig) return "FirebaseUpload";
 		if (field.type === "boolean") return "Checkbox";
 		if (field.type === "date") return "DatePicker";
 		if (field.type === "number") return "InputNumber";
 		if (meta.valid) return "Select";
-		if (meta.loadBarcodeName) return "Barcode";
-		if (meta.getUploadUrl) return "GCSUpload";
-		if (meta.firebaseConfig) return "FirebaseUpload";
-		if (meta.onFieldRender) return "Custom";
 		return "Input";
 	}
 
