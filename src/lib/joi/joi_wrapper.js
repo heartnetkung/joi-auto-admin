@@ -145,9 +145,9 @@ class JoiField {
 			else if (
 				fieldType === "GCSUpload" ||
 				fieldType === "FirebaseUpload"
-			)
-				ans.render = (a) => <ColImage src={a} keyUrl={meta.keyUrl} />;
-			else if (type === "number")
+			) {
+				ans.render = (a) => <ColImage src={a} />;
+			} else if (type === "number")
 				ans.render = (a) => (a == null ? "" : numeral(a).format("0,0"));
 			else if (type === "boolean")
 				ans.render = (a) => (a == null ? "" : a ? "ใช่" : "ไม่ใช่");
@@ -189,7 +189,7 @@ class JoiField {
 		if (field.type === "number") return "InputNumber";
 		if (meta.valid) return "Select";
 		if (meta.loadBarcodeName) return "Barcode";
-		if (meta.getUploadUrl || meta.gcsCredentials) return "GCSUpload";
+		if (meta.getUploadUrl) return "GCSUpload";
 		if (meta.firebaseConfig) return "FirebaseUpload";
 		if (meta.onFieldRender) return "Custom";
 		return "Input";
