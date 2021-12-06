@@ -56,7 +56,7 @@ const FirebaseUpload = (props) => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [values, name]);
+  }, [name]);
 
   const getImageSize = usePersistFn((file) => {
     const promise = new Promise((resolve, reject) => {
