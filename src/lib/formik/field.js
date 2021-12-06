@@ -14,7 +14,6 @@ import GCSUpload from "./components/gcs-upload";
 import FirebaseUpload from "./components/firebase-upload";
 import moment from "moment";
 import React from "react";
-import { useFormikContext } from "formik";
 import { Col } from "antd";
 
 const { WeekPicker, RangePicker, MonthPicker } = DatePicker;
@@ -22,16 +21,8 @@ const { WeekPicker, RangePicker, MonthPicker } = DatePicker;
 const Field = (props) => {
 	const { fieldType, label, required, name, validate, meta } = props;
 	const { labelCol, wrapperCol, colSpan, offset, className } = props;
-	const { fieldHide, currentStep, containerStyle, step } = props;
-	const { onFieldRender, type } = props;
-
+	const { containerStyle, onFieldRender, type } = props;
 	const props2 = { ...meta, name };
-	const { values } = useFormikContext();
-
-	if (typeof fieldHide === "function") {
-		if (fieldHide(values)) return null;
-	} else if (fieldHide) return null;
-	if (currentStep !== -1 && currentStep !== step) return null;
 
 	return (
 		<Col
@@ -95,7 +86,9 @@ const Field = (props) => {
 					</Select>
 				)}
 				{fieldType === "Switch" && <Switch {...props2} />}
-				{fieldType === "GCSUpload" && <GCSUpload {...props2} dataType={type} />}
+				{fieldType === "GCSUpload" && (
+					<GCSUpload {...props2} dataType={type} />
+				)}
 				{fieldType === "FirebaseUpload" && (
 					<FirebaseUpload {...props2} />
 				)}
@@ -131,26 +124,21 @@ Field.propTypes = {
 	label: PropTypes.string.isRequired,
 	required: PropTypes.bool.isRequired,
 	meta: PropTypes.object.isRequired,
-	currentStep: PropTypes.number.isRequired,
 	colSpan: PropTypes.number,
 	offset: PropTypes.number,
 	labelCol: PropTypes.object,
 	wrapperCol: PropTypes.object,
-	fieldHide: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
 	className: PropTypes.string,
 	containerStyle: PropTypes.object,
-	step: PropTypes.number,
 	onFieldRender: PropTypes.func,
 };
 Field.defaultProps = {
 	labelCol: undefined,
 	wrapperCol: undefined,
-	fieldHide: undefined,
 	colSpan: undefined,
 	offset: undefined,
 	className: undefined,
 	containerStyle: undefined,
-	step: undefined,
 	onFieldRender: undefined,
 };
 
