@@ -1,6 +1,6 @@
 {
   "name": "joi-auto-admin",
-  "version": "0.30.0",
+  "version": "0.32.0",
   "main": "dist/index.js",
   "files": [
     "dist"

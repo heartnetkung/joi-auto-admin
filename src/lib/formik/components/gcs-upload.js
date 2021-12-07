@@ -29,7 +29,7 @@ const GCSUpload = (props) => {
     if (!file) return;
 
     try {
-      const uploadURL = await getUploadUrl(file.type);
+      const uploadURL = await getUploadUrl(file.type, file.name);
       await axios.put(uploadURL, file, {
         headers: { "Content-Type": file.type },
         signal: abortRef.current.signal,
