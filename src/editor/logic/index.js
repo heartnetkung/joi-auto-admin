@@ -57,7 +57,7 @@ const settingsSchema = Joi.object({
 
 export const editorToCode = (editors, settings) => {
 	var editors2 = editorSchema.validate(editors);
-	var settings2 = settingsSchema.assert(settings);
+	var settings2 = settingsSchema.validate(settings);
 	return renderTemplate(editors2.value, settings2.value);
 };
 
