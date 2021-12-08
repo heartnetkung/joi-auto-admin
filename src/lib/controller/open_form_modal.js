@@ -17,7 +17,11 @@ export const openFormModal = (props) => {
 	};
 
 	document.body.appendChild(div);
-	const props2 = { ...props, onClose, schema: new JoiWrapper(props.schema) };
+	const props2 = {
+		...props,
+		onClose,
+		schema: new JoiWrapper(props.schema, props.devMode),
+	};
 	setTimeout(() => ReactDOM.render(<FormModal {...props2} />, div));
 };
 
@@ -25,12 +29,12 @@ const FormModal = (props) => {
 	const { onClose, schema, title, onSubmit, steps } = props;
 	const [error, setError] = useState(null);
 
-	const onSubmit2 = async (data, actions) => {
+	const onSubmit2 = async (data, actions, originalData) => {
 		setError(null);
 		try {
 			data = Joi.attempt(data, schema.joiObj);
-			await onSubmit(data);
-			alert.success("แก้ไขข้อมูลเรียบร้อย");
+			await onSubmit(data, originalData);
+			alert.success("บันทึกข้อมูลเรียบร้อย");
 			onClose();
 		} catch (e) {
 			setError(e);

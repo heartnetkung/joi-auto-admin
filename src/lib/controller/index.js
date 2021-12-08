@@ -16,10 +16,10 @@ import React from "react";
 const INITIAL_FORM_STATUS = { isEdit: false, initialValue: null, error: null };
 
 const Controller = (props) => {
-	const { getMany, createMany, updateOne, deleteMany } = props;
-	const { canExportCsv, canImportCsv, name, description } = props;
+	const { getMany, createMany, updateOne, deleteMany, devMode } = props;
+	const { name, description, uploadPreviewUrl } = props;
 	const { schema, querySchema, rowButtons, tableScroll, steps } = props;
-	const { canDownloadExcel, canUploadExcel, uploadPreviewUrl } = props;
+	const { disableExcelDownload, disableExcelUpload } = props;
 
 	const [editModalData, setEditModalData] = useState(INITIAL_FORM_STATUS);
 	const [excelError, setExcelError] = useState([]);
@@ -27,10 +27,13 @@ const Controller = (props) => {
 	const [deleteStatus, doDelete] = useAPI(deleteMany);
 	const editModalControl = useModal();
 	const excelModalControl = useModal();
-	const schema2 = useMemo(() => new JoiWrapper(schema), [schema]);
+	const schema2 = useMemo(() => new JoiWrapper(schema, devMode), [
+		schema,
+		devMode,
+	]);
 	const querySchema2 = useMemo(
-		() => querySchema && new JoiWrapper(querySchema),
-		[querySchema]
+		() => querySchema && new JoiWrapper(querySchema, devMode),
+		[querySchema, devMode]
 	);
 
 	const onCreate = usePersistFn(() => {
@@ -48,13 +51,13 @@ const Controller = (props) => {
 		setData(tableData.map((a) => (a._id === rowData._id ? rowData : a)));
 	});
 
-	const onSubmit = usePersistFn(async (data, actions) => {
+	const onSubmit = usePersistFn(async (data, actions, originalData) => {
 		setEditModalData((a) => ({ ...a, error: null }));
 		try {
 			if (editModalData.isEdit) {
 				data = Joi.attempt(data, schema2.joiObj);
-				await updateOne(data);
-				updateDataAtRow(data);
+				await updateOne(data, originalData);
+				updateDataAtRow(originalData);
 				alert.success("แก้ไขข้อมูลเรียบร้อย");
 				editModalControl.setVisible(false);
 			} else {
@@ -118,7 +121,7 @@ const Controller = (props) => {
 		try {
 			var rawExcel = await excelToTable(a);
 			var newRows = deserializeTable(rawExcel, schema2);
-			var newData = await createMany(newRows);
+			var newData = await createMany(newRows, newRows);
 			if (!Array.isArray(newData) || newData.length !== newRows.length)
 				return alert.error("ข้อมูลจากเซิฟเวอร์ไม่ถูกต้อง");
 
@@ -133,7 +136,7 @@ const Controller = (props) => {
 
 	return (
 		<>
-			<Header name={name} />
+			<Header name={name} description={description} />
 			{querySchema && (
 				<Form
 					schema={querySchema2}
@@ -145,23 +148,22 @@ const Controller = (props) => {
 			<Table
 				{...getManyStatus}
 				loading={getManyStatus.loading || deleteStatus.loading}
-				canExportCsv={canExportCsv}
-				canImportCsv={canImportCsv}
 				schema={schema2}
 				querySchema={querySchema}
 				rowButtons={rowButtons}
-				description={description}
 				onEdit={updateOne && onEdit}
 				onCreate={createMany && onCreate}
 				onDelete={deleteMany && onDelete}
 				onDownloadExcel={
-					canDownloadExcel && getManyStatus.data?.length
+					!disableExcelDownload && getManyStatus.data?.length
 						? onDownloadExcel
 						: null
 				}
-				onUploadExcel={canUploadExcel && createMany ? onUploadExcel : null}
+				onUploadExcel={
+					!disableExcelUpload && createMany ? onUploadExcel : null
+				}
 				onExampleExcel={
-					canUploadExcel &&
+					!disableExcelUpload &&
 					createMany &&
 					(uploadPreviewUrl || getManyStatus.data?.length)
 						? onExampleExcel
@@ -199,10 +201,11 @@ Controller.propTypes = {
 	schema: PropTypes.object.isRequired,
 	querySchema: PropTypes.object,
 	steps: PropTypes.array,
+	devMode: PropTypes.bool,
 
 	//excel
-	canDownloadExcel: PropTypes.bool,
-	canUploadExcel: PropTypes.bool,
+	disableExcelDownload: PropTypes.bool,
+	disableExcelUpload: PropTypes.bool,
 	uploadPreviewUrl: PropTypes.string,
 };
 
@@ -215,10 +218,11 @@ Controller.defaultProps = {
 	tableScroll: undefined,
 	rowButtons: [],
 	querySchema: null,
-	canDownloadExcel: true,
-	canUploadExcel: true,
+	disableExcelDownload: false,
+	disableExcelUpload: false,
 	uploadPreviewUrl: null,
 	steps: [],
+	devMode: false,
 };
 
 export default Controller;

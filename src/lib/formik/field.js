@@ -14,34 +14,15 @@ import GCSUpload from "./components/gcs-upload";
 import FirebaseUpload from "./components/firebase-upload";
 import moment from "moment";
 import React from "react";
-import { useFormikContext } from "formik";
 import { Col } from "antd";
-import { useRef } from "react";
-import _ from "lodash";
 
 const { WeekPicker, RangePicker, MonthPicker } = DatePicker;
 
 const Field = (props) => {
 	const { fieldType, label, required, name, validate, meta } = props;
 	const { labelCol, wrapperCol, colSpan, offset, className } = props;
-	const { fieldHide, currentStep, containerStyle, step, onFormik } = props;
-
+	const { containerStyle, onFieldRender, type } = props;
 	const props2 = { ...meta, name };
-	const { values, setFieldError, setFieldValue } = useFormikContext();
-	const ref = useRef(undefined);
-
-	if (typeof fieldHide === "function") {
-		if (fieldHide(values)) return null;
-	} else if (fieldHide) return null;
-	if (currentStep !== -1 && currentStep !== step) return null;
-
-	if (onFormik) {
-		var newValue = _.get(values, name);
-		if (newValue !== ref.current) {
-			onFormik({ setFieldError, setFieldValue, values, value: newValue });
-			ref.current = newValue;
-		}
-	}
 
 	return (
 		<Col
@@ -58,13 +39,18 @@ const Field = (props) => {
 				labelCol={labelCol}
 				wrapperCol={wrapperCol}
 			>
+				{fieldType === "Custom" &&
+					onFieldRender &&
+					onFieldRender(props2)}
 				{fieldType === "Barcode" && <Barcode {...props2} />}
 				{fieldType === "Cascader" && <Cascader {...props2} />}
 				{fieldType === "Checkbox" && <Checkbox {...props2}></Checkbox>}
 				{fieldType === "DatePicker" && (
 					<DatePicker
 						{...props2}
-						defaultValue={props2.defaultValue && moment(props2.defaultValue)}
+						defaultValue={
+							props2.defaultValue && moment(props2.defaultValue)
+						}
 						style={{ width: "100%" }}
 					/>
 				)}
@@ -72,15 +58,22 @@ const Field = (props) => {
 				{fieldType === "RangePicker" && <RangePicker {...props2} />}
 				{fieldType === "MonthPicker" && <MonthPicker {...props2} />}
 				{fieldType === "Input" && <Input {...props2} />}
-				{fieldType === "InputEmail" && <Input {...props2} type="email" />}
+				{fieldType === "InputEmail" && (
+					<Input {...props2} type="email" />
+				)}
 				{fieldType === "InputNumber" && (
-					<InputNumber {...props2} style={{ width: "100%" }} />
+					<InputNumber
+						{...props2}
+						style={{ ...props2.style, width: "100%" }}
+					/>
 				)}
 				{fieldType === "InputURL" && <Input {...props2} type="url" />}
 				{fieldType === "InputPhone" && (
 					<Input placeholder="ไม่ต้องใส่ขีด" {...props2} type="tel" />
 				)}
-				{fieldType === "InputPassword" && <Input.Password {...props2} />}
+				{fieldType === "InputPassword" && (
+					<Input.Password {...props2} />
+				)}
 				{fieldType === "TextArea" && <Input.TextArea {...props2} />}
 				{fieldType === "Select" && (
 					<Select {...props2} style={{ textAlign: "left" }}>
@@ -93,8 +86,12 @@ const Field = (props) => {
 					</Select>
 				)}
 				{fieldType === "Switch" && <Switch {...props2} />}
-				{fieldType === "GCSUpload" && <GCSUpload {...props2} />}
-				{fieldType === "FirebaseUpload" && <FirebaseUpload {...props2} />}
+				{fieldType === "GCSUpload" && (
+					<GCSUpload {...props2} dataType={type} />
+				)}
+				{fieldType === "FirebaseUpload" && (
+					<FirebaseUpload {...props2} />
+				)}
 			</Form.Item>
 		</Col>
 	);
@@ -112,37 +109,37 @@ Field.propTypes = {
 		"Input",
 		"InputNumber",
 		"InputPhone",
+		"InputEmail",
+		"InputURL",
 		"InputPassword",
 		"TextArea",
 		"Select",
 		"Switch",
+		"GCSUpload",
+		"FirebaseUpload",
+		"Custom",
 	]).isRequired,
 	name: PropTypes.string.isRequired,
 	validate: PropTypes.func.isRequired,
 	label: PropTypes.string.isRequired,
 	required: PropTypes.bool.isRequired,
 	meta: PropTypes.object.isRequired,
-	currentStep: PropTypes.number.isRequired,
 	colSpan: PropTypes.number,
 	offset: PropTypes.number,
 	labelCol: PropTypes.object,
 	wrapperCol: PropTypes.object,
-	fieldHide: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
 	className: PropTypes.string,
 	containerStyle: PropTypes.object,
-	step: PropTypes.number,
-	onFormik: PropTypes.func,
+	onFieldRender: PropTypes.func,
 };
 Field.defaultProps = {
 	labelCol: undefined,
 	wrapperCol: undefined,
-	fieldHide: undefined,
 	colSpan: undefined,
 	offset: undefined,
 	className: undefined,
 	containerStyle: undefined,
-	step: undefined,
-	onFormik: undefined,
+	onFieldRender: undefined,
 };
 
 export default Field;

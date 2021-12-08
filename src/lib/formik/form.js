@@ -2,12 +2,12 @@ import { Form, SubmitButton } from "formik-antd";
 import { Formik } from "formik";
 import PropTypes from "prop-types";
 import { Row, Col, Divider, Steps } from "antd";
-import Field from "./field";
-import { calculateSpan, handleCascader, useSteps } from "./logic";
-import { useMemo } from "react";
-import React from "react";
+import { handleCascader, useSteps } from "./logic";
+import React, { useMemo } from "react";
 import SubmitLine from "./submit_line";
 import { useMaxWidth } from "../shared/hook";
+import _ from "lodash";
+import InnerForm from "./inner-form";
 
 const { Step } = Steps;
 
@@ -17,20 +17,28 @@ const CombinedForm = (props) => {
 	const isSmall = useMaxWidth(575);
 
 	const { formSpec, onSubmit2 } = useMemo(() => {
-		const formSpec2 = calculateSpan(schema.formSpec, inline);
-		const { formSpec, cascaderHook } = handleCascader(formSpec2, isSmall);
+		const { formSpec, cascaderHook } = handleCascader(
+			schema.formSpec,
+			isSmall
+		);
 		const onSubmitHooks = [cascaderHook].concat(
 			formSpec.map((a) => a?.meta?.onSubmitHook).filter((a) => !!a)
 		);
 		const onSubmit2 = async (postData, actions) => {
+			postData = _.cloneDeep(postData);
 			for (var hook of onSubmitHooks) postData = hook(postData);
-			var ans = {};
-			for (var key in postData)
-				if (!/^\$/.test(key)) ans[key] = postData[key];
-			await onSubmit(ans, actions);
+			var names = schema.formSpec.map((a) => a.name);
+			var ans = _.pick(
+				postData,
+				names.filter((a) => !/^\$|\.\$/.test(a))
+			);
+			names
+				.filter((a) => /^\$|\.\$/.test(a))
+				.forEach((a) => _.unset(postData, a));
+			await onSubmit(ans, actions, postData);
 		};
 		return { formSpec, onSubmit2 };
-	}, [schema, inline, onSubmit, isSmall]);
+	}, [schema, onSubmit, isSmall]);
 
 	const { nextStep, prevStep, currentStep } = useSteps(steps);
 
@@ -58,13 +66,11 @@ const CombinedForm = (props) => {
 					) : null}
 
 					<Row gutter={8} justify={inline ? "center" : undefined}>
-						{formSpec.map((a, i) => (
-							<Field
-								{...a}
-								key={a.name}
-								currentStep={currentStep}
-							/>
-						))}
+						<InnerForm
+							formSpec={formSpec}
+							currentStep={currentStep}
+							inline={inline}
+						/>
 						{inline && (
 							<Col span={4}>
 								<SubmitButton

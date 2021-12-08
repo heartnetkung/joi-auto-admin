@@ -10,6 +10,7 @@ const schema = Joi.object({
 		.label("ชื่อ")
 		.meta({ placeholder: "ชื่อภาษาไทย" }),
 	purchased_value: Joi.number().integer().label("เงิน"),
+	district: Joi.array().label("เขต"),
 	create_date: Joi.date()
 		.default(Date.now)
 		.label("วันสมัคร")
@@ -93,13 +94,13 @@ describe("serialize", () => {
 				expect(e.errors.length).toBe(2);
 				expect(e.errors[0]).toEqual({
 					label: "ชื่อ",
-					line: 1,
+					line: 2,
 					message: "ต้องกรอกไม่ต่ำกว่า 3 ตัวอักษร",
 					type: "string.min",
 				});
 				expect(e.errors[1]).toEqual({
 					label: "เงิน",
-					line: 1,
+					line: 2,
 					message: "ต้องเป็นตัวเลข",
 					type: "number.base",
 				});

@@ -1,7 +1,6 @@
 import Joi from "joi/lib/index";
 import AutoAdmin from "./lib/controller";
 import React from "react";
-import ColImage from "./lib/test-cell-component/col_image";
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -60,7 +59,6 @@ const App = () => {
         .label("รูป")
         .meta({
           multiple: true,
-          imagePreview: true,
           uploadFileType: "image",
           firebaseConfig: {
             apiKey: "",
@@ -74,10 +72,6 @@ const App = () => {
           collectionName: "products",
           prefixFileName: "iPhone",
           requireImageSize: true,
-          cellWidth: 150,
-          cellFormat: (cellData) => (
-            <ColImage src={cellData} keyUrl="renderUrl" />
-          ),
         }),
     }),
     querySchema: Joi.object({

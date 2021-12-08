@@ -19,7 +19,6 @@ const FirebaseUpload = (props) => {
     label,
     multiple,
     accept,
-    imagePreview,
     uploadFileType,
     requireImageSize,
     firebaseConfig,
@@ -57,7 +56,7 @@ const FirebaseUpload = (props) => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [values, name]);
+  }, [name]);
 
   const getImageSize = usePersistFn((file) => {
     const promise = new Promise((resolve, reject) => {
@@ -146,7 +145,7 @@ const FirebaseUpload = (props) => {
       <>
         <Upload
           name={name}
-          listType={imagePreview ? "picture" : null}
+          listType={uploadFileType === "image" ? "picture" : null}
           multiple={multiple}
           accept={accept}
           fileList={fileListState}
@@ -167,7 +166,6 @@ FirebaseUpload.propTypes = {
   label: PropTypes.string,
   multiple: PropTypes.bool,
   accept: PropTypes.string,
-  imagePreview: PropTypes.bool,
   uploadFileType: PropTypes.oneOf(["image", "file"]).isRequired,
   requireImageSize: PropTypes.bool,
   firebaseConfig: PropTypes.object.isRequired,
@@ -179,7 +177,6 @@ FirebaseUpload.defaultProps = {
   label: "อัพโหลดไฟล์",
   multiple: false,
   accept: "*",
-  imagePreview: false,
   requireImageSize: false,
   collectionName: "",
   prefixFileName: "",

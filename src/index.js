@@ -8,9 +8,11 @@ import "./lib/index.css";
 // import App from "./App7";
 // import App from "./App8";
 // import App from "./App4";
+// import App from "./App9";
+// import { App } from "./editor/logic";
 import React from "react";
-import EditorScreen from "./editor";
+import App from "./editor";
 
 // strict mode disabled because antd doesn't support it
 // https://github.com/ant-design/ant-design/issues/22493
-ReactDOM.render(<EditorScreen />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));

@@ -7,13 +7,14 @@ const errorTranslation = {
 	"string.max": (errorObj) =>
 		`ต้องกรอกไม่เกิน ${errorObj.context.limit} ตัวอักษร`,
 	"string.email": "อีเมลไม่ถูกต้อง",
-	"number.base": "ต้องเป็นตัวเลข"
+	"number.base": "ต้องเป็นตัวเลข",
 };
 
 export const getErrorMessage = (errorObj, label) => {
 	label = label || errorObj?.context?.label;
 
-	var { message, type } = errorObj;
+	var { message, type, context } = errorObj;
+	if (type === "any.custom") return context?.error?.message;
 	if (/[ก-ฮ]/.test(message.replace(/"[^"]+"/g, ""))) return message;
 	if (/pattern/.test(type) && label) return `${label}ไม่ถูกต้อง`;
 

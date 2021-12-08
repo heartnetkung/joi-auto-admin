@@ -3,7 +3,9 @@ import { getErrorMessage } from "./error_message";
 import _ from "lodash";
 import numeral from "numeral";
 import moment from "moment";
-import { fixEmptyString } from "./fix_empty_string";
+import { prepare } from "./prepare_joi";
+import React from "react";
+import ColImage from "../formik/components/col_image";
 
 const OMIT_META = [
 	"twoColumn",
@@ -17,18 +19,17 @@ const OMIT_META = [
 	"fieldHide",
 	"containerStyle",
 	"step",
-	"onFormik",
 	"disableSorting",
 	"disableFilter",
+	"onFieldRender",
 ];
 
 class JoiWrapper {
-	constructor(joiObj) {
+	constructor(joiObj, devMode) {
 		if (!Joi.isSchema(joiObj)) throw new Error("Invalid Joi Object");
 
 		this.describe = joiObj.describe();
-		this.joiObj = fixEmptyString(joiObj, this.describe);
-		this.joiObj = this.joiObj.append({ _id: Joi.any() });
+		this.joiObj = prepare(joiObj, this.describe, devMode);
 		this.formSpec = [];
 		traverse(this.describe, [], this.formSpec, this.joiObj);
 		handleCellShow(this.formSpec);
@@ -40,7 +41,8 @@ class JoiWrapper {
 		if (!this.defaultValues) {
 			var ans = (this.defaultValues = {});
 			for (var { name, defaultValue } of this.formSpec) {
-				if (typeof defaultValue === "function") defaultValue = defaultValue();
+				if (typeof defaultValue === "function")
+					defaultValue = defaultValue();
 				if (defaultValue !== undefined) _.set(ans, name, defaultValue);
 			}
 		}
@@ -89,7 +91,7 @@ class JoiField {
 		this.fieldHide = meta.fieldHide;
 		this.containerStyle = meta.containerStyle;
 		this.step = meta.step;
-		this.onFormik = meta.onFormik;
+		this.onFieldRender = meta.onFieldRender;
 		this.meta = _.omit(meta, OMIT_META);
 	}
 
@@ -99,7 +101,8 @@ class JoiField {
 		if (fieldType === "InputPhone")
 			return ans.pattern(/^0([2]|[6]|[0-9][0-9])[0-9]{7}$/);
 		if (fieldType === "InputEmail") return ans.email();
-		if (fieldType === "InputURL") return ans.uri({ scheme: ["http", "https"] });
+		if (fieldType === "InputURL")
+			return ans.uri({ scheme: ["http", "https"] });
 		return ans;
 	}
 
@@ -122,19 +125,37 @@ class JoiField {
 		if (!ans.width) {
 			if (type === "number") ans.width = 80;
 			else if (type === "date") ans.width = 130;
+			else if (
+				fieldType === "GCSUpload" ||
+				fieldType === "FirebaseUpload"
+			)
+				ans.width = 150;
 		}
 
 		if (!ans.render) {
-			if (type === "number") ans.render = (a) => numeral(a).format("0,0");
-			else if (type === "boolean") ans.render = (a) => (a ? "ใช่" : "ไม่ใช่");
-			else if (type === "date")
-				ans.render = (a) => moment(a).format("YYYY-MM-DD");
-			else if (type === "array") {
+			if (fieldType === "Select") ans.render = (a) => meta.valid[a];
+			else if (fieldType === "InputPhone")
 				ans.render = (a) => {
-					if (Array.isArray(a)) return a.join(", ");
-					return "";
+					if (typeof a !== "string") return a;
+					return a.replace(
+						/(\d{2,3})(\d{3})(\d{4})/,
+						(m, p1, p2, p3) => [p1, p2, p3].join("-")
+					);
 				};
-			} else if (fieldType === "Select") ans.render = (a) => meta.valid[a];
+			else if (
+				fieldType === "GCSUpload" ||
+				fieldType === "FirebaseUpload"
+			) {
+				ans.render = (a) => <ColImage src={a} />;
+			} else if (type === "number")
+				ans.render = (a) => (a == null ? "" : numeral(a).format("0,0"));
+			else if (type === "boolean")
+				ans.render = (a) => (a == null ? "" : a ? "ใช่" : "ไม่ใช่");
+			else if (type === "date")
+				ans.render = (a) =>
+					a == null ? "" : moment(a).format("YYYY-MM-DD");
+			else if (type === "array")
+				ans.render = (a) => (a == null ? "" : a.join(", "));
 		}
 
 		return ans;
@@ -163,19 +184,27 @@ class JoiField {
 
 	guessFieldType(field, meta) {
 		if (meta.fieldType) return meta.fieldType;
+		if (meta.onFieldRender) return "Custom";
+		if (meta.loadBarcodeName) return "Barcode";
+		if (meta.getUploadUrl) return "GCSUpload";
+		if (meta.firebaseConfig) return "FirebaseUpload";
 		if (field.type === "boolean") return "Checkbox";
 		if (field.type === "date") return "DatePicker";
 		if (field.type === "number") return "InputNumber";
 		if (meta.valid) return "Select";
-		if (meta.loadBarcodeName) return "Barcode";
-		if (meta.getUploadUrl || meta.gcsCredentials) return "GCSUpload";
-		if (meta.firebaseConfig) return "FirebaseUpload";
 		return "Input";
 	}
 
 	validate(value) {
 		var rawError = this._extractedSchema.validate(value);
-		if (!rawError.error || !Array.isArray(rawError.error.details)) return null;
+		if (this.required && !value)
+			return getErrorMessage(
+				{ type: "any.required", message: "" },
+				this.label
+			);
+
+		if (!rawError.error || !Array.isArray(rawError.error.details))
+			return null;
 
 		for (var errorObj of rawError.error.details)
 			return getErrorMessage(errorObj, this.label);
