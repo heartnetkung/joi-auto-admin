@@ -31,7 +31,7 @@ const EditorScreen = () => {
     { ...rowField },
     { ...rowField },
   ]);
-  const [settingState, setSettingState] = useState({ name: "example-name" });
+  const [settingState, setSettingState] = useState({ name: "example-tb-name", querySchema: {}, steps: [] });
 
   useEffect(() => {
     document.addEventListener("mousemove", onMouseMove);

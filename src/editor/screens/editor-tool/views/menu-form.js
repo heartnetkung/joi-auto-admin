@@ -15,6 +15,14 @@ const MenuFormView = (props) => {
     <div style={styles.rowMenu}>
       <Button
         type="primary"
+        ghost={currentMenu?.current !== MENU_FORM.setting}
+        block
+        onClick={() => onEventClick(MENU_FORM.setting)}
+      >
+        {MENU_FORM.setting}
+      </Button>
+      <Button
+        type="primary"
         ghost={currentMenu?.current !== MENU_FORM.form}
         block
         style={styles.button}
@@ -22,14 +30,7 @@ const MenuFormView = (props) => {
       >
         {MENU_FORM.form}
       </Button>
-      <Button
-        type="primary"
-        ghost={currentMenu?.current !== MENU_FORM.setting}
-        block
-        onClick={() => onEventClick(MENU_FORM.setting)}
-      >
-        {MENU_FORM.setting}
-      </Button>
+
     </div>
   );
 };

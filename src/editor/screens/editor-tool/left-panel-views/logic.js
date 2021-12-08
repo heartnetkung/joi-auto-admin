@@ -35,3 +35,12 @@ export const createConfig = (index, options, newForm, dataOptions) => {
   });
   return newForm;
 };
+
+
+export const createStepOptions = () => {
+  const options = [{label: 'No step', value: 'No step'}];
+  for (let i = 2; i <= 20; i++){
+    options.push({label: i + ' step', value: i})
+  }
+  return options;
+}

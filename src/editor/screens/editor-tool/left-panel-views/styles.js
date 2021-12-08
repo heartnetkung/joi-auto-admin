@@ -15,7 +15,7 @@ export const contentWhite = {
 export const layoutMargin = {
   display: "flex",
   flexDirection: "column",
-  margin: "1rem 0",
+  margin: "0 0 1rem 0",
 };
 
 export const checkbox = {

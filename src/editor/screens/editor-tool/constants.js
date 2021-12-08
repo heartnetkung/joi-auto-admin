@@ -9,10 +9,11 @@ export const MENU_FORM = {
   setting: "Table-Settings",
 };
 
-export const SETTINGS = {
-  canCreate: "canCreate",
-  canUpdate: "canUpdate",
-  canDelete: "canDelete",
-  canDownloadExcel: "canDownloadExcel",
-  canUploadExcel: "canUploadExcel",
-};
+export const SETTINGS = [
+  "canCreate",
+  "canUpdate",
+  "canDelete",
+  "disableExcelDownload",
+  "disableExcelUpload",
+  'uploadPreviewUrl'
+]

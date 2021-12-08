@@ -28,6 +28,7 @@ export const leftPanelContainer = {
   marginBottom: 6,
   borderRadius: 8,
   border: `1px solid ${panelColor}`,
+  position: 'relative'
 };
 
 export const rightPanelContainer = {
