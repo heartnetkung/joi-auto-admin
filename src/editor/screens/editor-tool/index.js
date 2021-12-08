@@ -26,7 +26,11 @@ const EditorScreen = () => {
   const [currentMenuFormState, setCurrentMenuFormState] = useState({
     current: MENU_FORM.form,
   });
-  const [formState, setFormState] = useState([{ ...rowField }]);
+  const [formState, setFormState] = useState([
+    { ...rowField },
+    { ...rowField },
+    { ...rowField },
+  ]);
   const [settingState, setSettingState] = useState({ name: "example-name" });
 
   useEffect(() => {

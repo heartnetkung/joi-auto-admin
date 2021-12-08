@@ -36,16 +36,16 @@ export const columnOptions = [
 ];
 
 export const filedTypes = [
-  "string",
+  "input",
+  "url",
+  "tel",
+  "email",
+  "checkbox",
   "number",
   "date",
-  "inputPhone",
-  "inputEmail",
-  "inputUrl",
-  "array",
-  "object",
-  "barcode",
-  "cascader",
-  "upload",
+  "cascader_async",
+  "cascader_address",
   "dropdown",
+  "barcode",
+  "upload",
 ];
