@@ -20,7 +20,7 @@ const RightPanelView = (props) => {
     return <RenderCodeBlocks text={codeText} />;
   }
 
-  return <div>
+  return <div style={{ maxWidth: '50vw', overflow: 'auto' }}>
     <TransView editors={editors} settings={settings} />
   </div>;
 };

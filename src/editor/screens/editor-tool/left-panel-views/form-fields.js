@@ -116,7 +116,7 @@ const FormFields = (props) => {
               {formState.map((item, index) => (
                 <Collapse.Panel
                   key={index.toString()}
-                  header={item.name}
+                  header={logic.getHeader(item.name, item.step)}
                   extra={
                     <DeleteFilled
                       style={{ color: "red" }}
@@ -215,7 +215,6 @@ const FormFields = (props) => {
                     </Col>
                   </Row>
                   <Checkbox.Group
-                    defaultValue={_.get(logic.getDefaultBooleanConfig(dataFieldOptions), 'value') || null}
                     options={dataFieldOptions || []}
                     onChange={(option) => onChangeConfig("field", index, option)}
                   />

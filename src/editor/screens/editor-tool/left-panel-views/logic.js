@@ -51,3 +51,10 @@ export const getDefaultBooleanConfig = (options) => {
   }
   return options.find(item => item.label === 'extraMargin')
 }
+
+export const getHeader = (name, step) => {
+  if (!step && step !== 0) {
+    return name;
+  }
+  return `${name} (${step})`
+}

@@ -23,7 +23,7 @@ export const rowField = {
   require: false,
   disabled: false,
   twoColumn: false,
-  extraMargin: true,
+  extraMargin: false,
   columnWidth: "",
   cellEllipsis: false,
   columnHide: false,

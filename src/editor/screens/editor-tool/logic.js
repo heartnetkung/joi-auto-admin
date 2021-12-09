@@ -7,13 +7,14 @@ export const cleanTableSettingBeforeTrans = (setting) => {
     return setting;
   }
   const newSetting = { ...setting }
-  if (_.get(newSetting.steps, '[0].value')) {
-    newSetting.steps = newSetting.steps.map(item => item.value).join(',')
+  const omitSetting = [...OMIT_SETTING];
+  if (_.get(newSetting.steps, '[0]')) {
+    newSetting.steps = newSetting.steps.map((item, index) => item.value || `label step ${index + 1}`).join(',')
   }
-  if (!_.get(newSetting.steps, '[0].value')) {
-    OMIT_SETTING.push('steps')
+  if (!newSetting.steps || !_.get(newSetting.steps, '[0]')) {
+    omitSetting.push('steps')
   }
-  return _.omit(newSetting, OMIT_SETTING);
+  return _.omit(newSetting, omitSetting);
 }
 
 const findStep = (steps, target) => {
