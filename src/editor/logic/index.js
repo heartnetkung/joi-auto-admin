@@ -39,8 +39,10 @@ const editorSchemaInner = Joi.object({
 	disabledFilter: Joi.boolean(),
 });
 
-const editorSchema1 = Joi.array().items(editorSchemaInner, Joi.any().strip()).unique('name');
-const editorSchema2 = Joi.array().items(editorSchemaInner).unique('name');
+const editorSchema1 = Joi.array()
+	.items(editorSchemaInner, Joi.any().strip())
+	.unique("name");
+const editorSchema2 = Joi.array().items(editorSchemaInner).unique("name");
 
 const settingsSchema = Joi.object({
 	name: Joi.string(),
@@ -83,6 +85,8 @@ export const App = (props) => {
 	const props2 = useMemo(() => {
 		const ans = renderProps(editors, settings, true);
 		ans.schema = makeJoiObj(editors, settings);
+		if (settings.querySchema)
+			ans.querySchema = makeJoiObj(settings.querySchema, {});
 		return ans;
 	}, [editors, settings]);
 
@@ -103,5 +107,16 @@ App.defaultProps = {
 			extraMargin: true,
 		},
 	],
-	settings: { canCreate: true },
+	settings: {
+		canCreate: true,
+		querySchema: [
+			{
+				name: "hello.abc",
+				label: "helloName",
+				require: true,
+				defaultValue: "a",
+				extraMargin: true,
+			},
+		],
+	},
 };
