@@ -24,12 +24,34 @@ const findStep = (steps, target) => {
   return stepValue;
 }
 
+const cleanDefault = (row) => {
+  if (!row) {
+    return row;
+  }
+  for (const [key, value] of Object.entries(row)) {
+    if (value || value === 0) {
+      row[key] = value
+    } else {
+      delete row[key]
+    }
+  }
+  return row
+}
+
+const cleanColWidth = (colWidth) => {
+  try {
+    return parseInt(colWidth, 10)
+  } catch (error) {
+    return ""
+  }
+}
+
 export const cleanFormBeforeTrans = (editor, settingSteps) => {
   if (!Array.isArray(editor) || !Array.isArray(settingSteps)) {
     return editor;
   }
   const schema = editor.map((item, index) => {
-    const row = { ...item };
+    let row = { ...item };
     row.step = findStep(settingSteps, item.step);
     if (!item.label) {
       row.label = `label_${index}`
@@ -37,7 +59,10 @@ export const cleanFormBeforeTrans = (editor, settingSteps) => {
     if (!item.name) {
       row.name = `name_${index}`
     }
-    return row;
+    if (item.columnWidth) {
+      row.columnWidth = cleanColWidth(item.columnWidth);
+    }
+    return cleanDefault(row);
   })
   return schema;
 }

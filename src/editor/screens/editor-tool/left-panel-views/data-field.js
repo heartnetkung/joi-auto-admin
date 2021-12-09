@@ -1,6 +1,21 @@
+const generateId = () => {
+  return Math.floor(Math.random() * 90000) + 10000;
+}
+
+export const getInitRowField = () => {
+  const initRows = [{ ...rowField }, { ...rowField }, { ...rowField }];
+  return initRows.map((item) => ({ ...item, name: "name-field-" + generateId(), }))
+}
+
+export const getSingleRow = () => {
+  const row = { ...rowField }
+  row.name = rowField.name + `-${generateId()}`
+  return row;
+}
+
 export const rowField = {
-  name: "new-field",
-  label: "new-field",
+  name: "name-field",
+  label: "label-field",
   fieldType: "input",
   placeholder: "",
   defaultValue: "",

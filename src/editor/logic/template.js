@@ -1,5 +1,6 @@
 import _ from "lodash";
-// import prettier from "prettier";
+import prettier from "prettier/standalone";
+import parserBabel from "prettier/parser-babel";
 import { makeJoiLine } from "./joi_line";
 import { raw, showRaw } from "./util";
 
@@ -69,9 +70,8 @@ export const renderProps = (editors, settings, isComp) => {
 };
 
 export const format = (a, isJson) => {
-	return a
-	// if (isJson) a = "(" + a + ")";
-	// return prettier.format(a, { parser: "babel" });
+	if (isJson) a = "(" + a + ")";
+	return prettier.format(a, { parser: "babel", plugins: [parserBabel] });
 };
 
 export const renderTemplate = (editors, settings) => {

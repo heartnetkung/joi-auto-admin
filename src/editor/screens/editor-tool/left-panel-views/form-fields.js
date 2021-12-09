@@ -15,10 +15,10 @@ import {
 } from "antd";
 import _ from "lodash";
 import {
-  rowField,
   filedTypes,
   fieldOptions,
   columnOptions,
+  getSingleRow
 } from "./data-field";
 import * as styles from "./styles";
 import * as logic from "./logic";
@@ -68,7 +68,7 @@ const FormFields = (props) => {
       return;
     }
     const newForm = cloneState();
-    newForm.push({ ...rowField });
+    newForm.push({ ...getSingleRow() });
     setFormState(newForm);
   };
 
@@ -77,7 +77,7 @@ const FormFields = (props) => {
       return;
     }
     if (!_.get(formState, "[1]")) {
-      setFormState([{ ...rowField }]);
+      setFormState([{ ...getSingleRow() }]);
       return;
     }
     const newForm = cloneState();
@@ -215,6 +215,7 @@ const FormFields = (props) => {
                     </Col>
                   </Row>
                   <Checkbox.Group
+                    defaultValue={_.get(logic.getDefaultBooleanConfig(dataFieldOptions), 'value') || null}
                     options={dataFieldOptions || []}
                     onChange={(option) => onChangeConfig("field", index, option)}
                   />

@@ -7,7 +7,7 @@ import MenuFormView from "./views/menu-form";
 import RightPanelView from "./right-panel-views";
 import LeftPanelView from "./left-panel-views";
 import { MENU, MENU_FORM } from "./constants";
-import { rowField } from "./left-panel-views/data-field";
+import { getInitRowField } from "./left-panel-views/data-field";
 import * as styles from "./styles";
 import * as logic from "./logic";
 
@@ -27,11 +27,7 @@ const EditorScreen = () => {
   const [currentMenuFormState, setCurrentMenuFormState] = useState({
     current: MENU_FORM.setting,
   });
-  const [formState, setFormState] = useState([
-    { ...rowField },
-    { ...rowField },
-    { ...rowField },
-  ]);
+  const [formState, setFormState] = useState(() => getInitRowField());
   const [settingState, setSettingState] = useState({ name: "example-tb-name", querySchema: {}, steps: [] });
   const [tableSettingProps, setTableSettingProps] = useState();
   const [schemaProps, setSchemaProps] = useState();

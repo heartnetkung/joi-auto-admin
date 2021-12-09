@@ -38,9 +38,16 @@ export const createConfig = (index, options, newForm, dataOptions) => {
 
 
 export const createStepOptions = () => {
-  const options = [{label: 'No step', value: 'No step'}];
-  for (let i = 2; i <= 20; i++){
-    options.push({label: i + ' step', value: i})
+  const options = [{ label: 'No step', value: 'No step' }];
+  for (let i = 2; i <= 20; i++) {
+    options.push({ label: i + ' step', value: i })
   }
   return options;
+}
+
+export const getDefaultBooleanConfig = (options) => {
+  if (!Array.isArray(options)) {
+    return options;
+  }
+  return options.find(item => item.label === 'extraMargin')
 }

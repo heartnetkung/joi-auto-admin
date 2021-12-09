@@ -6,41 +6,41 @@ import { renderProps, renderTemplate } from "./template";
 import { makeJoiLine } from "./joi_line";
 import _ from "lodash";
 
-const editorSchema = Joi.array().items(
-	Joi.object({
-		name: Joi.string().required().min(1),
-		label: Joi.string().required().min(1),
-		fieldType: Joi.string()
-			.required()
-			.valid(
-				"cascader_async",
-				"cascader_address",
-				"dropdown",
-				"barcode",
-				"upload",
-				"input",
-				"url",
-				"tel",
-				"email",
-				"checkbox",
-				"number",
-				"date"
-			),
-		step: Joi.number(),
-		placeholder: Joi.string(),
-		defaultValue: Joi.string(),
-		require: Joi.boolean(),
-		disabled: Joi.boolean(),
-		twoColumn: Joi.boolean(),
-		extraMargin: Joi.boolean(),
-		columnWidth: Joi.number(),
-		cellEllipsis: Joi.boolean(),
-		columnHide: Joi.boolean(),
-		disabledSorting: Joi.boolean(),
-		disabledFilter: Joi.boolean(),
-	}),
-	// Joi.any().strip()
-);
+const editorSchemaInner = Joi.object({
+	name: Joi.string().required().min(1),
+	label: Joi.string().required().min(1),
+	fieldType: Joi.string()
+		.required()
+		.valid(
+			"cascader_async",
+			"cascader_address",
+			"dropdown",
+			"barcode",
+			"upload",
+			"input",
+			"url",
+			"tel",
+			"email",
+			"checkbox",
+			"number",
+			"date"
+		),
+	step: Joi.number(),
+	placeholder: Joi.string(),
+	defaultValue: Joi.string(),
+	require: Joi.boolean(),
+	disabled: Joi.boolean(),
+	twoColumn: Joi.boolean(),
+	extraMargin: Joi.boolean(),
+	columnWidth: Joi.number(),
+	cellEllipsis: Joi.boolean(),
+	columnHide: Joi.boolean(),
+	disabledSorting: Joi.boolean(),
+	disabledFilter: Joi.boolean(),
+});
+
+const editorSchema1 = Joi.array().items(editorSchemaInner, Joi.any().strip()).unique('name');
+const editorSchema2 = Joi.array().items(editorSchemaInner).unique('name');
 
 const settingsSchema = Joi.object({
 	name: Joi.string(),
@@ -48,7 +48,7 @@ const settingsSchema = Joi.object({
 	canCreate: Joi.boolean(),
 	canUpdate: Joi.boolean(),
 	canDelete: Joi.boolean(),
-	querySchema: editorSchema,
+	querySchema: editorSchema1,
 	disableExcelDownload: Joi.boolean(),
 	disableExcelUpload: Joi.boolean(),
 	uploadPreviewUrl: Joi.string(),
@@ -56,12 +56,12 @@ const settingsSchema = Joi.object({
 });
 
 export const editorToCode = (editors, settings) => {
-	var editors2 = editorSchema.validate(editors);
+	var editors2 = editorSchema1.validate(editors);
 	var settings2 = settingsSchema.validate(settings);
 	return renderTemplate(editors2.value, settings2.value);
 };
 
-export const validateEditor = (editors) => editorSchema.validate(editors);
+export const validateEditor = (editors) => editorSchema2.validate(editors);
 
 const traverse = (node) => {
 	if (Joi.isSchema(node)) return node;
