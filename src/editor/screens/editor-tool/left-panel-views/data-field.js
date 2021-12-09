@@ -13,6 +13,17 @@ export const getSingleRow = () => {
   return row;
 }
 
+export const getInitRowQuerySchema = () => {
+  const initRows = [{ ...rowQuerySchema }];
+  return initRows.map((item) => ({ ...item, name: "name-query-" + generateId(), }))
+}
+
+export const getSingleRowQuerySchema = () => {
+  const row = { ...rowQuerySchema }
+  row.name = rowQuerySchema.name + `-${generateId()}`
+  return row;
+}
+
 export const rowField = {
   name: "name-field",
   label: "label-field",
@@ -31,9 +42,19 @@ export const rowField = {
   disableFilter: false,
 };
 
+export const rowQuerySchema = {
+  name: "name-query",
+  label: "label-query",
+  fieldType: "input",
+  placeholder: "",
+}
+
 export const disabledDefaultList = [
   "barcode",
   "cascader",
+  "cascader_async",
+  "cascader_address",
+  "checkbox",
   "upload",
   "dropdown",
   "date",

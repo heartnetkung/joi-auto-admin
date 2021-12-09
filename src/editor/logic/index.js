@@ -70,7 +70,7 @@ const traverse = (node) => {
 	return Joi.object(ans);
 };
 
-const makeJoiObj = (editors, settings) => {
+export const makeJoiObj = (editors, settings) => {
 	var ans = {};
 	for (var editor of editors)
 		_.set(ans, editor.name, makeJoiLine(editor, settings, true));

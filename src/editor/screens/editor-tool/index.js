@@ -7,7 +7,7 @@ import MenuFormView from "./views/menu-form";
 import RightPanelView from "./right-panel-views";
 import LeftPanelView from "./left-panel-views";
 import { MENU, MENU_FORM } from "./constants";
-import { getInitRowField } from "./left-panel-views/data-field";
+import { getInitRowField, getInitRowQuerySchema } from "./left-panel-views/data-field";
 import * as styles from "./styles";
 import * as logic from "./logic";
 
@@ -28,7 +28,12 @@ const EditorScreen = () => {
     current: MENU_FORM.setting,
   });
   const [formState, setFormState] = useState(() => getInitRowField());
-  const [settingState, setSettingState] = useState({ name: "example-tb-name", querySchema: {}, steps: [] });
+  const [settingState, setSettingState] = useState(() => ({
+    name: "example-tb-name", querySchema: {
+      query: false,
+      schema: [...getInitRowQuerySchema()]
+    }, steps: []
+  }));
   const [tableSettingProps, setTableSettingProps] = useState();
   const [schemaProps, setSchemaProps] = useState();
 
@@ -166,7 +171,7 @@ const EditorScreen = () => {
           </div>
         </div>
         <div style={styles.resizableContainer} onMouseDown={onEventMouseDown} />
-        <div style={styles.rightPanelContainer}>
+        <div style={currentMenuState.current === MENU.ui ? styles.rightPanelContainer2 : styles.rightPanelContainer}>
           <RightPanelView view={currentMenuState.current} settings={tableSettingProps} editors={schemaProps || formState} />
         </div>
       </div>

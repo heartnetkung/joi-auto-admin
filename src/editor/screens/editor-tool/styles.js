@@ -1,10 +1,11 @@
 const panelColor = "rgb(35,39,46)";
+const panelColor2 = '#889EAF';
 
 export const LayoutContainer = {
   display: "flex",
   flexDirection: "column",
   width: "100%",
-  height: "100vh",
+  height: '100%',
   minWidth: 800,
 };
 
@@ -37,6 +38,15 @@ export const rightPanelContainer = {
   marginRight: 6,
   marginBottom: 6,
   backgroundColor: panelColor,
+  padding: "2rem 1rem",
+};
+
+export const rightPanelContainer2 = {
+  flex: 1,
+  borderRadius: 8,
+  marginRight: 6,
+  marginBottom: 6,
+  backgroundColor: panelColor2,
   padding: "2rem 1rem",
 };
 

@@ -9,9 +9,18 @@ const RenderCodeBlocks = (props) => {
     return null;
   }
 
-  return <div style={{ width: '100%', maxWidth: '50vw', overflow: 'auto' }}>
-    <CopyBlock text={text} language={language} theme={dracula} />
-  </div>;
+  return (
+    <div
+      style={{
+        height: "100%",
+        width: "100%",
+        maxWidth: "50vw",
+        overflow: "auto",
+      }}
+    >
+      <CopyBlock text={text} language={language} theme={dracula} />
+    </div>
+  );
 };
 
 RenderCodeBlocks.propTypes = {

@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import RenderCodeBlocks from "./code-blocks";
 import { MENU } from "../constants";
-import { DUMMY_JSX } from "../example/dummy-code";
-import { App as TransView, validateEditor } from '../../../logic'
+import { App as TransView, validateEditor, makeJoiObj } from '../../../logic'
 import { renderTemplate } from '../../../logic/template'
 
 const RightPanelView = (props) => {
