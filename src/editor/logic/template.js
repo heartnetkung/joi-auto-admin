@@ -1,7 +1,8 @@
 import _ from "lodash";
-import prettier from "prettier";
+// import prettier from "prettier";
 import { makeJoiLine } from "./joi_line";
 import { raw, showRaw } from "./util";
+
 
 export const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -68,8 +69,9 @@ export const renderProps = (editors, settings, isComp) => {
 };
 
 export const format = (a, isJson) => {
-	if (isJson) a = "(" + a + ")";
-	return prettier.format(a, { parser: "babel" });
+	return a
+	// if (isJson) a = "(" + a + ")";
+	// return prettier.format(a, { parser: "babel" });
 };
 
 export const renderTemplate = (editors, settings) => {

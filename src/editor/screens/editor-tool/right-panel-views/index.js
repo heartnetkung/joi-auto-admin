@@ -5,34 +5,34 @@ import RenderCodeBlocks from "./code-blocks";
 import { MENU } from "../constants";
 import { DUMMY_JSX } from "../example/dummy-code";
 import { App as TransView, validateEditor } from '../../../logic'
+import { renderTemplate } from '../../../logic/template'
 
 const RightPanelView = (props) => {
   const { view, editors, settings } = props;
-  const [isEditorError, setIsEditorError] = useState(false)
 
   useEffect(() => {
-    console.log(editors, 'editor')
-    const isError = validateEditor(editors);
-    console.log(isError, 'error')
+    validateEditor(editors);
+    // console.log(isError, 'error')
   }, [editors])
 
   if (view === MENU.code) {
-    return <RenderCodeBlocks text={DUMMY_JSX} />;
+    const codeText = renderTemplate(editors, settings);
+    return <RenderCodeBlocks text={codeText} />;
   }
 
   return <div>
-    <TransView editors={!isEditorError ? editors : undefined} settings={settings} />
+    <TransView editors={editors} settings={settings} />
   </div>;
 };
 
 RightPanelView.propTypes = {
-  view: PropTypes.oneOf([MENU.form, MENU.table, MENU.code, MENU.setting]),
+  view: PropTypes.oneOf([MENU.ui, MENU.code]),
   editors: PropTypes.array,
   settings: PropTypes.object,
 };
 
 RightPanelView.defaultProps = {
-  view: "form",
+  view: MENU.ui,
 };
 
 export default RightPanelView;

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import lodashGet from 'lodash/get';
 import { Input, Form, Checkbox, Collapse, Row, Col, Typography, Select, Divider } from "antd";
 import { SETTINGS } from "../constants";
 import {
@@ -51,7 +50,7 @@ const RenderSetting = (props) => {
     }
     const steps = [];
     for (let i = 1; i <= numberOfStep; i++) {
-      steps.push({ placeholder: `label step ${i}`, value: `step ${i}` })
+      steps.push({ placeholder: `label step ${i}`, value: `label step ${i}` })
     }
     state.steps = [...steps]
     setSettingState(state);
@@ -90,6 +89,62 @@ const RenderSetting = (props) => {
           >
             {item}
           </Checkbox>)}
+
+        <div style={{ paddingTop: '1rem' }}>
+          <Input
+            style={styles.input}
+            placeholder="uploadPreviewUrl"
+            value={settingState?.uploadPreviewUrl}
+            onChange={(event) => onChangeField("uploadPreviewUrl", event.target.value)}
+          />
+        </div>
+        <Divider />
+        <div>
+          <Typography.Title level={5}>
+            Step setup
+          </Typography.Title>
+          <Row>
+            <Typography.Text style={{ padding: "0.25rem 0.5rem 0 0" }}>
+              Form Steps
+            </Typography.Text>
+            {
+              Array.isArray(optionsStep) &&
+              <Select defaultValue={settingState?.step || optionsStep[0].value}
+                style={{ flex: 1 }}
+                onChange={(value) =>
+                  onChangeField("step", value)
+                }>
+                {optionsStep.map((st, si) => (
+                  <Select.Option key={si.toString()} value={st.value}>
+                    {st.label}
+                  </Select.Option>
+                ))}
+              </Select>
+            }
+          </Row>
+          <div style={{ paddingTop: '1rem' }}>
+            {Array.isArray(settingState?.steps) &&
+              settingState.steps.map((item, index) =>
+                <Row key={index.toString()} style={{ padding: "0.5rem 0" }}>
+                  <Col style={{ padding: "0.25rem 0.5rem 0 0", width: 65 }}>
+                    <Typography.Text >
+                      {`step ${index + 1}`}
+                    </Typography.Text>
+                  </Col>
+                  <Col flex="1">
+                    <Input
+                      placeholder={item.placeholder}
+                      value={item.value}
+                      onChange={(event) =>
+                        onChangeInputSteps(index, event.target.value)
+                      }
+                    />
+                  </Col>
+                </Row>
+              )
+            }
+          </div>
+        </div>
         <Divider />
         <div>
           <Typography.Title level={5}>
@@ -154,52 +209,6 @@ const RenderSetting = (props) => {
               </Row>
             </Collapse.Panel>
           </Collapse>
-        </div>
-        <Divider />
-        <div>
-          <Typography.Title level={5}>
-            Step setup
-          </Typography.Title>
-          <Row>
-            <Typography.Text style={{ padding: "0.25rem 0.5rem 0 0" }}>
-              Form Steps
-            </Typography.Text>
-            {
-              Array.isArray(optionsStep) &&
-              <Select defaultValue={settingState?.step || optionsStep[0].value}
-                style={{ flex: 1 }}
-                onChange={(value) =>
-                  onChangeField("step", value)
-                }>
-                {optionsStep.map((st, si) => (
-                  <Select.Option key={si.toString()} value={st.value}>
-                    {st.label}
-                  </Select.Option>
-                ))}
-              </Select>
-            }
-          </Row>
-          <div style={{ paddingTop: '1rem' }}>
-            {Array.isArray(settingState?.steps) &&
-              settingState.steps.map((item, index) =>
-                <div key={index.toString()} style={{ padding: '0.5rem 0' }}>
-                  <Input
-
-                    placeholder={item.placeholder}
-                    value={item.value}
-                    onChange={(event) =>
-                      onChangeInputSteps(index, event.target.value)
-                    }
-                  />
-                </div>
-              )
-            }
-          </div>
-          <div style={{ padding: '1rem 0' }}>
-            {lodashGet(settingState, 'hasSteps', false) && <div>
-
-            </div>}
-          </div>
         </div>
       </div>
     </Form>

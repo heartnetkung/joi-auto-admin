@@ -13,6 +13,7 @@ import * as logic from "./logic";
 
 const MIN_WIDTH = 400;
 const DELAY_TIMER = 500;
+const IS_DISABLE_RESIZE_PANEL = true;
 
 const EditorScreen = () => {
   const splitPanelRef = useRef();
@@ -21,7 +22,7 @@ const EditorScreen = () => {
   const [separatorXPosition, setSeparatorXPosition] = useState();
   const [leftPanelWidth, setLeftPanelWidth] = useState();
   const [currentMenuState, setCurrentMenuState] = useState({
-    current: MENU.form,
+    current: MENU.ui,
   });
   const [currentMenuFormState, setCurrentMenuFormState] = useState({
     current: MENU_FORM.setting,
@@ -33,18 +34,21 @@ const EditorScreen = () => {
   ]);
   const [settingState, setSettingState] = useState({ name: "example-tb-name", querySchema: {}, steps: [] });
   const [tableSettingProps, setTableSettingProps] = useState();
+  const [schemaProps, setSchemaProps] = useState();
 
   useEffect(() => {
-    document.addEventListener("mousemove", onMouseMove);
-    document.addEventListener("touchmove", onTouchMove);
-    document.addEventListener("mouseup", onMouseUp);
+    if (!IS_DISABLE_RESIZE_PANEL) {
+      document.addEventListener("mousemove", onMouseMove);
+      document.addEventListener("touchmove", onTouchMove);
+      document.addEventListener("mouseup", onMouseUp);
 
-    return () => {
-      document.removeEventListener("mousemove", onMouseMove);
-      document.removeEventListener("touchmove", onTouchMove);
-      document.removeEventListener("mouseup", onMouseUp);
-    };
-  });
+      return () => {
+        document.removeEventListener("mousemove", onMouseMove);
+        document.removeEventListener("touchmove", onTouchMove);
+        document.removeEventListener("mouseup", onMouseUp);
+      };
+    }
+  }, [IS_DISABLE_RESIZE_PANEL]);
 
   useEffect(() => {
     if (_.get(settingState, "name")) {
@@ -52,11 +56,24 @@ const EditorScreen = () => {
     }
   }, [settingState]);
 
+  useEffect(() => {
+    if (_.get(formState, "[0]")) {
+      debounceSchemaTrans();
+    }
+  }, [formState]);
+
   const onSettingChange = () => {
     const setting = logic.cleanTableSettingBeforeTrans(settingState)
     setTableSettingProps(setting)
   }
+
+  const onFormSchemaChange = () => {
+    const schema = logic.cleanFormBeforeTrans(formState, settingState?.steps)
+    setSchemaProps(schema)
+  }
+
   const debounceTableTrans = _.debounce(onSettingChange, DELAY_TIMER)
+  const debounceSchemaTrans = _.debounce(onFormSchemaChange, DELAY_TIMER)
 
   const onEventMouseDown = (event) => {
     if (!event) {
@@ -154,7 +171,7 @@ const EditorScreen = () => {
         </div>
         <div style={styles.resizableContainer} onMouseDown={onEventMouseDown} />
         <div style={styles.rightPanelContainer}>
-          <RightPanelView view={currentMenuState.current} settings={tableSettingProps} editors={formState} />
+          <RightPanelView view={currentMenuState.current} settings={tableSettingProps} editors={schemaProps || formState} />
         </div>
       </div>
     </div>

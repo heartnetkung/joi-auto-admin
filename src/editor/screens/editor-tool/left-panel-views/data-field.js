@@ -1,7 +1,7 @@
 export const rowField = {
   name: "new-field",
-  label: "",
-  fieldType: "string",
+  label: "new-field",
+  fieldType: "input",
   placeholder: "",
   defaultValue: "",
   step: "",

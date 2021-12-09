@@ -1,6 +1,5 @@
 export const MENU = {
-  form: "UI Form",
-  table: "UI Table",
+  ui: "UI Table",
   code: "Code",
 };
 
@@ -15,5 +14,4 @@ export const SETTINGS = [
   "canDelete",
   "disableExcelDownload",
   "disableExcelUpload",
-  'uploadPreviewUrl'
 ]
