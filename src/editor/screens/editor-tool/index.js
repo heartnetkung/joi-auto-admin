@@ -1,18 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from "react";
 import { Row, Col, Typography } from "antd";
+import _ from 'lodash'
 import MenuView from "./views/menu";
 import MenuFormView from "./views/menu-form";
 import RightPanelView from "./right-panel-views";
 import LeftPanelView from "./left-panel-views";
 import { MENU, MENU_FORM } from "./constants";
 import { rowField } from "./left-panel-views/data-field";
-import _ from "lodash";
 import * as styles from "./styles";
 import * as logic from "./logic";
 
 const MIN_WIDTH = 400;
-const DELAY_PARSER = 1000;
+const DELAY_TIMER = 500;
 
 const EditorScreen = () => {
   const splitPanelRef = useRef();
@@ -24,7 +24,7 @@ const EditorScreen = () => {
     current: MENU.form,
   });
   const [currentMenuFormState, setCurrentMenuFormState] = useState({
-    current: MENU_FORM.form,
+    current: MENU_FORM.setting,
   });
   const [formState, setFormState] = useState([
     { ...rowField },
@@ -32,6 +32,7 @@ const EditorScreen = () => {
     { ...rowField },
   ]);
   const [settingState, setSettingState] = useState({ name: "example-tb-name", querySchema: {}, steps: [] });
+  const [tableSettingProps, setTableSettingProps] = useState();
 
   useEffect(() => {
     document.addEventListener("mousemove", onMouseMove);
@@ -46,29 +47,16 @@ const EditorScreen = () => {
   });
 
   useEffect(() => {
-    if (_.get(formState, "[0]")) {
-      debounceJoiParser();
-    }
-  }, [formState]);
-
-  useEffect(() => {
     if (_.get(settingState, "name")) {
-      debounceTableParser();
+      debounceTableTrans();
     }
   }, [settingState]);
 
-  const onCallJoiParser = () => {
-    // eslint-disable-next-line no-unused-vars
-    const joiSchema = logic.joiParser(formState);
-  };
-
-  const onCallTableParser = () => {
-    // eslint-disable-next-line no-unused-vars
-    const tableProps = logic.tableParser(settingState);
-  };
-
-  const debounceJoiParser = _.debounce(onCallJoiParser, DELAY_PARSER);
-  const debounceTableParser = _.debounce(onCallTableParser, DELAY_PARSER);
+  const onSettingChange = () => {
+    const setting = logic.cleanTableSettingBeforeTrans(settingState)
+    setTableSettingProps(setting)
+  }
+  const debounceTableTrans = _.debounce(onSettingChange, DELAY_TIMER)
 
   const onEventMouseDown = (event) => {
     if (!event) {
@@ -166,7 +154,7 @@ const EditorScreen = () => {
         </div>
         <div style={styles.resizableContainer} onMouseDown={onEventMouseDown} />
         <div style={styles.rightPanelContainer}>
-          <RightPanelView view={currentMenuState.current} />
+          <RightPanelView view={currentMenuState.current} settings={tableSettingProps} editors={formState} />
         </div>
       </div>
     </div>

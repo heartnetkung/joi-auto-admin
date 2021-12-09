@@ -39,7 +39,7 @@ const editorSchema = Joi.array().items(
 		disabledSorting: Joi.boolean(),
 		disabledFilter: Joi.boolean(),
 	}),
-	Joi.any().strip()
+	// Joi.any().strip()
 );
 
 const settingsSchema = Joi.object({
@@ -49,9 +49,9 @@ const settingsSchema = Joi.object({
 	canUpdate: Joi.boolean(),
 	canDelete: Joi.boolean(),
 	querySchema: editorSchema,
-	canDownloadExcel: Joi.boolean(),
-	canUploadExcel: Joi.boolean(),
-	uploadPreviewUrl: Joi.boolean(),
+	disableExcelDownload: Joi.boolean(),
+	disableExcelUpload: Joi.boolean(),
+	uploadPreviewUrl: Joi.string(),
 	steps: Joi.string(),
 });
 
