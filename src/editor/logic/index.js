@@ -39,8 +39,8 @@ const editorSchemaInner = Joi.object({
 	disabledFilter: Joi.boolean(),
 });
 
-const editorSchema1 = Joi.array().items(editorSchemaInner, Joi.any().strip());
-const editorSchema2 = Joi.array().items(editorSchemaInner);
+const editorSchema1 = Joi.array().items(editorSchemaInner, Joi.any().strip()).unique('name');
+const editorSchema2 = Joi.array().items(editorSchemaInner).unique('name');
 
 const settingsSchema = Joi.object({
 	name: Joi.string(),
@@ -48,7 +48,7 @@ const settingsSchema = Joi.object({
 	canCreate: Joi.boolean(),
 	canUpdate: Joi.boolean(),
 	canDelete: Joi.boolean(),
-	querySchema: editorSchema,
+	querySchema: editorSchema1,
 	canDownloadExcel: Joi.boolean(),
 	canUploadExcel: Joi.boolean(),
 	uploadPreviewUrl: Joi.boolean(),
