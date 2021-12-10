@@ -2,30 +2,6 @@ import _ from "lodash";
 
 const OMIT_SETTING = ["step"];
 
-export const cleanTableSettingBeforeTrans = (setting) => {
-  if (!setting) {
-    return setting;
-  }
-  const newSetting = { ...setting };
-  const omitSetting = [...OMIT_SETTING];
-  if (_.get(newSetting.steps, "[0]")) {
-    newSetting.steps = newSetting.steps
-      .map((item, index) => item.value || `label step ${index + 1}`)
-      .join(",");
-  }
-  if (!newSetting.steps || !_.get(newSetting.steps, "[0]")) {
-    omitSetting.push("steps");
-  }
-  if (!newSetting.querySchema?.query) {
-    omitSetting.push("querySchema");
-  }
-  if (newSetting.querySchema?.query) {
-    const schema = [...newSetting.querySchema.schema];
-    newSetting.querySchema = schema;
-  }
-  return _.omit(newSetting, omitSetting);
-};
-
 const findStep = (steps, target) => {
   const stepValue = steps.findIndex((item) => item.value === target);
   if (stepValue < 0) {
@@ -54,6 +30,30 @@ const cleanColWidth = (colWidth) => {
   } catch (error) {
     return "";
   }
+};
+
+export const cleanTableSettingBeforeTrans = (setting) => {
+  if (!setting) {
+    return setting;
+  }
+  const newSetting = { ...setting };
+  const omitSetting = [...OMIT_SETTING];
+  if (_.get(newSetting.steps, "[0]")) {
+    newSetting.steps = newSetting.steps
+      .map((item, index) => item.value || `label step ${index + 1}`)
+      .join(",");
+  }
+  if (!newSetting.steps || !_.get(newSetting.steps, "[0]")) {
+    omitSetting.push("steps");
+  }
+  if (!newSetting.querySchema?.query) {
+    omitSetting.push("querySchema");
+  }
+  if (newSetting.querySchema?.query) {
+    const schema = [...newSetting.querySchema.schema];
+    newSetting.querySchema = schema;
+  }
+  return _.omit(newSetting, omitSetting);
 };
 
 export const cleanFormBeforeTrans = (editor, settingSteps) => {

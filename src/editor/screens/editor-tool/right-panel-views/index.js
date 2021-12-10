@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import RenderCodeBlocks from "./code-blocks";
 import { MENU } from "../constants";
-import { App as TransView, validateEditor, makeJoiObj } from '../../../logic'
-import { renderTemplate } from '../../../logic/template'
+import { App as TransView, validateEditor, makeJoiObj } from "../../../logic";
+import { renderTemplate } from "../../../logic/template";
 
 const RightPanelView = (props) => {
   const { view, editors, settings } = props;
@@ -12,16 +12,14 @@ const RightPanelView = (props) => {
   useEffect(() => {
     validateEditor(editors);
     // console.log(isError, 'error')
-  }, [editors])
+  }, [editors]);
 
   if (view === MENU.code) {
     const codeText = renderTemplate(editors, settings);
     return <RenderCodeBlocks text={codeText} />;
   }
 
-  return <div style={{ maxWidth: '50vw', overflow: 'auto' }}>
-    <TransView editors={editors} settings={settings} />
-  </div>;
+  return <TransView editors={editors} settings={settings} />;
 };
 
 RightPanelView.propTypes = {

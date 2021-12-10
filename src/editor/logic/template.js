@@ -50,8 +50,7 @@ export const renderProps = (editors, settings, isComp) => {
     ans.updateOne = raw(async () => {
       await wait(500);
     }, isComp);
-  if (querySchema)
-    ans.querySchema = raw(renderJoi(querySchema, {}, isComp), isComp);
+  if (querySchema && !isComp) ans.querySchema = raw(renderJoi(querySchema, {}));
 
   // literal
   var extras = _.pick(settings, [
