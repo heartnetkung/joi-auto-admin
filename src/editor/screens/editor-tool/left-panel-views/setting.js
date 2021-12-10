@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import lodash from "lodash";
-import { PlusOutlined, DeleteFilled } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import {
   Input,
   Form,
@@ -212,13 +212,16 @@ const RenderSetting = (props) => {
                         key={qi.toString()}
                         header={qs.name}
                         extra={
-                          <DeleteFilled
-                            style={{ color: "red" }}
+                          <Button
+                            type="dashed"
+                            danger
                             onClick={(event) => {
                               onDeleteQuerySchema(qi);
                               event.stopPropagation();
                             }}
-                          />
+                          >
+                            Delete
+                          </Button>
                         }
                       >
                         <Row style={styles.rowInput}>

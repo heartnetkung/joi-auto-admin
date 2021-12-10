@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
-import { Row, Col, Typography } from "antd";
-import _ from "lodash";
+import { Row, Col, Typography, Button } from "antd";
+import lodash from "lodash";
+import { PlusOutlined } from "@ant-design/icons";
 import MenuView from "./views/menu";
 import MenuFormView from "./views/menu-form";
 import RightPanelView from "./right-panel-views";
@@ -11,7 +12,9 @@ import { MENU, MENU_FORM } from "./constants";
 import {
   getInitRowField,
   getInitRowQuerySchema,
+  getSingleRow,
 } from "./left-panel-views/data-field";
+
 import * as styles from "./styles";
 import * as logic from "./logic";
 
@@ -35,15 +38,19 @@ const EditorScreen = () => {
   }));
   const [tableSettingProps, setTableSettingProps] = useState();
   const [schemaProps, setSchemaProps] = useState();
+  const [schemaValidateState, setSchemaValidateState] = useState({
+    isValidate: true,
+    message: "",
+  });
 
   useEffect(() => {
-    if (_.get(settingState, "name")) {
+    if (lodash.get(settingState, "name")) {
       debounceTableTrans();
     }
   }, [settingState]);
 
   useEffect(() => {
-    if (_.get(formState, "[0]")) {
+    if (lodash.get(formState, "[0]")) {
       debounceSchemaTrans();
     }
   }, [formState]);
@@ -56,10 +63,33 @@ const EditorScreen = () => {
   const onFormSchemaChange = () => {
     const schema = logic.cleanFormBeforeTrans(formState, settingState?.steps);
     setSchemaProps(schema);
+    const [isValidate, message] = logic.validateSchema(schema);
+    setSchemaValidateState({ isValidate, message });
   };
 
-  const debounceTableTrans = _.debounce(onSettingChange, DELAY_TIMER);
-  const debounceSchemaTrans = _.debounce(onFormSchemaChange, DELAY_TIMER);
+  const onAddField = () => {
+    if (!Array.isArray(formState)) {
+      return;
+    }
+    const newForm = [...formState];
+    newForm.push({ ...getSingleRow(settingState?.steps) });
+    setFormState(newForm);
+  };
+
+  const debounceTableTrans = lodash.debounce(onSettingChange, DELAY_TIMER);
+  const debounceSchemaTrans = lodash.debounce(onFormSchemaChange, DELAY_TIMER);
+
+  const onEventResetForm = () => {
+    setSettingState({
+      name: "example-tb-name",
+      querySchema: {
+        query: false,
+        schema: [...getInitRowQuerySchema()],
+      },
+      steps: [],
+    });
+    setFormState(() => getInitRowField());
+  };
 
   return (
     <div style={styles.LayoutContainer}>
@@ -79,14 +109,28 @@ const EditorScreen = () => {
           />
         </Col>
       </Row>
-
       <PanelContainerView
+        validateSchema={schemaValidateState}
+        currentView={currentMenuFormState.current}
+        menu={
+          <MenuFormView
+            currentMenu={currentMenuFormState}
+            setCurrentMenu={setCurrentMenuFormState}
+            onClearForm={onEventResetForm}
+          />
+        }
+        bottomBar={
+          <Button
+            block
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={onAddField}
+          >
+            Add Field
+          </Button>
+        }
         leftView={
           <>
-            <MenuFormView
-              currentMenu={currentMenuFormState}
-              setCurrentMenu={setCurrentMenuFormState}
-            />
             <LeftPanelView
               view={currentMenuFormState.current}
               formState={formState}

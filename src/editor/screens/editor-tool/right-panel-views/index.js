@@ -1,18 +1,12 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import RenderCodeBlocks from "./code-blocks";
 import { MENU } from "../constants";
-import { App as TransView, validateEditor, makeJoiObj } from "../../../logic";
+import { App as TransView } from "../../../logic";
 import { renderTemplate } from "../../../logic/template";
 
 const RightPanelView = (props) => {
   const { view, editors, settings } = props;
-
-  useEffect(() => {
-    validateEditor(editors);
-    // console.log(isError, 'error')
-  }, [editors]);
 
   if (view === MENU.code) {
     const codeText = renderTemplate(editors, settings);

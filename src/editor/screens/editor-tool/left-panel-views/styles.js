@@ -2,8 +2,12 @@ export const fullWidth = {
   width: "100%",
 };
 
-export const Wrapper = {
-  padding: "2rem 1rem",
+export const Wrapper1 = {
+  padding: "1rem",
+};
+
+export const Wrapper2 = {
+  padding: "0 1rem",
 };
 
 export const contentWhite = {

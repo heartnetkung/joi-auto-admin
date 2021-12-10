@@ -5,7 +5,7 @@ import { MENU_FORM } from "../constants";
 import * as styles from "./styles";
 
 const MenuFormView = (props) => {
-  const { currentMenu, setCurrentMenu } = props;
+  const { currentMenu, setCurrentMenu, onClearForm } = props;
 
   const onEventClick = (type) => {
     setCurrentMenu({ current: type });
@@ -30,7 +30,9 @@ const MenuFormView = (props) => {
       >
         {MENU_FORM.form}
       </Button>
-
+      <Button type="dashed" danger onClick={onClearForm}>
+        Reset
+      </Button>
     </div>
   );
 };
@@ -38,6 +40,7 @@ const MenuFormView = (props) => {
 MenuFormView.propTypes = {
   currentMenu: PropTypes.object.isRequired,
   setCurrentMenu: PropTypes.func.isRequired,
+  onClearForm: PropTypes.func.isRequired,
 };
 
 export default MenuFormView;

@@ -12,13 +12,13 @@ const LeftPanelView = (props) => {
 
   if (view === MENU_FORM.setting) {
     return (
-      <div style={styles.Wrapper}>
+      <div style={styles.Wrapper1}>
         <RenderSetting {...otherProps} />
       </div>
     );
   }
   return (
-    <div style={styles.Wrapper}>
+    <div style={styles.Wrapper2}>
       <RenderFormFields {...otherProps} />
     </div>
   );
