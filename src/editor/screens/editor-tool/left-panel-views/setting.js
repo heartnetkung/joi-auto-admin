@@ -114,7 +114,7 @@ const RenderSetting = (props) => {
   // console.log(settingState, "set-u");
   return (
     <Form>
-      <Typography.Title level={5}>Basic setup</Typography.Title>
+      <Typography.Title level={5}>Table Settings</Typography.Title>
       <Input
         style={styles.input}
         placeholder="name"
@@ -154,7 +154,7 @@ const RenderSetting = (props) => {
         </div>
         <Divider />
         <div>
-          <Typography.Title level={5}>Step setup</Typography.Title>
+          <Typography.Title level={5}>Multi-step Form</Typography.Title>
           <Row>
             <Typography.Text style={{ padding: "0.25rem 0.5rem 0 0" }}>
               Form Steps
@@ -195,12 +195,12 @@ const RenderSetting = (props) => {
         </div>
         <Divider />
         <div>
-          <Typography.Title level={5}>QuerySchema setup</Typography.Title>
+          <Typography.Title level={5}>Table Query</Typography.Title>
           <Checkbox
             checked={settingState.querySchema?.query || false}
             onChange={() => onChangCheckboxQuery()}
           >
-            with QuerySchema
+            enable table query
           </Checkbox>
           {settingState.querySchema?.query && (
             <>
