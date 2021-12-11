@@ -12,6 +12,7 @@ import ExcelErrorModal from "./excel_error_modal";
 import Form from "../formik/form";
 import Joi from "joi/lib/index";
 import React from "react";
+import _ from 'lodash';
 
 const INITIAL_FORM_STATUS = { isEdit: false, initialValue: null, error: null };
 
@@ -54,14 +55,18 @@ const Controller = (props) => {
 	const onSubmit = usePersistFn(async (data, actions, originalData) => {
 		setEditModalData((a) => ({ ...a, error: null }));
 		try {
+			data = Joi.attempt(data, schema2.joiObj);
+			schema2.formSpec
+				.map((a) => a.name)
+				.filter((a) => /^\$|\.\$/.test(a))
+				.forEach((a) => _.unset(data, a));
+
 			if (editModalData.isEdit) {
-				data = Joi.attempt(data, schema2.joiObj);
 				await updateOne(data, originalData);
 				updateDataAtRow(originalData);
 				alert.success("แก้ไขข้อมูลเรียบร้อย");
 				editModalControl.setVisible(false);
 			} else {
-				data = Joi.attempt(data, schema2.joiObj);
 				var returnData = await createMany([data]);
 				if (!Array.isArray(returnData) || returnData.length !== 1)
 					return alert.error("ข้อมูลจากเซิฟเวอร์ไม่ถูกต้อง");

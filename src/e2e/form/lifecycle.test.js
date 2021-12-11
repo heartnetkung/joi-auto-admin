@@ -141,3 +141,18 @@ it("handle empty string validation (known bug)", async () => {
 	expect(createMany.mock.calls[0][0]).toEqual([{ foo: "" }]);
 	expect(console.error.mock.calls.length).toBe(0);
 });
+
+it("handle blank submit with dollarSign", async () => {
+	var schema = Joi.object({
+		foo: Joi.string().label("fooName").default("ab"),
+		$foo: Joi.string().label("fooName2").default("cd"),
+	});
+	var createMany = await startForm(null, { schema });
+	await submitForm();
+	await waitFor(() => expect(createMany.mock.calls.length).toBe(1));
+
+	expect(createMany.mock.calls[0][0]).toEqual([{ foo: "ab" }]);
+	expect(getCells().length).toBe(4);
+	await screen.findByText(/สร้างข้อมูลเรียบร้อย/);
+	expect(console.error.mock.calls.length).toBe(0);
+});

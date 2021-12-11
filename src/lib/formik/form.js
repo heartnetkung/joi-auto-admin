@@ -32,9 +32,6 @@ const CombinedForm = (props) => {
 				postData,
 				names.filter((a) => !/^\$|\.\$/.test(a))
 			);
-			names
-				.filter((a) => /^\$|\.\$/.test(a))
-				.forEach((a) => _.unset(postData, a));
 			await onSubmit(ans, actions, postData);
 		};
 		return { formSpec, onSubmit2 };
