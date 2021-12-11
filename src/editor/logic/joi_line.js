@@ -102,6 +102,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 		});
 	if (newFieldType) meta.fieldType = newFieldType;
 	if (settings.steps) meta.step = meta.step || 0;
+	else delete meta.step;
 
 	if (_.size(meta))
 		ans.push({
