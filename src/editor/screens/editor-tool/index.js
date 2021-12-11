@@ -1,91 +1,94 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Row, Col, Typography } from "antd";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from "react";
+import { Row, Col, Typography, Button } from "antd";
+import lodash from "lodash";
+import { PlusOutlined } from "@ant-design/icons";
 import MenuView from "./views/menu";
 import MenuFormView from "./views/menu-form";
 import RightPanelView from "./right-panel-views";
 import LeftPanelView from "./left-panel-views";
+import PanelContainerView from "./views/panel";
 import { MENU, MENU_FORM } from "./constants";
-import * as styles from "./styles";
+import {
+  getInitRowField,
+  getInitRowQuerySchema,
+  getSingleRow,
+} from "./left-panel-views/data-field";
 
-const MIN_WIDTH = 200;
+import * as styles from "./styles";
+import * as logic from "./logic";
+
+const DELAY_TIMER = 500;
 
 const EditorScreen = () => {
-  const splitPanelRef = useRef();
-  const leftPanelRef = useRef();
-  const [isDragging, setIsDragging] = useState(false);
-  const [separatorXPosition, setSeparatorXPosition] = useState();
-  const [leftPanelWidth, setLeftPanelWidth] = useState();
   const [currentMenuState, setCurrentMenuState] = useState({
-    current: MENU.form,
+    current: MENU.ui,
   });
   const [currentMenuFormState, setCurrentMenuFormState] = useState({
-    current: MENU_FORM.form,
+    current: MENU_FORM.setting,
+  });
+  const [formState, setFormState] = useState(() => getInitRowField());
+  const [settingState, setSettingState] = useState(() => ({
+    name: "example-tb-name",
+    querySchema: {
+      query: false,
+      schema: [...getInitRowQuerySchema()],
+    },
+    steps: [],
+  }));
+  const [tableSettingProps, setTableSettingProps] = useState();
+  const [schemaProps, setSchemaProps] = useState();
+  const [schemaValidateState, setSchemaValidateState] = useState({
+    isValidate: true,
+    message: "",
   });
 
   useEffect(() => {
-    document.addEventListener("mousemove", onMouseMove);
-    document.addEventListener("touchmove", onTouchMove);
-    document.addEventListener("mouseup", onMouseUp);
+    if (lodash.get(settingState, "name")) {
+      debounceTableTrans();
+    }
+  }, [settingState]);
 
-    return () => {
-      document.removeEventListener("mousemove", onMouseMove);
-      document.removeEventListener("touchmove", onTouchMove);
-      document.removeEventListener("mouseup", onMouseUp);
-    };
-  });
+  useEffect(() => {
+    if (lodash.get(formState, "[0]")) {
+      debounceSchemaTrans();
+    }
+  }, [formState]);
 
-  const onEventMouseDown = (event) => {
-    if (!event) {
+  const onSettingChange = () => {
+    const setting = logic.cleanTableSettingBeforeTrans(settingState);
+    setTableSettingProps(setting);
+  };
+
+  const onFormSchemaChange = () => {
+    const schema = logic.cleanFormBeforeTrans(formState, settingState?.steps);
+    setSchemaProps(schema);
+    const [isValidate, message] = logic.validateSchema(schema);
+    setSchemaValidateState({ isValidate, message });
+  };
+
+  const onAddField = () => {
+    if (!Array.isArray(formState)) {
       return;
     }
-    setSeparatorXPosition(event.clientX);
-    if (!isDragging) {
-      setIsDragging(true);
-    }
-    if (!leftPanelWidth && leftPanelRef.current) {
-      setLeftPanelWidth(leftPanelRef.current.clientWidth);
-    }
+    const newForm = [...formState];
+    newForm.push({ ...getSingleRow(settingState?.steps) });
+    setFormState(newForm);
   };
 
-  const onMouseMove = (e) => {
-    if (isDragging) {
-      e.preventDefault();
-    }
-    onMove(e.clientX);
-  };
+  const debounceTableTrans = lodash.debounce(onSettingChange, DELAY_TIMER);
+  const debounceSchemaTrans = lodash.debounce(onFormSchemaChange, DELAY_TIMER);
 
-  const onTouchMove = (e) => {
-    if (!e) {
-      return;
-    }
-    onMove(e.touches[0].clientX);
-  };
-
-  const onMouseUp = () => {
-    setSeparatorXPosition(undefined);
-    setIsDragging(false);
-  };
-
-  const onMove = (clientX) => {
-    if (!clientX) {
-      return;
-    }
-    if (isDragging && leftPanelWidth && separatorXPosition) {
-      const newLeftWidth = leftPanelWidth + clientX - separatorXPosition;
-      setSeparatorXPosition(clientX);
-      if (newLeftWidth < MIN_WIDTH) {
-        setLeftPanelWidth(MIN_WIDTH);
-        return;
-      }
-      if (splitPanelRef.current) {
-        const splitPaneWidth = splitPanelRef.current.clientWidth;
-        if (newLeftWidth > splitPaneWidth - MIN_WIDTH) {
-          setLeftPanelWidth(splitPaneWidth - MIN_WIDTH);
-          return;
-        }
-      }
-      setLeftPanelWidth(newLeftWidth);
-    }
+  const onEventResetForm = () => {
+    setSettingState({
+      name: "example-tb-name",
+      querySchema: {
+        query: false,
+        schema: [...getInitRowQuerySchema()],
+      },
+      steps: [],
+    });
+    setFormState(() => getInitRowField());
   };
 
   return (
@@ -106,25 +109,50 @@ const EditorScreen = () => {
           />
         </Col>
       </Row>
-      <div ref={splitPanelRef} style={styles.panelContainer}>
-        <div
-          ref={leftPanelRef}
-          style={{
-            ...styles.leftPanelContainer,
-            width: leftPanelWidth || "50%",
-          }}
-        >
+      <PanelContainerView
+        validateSchema={schemaValidateState}
+        currentView={currentMenuFormState.current}
+        menu={
           <MenuFormView
             currentMenu={currentMenuFormState}
             setCurrentMenu={setCurrentMenuFormState}
+            onClearForm={onEventResetForm}
           />
-          <LeftPanelView view={currentMenuFormState.current} />
-        </div>
-        <div style={styles.resizableContainer} onMouseDown={onEventMouseDown} />
-        <div style={styles.rightPanelContainer}>
-          <RightPanelView view={currentMenuState.current} />
-        </div>
-      </div>
+        }
+        bottomBar={
+          <Button
+            block
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={onAddField}
+          >
+            Add Field
+          </Button>
+        }
+        leftView={
+          <>
+            <LeftPanelView
+              view={currentMenuFormState.current}
+              formState={formState}
+              setFormState={setFormState}
+              settingState={settingState}
+              setSettingState={setSettingState}
+            />
+          </>
+        }
+        rightView={
+          <RightPanelView
+            view={currentMenuState.current}
+            settings={tableSettingProps}
+            editors={schemaProps || formState}
+          />
+        }
+        rightViewStyle={
+          currentMenuState.current === MENU.ui
+            ? styles.rightPanelContainer2
+            : styles.rightPanelContainer
+        }
+      />
     </div>
   );
 };

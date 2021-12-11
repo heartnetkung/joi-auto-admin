@@ -17,8 +17,7 @@ const MenuView = (props) => {
       mode="horizontal"
       style={{ float: "right" }}
     >
-      <Menu.Item key={MENU.form}>{MENU.form}</Menu.Item>
-      <Menu.Item key={MENU.table}>{MENU.table}</Menu.Item>
+      <Menu.Item key={MENU.ui}>{MENU.ui}</Menu.Item>
       <Menu.Item key={MENU.code}>{MENU.code}</Menu.Item>
     </Menu>
   );

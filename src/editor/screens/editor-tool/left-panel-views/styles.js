@@ -2,12 +2,12 @@ export const fullWidth = {
   width: "100%",
 };
 
-export const Wrapper = {
-  flex: 1,
-  backgroundColor: "white",
-  padding: "2rem",
-  borderRadius: 8,
-  overflow: "auto",
+export const Wrapper1 = {
+  padding: "1rem",
+};
+
+export const Wrapper2 = {
+  padding: "0 1rem",
 };
 
 export const contentWhite = {
@@ -19,7 +19,7 @@ export const contentWhite = {
 export const layoutMargin = {
   display: "flex",
   flexDirection: "column",
-  margin: "1rem 0",
+  margin: "0 0 1rem 0",
 };
 
 export const checkbox = {
@@ -30,5 +30,13 @@ export const checkbox = {
 export const input = {
   maxWidth: 500,
   marginRight: "1rem",
+  marginBottom: "1rem",
+};
+
+export const VerticalSpacer = {
+  margin: "2rem 0",
+};
+
+export const rowInput = {
   marginBottom: "1rem",
 };

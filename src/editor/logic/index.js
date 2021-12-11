@@ -51,9 +51,9 @@ const settingsSchema = Joi.object({
 	canUpdate: Joi.boolean(),
 	canDelete: Joi.boolean(),
 	querySchema: editorSchema1,
-	canDownloadExcel: Joi.boolean(),
-	canUploadExcel: Joi.boolean(),
-	uploadPreviewUrl: Joi.boolean(),
+	disableExcelDownload: Joi.boolean(),
+	disableExcelUpload: Joi.boolean(),
+	uploadPreviewUrl: Joi.string(),
 	steps: Joi.string(),
 });
 
@@ -72,7 +72,7 @@ const traverse = (node) => {
 	return Joi.object(ans);
 };
 
-const makeJoiObj = (editors, settings) => {
+export const makeJoiObj = (editors, settings) => {
 	var ans = {};
 	for (var editor of editors)
 		_.set(ans, editor.name, makeJoiLine(editor, settings, true));

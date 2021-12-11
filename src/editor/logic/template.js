@@ -1,8 +1,8 @@
 import _ from "lodash";
 import prettier from "prettier/standalone";
+import parserBabel from "prettier/parser-babel";
 import { makeJoiLine } from "./joi_line";
 import { raw, showRaw } from "./util";
-import parserBabel from "prettier/parser-babel";
 
 export const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -50,8 +50,7 @@ export const renderProps = (editors, settings, isComp) => {
 		ans.updateOne = raw(async () => {
 			await wait(500);
 		}, isComp);
-	if (querySchema && !isComp)
-		ans.querySchema = raw(renderJoi(querySchema, {}));
+	if (querySchema && !isComp) ans.querySchema = raw(renderJoi(querySchema, {}));
 
 	// literal
 	var extras = _.pick(settings, [
@@ -83,8 +82,8 @@ const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 const schema = ${renderJoi(editors, settings)};
 
 const App = ()=>{
-  const props = ${renderProps(editors, settings)};
-  return <AutoAdmin {...props} />
+	const props = ${renderProps(editors, settings)};
+	return <AutoAdmin {...props} />
 }
 
 export default App;

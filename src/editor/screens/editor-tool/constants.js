@@ -1,6 +1,5 @@
 export const MENU = {
-  form: "UI Form",
-  table: "UI Table",
+  ui: "UI Table",
   code: "Code",
 };
 
@@ -9,11 +8,10 @@ export const MENU_FORM = {
   setting: "Table-Settings",
 };
 
-export const SETTINGS = {
-  canCreate: "canCreate",
-  canUpdate: "canUpdate",
-  canDelete: "canDelete",
-  canDownloadExcel: "canDownloadExcel",
-  canUploadExcel: "canUploadExcel",
-  uploadPreviewUrl: "uploadPreviewUrl",
-};
+export const SETTINGS = [
+  "canCreate",
+  "canUpdate",
+  "canDelete",
+  "disableExcelDownload",
+  "disableExcelUpload",
+];

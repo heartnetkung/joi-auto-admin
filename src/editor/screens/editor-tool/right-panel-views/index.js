@@ -2,22 +2,28 @@ import React from "react";
 import PropTypes from "prop-types";
 import RenderCodeBlocks from "./code-blocks";
 import { MENU } from "../constants";
-import { DUMMY_JSX } from "../example/dummy-code";
+import { App as TransView } from "../../../logic";
+import { renderTemplate } from "../../../logic/template";
 
 const RightPanelView = (props) => {
-  const { view } = props;
+  const { view, editors, settings } = props;
+
   if (view === MENU.code) {
-    return <RenderCodeBlocks text={DUMMY_JSX} />;
+    const codeText = renderTemplate(editors, settings);
+    return <RenderCodeBlocks text={codeText} />;
   }
-  return <div>d</div>;
+
+  return <TransView editors={editors} settings={settings} />;
 };
 
 RightPanelView.propTypes = {
-  view: PropTypes.oneOf([MENU.form, MENU.table, MENU.code, MENU.setting]),
+  view: PropTypes.oneOf([MENU.ui, MENU.code]),
+  editors: PropTypes.array,
+  settings: PropTypes.object,
 };
 
 RightPanelView.defaultProps = {
-  view: "form",
+  view: MENU.ui,
 };
 
 export default RightPanelView;
