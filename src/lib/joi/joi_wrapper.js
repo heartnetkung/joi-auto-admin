@@ -142,6 +142,19 @@ class JoiField {
 						(m, p1, p2, p3) => [p1, p2, p3].join("-")
 					);
 				};
+			else if (fieldType === "InputURL")
+				ans.render = (a) => (
+					<div
+						style={{
+							wordWrap: "break-word",
+							wordBreak: "break-word",
+							maxWidth: 250
+						}}
+						title={a}
+					>
+						{a}
+					</div>
+				);
 			else if (
 				fieldType === "GCSUpload" ||
 				fieldType === "FirebaseUpload"

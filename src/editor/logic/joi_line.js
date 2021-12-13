@@ -101,7 +101,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 		meta.containerStyle = _.assign(meta.containerStyle, {
 			marginBottom: 20,
 		});
-	if (editor.columnWidth) meta.cellWidth = editor.cellWidth;
+	if (editor.columnWidth) meta.cellWidth = editor.columnWidth;
 	if (newFieldType) meta.fieldType = newFieldType;
 	if (settings.steps) meta.step = meta.step || 0;
 	else delete meta.step;
