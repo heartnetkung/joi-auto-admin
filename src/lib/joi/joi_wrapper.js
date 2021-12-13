@@ -130,6 +130,7 @@ class JoiField {
 				fieldType === "FirebaseUpload"
 			)
 				ans.width = 150;
+			else if (fieldType === "InputURL") ans.width = 250;
 		}
 
 		if (!ans.render) {
