@@ -30,6 +30,9 @@ const EditorScreen = () => {
   const [formState, setFormState] = useState(() => getInitRowField());
   const [settingState, setSettingState] = useState(() => ({
     name: "example-tb-name",
+    canCreate: true,
+    canUpdate: true,
+    canDelete: true,
     querySchema: {
       query: false,
       schema: [...getInitRowQuerySchema()],
