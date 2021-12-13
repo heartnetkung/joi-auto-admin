@@ -98,7 +98,7 @@ const Controller = (props) => {
 		doGetMany({})
 			.then((data) => setData(data.map(appendId)))
 			.catch((error) => alert.error(error));
-	}, []);
+	}, [schema]);
 
 	const onQuery = usePersistFn(async (query) => {
 		try {
