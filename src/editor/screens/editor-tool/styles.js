@@ -1,5 +1,5 @@
 const panelColor = "rgb(35,39,46)";
-const panelColor2 = "#889EAF";
+const panelColor2 = "#dfe6e9";
 
 export const LayoutContainer = {
   display: "flex",
