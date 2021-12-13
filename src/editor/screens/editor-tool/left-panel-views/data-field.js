@@ -18,7 +18,7 @@ export const getInitRowField = () => {
 
 export const getSingleRow = (stepOptions) => {
   const row = { ...rowField };
-  const id = generateId()
+  const id = generateId();
   row.name = rowField.name + `-${id}`;
   row.label = rowField.label + `-${id}`;
   if (lodash.get(stepOptions, "[0]")) {
@@ -41,7 +41,7 @@ export const getInitRowQuerySchema = () => {
 
 export const getSingleRowQuerySchema = () => {
   const row = { ...rowQuerySchema };
-  const id = generateId()
+  const id = generateId();
   row.name = rowQuerySchema.name + `-${id}`;
   row.label = rowQuerySchema.label + `-${id}`;
   return row;
@@ -74,16 +74,23 @@ export const rowQuerySchema = {
 
 export const disabledDefaultList = [
   "barcode",
-  "cascader",
-  "cascader_async",
-  "cascader_address",
-  "checkbox",
+  //TODO "cascader",
+  //TODO "cascader_async",
+  //TODO "cascader_address",
   "upload",
   "dropdown",
-  "date",
   "array",
   "object",
 ];
+
+export const placeholderDefault = {
+  checkbox: "true/false",
+  date: "YYYY-MM-DD",
+  url: "http://www.google.com/...",
+  tel: "0811111111",
+  email: "abc@example.com",
+  number: "0/1/2/...",
+};
 
 export const fieldOptions = ["require", "disabled", "twoColumn", "extraMargin"];
 
@@ -102,8 +109,8 @@ export const filedTypes = [
   "checkbox",
   "number",
   "date",
-  "cascader_async",
-  "cascader_address",
+  //TODO "cascader_async",
+  //TODO "cascader_address",
   "dropdown",
   "barcode",
   "upload",

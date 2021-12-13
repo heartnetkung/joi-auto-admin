@@ -18,6 +18,7 @@ import {
   fieldOptions,
   columnOptions,
   getSingleRow,
+  placeholderDefault,
 } from "./data-field";
 import * as styles from "./styles";
 import * as logic from "./logic";
@@ -169,7 +170,12 @@ const FormFields = (props) => {
                   <Col span="1" />
                   <Col flex="1">
                     <Input
-                      placeholder="defaultValue (accept string, object, array)"
+                      placeholder={
+                        "defaultValue " +
+                        (placeholderDefault[item.fieldType]
+                          ? "ex. " + placeholderDefault[item.fieldType]
+                          : "")
+                      }
                       disabled={logic.checkIsDisabledDefault(item.fieldType)}
                       value={item.defaultValue}
                       onChange={(event) =>
