@@ -42,11 +42,12 @@ const Field = (props) => {
 				{fieldType === "Custom" &&
 					onFieldRender &&
 					onFieldRender(props2)}
-				{fieldType === "Barcode" && <Barcode {...props2} />}
+				{fieldType === "Barcode" && <Barcode placeholder="พิมพ์แล้วกด Enter เช่น a001" {...props2} />}
 				{fieldType === "Cascader" && <Cascader {...props2} />}
 				{fieldType === "Checkbox" && <Checkbox {...props2} />}
 				{fieldType === "DatePicker" && (
 					<DatePicker
+						placeholder="เลือกวันที่"
 						{...props2}
 						defaultValue={
 							props2.defaultValue && moment(props2.defaultValue)
@@ -81,6 +82,7 @@ const Field = (props) => {
 				{fieldType === "TextArea" && <Input.TextArea {...props2} />}
 				{fieldType === "Select" && (
 					<Select
+						placeholder="เลือก"
 						{...props2}
 						style={{ ...props2.style, textAlign: "left" }}
 					>

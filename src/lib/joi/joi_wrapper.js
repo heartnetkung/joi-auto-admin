@@ -167,7 +167,11 @@ class JoiField {
 				ans.render = (a) => (a == null ? "" : a ? "ใช่" : "ไม่ใช่");
 			else if (type === "date")
 				ans.render = (a) =>
-					a == null ? "" : moment(a).format("YYYY-MM-DD");
+					a == null
+						? ""
+						: a instanceof Date
+						? moment(a).format("YYYY-MM-DD")
+						: a;
 			else if (type === "array")
 				ans.render = (a) =>
 					a == null ? "" : Array.isArray(a) ? a.join(", ") : a;

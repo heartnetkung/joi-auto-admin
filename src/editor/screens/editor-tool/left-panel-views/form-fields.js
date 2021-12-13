@@ -189,6 +189,7 @@ const FormFields = (props) => {
                     <Input
                       placeholder="placeholder"
                       value={item.placeholder}
+                      disabled={item.fieldType==='checkbox'}
                       onChange={(event) =>
                         onChangeField(index, "placeholder", event.target.value)
                       }
