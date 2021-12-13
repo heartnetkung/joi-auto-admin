@@ -8,6 +8,10 @@ Automatically create a full-featured web admin UI for CRUD operations using only
 npm install joi-auto-admin
 ```
 
+## Try it out
+
+[Code Generator UI](https://heartnetkung.github.io/joi-auto-admin)
+
 ## Overview
 
 As a developer in a company, we spend a lot of time writing web-based tools for our staffs and back office usage. This package aims to automate such work completely on the front-end side.
