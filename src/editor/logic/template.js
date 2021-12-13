@@ -26,35 +26,44 @@ export const renderProps = (editors, settings, isComp) => {
 	const { canCreate, canUpdate, canDelete, querySchema, devMode } = settings;
 
 	// required
-	var ans = {
-		name: settings.name || "{tableName}",
-		schema: raw("schema", isComp),
-		getMany: raw("async ()=>{await wait(500);return mockData();}"),
-	};
+	var ans = { name: settings.name || "{tableName}" };
 
-	if (isComp) delete ans.schema;
-	if (isComp)
+	// api
+	if (isComp) {
 		ans.getMany = raw(async () => {
 			await wait(500);
 			return randomData(editors, 3);
 		}, isComp);
-
-	// api
-	if (canCreate)
-		ans.createMany = raw(async (a) => {
-			await wait(500);
-			return a;
-		}, isComp);
-	if (canDelete)
-		ans.deleteMany = raw(async () => {
-			await wait(500);
-		}, isComp);
-	if (canUpdate)
-		ans.updateOne = raw(async () => {
-			await wait(500);
-		}, isComp);
-	if (querySchema && !isComp)
-		ans.querySchema = raw(renderJoi(querySchema, {}));
+		if (canCreate)
+			ans.createMany = raw(async (a) => {
+				await wait(500);
+				return a;
+			}, isComp);
+		if (canDelete)
+			ans.deleteMany = raw(async () => {
+				await wait(500);
+			}, isComp);
+		if (canUpdate)
+			ans.updateOne = raw(async () => {
+				await wait(500);
+			}, isComp);
+	} else {
+		ans.schema = raw("schema", false);
+		ans.getMany = raw("async ()=>{await wait(500);return mockData();}");
+		if (canCreate)
+			ans.createMany = raw(
+				"async (a)=>{await wait(500);return a;}"
+			);
+		if (canDelete)
+			ans.deleteMany = raw(
+				"async ()=>{await wait(500);}"
+			);
+		if (canUpdate)
+			ans.updateOne = raw(
+				"async ()=>{await wait(500);}"
+			);
+		if (querySchema) ans.querySchema = raw(renderJoi(querySchema, {}));
+	}
 
 	// literal
 	var extras = _.pick(settings, [
