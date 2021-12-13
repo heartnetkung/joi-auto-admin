@@ -85,6 +85,9 @@ const EditorScreen = () => {
   const onEventResetForm = () => {
     setSettingState({
       name: "example-tb-name",
+      canCreate: true,
+      canUpdate: true,
+      canDelete: true,
       querySchema: {
         query: false,
         schema: [...getInitRowQuerySchema()],
