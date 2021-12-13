@@ -7,7 +7,7 @@ describe("renderProps()", () => {
   schema: schema,
   getMany: async () => {
     await wait(500);
-    return [];
+    return mockData();
   },
   devMode: false,
 });
@@ -22,7 +22,7 @@ describe("renderProps()", () => {
   schema: schema,
   getMany: async () => {
     await wait(500);
-    return [];
+    return mockData();
   },
   updateOne: async () => {
     await wait(500);
@@ -37,9 +37,10 @@ describe("renderProps()", () => {
 
 describe("renderTemplate()", () => {
 	it("handle basic case", () => {
-		var output = `import { Joi, AutoAdmin } from "joi_auto_admin";
+		var output = `import { Joi, AutoAdmin, Chance } from "joi_auto_admin";
 import React from "react";
 
+const chance = new Chance(0);
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
 const schema = Joi.object({
@@ -51,13 +52,19 @@ const schema = Joi.object({
   }),
 });
 
+const mockData = () => {
+  const ans = [];
+  for (let i = 0; i < 3; i++) ans.push({ hello: { abc: chance.word() } });
+  return ans;
+};
+
 const App = () => {
   const props = {
     name: "{tableName}",
     schema: schema,
     getMany: async () => {
       await wait(500);
-      return [];
+      return mockData();
     },
     steps: ["hello", "hello2"],
     devMode: false,

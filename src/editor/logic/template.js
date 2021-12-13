@@ -3,6 +3,7 @@ import prettier from "prettier/standalone";
 import parserBabel from "prettier/parser-babel";
 import { makeJoiLine } from "./joi_line";
 import { raw, showRaw } from "./util";
+import { randomData, genChanceString } from "./chance";
 
 export const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -28,13 +29,15 @@ export const renderProps = (editors, settings, isComp) => {
 	var ans = {
 		name: settings.name || "{tableName}",
 		schema: raw("schema", isComp),
-		getMany: raw(async () => {
-			await wait(500);
-			return [];
-		}, isComp),
+		getMany: raw("async ()=>{await wait(500);return mockData();}"),
 	};
 
 	if (isComp) delete ans.schema;
+	if (isComp)
+		ans.getMany = raw(async () => {
+			await wait(500);
+			return randomData(editors, 3);
+		}, isComp);
 
 	// api
 	if (canCreate)
@@ -50,7 +53,8 @@ export const renderProps = (editors, settings, isComp) => {
 		ans.updateOne = raw(async () => {
 			await wait(500);
 		}, isComp);
-	if (querySchema && !isComp) ans.querySchema = raw(renderJoi(querySchema, {}));
+	if (querySchema && !isComp)
+		ans.querySchema = raw(renderJoi(querySchema, {}));
 
 	// literal
 	var extras = _.pick(settings, [
@@ -74,12 +78,15 @@ export const format = (a, isJson) => {
 };
 
 export const renderTemplate = (editors, settings) => {
-	return format(`import { Joi, AutoAdmin } from 'joi_auto_admin';
+	return format(`import { Joi, AutoAdmin, Chance } from 'joi_auto_admin';
 import React from 'react';
 
+const chance = new Chance(0);
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
 const schema = ${renderJoi(editors, settings)};
+
+const mockData = ${genChanceString(editors, 3)};
 
 const App = ()=>{
 	const props = ${renderProps(editors, settings)};
