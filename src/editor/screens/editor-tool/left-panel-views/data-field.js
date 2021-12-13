@@ -90,7 +90,7 @@ export const fieldOptions = ["require", "disabled", "twoColumn", "extraMargin"];
 export const columnOptions = [
   "cellEllipsis",
   "columnHide",
-  "disabledSorting",
+  "disableSorting",
   "disableFilter",
 ];
 

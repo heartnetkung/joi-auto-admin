@@ -35,8 +35,8 @@ const editorSchemaInner = Joi.object({
 	columnWidth: Joi.number(),
 	cellEllipsis: Joi.boolean(),
 	columnHide: Joi.boolean(),
-	disabledSorting: Joi.boolean(),
-	disabledFilter: Joi.boolean(),
+	disableSorting: Joi.boolean(),
+	disableFilter: Joi.boolean(),
 });
 
 const editorSchema1 = Joi.array()
