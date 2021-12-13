@@ -34,7 +34,6 @@
     "@testing-library/user-event": "^12.1.10",
     "babel-plugin-lodash": "^3.3.4",
     "esm": "^3.2.25",
-    "gh-pages": "^3.2.3",
     "jsdom-screenshot": "^4.0.0",
     "prettier": "^2.5.0",
     "react": "16.13.1",
@@ -50,8 +49,7 @@
     "build": "babel src/lib --out-dir dist --copy-files",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "react-scripts build",
-    "deploy": "gh-pages -d build"
+    "deploy": "react-scripts build"
   },
   "eslintConfig": {
     "extends": [
