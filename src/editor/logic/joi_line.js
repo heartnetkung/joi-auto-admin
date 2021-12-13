@@ -73,6 +73,25 @@ export const makeJoiLine = (editor, settings, isObj) => {
 			suffix = { name: "valid", args: ["m", "f"] };
 			editor = { ...editor, validLabel: ["ชาย", "หญิง"] };
 			break;
+		case "upload-multi":
+			editor = {
+				...editor,
+				multiple: true,
+				uploadFile: () => "",
+				uploadFileType: "image",
+				accept: ".png,.jpeg,.jpg,.gif",
+			};
+			type = "array";
+			break;
+		case "upload-single":
+			editor = {
+				...editor,
+				multiple: false,
+				uploadFile: () => "",
+				uploadFileType: "file",
+				accept: ".pdf",
+			};
+			break;
 		default:
 			break;
 	}
