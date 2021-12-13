@@ -25,7 +25,7 @@ const EditorScreen = () => {
     current: MENU.ui,
   });
   const [currentMenuFormState, setCurrentMenuFormState] = useState({
-    current: MENU_FORM.setting,
+    current: MENU_FORM.form,
   });
   const [formState, setFormState] = useState(() => getInitRowField());
   const [settingState, setSettingState] = useState(() => ({
