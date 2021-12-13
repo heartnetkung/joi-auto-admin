@@ -1,5 +1,5 @@
 export const MENU = {
-  ui: "UI Table",
+  ui: "UI",
   code: "Code",
 };
 

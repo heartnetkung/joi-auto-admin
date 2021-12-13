@@ -15,10 +15,10 @@ const MenuView = (props) => {
       onClick={onEventClick}
       selectedKeys={[currentMenu.current]}
       mode="horizontal"
-      style={{ float: "right" }}
+      style={{ float: "right", flexDirection: 'row-reverse', minWidth: 150 }}
     >
-      <Menu.Item key={MENU.ui}>{MENU.ui}</Menu.Item>
       <Menu.Item key={MENU.code}>{MENU.code}</Menu.Item>
+      <Menu.Item key={MENU.ui}>{MENU.ui}</Menu.Item>
     </Menu>
   );
 };
