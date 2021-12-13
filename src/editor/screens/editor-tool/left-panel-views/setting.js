@@ -111,7 +111,7 @@ const RenderSetting = (props) => {
     }
     setSettingState(newSettings);
   };
-  // console.log(settingState, "set-u");
+
   return (
     <Form>
       <Typography.Title level={5}>Table Settings</Typography.Title>
@@ -141,17 +141,6 @@ const RenderSetting = (props) => {
               {item}
             </Checkbox>
           ))}
-
-        <div style={{ paddingTop: "1rem" }}>
-          <Input
-            style={styles.input}
-            placeholder="uploadPreviewUrl"
-            value={settingState?.uploadPreviewUrl}
-            onChange={(event) =>
-              onChangeField("uploadPreviewUrl", event.target.value)
-            }
-          />
-        </div>
         <Divider />
         <div>
           <Typography.Title level={5}>Multi-step Form</Typography.Title>
