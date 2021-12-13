@@ -6,15 +6,21 @@ const generateId = () => {
 
 export const getInitRowField = () => {
   const initRows = [{ ...rowField }, { ...rowField }, { ...rowField }];
-  return initRows.map((item) => ({
-    ...item,
-    name: "name-field-" + generateId(),
-  }));
+  return initRows.map((item) => {
+    const id = generateId();
+    return {
+      ...item,
+      name: "name-" + id,
+      label: "label-" + id,
+    };
+  });
 };
 
 export const getSingleRow = (stepOptions) => {
   const row = { ...rowField };
-  row.name = rowField.name + `-${generateId()}`;
+  const id = generateId()
+  row.name = rowField.name + `-${id}`;
+  row.label = rowField.label + `-${id}`;
   if (lodash.get(stepOptions, "[0]")) {
     row.step = lodash.get(stepOptions, "[0].value");
   }
@@ -23,21 +29,27 @@ export const getSingleRow = (stepOptions) => {
 
 export const getInitRowQuerySchema = () => {
   const initRows = [{ ...rowQuerySchema }];
-  return initRows.map((item) => ({
-    ...item,
-    name: "name-query-" + generateId(),
-  }));
+  return initRows.map((item) => {
+    const id = generateId();
+    return {
+      ...item,
+      name: "name-" + id,
+      label: "label-" + id,
+    };
+  });
 };
 
 export const getSingleRowQuerySchema = () => {
   const row = { ...rowQuerySchema };
-  row.name = rowQuerySchema.name + `-${generateId()}`;
+  const id = generateId()
+  row.name = rowQuerySchema.name + `-${id}`;
+  row.label = rowQuerySchema.label + `-${id}`;
   return row;
 };
 
 export const rowField = {
-  name: "name-field",
-  label: "label-field",
+  name: "name",
+  label: "label",
   fieldType: "input",
   placeholder: "",
   defaultValue: "",
@@ -54,8 +66,8 @@ export const rowField = {
 };
 
 export const rowQuerySchema = {
-  name: "name-query",
-  label: "label-query",
+  name: "name",
+  label: "label",
   fieldType: "input",
   placeholder: "",
 };

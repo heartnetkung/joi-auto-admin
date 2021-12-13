@@ -4,8 +4,8 @@ export const MENU = {
 };
 
 export const MENU_FORM = {
-  form: "Form-Fields",
-  setting: "Table-Settings",
+  form: "Fields",
+  setting: "Table Settings",
 };
 
 export const SETTINGS = [

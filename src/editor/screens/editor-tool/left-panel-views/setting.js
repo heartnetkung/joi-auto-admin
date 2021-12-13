@@ -206,7 +206,7 @@ const RenderSetting = (props) => {
             <>
               <div style={{ padding: "1rem 0 0 0" }}>
                 {lodash.get(settingState.querySchema?.schema, "[0]") && (
-                  <Collapse defaultActiveKey={["0"]}>
+                  <Collapse defaultActiveKey={["0"]} accordion>
                     {settingState.querySchema.schema.map((qs, qi) => (
                       <Collapse.Panel
                         key={qi.toString()}
