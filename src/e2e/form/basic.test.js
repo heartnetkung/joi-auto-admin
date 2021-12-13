@@ -80,8 +80,8 @@ it("handle style", async () => {
 	expect(formItems[i++].innerHTML).toMatch("purple");
 	expect(formItems[i++].innerHTML).toMatch("purple");
 	expect(formItems[i++].innerHTML).toMatch("purple");
-	expect(formItems[i++].innerHTML).not.toMatch("purple"); //date
-	expect(formItems[i++].innerHTML).not.toMatch("purple"); //select
+	expect(formItems[i++].innerHTML).toMatch("purple");
+	expect(formItems[i++].innerHTML).toMatch("purple");
 	expect(formItems[i++].innerHTML).toMatch("purple");
 	expect(formItems[i++].innerHTML).toMatch("purple");
 	expect(formItems[i++].innerHTML).toMatch("purple");

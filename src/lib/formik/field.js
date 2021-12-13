@@ -44,14 +44,14 @@ const Field = (props) => {
 					onFieldRender(props2)}
 				{fieldType === "Barcode" && <Barcode {...props2} />}
 				{fieldType === "Cascader" && <Cascader {...props2} />}
-				{fieldType === "Checkbox" && <Checkbox {...props2}></Checkbox>}
+				{fieldType === "Checkbox" && <Checkbox {...props2} />}
 				{fieldType === "DatePicker" && (
 					<DatePicker
 						{...props2}
 						defaultValue={
 							props2.defaultValue && moment(props2.defaultValue)
 						}
-						style={{ width: "100%" }}
+						style={{ ...props2.style, width: "100%" }}
 					/>
 				)}
 				{fieldType === "WeekPicker" && <WeekPicker {...props2} />}
@@ -69,14 +69,21 @@ const Field = (props) => {
 				)}
 				{fieldType === "InputURL" && <Input {...props2} type="url" />}
 				{fieldType === "InputPhone" && (
-					<Input placeholder="ไม่ต้องใส่ขีด" {...props2} type="tel" />
+					<Input
+						placeholder="เช่น 0811111111"
+						{...props2}
+						type="tel"
+					/>
 				)}
 				{fieldType === "InputPassword" && (
 					<Input.Password {...props2} />
 				)}
 				{fieldType === "TextArea" && <Input.TextArea {...props2} />}
 				{fieldType === "Select" && (
-					<Select {...props2} style={{ textAlign: "left" }}>
+					<Select
+						{...props2}
+						style={{ ...props2.style, textAlign: "left" }}
+					>
 						{props2.valid &&
 							Object.entries(props2.valid).map(([k, v]) => (
 								<Select.Option key={k} value={k}>
