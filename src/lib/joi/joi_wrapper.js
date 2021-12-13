@@ -148,7 +148,7 @@ class JoiField {
 						style={{
 							wordWrap: "break-word",
 							wordBreak: "break-word",
-							maxWidth: 250
+							maxWidth: 250,
 						}}
 						title={a}
 					>
@@ -168,7 +168,8 @@ class JoiField {
 				ans.render = (a) =>
 					a == null ? "" : moment(a).format("YYYY-MM-DD");
 			else if (type === "array")
-				ans.render = (a) => (a == null ? "" : a.join(", "));
+				ans.render = (a) =>
+					a == null ? "" : Array.isArray(a) ? a.join(", ") : a;
 		}
 
 		return ans;

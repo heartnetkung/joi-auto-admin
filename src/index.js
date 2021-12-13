@@ -11,7 +11,6 @@ import "./lib/index.css";
 // import App from "./App9";
 // import App from "./App20";
 // import App from "./App21";
-// import { App } from "./editor/logic";
 import React from "react";
 import App from "./editor";
 
