@@ -125,11 +125,7 @@ class JoiField {
 		if (!ans.width) {
 			if (type === "number") ans.width = 80;
 			else if (type === "date") ans.width = 130;
-			else if (
-				fieldType === "GCSUpload" ||
-				fieldType === "FirebaseUpload"
-			)
-				ans.width = 150;
+			else if (fieldType === "FileUpload") ans.width = 150;
 			else if (fieldType === "InputURL") ans.width = 250;
 		}
 
@@ -143,7 +139,10 @@ class JoiField {
 						(m, p1, p2, p3) => [p1, p2, p3].join("-")
 					);
 				};
-			else if (fieldType === "InputURL")
+			else if (
+				fieldType === "InputURL" ||
+				(fieldType === "FileUpload" && meta.uploadFileType !== "image")
+			)
 				ans.render = (a) => (
 					<div
 						style={{
@@ -157,11 +156,11 @@ class JoiField {
 					</div>
 				);
 			else if (
-				fieldType === "GCSUpload" ||
-				fieldType === "FirebaseUpload"
-			) {
+				fieldType === "FileUpload" &&
+				meta.uploadFileType === "image"
+			)
 				ans.render = (a) => <ColImage src={a} />;
-			} else if (type === "number")
+			else if (type === "number")
 				ans.render = (a) => (a == null ? "" : numeral(a).format("0,0"));
 			else if (type === "boolean")
 				ans.render = (a) => (a == null ? "" : a ? "ใช่" : "ไม่ใช่");
@@ -205,8 +204,8 @@ class JoiField {
 		if (meta.fieldType) return meta.fieldType;
 		if (meta.onFieldRender) return "Custom";
 		if (meta.loadBarcodeName) return "Barcode";
-		if (meta.getUploadUrl) return "GCSUpload";
-		if (meta.firebaseConfig) return "FirebaseUpload";
+		if (meta.getUploadUrl || meta.firebaseConfig || meta.uploadFile)
+			return "FileUpload";
 		if (field.type === "boolean") return "Checkbox";
 		if (field.type === "date") return "DatePicker";
 		if (field.type === "number") return "InputNumber";

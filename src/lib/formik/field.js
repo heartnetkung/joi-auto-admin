@@ -10,11 +10,11 @@ import {
 } from "formik-antd";
 import Cascader from "./components/cascader";
 import Barcode from "./components/barcode";
-import GCSUpload from "./components/gcs-upload";
-import FirebaseUpload from "./components/firebase-upload";
+import FileUpload from "./components/file_upload";
 import moment from "moment";
 import React from "react";
 import { Col } from "antd";
+import { handleFileUpload } from "./upload_logic";
 
 const { WeekPicker, RangePicker, MonthPicker } = DatePicker;
 
@@ -42,7 +42,12 @@ const Field = (props) => {
 				{fieldType === "Custom" &&
 					onFieldRender &&
 					onFieldRender(props2)}
-				{fieldType === "Barcode" && <Barcode placeholder="พิมพ์แล้วกด Enter เช่น a001" {...props2} />}
+				{fieldType === "Barcode" && (
+					<Barcode
+						placeholder="พิมพ์แล้วกด Enter เช่น a001"
+						{...props2}
+					/>
+				)}
 				{fieldType === "Cascader" && <Cascader {...props2} />}
 				{fieldType === "Checkbox" && <Checkbox {...props2} />}
 				{fieldType === "DatePicker" && (
@@ -95,11 +100,12 @@ const Field = (props) => {
 					</Select>
 				)}
 				{fieldType === "Switch" && <Switch {...props2} />}
-				{fieldType === "GCSUpload" && (
-					<GCSUpload {...props2} dataType={type} />
-				)}
-				{fieldType === "FirebaseUpload" && (
-					<FirebaseUpload {...props2} />
+				{fieldType === "FileUpload" && (
+					<FileUpload
+						{...props2}
+						{...handleFileUpload(props2)}
+						dataType={type}
+					/>
 				)}
 			</Form.Item>
 		</Col>
@@ -124,8 +130,7 @@ Field.propTypes = {
 		"TextArea",
 		"Select",
 		"Switch",
-		"GCSUpload",
-		"FirebaseUpload",
+		"FileUpload",
 		"Custom",
 	]).isRequired,
 	name: PropTypes.string.isRequired,

@@ -77,7 +77,8 @@ export const disabledDefaultList = [
   //TODO "cascader",
   //TODO "cascader_async",
   //TODO "cascader_address",
-  "upload",
+  "upload-single",
+  "upload-multi",
   "dropdown",
   "array",
   "object",
@@ -113,5 +114,6 @@ export const filedTypes = [
   //TODO "cascader_address",
   "dropdown",
   "barcode",
-  "upload",
+  "upload-single",
+  "upload-multi",
 ];

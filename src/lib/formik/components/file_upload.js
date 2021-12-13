@@ -3,14 +3,13 @@ import { FieldArray, useFormikContext } from "formik";
 import PropTypes from "prop-types";
 import { Upload, Button } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import axios from "axios";
 import { alert } from "../../controller/util";
 import { usePersistFn } from "../../shared/hook";
 import _ from "lodash";
 
-const GCSUpload = (props) => {
-  const { name, label, multiple, accept, getUploadUrl, uploadFileType } = props;
-  const { dataType } = props;
+const FileUpload = (props) => {
+  const { name, label, multiple, accept, dataType } = props;
+  const { uploadFileType, uploadFile, uploadFileInit } = props;
   const [fileListState, setFileListState] = useState([]);
   const { values, setFieldValue } = useFormikContext();
   const abortRef = useRef(null);
@@ -20,6 +19,7 @@ const GCSUpload = (props) => {
     let value = _.get(values, name);
     if (typeof value === "string") value = [value];
     if (Array.isArray(value)) setFileListState(value.map(urlToFileList));
+    uploadFileInit();
     return () => abortRef.current.abort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name]);
@@ -29,17 +29,15 @@ const GCSUpload = (props) => {
     if (!file) return;
 
     try {
-      const uploadURL = await getUploadUrl(file.type, file.name);
-      await axios.put(uploadURL, file, {
-        headers: { "Content-Type": file.type },
-        signal: abortRef.current.signal,
-      });
-      onSuccess({
-        status: 200,
-        uri: uploadURL.split(/[#?]/)[0],
-        url: URL.createObjectURL(file),
-      });
+      const uploadURL = await uploadFile(file);
+      if (!abortRef.current.signal.aborted)
+        onSuccess({
+          status: 200,
+          uri: uploadURL.split(/[#?]/)[0],
+          url: URL.createObjectURL(file),
+        });
     } catch (error) {
+      console.error(error);
       onError({});
       alert.error("อัพโหลดไฟล์ไม่สำเร็จ");
     }
@@ -82,17 +80,18 @@ const GCSUpload = (props) => {
   return <FieldArray name={name} render={renderHelper} />;
 };
 
-GCSUpload.propTypes = {
+FileUpload.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
   multiple: PropTypes.bool,
   accept: PropTypes.string,
-  getUploadUrl: PropTypes.func.isRequired,
+  uploadFile: PropTypes.func.isRequired,
+  uploadFileInit: PropTypes.func.isRequired,
   uploadFileType: PropTypes.oneOf(["image", "file"]).isRequired,
   dataType: PropTypes.oneOf(["string", "array"]).isRequired,
 };
 
-GCSUpload.defaultProps = {
+FileUpload.defaultProps = {
   label: "อัพโหลดไฟล์",
   multiple: false,
   accept: "*",
@@ -104,4 +103,4 @@ const urlToFileList = (a) => ({
   uri: a,
 });
 
-export default GCSUpload;
+export default FileUpload;
