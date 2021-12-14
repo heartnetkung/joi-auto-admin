@@ -8,7 +8,7 @@ import { usePersistFn } from "../../shared/hook";
 import _ from "lodash";
 
 const FileUpload = (props) => {
-  const { name, label, multiple, accept, dataType } = props;
+  const { name, label, multiple, accept, dataType, disabled } = props;
   const { uploadFileType, uploadFile, uploadFileInit } = props;
   const [fileListState, setFileListState] = useState([]);
   const { values, setFieldValue } = useFormikContext();
@@ -70,8 +70,9 @@ const FileUpload = (props) => {
           fileList={fileListState}
           onChange={onChangeFile}
           customRequest={onUpload}
+          disabled={disabled}
         >
-          <Button icon={<UploadOutlined />}>{label}</Button>
+          <Button icon={<UploadOutlined />} disabled={disabled}>{label}</Button>
         </Upload>
       </>
     );
@@ -89,12 +90,14 @@ FileUpload.propTypes = {
   uploadFileInit: PropTypes.func.isRequired,
   uploadFileType: PropTypes.oneOf(["image", "file"]).isRequired,
   dataType: PropTypes.oneOf(["string", "array"]).isRequired,
+  disabled: PropTypes.bool,
 };
 
 FileUpload.defaultProps = {
   label: "อัพโหลดไฟล์",
   multiple: false,
   accept: "*",
+  disabled: false,
 };
 
 const urlToFileList = (a) => ({
