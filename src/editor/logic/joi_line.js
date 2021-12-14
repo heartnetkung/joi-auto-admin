@@ -28,6 +28,9 @@ export const makeJoiLine = (editor, settings, isObj) => {
 	var newFieldType = "";
 	var suffix = [];
 	switch (editor.fieldType) {
+		case "text area":
+			newFieldType = 'TextArea'
+			break;
 		case "format|url":
 			newFieldType = "InputURL";
 			break;
@@ -38,11 +41,17 @@ export const makeJoiLine = (editor, settings, isObj) => {
 			newFieldType = "InputEmail";
 			break;
 		case "format|thai zipcode":
+			editor = { placeholder: "เช่น 10210", ...editor };
 			suffix.push({ name: "pattern", args: [regex(/^\d{5}$/, isObj)] });
 			suffix.push({ name: "message", args: ["รหัสไปรษณีย์ไม่ถูกต้อง"] });
 			break;
 		case "format|thai citizen id":
-			suffix.push({ name: "custom", args: [func(`(id,helper)=>{
+			editor = { placeholder: "เช่น 0139499973311", ...editor };
+			suffix.push({
+				name: "custom",
+				args: [
+					func(
+						`(id)=>{
 if (!/^\u0091d{13}$/.test(id)) throw new Error("เลขประชาชนต้องเป็นเลข 13 หลัก");
 var digits = [];
 for(var i = 0; i < 13; i++) digits.push(parseInt(id[i]));
@@ -51,7 +60,11 @@ for(var j = 0; j < 12; i++) checksum += (13 - j) * digits[j];
 var digit13 = checksum % 11;
 digit13 = digit13 > 1 ? 11 - digit13 : 1 - digit13;
 if (digit13 !== digits[12]) throw new Error("เลขประชาชนไม่ถูกต้อง");
-return id;}`, isObj)] });
+return id;}`,
+						isObj
+					),
+				],
+			});
 			break;
 		case "checkbox":
 			type = "bool";

@@ -60,9 +60,12 @@ const editorToChance = (editor) => {
 		case "format|email":
 			return { name: "email" };
 		case "format|thai zipcode":
-			return{ name: "pickone", args: [["10210", "10400"]] };
+			return { name: "pickone", args: [["10210", "10400"]] };
 		case "format|thai citizen id":
-			return{ name: "pickone", args: [["0139499973311", "0547041689552"]] };
+			return {
+				name: "pickone",
+				args: [["0139499973311", "0547041689552"]],
+			};
 		case "checkbox":
 			return { name: "bool" };
 		case "number":
@@ -73,6 +76,8 @@ const editorToChance = (editor) => {
 			return { name: "pickone", args: [[["a001"], ["a002"]]] };
 		case "dropdown":
 			return { name: "pickone", args: [["m", "f"]] };
+		case "text area":
+			return { name: "paragraph" };
 		default:
 			return { name: "word" };
 	}

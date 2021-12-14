@@ -25,7 +25,8 @@ const editorSchemaInner = Joi.object({
 			"format|thai citizen id",
 			"checkbox",
 			"number",
-			"date"
+			"date",
+			"text area"
 		),
 	_fieldType: Joi.any(),
 	step: Joi.number(),

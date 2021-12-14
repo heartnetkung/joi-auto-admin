@@ -107,6 +107,7 @@ export const fieldTree = [
   { l: "number" },
   { l: "date" },
   { l: "barcode" },
+  { l: "text area" },
   { l: "upload", c: [{ l: "single file" }, { l: "multiple images" }] },
   {
     l: "format",

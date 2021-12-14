@@ -127,6 +127,11 @@ class JoiField {
 			else if (type === "date") ans.width = 130;
 			else if (fieldType === "FileUpload") ans.width = 150;
 			else if (fieldType === "InputURL") ans.width = 250;
+			else if (fieldType === "TextArea") ans.width = 250;
+		}
+
+		if (!ans.ellipsis) {
+			if (fieldType === "TextArea") ans.ellipsis = true;
 		}
 
 		if (!ans.render) {
@@ -141,6 +146,7 @@ class JoiField {
 				};
 			else if (
 				fieldType === "InputURL" ||
+				fieldType === "TextArea" ||
 				(fieldType === "FileUpload" && meta.uploadFileType !== "image")
 			)
 				ans.render = (a) => (
