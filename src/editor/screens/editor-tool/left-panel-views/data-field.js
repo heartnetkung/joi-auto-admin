@@ -80,6 +80,7 @@ export const disabledDefaultList = [
   "upload|firebase",
   "upload|google cloud storage",
   "dropdown",
+  "advanced|reactive component",
 ];
 
 export const placeholderDefault = {
@@ -129,6 +130,7 @@ export const fieldTree = [
       { l: "thai zipcode" },
     ],
   },
+  { l: "advanced", c: [{ l: "reactive component" }] },
 ];
 
 export const queryFieldTree = [

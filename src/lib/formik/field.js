@@ -100,10 +100,7 @@ const Field = (props) => {
 				)}
 				{fieldType === "Switch" && <Switch {...props2} />}
 				{fieldType === "FileUpload" && (
-					<FileUpload
-						{...props2}
-						dataType={type}
-					/>
+					<FileUpload {...props2} dataType={type} />
 				)}
 			</Form.Item>
 		</Col>

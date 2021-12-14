@@ -2,6 +2,7 @@ import { Joi } from "../../lib";
 import _ from "lodash";
 import { raw, softEval, func, regex } from "./util";
 import toSource from "tosource";
+import { ReactiveComponent } from "./advanced_component";
 
 const makeObject = (joiList) => {
 	var ans = Joi;
@@ -30,6 +31,12 @@ export const makeJoiLine = (editor, settings, isObj) => {
 	switch (editor.fieldType) {
 		case "text area":
 			newFieldType = "TextArea";
+			break;
+		case "advanced|reactive component":
+			var onFieldRender = isObj
+				? ReactiveComponent
+				: raw(ReactiveComponent.str, isObj);
+			editor = { onFieldRender, ...editor };
 			break;
 		case "format|url":
 			newFieldType = "InputURL";

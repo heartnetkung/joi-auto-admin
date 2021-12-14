@@ -77,6 +77,11 @@ export const renderImport = (editors) => {
 				"import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';"
 			);
 			ans.add("import { nanoid } from 'nanoid';");
+		} else if (editor.fieldType === "advanced|reactive component") {
+			ans.add("import {useFormikContext} from 'formik';");
+			ans.add("import {Input} from 'formik-antd';");
+			ans.add("import _ from 'lodash';");
+			ans.add("import {useEffect} from 'react';");
 		}
 	}
 	if (!ans.size) return "";
@@ -87,7 +92,7 @@ export const renderFunction = (editors) => {
 	const ans = new Set();
 	for (var editor of editors) {
 		if (editor.fieldType === "upload|firebase")
-			ans.add(`\nvar storage = null;
+			ans.add(`\nlet storage = null;
 const getFirebase = () => {
 if (!storage) storage = getStorage(initializeApp({
 apiKey: "",
