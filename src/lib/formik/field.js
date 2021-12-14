@@ -14,7 +14,6 @@ import FileUpload from "./components/file_upload";
 import moment from "moment";
 import React from "react";
 import { Col } from "antd";
-import { handleFileUpload } from "./upload_logic";
 
 const { WeekPicker, RangePicker, MonthPicker } = DatePicker;
 
@@ -103,7 +102,6 @@ const Field = (props) => {
 				{fieldType === "FileUpload" && (
 					<FileUpload
 						{...props2}
-						{...handleFileUpload(props2)}
 						dataType={type}
 					/>
 				)}
