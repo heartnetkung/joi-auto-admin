@@ -44,9 +44,10 @@ export const randomData = (editors, count, seed) => {
 const editorToChance = (editor) => {
 	switch (editor.fieldType) {
 		case "url":
-		case "upload-multi":
 		case "upload-single":
 			return { name: "avatar", args: [{ protocol: "https" }] };
+		case "upload-multi":
+			return { name: "pickone", args: [['https://www.gravatar.com/avatar/407cedb085e93b2253656ce07a52a898']] };
 		case "tel":
 			return { name: "pickone", args: [["0812345678", "021111111"]] };
 		case "email":
