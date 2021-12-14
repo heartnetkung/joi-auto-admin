@@ -40,8 +40,8 @@ describe("renderTemplate()", () => {
 		var output = `import { Joi, AutoAdmin, Chance } from "joi_auto_admin";
 import React from "react";
 
-const chance = new Chance(0);
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
+const chance = new Chance(0);
 
 const schema = Joi.object({
   hello: Joi.object({
