@@ -2,7 +2,7 @@ import _ from "lodash";
 import prettier from "prettier/standalone";
 import parserBabel from "prettier/parser-babel";
 import { makeJoiLine } from "./joi_line";
-import { raw, showRaw } from "./util";
+import { raw, showRaw, func } from "./util";
 import { randomData, genChanceString } from "./chance";
 
 export const wait = (ms) => new Promise((res) => setTimeout(res, ms));
@@ -28,42 +28,22 @@ export const renderProps = (editors, settings, isComp) => {
 	// required
 	var ans = { name: settings.name || "{tableName}" };
 
-	// api
 	if (isComp) {
 		ans.getMany = raw(async () => {
 			await wait(500);
 			return randomData(editors, 3);
 		}, isComp);
-		if (canCreate)
-			ans.createMany = raw(async (a) => {
-				await wait(500);
-				return a;
-			}, isComp);
-		if (canDelete)
-			ans.deleteMany = raw(async () => {
-				await wait(500);
-			}, isComp);
-		if (canUpdate)
-			ans.updateOne = raw(async () => {
-				await wait(500);
-			}, isComp);
 	} else {
 		ans.schema = raw("schema", false);
-		ans.getMany = raw("async ()=>{await wait(500);return mockData();}");
-		if (canCreate)
-			ans.createMany = raw(
-				"async (a)=>{await wait(500);return a;}"
-			);
-		if (canDelete)
-			ans.deleteMany = raw(
-				"async ()=>{await wait(500);}"
-			);
-		if (canUpdate)
-			ans.updateOne = raw(
-				"async ()=>{await wait(500);}"
-			);
 		if (querySchema) ans.querySchema = raw(renderJoi(querySchema, {}));
+		ans.getMany = raw("async ()=>{await wait(500);return mockData();}");
 	}
+
+	if (canCreate)
+		ans.createMany = func("async (a)=>{await wait(500);return a;}", isComp);
+	if (canDelete)
+		ans.deleteMany = func("async ()=>{await wait(500);}", isComp);
+	if (canUpdate) ans.updateOne = func("async ()=>{await wait(500);}", isComp);
 
 	// literal
 	var extras = _.pick(settings, [

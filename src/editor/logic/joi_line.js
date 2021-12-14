@@ -1,20 +1,9 @@
 import { Joi } from "../../lib";
 import _ from "lodash";
-import { raw } from "./util";
+import { raw, softEval, func } from "./util";
 import toSource from "tosource";
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
-
-const softEval = (a, type) => {
-	try {
-		// eslint-disable-next-line
-		var ans = Function('"use strict";return (' + a + ")")();
-		return ans == null ? a : ans;
-	} catch (e) {
-		if (type === "array") return a.split(/\s*,\s*/);
-		return a;
-	}
-};
 
 const makeObject = (joiList) => {
 	var ans = Joi;
@@ -63,10 +52,10 @@ export const makeJoiLine = (editor, settings, isObj) => {
 			editor = {
 				...editor,
 				containerStyle: { marginBottom: 30 },
-				loadBarcodeName: raw(async (a) => {
-					await wait(500);
-					if (a === "a001") return "iPhone";
-				}, isObj),
+				loadBarcodeName: func(
+					'async (a) => {await wait(500); if (a === "a001") return "iPhone";}',
+					isObj
+				),
 			};
 			break;
 		case "dropdown":
@@ -77,7 +66,10 @@ export const makeJoiLine = (editor, settings, isObj) => {
 			editor = {
 				...editor,
 				multiple: true,
-				uploadFile: () => "",
+				uploadFile: func(
+					'async (fileObj) => "https://www.gravatar.com/avatar/1"',
+					isObj
+				),
 				uploadFileType: "image",
 				accept: ".png,.jpeg,.jpg,.gif",
 			};
@@ -87,7 +79,10 @@ export const makeJoiLine = (editor, settings, isObj) => {
 			editor = {
 				...editor,
 				multiple: false,
-				uploadFile: () => "",
+				uploadFile: func(
+					'async (fileObj) => "https://www.gravatar.com/avatar/1"',
+					isObj
+				),
 				uploadFileType: "file",
 				accept: ".pdf",
 			};
