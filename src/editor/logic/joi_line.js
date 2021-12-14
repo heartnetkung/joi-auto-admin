@@ -105,6 +105,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 		"defaultValue",
 		"label",
 		"fieldType",
+		"_fieldType",
 		"extraMargin",
 		"name",
 		"columnWidth",

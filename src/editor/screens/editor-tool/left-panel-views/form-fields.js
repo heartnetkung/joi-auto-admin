@@ -153,6 +153,7 @@ const FormFields = (props) => {
                       </Typography.Text>
                       <Cascader
                         showSearch
+                        allowClear={false}
                         fieldNames={{ label: "l", value: "l", children: "c" }}
                         options={fieldTree}
                         value={item._fieldType}
