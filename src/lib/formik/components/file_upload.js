@@ -72,7 +72,9 @@ const FileUpload = (props) => {
           customRequest={onUpload}
           disabled={disabled}
         >
-          <Button icon={<UploadOutlined />} disabled={disabled}>{label}</Button>
+          <Button icon={<UploadOutlined />} disabled={disabled}>
+            {label}
+          </Button>
         </Upload>
       </>
     );
@@ -87,7 +89,7 @@ FileUpload.propTypes = {
   multiple: PropTypes.bool,
   accept: PropTypes.string,
   uploadFile: PropTypes.func.isRequired,
-  uploadFileInit: PropTypes.func.isRequired,
+  uploadFileInit: PropTypes.func,
   uploadFileType: PropTypes.oneOf(["image", "file"]).isRequired,
   dataType: PropTypes.oneOf(["string", "array"]).isRequired,
   disabled: PropTypes.bool,
@@ -98,6 +100,7 @@ FileUpload.defaultProps = {
   multiple: false,
   accept: "*",
   disabled: false,
+  uploadFileInit: _.noop,
 };
 
 const urlToFileList = (a) => ({

@@ -29,7 +29,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 	var suffix = [];
 	switch (editor.fieldType) {
 		case "text area":
-			newFieldType = 'TextArea'
+			newFieldType = "TextArea";
 			break;
 		case "format|url":
 			newFieldType = "InputURL";
@@ -95,6 +95,46 @@ return id;}`,
 				multiple: true,
 				uploadFile: func(
 					'async (fileObj) => {await wait(500); return "https://www.gravatar.com/avatar/1"}',
+					isObj
+				),
+				uploadFileType: "image",
+				accept: ".png,.jpeg,.jpg,.gif",
+			};
+			type = "array";
+			break;
+		case "upload|firebase":
+			editor = {
+				...editor,
+				multiple: true,
+				uploadFile: func(
+					`async (file) => {
+// const path = 'images/' + nanoid();
+// const storageRef = ref(getFirebase(), path);
+// await uploadBytes(storageRef, file);
+// return await getDownloadURL(storageRef);
+await wait(500);
+return "https://www.gravatar.com/avatar/1"}`,
+					isObj
+				),
+				uploadFileInit: func(`() => getFirebase()`, isObj),
+				uploadFileType: "image",
+				accept: ".png,.jpeg,.jpg,.gif",
+			};
+			type = "array";
+			break;
+		case "upload|google cloud storage":
+			editor = {
+				...editor,
+				multiple: true,
+				uploadFile: func(
+					`async (file) => {
+// https://cloud.google.com/storage/docs/samples/storage-generate-signed-url-v4
+// var serverUrl = 'https://www.example.com/get-upload-url?filename=';
+// var url = await axios.get(serverUrl + encodeURIComponent(file.name));
+// await axios.put(url, file, {headers: { "Content-Type": file.type }});
+// return url;
+await wait(500);
+return "https://www.gravatar.com/avatar/1"}`,
 					isObj
 				),
 				uploadFileType: "image",

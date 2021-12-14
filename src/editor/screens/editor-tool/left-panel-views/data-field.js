@@ -77,6 +77,8 @@ export const disabledDefaultList = [
   "barcode",
   "upload|single file",
   "upload|multiple images",
+  "upload|firebase",
+  "upload|google cloud storage",
   "dropdown",
 ];
 
@@ -108,7 +110,15 @@ export const fieldTree = [
   { l: "date" },
   { l: "barcode" },
   { l: "text area" },
-  { l: "upload", c: [{ l: "single file" }, { l: "multiple images" }] },
+  {
+    l: "upload",
+    c: [
+      { l: "single file" },
+      { l: "multiple images" },
+      { l: "firebase" },
+      { l: "google cloud storage" },
+    ],
+  },
   {
     l: "format",
     c: [

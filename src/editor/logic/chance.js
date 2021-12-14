@@ -47,6 +47,8 @@ const editorToChance = (editor) => {
 		case "upload|single file":
 			return { name: "avatar", args: [{ protocol: "https" }] };
 		case "upload|multiple images":
+		case "upload|firebase":
+		case "upload|google cloud storage":
 			return {
 				name: "pickone",
 				args: [

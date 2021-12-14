@@ -17,6 +17,8 @@ const editorSchemaInner = Joi.object({
 			"barcode",
 			"upload|single file",
 			"upload|multiple images",
+			"upload|firebase",
+			"upload|google cloud storage",
 			"input",
 			"format|url",
 			"format|tel",

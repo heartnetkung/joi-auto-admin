@@ -66,12 +66,51 @@ export const format = (a, isJson) => {
 	return prettier.format(a, { parser: "babel", plugins: [parserBabel] });
 };
 
+export const renderImport = (editors) => {
+	const ans = new Set();
+	for (var editor of editors) {
+		if (editor.fieldType === "upload|google cloud storage")
+			ans.add("import axios from 'axios';");
+		else if (editor.fieldType === "upload|firebase") {
+			ans.add("import { initializeApp } from 'firebase/app';");
+			ans.add(
+				"import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';"
+			);
+			ans.add("import { nanoid } from 'nanoid';");
+		}
+	}
+	if (!ans.size) return "";
+	return "\n" + [...ans].join("\n");
+};
+
+export const renderFunction = (editors) => {
+	const ans = new Set();
+	for (var editor of editors) {
+		if (editor.fieldType === "upload|firebase")
+			ans.add(`\nvar storage = null;
+const getFirebase = () => {
+if (!storage) storage = getStorage(initializeApp({
+apiKey: "",
+authDomain: "",
+projectId: "",
+storageBucket: "",
+messagingSenderId: "",
+appId: "",
+measurementId: "",
+}));
+return storage;
+};`);
+	}
+	if (!ans.size) return "";
+	return "\n" + [...ans].join("\n");
+};
+
 export const renderTemplate = (editors, settings) => {
 	return format(`import { Joi, AutoAdmin, Chance } from 'joi_auto_admin';
-import React from 'react';
+import React from 'react';${renderImport(editors)}
 
-const chance = new Chance(0);
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
+const chance = new Chance(0);${renderFunction(editors)}
 
 const schema = ${renderJoi(editors, settings)};
 
