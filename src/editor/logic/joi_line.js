@@ -3,8 +3,6 @@ import _ from "lodash";
 import { raw, softEval, func } from "./util";
 import toSource from "tosource";
 
-const wait = (ms) => new Promise((res) => setTimeout(res, ms));
-
 const makeObject = (joiList) => {
 	var ans = Joi;
 	for (var joi of joiList) ans = ans[joi.name](...(joi.args || []));
