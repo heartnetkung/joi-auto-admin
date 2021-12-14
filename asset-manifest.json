@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/joi-auto-admin/static/css/main.9b897e92.chunk.css",
-    "main.js": "/joi-auto-admin/static/js/main.9d755ab7.chunk.js",
-    "main.js.map": "/joi-auto-admin/static/js/main.9d755ab7.chunk.js.map",
+    "main.js": "/joi-auto-admin/static/js/main.3c3e146c.chunk.js",
+    "main.js.map": "/joi-auto-admin/static/js/main.3c3e146c.chunk.js.map",
     "react-syntax-highlighter_languages_refractor_abap.js": "/joi-auto-admin/static/js/react-syntax-highlighter_languages_refractor_abap.d5cb2ad3.chunk.js",
     "react-syntax-highlighter_languages_refractor_abap.js.map": "/joi-auto-admin/static/js/react-syntax-highlighter_languages_refractor_abap.d5cb2ad3.chunk.js.map",
     "react-syntax-highlighter_languages_refractor_actionscript.js": "/joi-auto-admin/static/js/react-syntax-highlighter_languages_refractor_actionscript.195e9103.chunk.js",
@@ -308,21 +308,21 @@
     "runtime-main.js": "/joi-auto-admin/static/js/runtime-main.ec1d2343.js",
     "runtime-main.js.map": "/joi-auto-admin/static/js/runtime-main.ec1d2343.js.map",
     "static/css/153.a95be28f.chunk.css": "/joi-auto-admin/static/css/153.a95be28f.chunk.css",
-    "static/js/153.7d4db5d8.chunk.js": "/joi-auto-admin/static/js/153.7d4db5d8.chunk.js",
-    "static/js/153.7d4db5d8.chunk.js.map": "/joi-auto-admin/static/js/153.7d4db5d8.chunk.js.map",
+    "static/js/153.4099ecbf.chunk.js": "/joi-auto-admin/static/js/153.4099ecbf.chunk.js",
+    "static/js/153.4099ecbf.chunk.js.map": "/joi-auto-admin/static/js/153.4099ecbf.chunk.js.map",
     "static/js/154.e51989bb.chunk.js": "/joi-auto-admin/static/js/154.e51989bb.chunk.js",
     "static/js/154.e51989bb.chunk.js.map": "/joi-auto-admin/static/js/154.e51989bb.chunk.js.map",
     "index.html": "/joi-auto-admin/index.html",
     "static/css/153.a95be28f.chunk.css.map": "/joi-auto-admin/static/css/153.a95be28f.chunk.css.map",
     "static/css/main.9b897e92.chunk.css.map": "/joi-auto-admin/static/css/main.9b897e92.chunk.css.map",
-    "static/js/153.7d4db5d8.chunk.js.LICENSE.txt": "/joi-auto-admin/static/js/153.7d4db5d8.chunk.js.LICENSE.txt",
+    "static/js/153.4099ecbf.chunk.js.LICENSE.txt": "/joi-auto-admin/static/js/153.4099ecbf.chunk.js.LICENSE.txt",
     "static/media/index.css": "/joi-auto-admin/static/media/Prompt-Regular.20f74859.ttf"
   },
   "entrypoints": [
     "static/js/runtime-main.ec1d2343.js",
     "static/css/153.a95be28f.chunk.css",
-    "static/js/153.7d4db5d8.chunk.js",
+    "static/js/153.4099ecbf.chunk.js",
     "static/css/main.9b897e92.chunk.css",
-    "static/js/main.9d755ab7.chunk.js"
+    "static/js/main.3c3e146c.chunk.js"
   ]
 }
