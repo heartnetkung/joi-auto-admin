@@ -74,7 +74,7 @@ const editorToChance = (editor) => {
 			return { name: "natural", args: [{ max: 30 }] };
 		case "date":
 			return { name: "date", args: [] };
-		case "barcode":
+		case "advanced|barcode scanner":
 			return { name: "pickone", args: [[["a001"], ["a002"]]] };
 		case "dropdown":
 			return { name: "pickone", args: [["m", "f"]] };

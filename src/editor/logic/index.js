@@ -14,7 +14,6 @@ const editorSchemaInner = Joi.object({
 		.required()
 		.valid(
 			"dropdown",
-			"barcode",
 			"upload|single file",
 			"upload|multiple images",
 			"upload|firebase",
@@ -25,6 +24,7 @@ const editorSchemaInner = Joi.object({
 			"format|email",
 			"format|thai zipcode",
 			"format|thai citizen id",
+			"advanced|barcode scanner",
 			"advanced|reactive component",
 			"checkbox",
 			"number",

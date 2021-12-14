@@ -74,7 +74,7 @@ export const rowQuerySchema = {
 };
 
 export const disabledDefaultList = [
-  "barcode",
+  "advanced|barcode scanner",
   "upload|single file",
   "upload|multiple images",
   "upload|firebase",
@@ -109,7 +109,6 @@ export const fieldTree = [
   { l: "checkbox" },
   { l: "number" },
   { l: "date" },
-  { l: "barcode" },
   { l: "text area" },
   {
     l: "upload",
@@ -130,7 +129,7 @@ export const fieldTree = [
       { l: "thai zipcode" },
     ],
   },
-  { l: "advanced", c: [{ l: "reactive component" }] },
+  { l: "advanced", c: [{ l: "reactive component" }, { l: "barcode scanner" }] },
 ];
 
 export const queryFieldTree = [

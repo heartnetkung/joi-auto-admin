@@ -80,7 +80,7 @@ return id;}`,
 		case "date":
 			type = editor.fieldType;
 			break;
-		case "barcode":
+		case "advanced|barcode scanner":
 			type = "array";
 			suffix.push({ name: "min", args: [1] });
 			editor = {
