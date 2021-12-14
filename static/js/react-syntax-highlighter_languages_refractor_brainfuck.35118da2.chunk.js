@@ -1,0 +1,2 @@
+(this["webpackJsonpjoi-auto-admin"]=this["webpackJsonpjoi-auto-admin"]||[]).push([[18],{513:function(a,t,e){"use strict";function n(a){a.languages.brainfuck={pointer:{pattern:/<|>/,alias:"keyword"},increment:{pattern:/\+/,alias:"inserted"},decrement:{pattern:/-/,alias:"deleted"},branching:{pattern:/\[|\]/,alias:"important"},operator:/[.,]/,comment:/\S+/}}a.exports=n,n.displayName="brainfuck",n.aliases=[]}}]);
+//# sourceMappingURL=react-syntax-highlighter_languages_refractor_brainfuck.35118da2.chunk.js.map

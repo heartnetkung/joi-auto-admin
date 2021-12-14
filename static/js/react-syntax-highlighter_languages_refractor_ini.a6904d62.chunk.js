@@ -1,0 +1,2 @@
+(this["webpackJsonpjoi-auto-admin"]=this["webpackJsonpjoi-auto-admin"]||[]).push([[60],{551:function(t,i,n){"use strict";function a(t){t.languages.ini={comment:/^[ \t]*[;#].*$/m,selector:/^[ \t]*\[.*?\]/m,constant:/^[ \t]*[^\s=]+?(?=[ \t]*=)/m,"attr-value":{pattern:/=.*/,inside:{punctuation:/^[=]/}}}}t.exports=a,a.displayName="ini",a.aliases=[]}}]);
+//# sourceMappingURL=react-syntax-highlighter_languages_refractor_ini.a6904d62.chunk.js.map
