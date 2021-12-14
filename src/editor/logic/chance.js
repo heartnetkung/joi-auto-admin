@@ -43,10 +43,10 @@ export const randomData = (editors, count, seed) => {
 
 const editorToChance = (editor) => {
 	switch (editor.fieldType) {
-		case "url":
-		case "upload-single":
+		case "format|url":
+		case "upload|single file":
 			return { name: "avatar", args: [{ protocol: "https" }] };
-		case "upload-multi":
+		case "upload|multiple images":
 			return {
 				name: "pickone",
 				args: [
@@ -55,9 +55,9 @@ const editorToChance = (editor) => {
 					],
 				],
 			};
-		case "tel":
+		case "format|tel":
 			return { name: "pickone", args: [["0812345678", "021111111"]] };
-		case "email":
+		case "format|email":
 			return { name: "email" };
 		case "checkbox":
 			return { name: "bool" };

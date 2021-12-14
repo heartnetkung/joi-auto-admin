@@ -28,13 +28,13 @@ export const makeJoiLine = (editor, settings, isObj) => {
 	var newFieldType = "";
 	var suffix = null;
 	switch (editor.fieldType) {
-		case "url":
+		case "format|url":
 			newFieldType = "InputURL";
 			break;
-		case "tel":
+		case "format|tel":
 			newFieldType = "InputPhone";
 			break;
-		case "email":
+		case "format|email":
 			newFieldType = "InputEmail";
 			break;
 		case "checkbox":
@@ -60,7 +60,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 			suffix = { name: "valid", args: ["m", "f"] };
 			editor = { ...editor, validLabel: ["ชาย", "หญิง"] };
 			break;
-		case "upload-multi":
+		case "upload|multiple images":
 			editor = {
 				...editor,
 				multiple: true,
@@ -73,7 +73,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 			};
 			type = "array";
 			break;
-		case "upload-single":
+		case "upload|single file":
 			editor = {
 				...editor,
 				multiple: false,

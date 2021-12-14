@@ -11,14 +11,15 @@ import {
   Checkbox,
   Divider,
   Typography,
+  Cascader,
 } from "antd";
 import _ from "lodash";
 import {
-  filedTypes,
   fieldOptions,
   columnOptions,
   getSingleRow,
   placeholderDefault,
+  fieldTree,
 } from "./data-field";
 import * as styles from "./styles";
 import * as logic from "./logic";
@@ -150,21 +151,16 @@ const FormFields = (props) => {
                       >
                         FieldType
                       </Typography.Text>
-                      {Array.isArray(filedTypes) && (
-                        <Select
-                          defaultValue={filedTypes[0]}
-                          style={{ flex: 1 }}
-                          onChange={(value) =>
-                            onChangeField(index, "fieldType", value)
-                          }
-                        >
-                          {filedTypes.map((ft, fi) => (
-                            <Select.Option key={fi.toString()} value={ft}>
-                              {ft}
-                            </Select.Option>
-                          ))}
-                        </Select>
-                      )}
+                      <Cascader
+                        showSearch
+                        fieldNames={{ label: "l", value: "l", children: "c" }}
+                        options={fieldTree}
+                        value={item._fieldType}
+                        onChange={(value) => {
+                          onChangeField(index, "_fieldType", value);
+                          onChangeField(index, "fieldType", value.join("|"));
+                        }}
+                      />
                     </Row>
                   </Col>
                   <Col span="1" />
@@ -189,7 +185,7 @@ const FormFields = (props) => {
                     <Input
                       placeholder="placeholder"
                       value={item.placeholder}
-                      disabled={item.fieldType==='checkbox'}
+                      disabled={item.fieldType === "checkbox"}
                       onChange={(event) =>
                         onChangeField(index, "placeholder", event.target.value)
                       }

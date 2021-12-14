@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { renderProps, renderTemplate } from "./template";
 import { makeJoiLine } from "./joi_line";
 import _ from "lodash";
+import { Spin } from "antd";
 
 const editorSchemaInner = Joi.object({
 	name: Joi.string().required().min(1),
@@ -12,20 +13,19 @@ const editorSchemaInner = Joi.object({
 	fieldType: Joi.string()
 		.required()
 		.valid(
-			"cascader_async",
-			"cascader_address",
 			"dropdown",
 			"barcode",
-			"upload-single",
-			"upload-multi",
+			"upload|single file",
+			"upload|multiple images",
 			"input",
-			"url",
-			"tel",
-			"email",
+			"format|url",
+			"format|tel",
+			"format|email",
 			"checkbox",
 			"number",
 			"date"
 		),
+	_fieldType: Joi.any(),
 	step: Joi.number(),
 	placeholder: Joi.string(),
 	defaultValue: Joi.string(),
@@ -84,6 +84,8 @@ export const App = (props) => {
 	const { editors, settings } = props;
 
 	const props2 = useMemo(() => {
+		if (!settings) return null;
+
 		const ans = renderProps(editors, settings, true);
 		ans.schema = makeJoiObj(editors, settings);
 		if (settings.querySchema)
@@ -92,6 +94,12 @@ export const App = (props) => {
 	}, [editors, settings]);
 
 	if (!editors.length) return "กรุณาสร้างข้อมูลด้านซ้าย";
+	if (!settings)
+		return (
+			<center>
+				<Spin />
+			</center>
+		);
 	return <AutoAdmin {...props2} />;
 };
 App.propTypes = {
@@ -108,16 +116,5 @@ App.defaultProps = {
 			extraMargin: true,
 		},
 	],
-	settings: {
-		canCreate: true,
-		querySchema: [
-			{
-				name: "hello.abc",
-				label: "helloName",
-				require: true,
-				defaultValue: "a",
-				extraMargin: true,
-			},
-		],
-	},
+	settings: null,
 };

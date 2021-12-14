@@ -16,7 +16,7 @@ import {
 } from "antd";
 import { SETTINGS } from "../constants";
 import {
-  filedTypes,
+  queryFieldTree,
   getInitRowQuerySchema,
   getSingleRowQuerySchema,
 } from "./data-field";
@@ -250,9 +250,9 @@ const RenderSetting = (props) => {
                               >
                                 FieldType
                               </Typography.Text>
-                              {Array.isArray(filedTypes) && (
+                              {Array.isArray(queryFieldTree) && (
                                 <Select
-                                  defaultValue={filedTypes[0]}
+                                  defaultValue={queryFieldTree[0]}
                                   style={{ flex: 1 }}
                                   onChange={(value) =>
                                     onChangeFieldQuerySchema(
@@ -262,7 +262,7 @@ const RenderSetting = (props) => {
                                     )
                                   }
                                 >
-                                  {filedTypes.map((ft, fi) => (
+                                  {queryFieldTree.map((ft, fi) => (
                                     <Select.Option
                                       key={fi.toString()}
                                       value={ft}

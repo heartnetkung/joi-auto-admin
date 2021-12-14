@@ -51,6 +51,7 @@ export const rowField = {
   name: "name",
   label: "label",
   fieldType: "input",
+  _fieldType: ["input"],
   placeholder: "",
   defaultValue: "",
   step: "",
@@ -74,22 +75,17 @@ export const rowQuerySchema = {
 
 export const disabledDefaultList = [
   "barcode",
-  //TODO "cascader",
-  //TODO "cascader_async",
-  //TODO "cascader_address",
-  "upload-single",
-  "upload-multi",
+  "upload|single file",
+  "upload|multiple images",
   "dropdown",
-  "array",
-  "object",
 ];
 
 export const placeholderDefault = {
   checkbox: "true/false",
   date: "YYYY-MM-DD",
-  url: "http://www.google.com/...",
-  tel: "0811111111",
-  email: "abc@example.com",
+  "format|url": "http://www.google.com/...",
+  "format|tel": "0811111111",
+  "format|email": "abc@example.com",
   number: "0/1/2/...",
 };
 
@@ -102,18 +98,21 @@ export const columnOptions = [
   "disableFilter",
 ];
 
-export const filedTypes = [
+export const fieldTree = [
+  { l: "input" },
+  { l: "dropdown" },
+  { l: "checkbox" },
+  { l: "number" },
+  { l: "date" },
+  { l: "barcode" },
+  { l: "upload", c: [{ l: "single file" }, { l: "multiple images" }] },
+  { l: "format", c: [{ l: "url" }, { l: "tel" }, { l: "email" }] },
+];
+
+export const queryFieldTree = [
   "input",
-  "url",
-  "tel",
-  "email",
-  "checkbox",
-  "number",
-  "date",
-  //TODO "cascader_async",
-  //TODO "cascader_address",
   "dropdown",
-  "barcode",
-  "upload-single",
-  "upload-multi",
+  "number",
+  "checkbox",
+  "date",
 ];
