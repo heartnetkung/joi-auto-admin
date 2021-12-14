@@ -1,6 +1,6 @@
 import { Joi } from "../../lib";
 import _ from "lodash";
-import { raw, softEval, func } from "./util";
+import { raw, softEval, func, regex } from "./util";
 import toSource from "tosource";
 
 const makeObject = (joiList) => {
@@ -26,7 +26,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 
 	var type = "string";
 	var newFieldType = "";
-	var suffix = null;
+	var suffix = [];
 	switch (editor.fieldType) {
 		case "format|url":
 			newFieldType = "InputURL";
@@ -37,6 +37,22 @@ export const makeJoiLine = (editor, settings, isObj) => {
 		case "format|email":
 			newFieldType = "InputEmail";
 			break;
+		case "format|thai zipcode":
+			suffix.push({ name: "pattern", args: [regex(/^\d{5}$/, isObj)] });
+			suffix.push({ name: "message", args: ["รหัสไปรษณีย์ไม่ถูกต้อง"] });
+			break;
+		case "format|thai citizen id":
+			suffix.push({ name: "custom", args: [func(`(id,helper)=>{
+if (!/^\u0091d{13}$/.test(id)) throw new Error("เลขประชาชนต้องเป็นเลข 13 หลัก");
+var digits = [];
+for(var i = 0; i < 13; i++) digits.push(parseInt(id[i]));
+var checksum = 0;
+for(var j = 0; j < 12; i++) checksum += (13 - j) * digits[j];
+var digit13 = checksum % 11;
+digit13 = digit13 > 1 ? 11 - digit13 : 1 - digit13;
+if (digit13 !== digits[12]) throw new Error("เลขประชาชนไม่ถูกต้อง");
+return id;}`, isObj)] });
+			break;
 		case "checkbox":
 			type = "bool";
 			break;
@@ -46,7 +62,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 			break;
 		case "barcode":
 			type = "array";
-			suffix = { name: "min", args: [1] };
+			suffix.push({ name: "min", args: [1] });
 			editor = {
 				...editor,
 				containerStyle: { marginBottom: 30 },
@@ -57,7 +73,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 			};
 			break;
 		case "dropdown":
-			suffix = { name: "valid", args: ["m", "f"] };
+			suffix.push({ name: "valid", args: ["m", "f"] });
 			editor = { ...editor, validLabel: ["ชาย", "หญิง"] };
 			break;
 		case "upload|multiple images":
@@ -65,7 +81,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 				...editor,
 				multiple: true,
 				uploadFile: func(
-					'async (fileObj) => "https://www.gravatar.com/avatar/1"',
+					'async (fileObj) => {await wait(500); return "https://www.gravatar.com/avatar/1"}',
 					isObj
 				),
 				uploadFileType: "image",
@@ -78,7 +94,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 				...editor,
 				multiple: false,
 				uploadFile: func(
-					'async (fileObj) => "https://www.gravatar.com/avatar/1"',
+					'async (fileObj) => {await wait(500); return "https://www.gravatar.com/avatar/1"}',
 					isObj
 				),
 				uploadFileType: "file",
@@ -88,8 +104,6 @@ export const makeJoiLine = (editor, settings, isObj) => {
 		default:
 			break;
 	}
-	// not implemented cascader_async, cascader_address, upload
-
 	ans.push({ name: type }, { name: "label", args: [editor.label] });
 
 	if (editor.require) ans.push({ name: "required" });
@@ -98,7 +112,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 			name: "default",
 			args: [softEval(editor.defaultValue, type)],
 		});
-	if (suffix) ans.push(suffix);
+	ans = ans.concat(suffix);
 
 	var meta = _.omit(editor, [
 		"require",

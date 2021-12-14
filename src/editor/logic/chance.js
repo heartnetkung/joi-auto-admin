@@ -59,6 +59,10 @@ const editorToChance = (editor) => {
 			return { name: "pickone", args: [["0812345678", "021111111"]] };
 		case "format|email":
 			return { name: "email" };
+		case "format|thai zipcode":
+			return{ name: "pickone", args: [["10210", "10400"]] };
+		case "format|thai citizen id":
+			return{ name: "pickone", args: [["0139499973311", "0547041689552"]] };
 		case "checkbox":
 			return { name: "bool" };
 		case "number":

@@ -86,6 +86,8 @@ export const placeholderDefault = {
   "format|url": "http://www.google.com/...",
   "format|tel": "0811111111",
   "format|email": "abc@example.com",
+  "format|thai citizen id": "0139499973311",
+  "format|thai zipcode": "10210",
   number: "0/1/2/...",
 };
 
@@ -106,7 +108,16 @@ export const fieldTree = [
   { l: "date" },
   { l: "barcode" },
   { l: "upload", c: [{ l: "single file" }, { l: "multiple images" }] },
-  { l: "format", c: [{ l: "url" }, { l: "tel" }, { l: "email" }] },
+  {
+    l: "format",
+    c: [
+      { l: "url" },
+      { l: "tel" },
+      { l: "email" },
+      { l: "thai citizen id" },
+      { l: "thai zipcode" },
+    ],
+  },
 ];
 
 export const queryFieldTree = [

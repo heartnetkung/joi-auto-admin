@@ -21,6 +21,8 @@ const editorSchemaInner = Joi.object({
 			"format|url",
 			"format|tel",
 			"format|email",
+			"format|thai zipcode",
+			"format|thai citizen id",
 			"checkbox",
 			"number",
 			"date"
