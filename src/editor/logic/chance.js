@@ -81,7 +81,7 @@ const editorToChance = (editor) => {
 		case "text area":
 			return { name: "paragraph" };
 		case "advanced|reactive component":
-			return { name: "pickone", args: [[null]] };
+			return { name: "pickone", args: [['{}']] };
 		default:
 			return { name: "word" };
 	}

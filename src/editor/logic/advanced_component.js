@@ -16,6 +16,8 @@ export const ReactiveComponent = (props) => {
 ReactiveComponent.str = `(props)=>{
 const {values,setFieldValue} = useFormikContext();
 const values2 = JSON.stringify(_.set({ ...values }, props.name, null));
-useEffect(()=>{setFieldValue(props.name,values2,false);},[values2,props.name])
+useEffect(()=>{
+// you can also use setFieldValue to mutate other fields
+setFieldValue(props.name,values2,false);},[values2,props.name])
 return <Input disabled {...props}/>;
 }`;
