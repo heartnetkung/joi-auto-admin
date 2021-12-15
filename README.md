@@ -95,7 +95,25 @@ const App = () => {
 export default App;
 ```
 
-## Joi Object Explanation
+## FAQ
+
+1. How do I change Antd theme color?
+
+- You can override css in your project by importing directly from antd.
+  1. Generate css theme of your choice by using this [tool](https://github.com/emeks-studio/antd-custom-theme-generator).
+  2. `import 'my-theme.css'` in your code after you import joi-auto-admin to override css style.
+
+2. I got eslint warning about strict mode?
+
+- Remove component `<React.StrictMode>`. [Antd library doesn't support it.](https://github.com/ant-design/ant-design/issues/22493)
+
+3. How do I handle nested object?
+
+- You can add dot in field name to denote nested object. For example:
+  - `name-1234` would render to `Joi.object({ "name-1234": Joi.string() })`
+  - `hello.name-1234` would render to `Joi.object({ "hello": Joi.object({ "name-1234": Joi.string() }) })`
+
+## Joi Object API
 
 - `.label(str)`
   - Required. Label is used as table header, excel header, and form label.
@@ -223,15 +241,3 @@ export default App;
 | steps          | break form into multi steps using `<Steps>` component from antd. | [string]                                    | []            |
 | largeComponent | enlarge all antd components                                      | boolean                                     | false         |
 | devMode        | remove `required` from all fields for easy testing               | boolean                                     | false         |
-
-## FAQ
-
-1. How do I change Antd theme color?
-
-- You can override css in your project by importing directly from antd.
-  1. Generate css theme of your choice by using this [tool](https://github.com/emeks-studio/antd-custom-theme-generator).
-  2. `import 'my-theme.css'` in your code after you import joi-auto-admin to override css style.
-
-2. I got eslint warning about strict mode?
-
-- Remove component `<React.StrictMode>`. [Antd library doesn't support it.](https://github.com/ant-design/ant-design/issues/22493)
