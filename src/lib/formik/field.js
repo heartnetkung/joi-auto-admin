@@ -15,7 +15,7 @@ import moment from "moment";
 import React from "react";
 import { Col } from "antd";
 
-const { WeekPicker, RangePicker, MonthPicker } = DatePicker;
+const { WeekPicker, MonthPicker } = DatePicker;
 
 const Field = (props) => {
 	const { fieldType, label, required, name, validate, meta } = props;
@@ -60,7 +60,6 @@ const Field = (props) => {
 					/>
 				)}
 				{fieldType === "WeekPicker" && <WeekPicker {...props2} />}
-				{fieldType === "RangePicker" && <RangePicker {...props2} />}
 				{fieldType === "MonthPicker" && <MonthPicker {...props2} />}
 				{fieldType === "Input" && <Input {...props2} />}
 				{fieldType === "InputEmail" && (
@@ -114,7 +113,6 @@ Field.propTypes = {
 		"Checkbox",
 		"DatePicker",
 		"WeekPicker",
-		"RangePicker",
 		"MonthPicker",
 		"Input",
 		"InputNumber",
