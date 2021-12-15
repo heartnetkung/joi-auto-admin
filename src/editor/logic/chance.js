@@ -77,7 +77,7 @@ const editorToChance = (editor) => {
 			return { name: "natural", args: [{ max: 30 }] };
 		case "date":
 			return { name: "date", args: [] };
-		case "advanced|barcode scanner":
+		case "common|barcode scanner":
 			return { name: "pickone", args: [[["a001"], ["a002"]]] };
 		case "dropdown":
 			return { name: "pickone", args: [["m", "f"]] };
@@ -85,7 +85,7 @@ const editorToChance = (editor) => {
 			return { name: "paragraph" };
 		case "common|password":
 			return { name: "pickone", args: [[null]] };
-		case "advanced|dependent input example":
+		case "custom component|dependent input example":
 			return { name: "pickone", args: [['{}']] };
 		default:
 			return { name: "word" };

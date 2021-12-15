@@ -2,7 +2,7 @@ import { Joi } from "../../lib";
 import _ from "lodash";
 import { raw, softEval, func, regex } from "./util";
 import toSource from "tosource";
-import { DependentComp } from "./advanced_component";
+import { DependentComp } from "./custom_component";
 
 const makeObject = (joiList) => {
 	var ans = Joi;
@@ -32,7 +32,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 		case "common|text area":
 			newFieldType = "TextArea";
 			break;
-		case "advanced|dependent input example":
+		case "custom component|dependent input example":
 			var onFieldRender = isObj
 				? DependentComp
 				: raw(DependentComp.str, isObj);
@@ -104,7 +104,7 @@ return id;}`,
 		case "date":
 			type = editor.fieldType;
 			break;
-		case "advanced|barcode scanner":
+		case "common|barcode scanner":
 			type = "array";
 			suffix.push({ name: "min", args: [1] });
 			editor = {

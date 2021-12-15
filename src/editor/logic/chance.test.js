@@ -9,7 +9,7 @@ describe("randomData()", () => {
 			{ name: "d", fieldType: "format|email" },
 			{ name: "e", fieldType: "checkbox" },
 			{ name: "f", fieldType: "date" },
-			{ name: "g", fieldType: "advanced|barcode scanner" },
+			{ name: "g", fieldType: "common|barcode scanner" },
 			{ name: "h", fieldType: "dropdown" },
 			{ name: "i.j", fieldType: "input" },
 		];
@@ -41,7 +41,7 @@ describe("genChanceString()", () => {
 			{ name: "d", fieldType: "format|email" },
 			{ name: "e", fieldType: "checkbox" },
 			{ name: "f", fieldType: "date" },
-			{ name: "g", fieldType: "advanced|barcode scanner" },
+			{ name: "g", fieldType: "common|barcode scanner" },
 			{ name: "h", fieldType: "dropdown" },
 			{ name: "i.j", fieldType: "input" },
 		];

@@ -74,13 +74,13 @@ export const rowQuerySchema = {
 };
 
 export const disabledDefaultList = [
-  "advanced|barcode scanner",
+  "common|barcode scanner",
   "upload|single file",
   "upload|multiple images",
   "upload|firebase",
   "upload|google cloud storage",
   "dropdown",
-  "advanced|dependent input example",
+  "custom component|dependent input example",
   "common|password",
 ];
 
@@ -116,7 +116,10 @@ export const fieldTree = [
   { l: "checkbox" },
   { l: "number" },
   { l: "date" },
-  { l: "common", c: [{ l: "text area" }, { l: "password" }] },
+  {
+    l: "common",
+    c: [{ l: "text area" }, { l: "password" }, { l: "barcode scanner" }],
+  },
   {
     l: "format",
     c: [
@@ -139,8 +142,8 @@ export const fieldTree = [
     ],
   },
   {
-    l: "advanced",
-    c: [{ l: "barcode scanner" }, { l: "dependent input example" }],
+    l: "custom component",
+    c: [{ l: "dependent input example" }],
   },
 ];
 

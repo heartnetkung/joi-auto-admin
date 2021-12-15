@@ -79,7 +79,7 @@ export const renderImport = (editors) => {
 				"import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';"
 			);
 			ans.add("import { nanoid } from 'nanoid';");
-		} else if (editor.fieldType === "advanced|dependent input example") {
+		} else if (editor.fieldType === "custom component|dependent input example") {
 			ans.add("import {useFormikContext} from 'formik';");
 			ans.add("import {Input} from 'formik-antd';");
 			ans.add("import _ from 'lodash';");

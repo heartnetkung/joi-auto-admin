@@ -26,13 +26,13 @@ const editorSchemaInner = Joi.object({
 			"format|thai citizen id",
 			"format|regex validation example",
 			"format|custom validation example",
-			"advanced|barcode scanner",
-			"advanced|dependent input example",
+			"custom component|dependent input example",
 			"checkbox",
 			"number",
 			"date",
 			"common|text area",
-			"common|password"
+			"common|password",
+			"common|barcode scanner"
 		),
 	_fieldType: Joi.any(),
 	step: Joi.number(),
