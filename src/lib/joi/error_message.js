@@ -16,7 +16,10 @@ export const getErrorMessage = (errorObj, label) => {
 	var { message, type, context } = errorObj;
 	if (type === "any.custom") return context?.error?.message;
 	if (/[ก-ฮ]/.test(message.replace(/"[^"]+"/g, ""))) return message;
-	if (/pattern/.test(type) && label) return `${label}ไม่ถูกต้อง`;
+	if (/pattern/.test(type) && label)
+		if (/fails to match the required pattern/.test(message))
+			return `${label}ไม่ถูกต้อง`;
+		else return message;
 
 	var found = errorTranslation[type];
 	if (!found && label) return `${label}ไม่ถูกต้อง (${message})`;
