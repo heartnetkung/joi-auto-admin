@@ -68,6 +68,7 @@ export const format = (a, isJson) => {
 
 export const renderImport = (editors) => {
 	const ans = new Set();
+	const reactVar = new Set();
 	for (var editor of editors) {
 		if (editor.fieldType === "upload|google cloud storage")
 			ans.add("import axios from 'axios';");
@@ -81,11 +82,14 @@ export const renderImport = (editors) => {
 			ans.add("import {useFormikContext} from 'formik';");
 			ans.add("import {Input} from 'formik-antd';");
 			ans.add("import _ from 'lodash';");
-			ans.add("import {useEffect} from 'react';");
+			reactVar.add("useEffect");
 		}
 	}
-	if (!ans.size) return "";
-	return "\n" + [...ans].join("\n");
+	const reactVarString = reactVar.size
+		? ",{" + [...reactVar].join(",") + "}"
+		: "";
+	ans.add(`import React${reactVarString} from 'react';`);
+	return [...ans].join("\n");
 };
 
 export const renderFunction = (editors) => {
@@ -112,7 +116,7 @@ return storage;
 
 export const renderTemplate = (editors, settings) => {
 	return format(`import { Joi, AutoAdmin, Chance } from 'joi_auto_admin';
-import React from 'react';${renderImport(editors)}
+${renderImport(editors)}
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 const chance = new Chance(0);${renderFunction(editors)}
