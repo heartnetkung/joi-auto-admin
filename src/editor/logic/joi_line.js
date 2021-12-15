@@ -52,6 +52,18 @@ export const makeJoiLine = (editor, settings, isObj) => {
 			suffix.push({ name: "pattern", args: [regex(/^\d{5}$/, isObj)] });
 			suffix.push({ name: "message", args: ["รหัสไปรษณีย์ไม่ถูกต้อง"] });
 			break;
+		case "format|regex validation example":
+			suffix.push({ name: "pattern", args: [regex(/^changeme$/, isObj)] });
+			suffix.push({ name: "message", args: ["changeme error"] });
+			break;
+		case "format|custom validation example":
+			suffix.push({ name: "custom", args: [func(
+						`(a)=>{
+if (!/^changeme$/.test(a)) throw new Error("changeme error");
+return a;}`,
+						isObj
+					),] });
+			break;
 		case "format|thai citizen id":
 			editor = { placeholder: "เช่น 0139499973311", ...editor };
 			suffix.push({

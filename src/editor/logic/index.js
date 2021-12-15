@@ -24,6 +24,8 @@ const editorSchemaInner = Joi.object({
 			"format|email",
 			"format|thai zipcode",
 			"format|thai citizen id",
+			"format|regex validation example",
+			"format|custom validation example",
 			"advanced|barcode scanner",
 			"advanced|dependent input example",
 			"checkbox",

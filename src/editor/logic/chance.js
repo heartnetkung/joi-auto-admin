@@ -57,6 +57,9 @@ const editorToChance = (editor) => {
 					],
 				],
 			};
+		case 'format|regex validation example':
+		case 'format|custom validation example':
+			return { name: "pickone", args: [["changeme"]] };
 		case "format|thai tel":
 			return { name: "pickone", args: [["0812345678", "021111111"]] };
 		case "format|email":

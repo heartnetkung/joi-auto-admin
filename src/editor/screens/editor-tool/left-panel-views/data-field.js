@@ -127,9 +127,14 @@ export const fieldTree = [
       { l: "thai tel" },
       { l: "thai citizen id" },
       { l: "thai zipcode" },
+      { l: "regex validation example" },
+      { l: "custom validation example" },
     ],
   },
-  { l: "advanced", c: [{ l: "dependent input example" }, { l: "barcode scanner" }] },
+  {
+    l: "advanced",
+    c: [{ l: "barcode scanner" }, { l: "dependent input example" }],
+  },
 ];
 
 export const queryFieldTree = [
