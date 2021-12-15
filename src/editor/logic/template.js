@@ -52,6 +52,7 @@ export const renderProps = (editors, settings, isComp) => {
 		"uploadPreviewUrl",
 		"description",
 		"steps",
+		"largeComponent",
 	]);
 	_.assign(ans, extras);
 	ans.devMode = devMode || false;
