@@ -47,6 +47,7 @@ const editorSchemaInner = Joi.object({
 	columnHide: Joi.boolean(),
 	disableSorting: Joi.boolean(),
 	disableFilter: Joi.boolean(),
+	appendDivider: Joi.boolean(),
 });
 
 const editorSchema1 = Joi.array()

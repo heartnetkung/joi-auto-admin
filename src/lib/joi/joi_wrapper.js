@@ -22,6 +22,7 @@ const OMIT_META = [
 	"disableSorting",
 	"disableFilter",
 	"onFieldRender",
+	"appendDivider",
 ];
 
 class JoiWrapper {
@@ -92,6 +93,7 @@ class JoiField {
 		this.containerStyle = meta.containerStyle;
 		this.step = meta.step;
 		this.onFieldRender = meta.onFieldRender;
+		this.appendDivider = meta.appendDivider;
 		this.meta = _.omit(meta, OMIT_META);
 	}
 

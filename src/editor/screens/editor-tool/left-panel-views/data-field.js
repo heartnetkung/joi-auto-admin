@@ -95,7 +95,13 @@ export const placeholderDefault = {
   number: "0/1/2/...",
 };
 
-export const fieldOptions = ["require", "disabled", "twoColumn", "extraMargin"];
+export const fieldOptions = [
+  "require",
+  "disabled",
+  "twoColumn",
+  "extraMargin",
+  "appendDivider",
+];
 
 export const columnOptions = [
   "cellEllipsis",
