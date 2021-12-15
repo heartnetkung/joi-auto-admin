@@ -2,7 +2,7 @@ import { Joi } from "../../lib";
 import _ from "lodash";
 import { raw, softEval, func, regex } from "./util";
 import toSource from "tosource";
-import { DependentComp } from "./custom_component";
+import { DependentComp, AsyncDropdown } from "./custom_component";
 
 const makeObject = (joiList) => {
 	var ans = Joi;
@@ -33,10 +33,20 @@ export const makeJoiLine = (editor, settings, isObj) => {
 			newFieldType = "TextArea";
 			break;
 		case "custom component|dependent input example":
-			var onFieldRender = isObj
-				? DependentComp
-				: raw(DependentComp.str, isObj);
-			editor = { onFieldRender, ...editor };
+			editor = {
+				onFieldRender: isObj
+					? DependentComp
+					: raw("DependentComp", isObj),
+				...editor,
+			};
+			break;
+		case "custom component|async searchable dropdown":
+			editor = {
+				onFieldRender: isObj
+					? AsyncDropdown
+					: raw("AsyncDropdown", isObj),
+				...editor,
+			};
 			break;
 		case "format|url":
 			newFieldType = "InputURL";

@@ -57,8 +57,8 @@ const editorToChance = (editor) => {
 					],
 				],
 			};
-		case 'format|regex validation example':
-		case 'format|custom validation example':
+		case "format|regex validation example":
+		case "format|custom validation example":
 			return { name: "pickone", args: [["changeme"]] };
 		case "format|thai tel":
 			return { name: "pickone", args: [["0812345678", "021111111"]] };
@@ -86,7 +86,9 @@ const editorToChance = (editor) => {
 		case "common|password":
 			return { name: "pickone", args: [[null]] };
 		case "custom component|dependent input example":
-			return { name: "pickone", args: [['{}']] };
+			return { name: "pickone", args: [["{}"]] };
+		case "custom component|async searchable dropdown":
+			return { name: "pickone", args: [["a01", "a02"]] };
 		default:
 			return { name: "word" };
 	}

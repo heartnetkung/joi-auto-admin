@@ -81,6 +81,7 @@ export const disabledDefaultList = [
   "upload|google cloud storage",
   "dropdown",
   "custom component|dependent input example",
+  "custom component|async searchable dropdown",
   "common|password",
 ];
 
@@ -143,7 +144,7 @@ export const fieldTree = [
   },
   {
     l: "custom component",
-    c: [{ l: "dependent input example" }],
+    c: [{ l: "async searchable dropdown" }, { l: "dependent input example" }],
   },
 ];
 

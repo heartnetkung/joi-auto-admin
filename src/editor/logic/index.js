@@ -27,6 +27,7 @@ const editorSchemaInner = Joi.object({
 			"format|regex validation example",
 			"format|custom validation example",
 			"custom component|dependent input example",
+			"custom component|async searchable dropdown",
 			"checkbox",
 			"number",
 			"date",

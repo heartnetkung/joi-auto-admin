@@ -4,8 +4,9 @@ import parserBabel from "prettier/parser-babel";
 import { makeJoiLine } from "./joi_line";
 import { raw, showRaw, func } from "./util";
 import { randomData, genChanceString } from "./chance";
+import { DependentComp, AsyncDropdown } from "./custom_component";
 
-export const wait = (ms) => new Promise((res) => setTimeout(res, ms));
+const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
 const traverse = (node) => {
 	if (typeof node === "string") return node;
@@ -69,34 +70,46 @@ export const format = (a, isJson) => {
 
 export const renderImport = (editors) => {
 	const ans = new Set();
-	const reactVar = new Set();
-	for (var editor of editors) {
-		if (editor.fieldType === "upload|google cloud storage")
+	const reactImport = new Set();
+	const formikAntdImport = new Set();
+
+	for (var { fieldType } of editors) {
+		if (fieldType === "upload|google cloud storage")
 			ans.add("import axios from 'axios';");
-		else if (editor.fieldType === "upload|firebase") {
+		else if (fieldType === "upload|firebase") {
 			ans.add("import { initializeApp } from 'firebase/app';");
 			ans.add(
 				"import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';"
 			);
 			ans.add("import { nanoid } from 'nanoid';");
-		} else if (editor.fieldType === "custom component|dependent input example") {
+		} else if (fieldType === "custom component|dependent input example") {
 			ans.add("import {useFormikContext} from 'formik';");
-			ans.add("import {Input} from 'formik-antd';");
 			ans.add("import _ from 'lodash';");
-			reactVar.add("useEffect");
+			formikAntdImport.add("Input");
+			reactImport.add("useEffect");
+		} else if (fieldType === "custom component|async searchable dropdown") {
+			reactImport.add("useEffect");
+			reactImport.add("useState");
+			formikAntdImport.add("Select");
 		}
 	}
-	const reactVarString = reactVar.size
-		? ",{" + [...reactVar].join(",") + "}"
+
+	const reactString = reactImport.size
+		? ",{" + [...reactImport].join(",") + "}"
 		: "";
-	ans.add(`import React${reactVarString} from 'react';`);
+	ans.add(`import React${reactString} from 'react';`);
+
+	if (formikAntdImport.size)
+		ans.add(
+			`import {${[...formikAntdImport].join(",")}} from 'formik-antd';`
+		);
 	return [...ans].join("\n");
 };
 
 export const renderFunction = (editors) => {
 	const ans = new Set();
-	for (var editor of editors) {
-		if (editor.fieldType === "upload|firebase")
+	for (var { fieldType } of editors) {
+		if (fieldType === "upload|firebase")
 			ans.add(`\nlet storage = null;
 const getFirebase = () => {
 if (!storage) storage = getStorage(initializeApp({
@@ -110,6 +123,10 @@ measurementId: "",
 }));
 return storage;
 };`);
+		else if (fieldType === "custom component|dependent input example")
+			ans.add("\n" + DependentComp.str);
+		else if (fieldType === "custom component|async searchable dropdown")
+			ans.add("\n" + AsyncDropdown.str);
 	}
 	if (!ans.size) return "";
 	return "\n" + [...ans].join("\n");
