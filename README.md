@@ -147,6 +147,18 @@ export default App;
     - `.meta({ disableFilter: true })`
       - For disabling column filter
 
+  - To add file upload input, use the following fields:
+    - `.meta({ uploadFile: async (fileObj)=> urlString })`
+      - Boilerplate code for uploading your file. The UI automatically generate this.
+    - `.meta({ accept: string })`
+      - Used for input component. Example: '.jp'
+    - `.meta({ uploadFileInit: ()=> null })`
+      - Not required. Useful for logging to third party API.
+    - `.meta({ multiple: true })`
+      - If multiple, user can upload multiple file and joi type should be array. Otherwise user can only upload a single file and joi type can be array or string.
+    - `.meta({ uploadFileType: 'image' | 'file' })`
+      - If image, the table and the form would show preview of the given file.
+
 - `.valid([ any ])`
   - For making `<Select>` input.
 - `.required()`
