@@ -98,7 +98,7 @@ return id;}`,
 			});
 			break;
 		case "checkbox":
-			type = "bool";
+			type = "boolean";
 			break;
 		case "number":
 		case "date":
