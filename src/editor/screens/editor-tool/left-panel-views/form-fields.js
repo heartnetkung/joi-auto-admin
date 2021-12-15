@@ -117,8 +117,8 @@ const FormFields = (props) => {
   return (
     <div>
       <Form>
-        {_.get(formState, "[0]") && (
-          <Collapse defaultActiveKey={["0"]} accordion>
+        {formState.length && (
+          <Collapse defaultActiveKey={formState[0].name} accordion>
             {formState.map((item, index) => (
               <Collapse.Panel
                 key={item.name}
