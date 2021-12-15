@@ -5,7 +5,7 @@ export const MENU = {
 
 export const MENU_FORM = {
   form: "Fields",
-  setting: "Table Settings",
+  setting: "Settings",
 };
 
 export const SETTINGS = [

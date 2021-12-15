@@ -122,7 +122,7 @@ const FormFields = (props) => {
             {formState.map((item, index) => (
               <Collapse.Panel
                 key={item.name}
-                header={logic.getHeader(item.name, item.step)}
+                header={logic.getHeader(item.label, item.step)}
                 extra={
                   <>
                     <Button
@@ -155,20 +155,20 @@ const FormFields = (props) => {
                 <Row style={styles.rowInput}>
                   <Col flex="1">
                     <Input
-                      placeholder="name"
-                      value={item.name}
+                      placeholder="label"
+                      value={item.label}
                       onChange={(event) =>
-                        onChangeField(index, "name", event.target.value)
+                        onChangeField(index, "label", event.target.value)
                       }
                     />
                   </Col>
                   <Col span="1" />
                   <Col flex="1">
                     <Input
-                      placeholder="label"
-                      value={item.label}
+                      placeholder="name"
+                      value={item.name}
                       onChange={(event) =>
-                        onChangeField(index, "label", event.target.value)
+                        onChangeField(index, "name", event.target.value)
                       }
                     />
                   </Col>
