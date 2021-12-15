@@ -81,7 +81,7 @@ export const disabledDefaultList = [
   "upload|google cloud storage",
   "dropdown",
   "advanced|dependent input example",
-  "common|password"
+  "common|password",
 ];
 
 export const placeholderDefault = {
@@ -112,15 +112,6 @@ export const fieldTree = [
   { l: "date" },
   { l: "common", c: [{ l: "text area" }, { l: "password" }] },
   {
-    l: "upload",
-    c: [
-      { l: "single file" },
-      { l: "multiple images" },
-      { l: "firebase" },
-      { l: "google cloud storage" },
-    ],
-  },
-  {
     l: "format",
     c: [
       { l: "url" },
@@ -130,6 +121,15 @@ export const fieldTree = [
       { l: "thai zipcode" },
       { l: "regex validation example" },
       { l: "custom validation example" },
+    ],
+  },
+  {
+    l: "upload",
+    c: [
+      { l: "single file" },
+      { l: "multiple images" },
+      { l: "firebase" },
+      { l: "google cloud storage" },
     ],
   },
   {
