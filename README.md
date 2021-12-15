@@ -1,6 +1,6 @@
 # joi-auto-admin
 
-Automatically create a full-featured web admin UI for CRUD operations using only a few react props.
+Create a full-featured customizable web admin UI for CRUD operations using web-based code generator (similar to Google Form).
 
 ## Installation
 
@@ -95,19 +95,12 @@ const App = () => {
 export default App;
 ```
 
-## More Examples
-
-- [ajax dropdown, searchable heirarchical dropdown](https://codesandbox.io/s/pedantic-violet-8qeh0?file=/src/App.js)
-- [multi-step / interactive form](https://www.google.com)
-- [barcode input](https://www.google.com)
-- [FormModal](https://www.google.com)
-- [email input, tel input, url input](https://www.google.com)
-
 ## Joi Object Explanation
 
 - `.label(str)`
   - Required. Label is used as table header, excel header, and form label.
 - `.meta(obj)`
+
   - The meta function allows you to customize each data field.
   - Object are parsed directly as a prop to input. Some of the most popular ones inlcude:
     - `.meta({ placeholder })`
@@ -115,6 +108,7 @@ export default App;
     - `.meta({ style })`
     - The rest of the props can be found [here.](https://reactjs.org/docs/dom-elements.html)
   - To customize `AutoAdmin` _form_, use the following fields:
+
     - `.meta({ fieldType: string })`
       - Useful ones are `InputPhone`, `InputEmail`, `InputURL`. The rest are automatic depending on other parameters, for example, boolean would be checkbox.
     - `.meta({ fieldHide: boolean | (formValue, currentStep)=>boolean })`
@@ -140,6 +134,7 @@ export default App;
       - Customize style of the field container, useful for adding margins or padding.
     - `.meta({ onFieldRender: (props)=>ReactDomNode })`
       - \[Advanced\] fully customize the form component. The function usually implements with `import { useFormikContext } from "formik";` to get/set internal value of the form. See the example for more information.
+
   - To customize `AutoAdmin` _table_, use the following fields:
     - `.meta({ cellEllipsis: true })`
     - `.meta({ cellFormat: (cellData)=> string | ReactDomNode })`
@@ -151,6 +146,7 @@ export default App;
       - For disabling column sorting
     - `.meta({ disableFilter: true })`
       - For disabling column filter
+
 - `.valid([ any ])`
   - For making `<Select>` input.
 - `.required()`
@@ -212,3 +208,13 @@ export default App;
 | title    | title of this form                                               | string                                      | "เพิ่มข้อมูล" |
 | steps    | break form into multi steps using `<Steps>` component from antd. | [string]                                    | []            |
 | devMode  | remove `required` from all fields for easy testing               | boolean                                     | false         |
+
+## FAQ
+
+1. How do I change Antd theme color?
+
+- You can override css in your project by importing directly from antd. More explanation [here](https://ant.design/docs/react/customize-theme#Customize-in-less-file)
+
+2. I got eslint warning about strict mode?
+
+- Remove component `<React.StrictMode>`. [Antd library doesn't support it.](https://github.com/ant-design/ant-design/issues/22493)
