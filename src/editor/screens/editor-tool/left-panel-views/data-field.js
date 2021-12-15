@@ -81,6 +81,7 @@ export const disabledDefaultList = [
   "upload|google cloud storage",
   "dropdown",
   "advanced|dependent input example",
+  "common|password"
 ];
 
 export const placeholderDefault = {
@@ -109,7 +110,7 @@ export const fieldTree = [
   { l: "checkbox" },
   { l: "number" },
   { l: "date" },
-  { l: "common", c: [{ l: "text area" }] },
+  { l: "common", c: [{ l: "text area" }, { l: "password" }] },
   {
     l: "upload",
     c: [

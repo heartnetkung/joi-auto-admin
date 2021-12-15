@@ -47,22 +47,34 @@ export const makeJoiLine = (editor, settings, isObj) => {
 		case "format|email":
 			newFieldType = "InputEmail";
 			break;
+		case "common|password":
+			editor = { ...editor, cellHide: true };
+			newFieldType = "InputPassword";
+			break;
 		case "format|thai zipcode":
 			editor = { placeholder: "เช่น 10210", ...editor };
 			suffix.push({ name: "pattern", args: [regex(/^\d{5}$/, isObj)] });
 			suffix.push({ name: "message", args: ["รหัสไปรษณีย์ไม่ถูกต้อง"] });
 			break;
 		case "format|regex validation example":
-			suffix.push({ name: "pattern", args: [regex(/^changeme$/, isObj)] });
+			suffix.push({
+				name: "pattern",
+				args: [regex(/^changeme$/, isObj)],
+			});
 			suffix.push({ name: "message", args: ["changeme error"] });
 			break;
 		case "format|custom validation example":
-			suffix.push({ name: "custom", args: [func(
+			suffix.push({
+				name: "custom",
+				args: [
+					func(
 						`(a)=>{
 if (!/^changeme$/.test(a)) throw new Error("changeme error");
 return a;}`,
 						isObj
-					),] });
+					),
+				],
+			});
 			break;
 		case "format|thai citizen id":
 			editor = { placeholder: "เช่น 0139499973311", ...editor };

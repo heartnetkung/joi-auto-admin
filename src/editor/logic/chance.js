@@ -83,6 +83,8 @@ const editorToChance = (editor) => {
 			return { name: "pickone", args: [["m", "f"]] };
 		case "common|text area":
 			return { name: "paragraph" };
+		case "common|password":
+			return { name: "pickone", args: [[null]] };
 		case "advanced|dependent input example":
 			return { name: "pickone", args: [['{}']] };
 		default:
