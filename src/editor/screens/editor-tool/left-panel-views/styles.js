@@ -16,6 +16,10 @@ export const contentWhite = {
   borderRadius: 8,
 };
 
+export const gray = {
+  color: "#aaa",
+};
+
 export const layoutMargin = {
   display: "flex",
   flexDirection: "column",

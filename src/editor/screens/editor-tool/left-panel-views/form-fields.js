@@ -23,6 +23,7 @@ import {
 } from "./data-field";
 import * as styles from "./styles";
 import * as logic from "./logic";
+import { UpOutlined, DownOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const FormFields = (props) => {
   const { formState, setFormState, settingState } = props;
@@ -38,11 +39,6 @@ const FormFields = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settingState]);
-
-  const cloneState = () => {
-    const newForm = [...formState];
-    return newForm;
-  };
 
   const onSetDefaultStep = () => {
     let newForm = [...formState];
@@ -73,8 +69,26 @@ const FormFields = (props) => {
       setFormState([{ ...getSingleRow(settingState?.steps) }]);
       return;
     }
-    const newForm = cloneState();
+    const newForm = [...formState];
     newForm.splice(index, 1);
+    setFormState(newForm);
+  };
+
+  const onMoveUp = (index) => {
+    if (!Array.isArray(formState) || index === 0) {
+      return;
+    }
+    const newForm = [...formState];
+    newForm.splice(index - 1, 2, formState[index], formState[index - 1]);
+    setFormState(newForm);
+  };
+
+  const onMoveDown = (index) => {
+    if (!Array.isArray(formState) || index === formState.length - 1) {
+      return;
+    }
+    const newForm = [...formState];
+    newForm.splice(index, 2, formState[index + 1], formState[index]);
     setFormState(newForm);
   };
 
@@ -82,7 +96,7 @@ const FormFields = (props) => {
     if (!Array.isArray(formState) || !key) {
       return;
     }
-    let newForm = cloneState();
+    let newForm = [...formState];
     if (!newForm[index] || !newForm[index]?.hasOwnProperty(key)) {
       return;
     }
@@ -94,7 +108,7 @@ const FormFields = (props) => {
   };
 
   const onChangeConfig = (key, index, options) => {
-    let newForm = cloneState();
+    let newForm = [...formState];
     const data = key === "field" ? fieldOptions : columnOptions;
     const newOptionConfig = logic.createConfig(index, options, newForm, data);
     setFormState([...newOptionConfig]);
@@ -107,19 +121,35 @@ const FormFields = (props) => {
           <Collapse defaultActiveKey={["0"]} accordion>
             {formState.map((item, index) => (
               <Collapse.Panel
-                key={index.toString()}
+                key={item.name}
                 header={logic.getHeader(item.name, item.step)}
                 extra={
-                  <Button
-                    type="dashed"
-                    danger
-                    onClick={(event) => {
-                      onDeleteField(index);
-                      event.stopPropagation();
-                    }}
-                  >
-                    Delete
-                  </Button>
+                  <>
+                    <Button
+                      icon={<UpOutlined style={styles.gray} />}
+                      type="text"
+                      onClick={(event) => {
+                        onMoveUp(index);
+                        event.stopPropagation();
+                      }}
+                    />
+                    <Button
+                      icon={<DownOutlined style={styles.gray} />}
+                      type="text"
+                      onClick={(event) => {
+                        onMoveDown(index);
+                        event.stopPropagation();
+                      }}
+                    />
+                    <Button
+                      icon={<DeleteOutlined style={styles.gray} />}
+                      type="text"
+                      onClick={(event) => {
+                        onDeleteField(index);
+                        event.stopPropagation();
+                      }}
+                    />
+                  </>
                 }
               >
                 <Row style={styles.rowInput}>
