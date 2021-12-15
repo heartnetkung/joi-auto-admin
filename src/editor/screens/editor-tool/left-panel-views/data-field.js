@@ -109,7 +109,7 @@ export const fieldTree = [
   { l: "checkbox" },
   { l: "number" },
   { l: "date" },
-  { l: "text area" },
+  { l: "common", c: [{ l: "text area" }] },
   {
     l: "upload",
     c: [

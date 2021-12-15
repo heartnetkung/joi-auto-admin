@@ -31,7 +31,7 @@ const editorSchemaInner = Joi.object({
 			"checkbox",
 			"number",
 			"date",
-			"text area"
+			"common|text area"
 		),
 	_fieldType: Joi.any(),
 	step: Joi.number(),

@@ -29,7 +29,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 	var newFieldType = "";
 	var suffix = [];
 	switch (editor.fieldType) {
-		case "text area":
+		case "common|text area":
 			newFieldType = "TextArea";
 			break;
 		case "advanced|dependent input example":

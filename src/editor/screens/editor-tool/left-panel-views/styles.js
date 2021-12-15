@@ -17,7 +17,7 @@ export const contentWhite = {
 };
 
 export const gray = {
-  color: "#aaa",
+  color: "#ccc",
 };
 
 export const layoutMargin = {

@@ -81,7 +81,7 @@ const editorToChance = (editor) => {
 			return { name: "pickone", args: [[["a001"], ["a002"]]] };
 		case "dropdown":
 			return { name: "pickone", args: [["m", "f"]] };
-		case "text area":
+		case "common|text area":
 			return { name: "paragraph" };
 		case "advanced|dependent input example":
 			return { name: "pickone", args: [['{}']] };
