@@ -136,6 +136,7 @@ export default App;
       - \[Advanced\] fully customize the form component. The function usually implements with `import { useFormikContext } from "formik";` to get/set internal value of the form. See the example for more information.
 
   - To customize `AutoAdmin` _table_, use the following fields:
+
     - `.meta({ cellEllipsis: true })`
     - `.meta({ cellFormat: (cellData)=> string | ReactDomNode })`
       - For formating number, date, etc. on the table.
@@ -227,7 +228,9 @@ export default App;
 
 1. How do I change Antd theme color?
 
-- You can override css in your project by importing directly from antd. More explanation [here](https://ant.design/docs/react/customize-theme#Customize-in-less-file)
+- You can override css in your project by importing directly from antd.
+  1. Generate css theme of your choice by using this [tool](https://github.com/emeks-studio/antd-custom-theme-generator).
+  2. `import 'my-theme.css'` in your code after you import joi-auto-admin to override css style.
 
 2. I got eslint warning about strict mode?
 
