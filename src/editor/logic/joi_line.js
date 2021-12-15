@@ -32,7 +32,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 		case "text area":
 			newFieldType = "TextArea";
 			break;
-		case "advanced|reactive component":
+		case "advanced|dependent input example":
 			var onFieldRender = isObj
 				? ReactiveComponent
 				: raw(ReactiveComponent.str, isObj);
@@ -41,7 +41,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 		case "format|url":
 			newFieldType = "InputURL";
 			break;
-		case "format|tel":
+		case "format|thai tel":
 			newFieldType = "InputPhone";
 			break;
 		case "format|email":

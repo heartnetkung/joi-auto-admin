@@ -80,14 +80,14 @@ export const disabledDefaultList = [
   "upload|firebase",
   "upload|google cloud storage",
   "dropdown",
-  "advanced|reactive component",
+  "advanced|dependent input example",
 ];
 
 export const placeholderDefault = {
   checkbox: "true/false",
   date: "YYYY-MM-DD",
   "format|url": "http://www.google.com/...",
-  "format|tel": "0811111111",
+  "format|thai tel": "0811111111",
   "format|email": "abc@example.com",
   "format|thai citizen id": "0139499973311",
   "format|thai zipcode": "10210",
@@ -123,13 +123,13 @@ export const fieldTree = [
     l: "format",
     c: [
       { l: "url" },
-      { l: "tel" },
       { l: "email" },
+      { l: "thai tel" },
       { l: "thai citizen id" },
       { l: "thai zipcode" },
     ],
   },
-  { l: "advanced", c: [{ l: "reactive component" }, { l: "barcode scanner" }] },
+  { l: "advanced", c: [{ l: "dependent input example" }, { l: "barcode scanner" }] },
 ];
 
 export const queryFieldTree = [

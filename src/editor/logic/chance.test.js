@@ -5,7 +5,7 @@ describe("randomData()", () => {
 		var editors = [
 			{ name: "a", fieldType: "number" },
 			{ name: "b", fieldType: "format|url" },
-			{ name: "c", fieldType: "format|tel" },
+			{ name: "c", fieldType: "format|thai tel" },
 			{ name: "d", fieldType: "format|email" },
 			{ name: "e", fieldType: "checkbox" },
 			{ name: "f", fieldType: "date" },
@@ -37,7 +37,7 @@ describe("genChanceString()", () => {
 		var editors = [
 			{ name: "a", fieldType: "number" },
 			{ name: "b", fieldType: "format|url" },
-			{ name: "c", fieldType: "format|tel" },
+			{ name: "c", fieldType: "format|thai tel" },
 			{ name: "d", fieldType: "format|email" },
 			{ name: "e", fieldType: "checkbox" },
 			{ name: "f", fieldType: "date" },

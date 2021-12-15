@@ -57,7 +57,7 @@ const editorToChance = (editor) => {
 					],
 				],
 			};
-		case "format|tel":
+		case "format|thai tel":
 			return { name: "pickone", args: [["0812345678", "021111111"]] };
 		case "format|email":
 			return { name: "email" };
@@ -80,7 +80,7 @@ const editorToChance = (editor) => {
 			return { name: "pickone", args: [["m", "f"]] };
 		case "text area":
 			return { name: "paragraph" };
-		case "advanced|reactive component":
+		case "advanced|dependent input example":
 			return { name: "pickone", args: [['{}']] };
 		default:
 			return { name: "word" };
