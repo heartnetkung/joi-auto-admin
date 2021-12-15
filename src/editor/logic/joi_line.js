@@ -214,6 +214,7 @@ return "https://www.gravatar.com/avatar/1"}`,
 		});
 	if (editor.columnWidth) meta.cellWidth = editor.columnWidth;
 	if (newFieldType) meta.fieldType = newFieldType;
+	if (!meta.placeholder) delete meta.placeholder;
 	if (settings.steps) meta.step = meta.step || 0;
 	else delete meta.step;
 
