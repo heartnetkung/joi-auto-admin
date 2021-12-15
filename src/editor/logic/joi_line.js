@@ -2,7 +2,7 @@ import { Joi } from "../../lib";
 import _ from "lodash";
 import { raw, softEval, func, regex } from "./util";
 import toSource from "tosource";
-import { ReactiveComponent } from "./advanced_component";
+import { DependentComp } from "./advanced_component";
 
 const makeObject = (joiList) => {
 	var ans = Joi;
@@ -34,8 +34,8 @@ export const makeJoiLine = (editor, settings, isObj) => {
 			break;
 		case "advanced|dependent input example":
 			var onFieldRender = isObj
-				? ReactiveComponent
-				: raw(ReactiveComponent.str, isObj);
+				? DependentComp
+				: raw(DependentComp.str, isObj);
 			editor = { onFieldRender, ...editor };
 			break;
 		case "format|url":

@@ -3,7 +3,7 @@ import { Input } from "formik-antd";
 import React, { useEffect } from "react";
 import { useFormikContext } from "formik";
 
-export const ReactiveComponent = (props) => {
+export const DependentComp = (props) => {
 	const { values, setFieldValue } = useFormikContext();
 	const values2 = JSON.stringify(_.set({ ...values }, props.name, null));
 	useEffect(() => {
@@ -13,7 +13,7 @@ export const ReactiveComponent = (props) => {
 	return <Input disabled {...props} />;
 };
 
-ReactiveComponent.str = `(props)=>{
+DependentComp.str = `(props)=>{
 const {values,setFieldValue} = useFormikContext();
 const values2 = JSON.stringify(_.set({ ...values }, props.name, null));
 useEffect(()=>{
