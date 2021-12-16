@@ -3,7 +3,7 @@ import React from "react";
 import { useMemo } from "react";
 import PropTypes from "prop-types";
 import { renderProps, renderTemplate } from "./template";
-import { makeJoiLine } from "./joi_line";
+import { makeJoiLine, makeExtraJoiLines } from "./joi_line";
 import _ from "lodash";
 import { Spin } from "antd";
 
@@ -28,6 +28,7 @@ const editorSchemaInner = Joi.object({
 			"format|custom validation example",
 			"custom component|dependent input example",
 			"custom component|async searchable dropdown",
+			"hierarchical dropdown|static option, allow modify",
 			"checkbox",
 			"number",
 			"date",
@@ -87,8 +88,11 @@ const traverse = (node) => {
 
 export const makeJoiObj = (editors, settings) => {
 	var ans = {};
-	for (var editor of editors)
+	for (var editor of editors) {
 		_.set(ans, editor.name, makeJoiLine(editor, settings, true));
+		var extraJoiLines = makeExtraJoiLines(editor, settings, true);
+		for (var key in extraJoiLines) _.set(ans, key, extraJoiLines[key]);
+	}
 	return traverse(ans);
 };
 

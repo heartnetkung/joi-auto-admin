@@ -1,10 +1,14 @@
 import _ from "lodash";
 import prettier from "prettier/standalone";
 import parserBabel from "prettier/parser-babel";
-import { makeJoiLine } from "./joi_line";
+import { makeJoiLine, makeExtraJoiLines } from "./joi_line";
 import { raw, showRaw, func } from "./util";
 import { randomData, genChanceString } from "./chance";
-import { DependentComp, AsyncDropdown } from "./custom_component";
+import {
+	DependentComp,
+	AsyncDropdown,
+	CascaderStatic,
+} from "./custom_component";
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -18,8 +22,11 @@ const traverse = (node) => {
 
 export const renderJoi = (editors, settings, isComp) => {
 	var ans = {};
-	for (var editor of editors)
+	for (var editor of editors) {
 		_.set(ans, editor.name, makeJoiLine(editor, settings));
+		var extraJoiLines = makeExtraJoiLines(editor, settings);
+		for (var key in extraJoiLines) _.set(ans, key, extraJoiLines[key]);
+	}
 	return showRaw(traverse(ans));
 };
 
@@ -91,6 +98,13 @@ export const renderImport = (editors) => {
 			reactImport.add("useEffect");
 			reactImport.add("useState");
 			formikAntdImport.add("Select");
+		} else if (
+			fieldType === "hierarchical dropdown|static option, allow modify"
+		) {
+			reactImport.add("useEffect");
+			reactImport.add("useState");
+			ans.add("import { Cascader } from 'antd';");
+			ans.add("import {useFormikContext} from 'formik';");
 		}
 	}
 
@@ -127,6 +141,10 @@ return storage;
 			ans.add("\n" + DependentComp.str);
 		else if (fieldType === "custom component|async searchable dropdown")
 			ans.add("\n" + AsyncDropdown.str);
+		else if (
+			fieldType === "hierarchical dropdown|static option, allow modify"
+		)
+			ans.add("\n" + CascaderStatic.str);
 	}
 	if (!ans.size) return "";
 	return "\n" + [...ans].join("\n");

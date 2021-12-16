@@ -35,10 +35,38 @@ export const randomData = (editors, count, seed) => {
 			var spec = editorToChance(editor);
 			var newRandom = chance[spec.name].apply(chance, spec.args || []);
 			_.set(newValue, editor.name, newRandom);
+
+			var extraSpecs = extraEditorToChance(editor);
+			for (var key in extraSpecs) {
+				spec = extraSpecs[key];
+				newRandom = chance[spec.name].apply(chance, spec.args || []);
+				_.set(newValue, key, newRandom);
+			}
 		}
 		ans.push(newValue);
 	}
 	return ans;
+};
+
+const extraEditorToChance = (editor) => {
+	if (!/^hierarchical dropdown|/.test(editor.fieldType)) return {};
+
+	const { fieldType, name } = editor;
+	switch (fieldType) {
+		case "hierarchical dropdown|static option, allow modify":
+			return {
+				[name + "-category"]: {
+					name: "pickone",
+					args: [["Hardware Business", "Software Business"]],
+				},
+				[name + "-brand"]: {
+					name: "pickone",
+					args: [["Apple"]],
+				},
+			};
+		default:
+			return {};
+	}
 };
 
 const editorToChance = (editor) => {

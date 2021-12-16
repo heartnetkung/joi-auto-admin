@@ -2,7 +2,11 @@ import { Joi } from "../../lib";
 import _ from "lodash";
 import { raw, softEval, func, regex } from "./util";
 import toSource from "tosource";
-import { DependentComp, AsyncDropdown } from "./custom_component";
+import {
+	DependentComp,
+	AsyncDropdown,
+	CascaderStatic,
+} from "./custom_component";
 
 const makeObject = (joiList) => {
 	var ans = Joi;
@@ -24,7 +28,6 @@ const makeString = (joiList) => {
 // return [{funcName, args}]
 export const makeJoiLine = (editor, settings, isObj) => {
 	var ans = [];
-
 	var type = "string";
 	var newFieldType = "";
 	var suffix = [];
@@ -47,6 +50,31 @@ export const makeJoiLine = (editor, settings, isObj) => {
 					: raw("AsyncDropdown", isObj),
 				...editor,
 			};
+			break;
+		case "hierarchical dropdown|static option, allow modify":
+			editor = {
+				...editor,
+				onFieldRender: isObj
+					? CascaderStatic
+					: raw("CascaderStatic", isObj),
+				options: [
+					{
+						l: "Hardware Business",
+						c: [{ l: "Apple" }, { l: "Intel" }],
+					},
+					{
+						l: "Software Business",
+						c: [{ l: "Apple" }, { l: "Google" }],
+					},
+				],
+				names: [editor.name + "-category", editor.name + "-brand"],
+				fieldNames: { label: "l", value: "l", children: "c" },
+				cellHide: true,
+				notFound: true,
+				notFoundText: "อื่นๆ",
+				defaultValue: {},
+			};
+			type = "object";
 			break;
 		case "format|url":
 			newFieldType = "InputURL";
@@ -234,4 +262,48 @@ return "https://www.gravatar.com/avatar/1"}`,
 
 	if (isObj) return makeObject(ans);
 	return makeString(ans);
+};
+
+export const makeExtraJoiLines = (editor, settings, isObj) => {
+	if (!/^hierarchical dropdown|/.test(editor.fieldType)) return {};
+
+	const { name, fieldType } = editor;
+	const extend = _.pick(editor, [
+		"require",
+		"step",
+		"columnWidth",
+		"disableSorting",
+		"disableFilter",
+	]);
+	const obj = {
+		...extend,
+		fieldHide: !isObj
+			? raw(`a=>a['${name}']?!a['${name}'].$notFound:true`, isObj)
+			: (a) => (a[name] ? !a[name].$notFound : true),
+		twoColumn: true,
+	};
+
+	switch (fieldType) {
+		case "hierarchical dropdown|static option, allow modify":
+			return {
+				[name + "-category"]: makeJoiLine(
+					{ ...obj, label: "category" },
+					settings,
+					isObj
+				),
+				[name + "-brand"]: makeJoiLine(
+					{ ...obj, label: "brand" },
+					settings,
+					isObj
+				),
+			};
+		case "hierarchical dropdown|static option, no modify":
+			return {};
+		case "hierarchical dropdown|async option, no modify":
+			return {};
+		case "hierarchical dropdown|thai province":
+			return {};
+		default:
+			return {};
+	}
 };

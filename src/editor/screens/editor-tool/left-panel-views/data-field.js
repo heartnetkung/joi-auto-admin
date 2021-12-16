@@ -143,6 +143,15 @@ export const fieldTree = [
     ],
   },
   {
+    l: "hierarchical dropdown",
+    c: [
+      { l: "static option, allow modify" },
+      { l: "static option, no modify" },
+      { l: "async option, no modify" },
+      { l: "thai province" },
+    ],
+  },
+  {
     l: "custom component",
     c: [{ l: "async searchable dropdown" }, { l: "dependent input example" }],
   },
