@@ -100,7 +100,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 						],
 					},
 				],
-				names: [null, editor.name + "-1"],
+				names: [null, editor.name + "-0"],
 				fieldNames: { label: "l", value: "v", children: "c" },
 				cellHide: true,
 				notFound: false,
@@ -332,7 +332,7 @@ export const makeExtraJoiLines = (editor, settings, isObj) => {
 			};
 		case "hierarchical dropdown|static option, no modify":
 			return {
-				[name + "-1"]: makeJoiLine(
+				[name + "-0"]: makeJoiLine(
 					{ ...obj, label: "product code" },
 					settings,
 					isObj

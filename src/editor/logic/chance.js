@@ -11,31 +11,27 @@ const getChance = (seed) => {
 };
 
 export const genChanceString = (editors, count) => {
-	var objSpec = {};
-	var args;
+	var ans = {};
 	for (var editor of editors) {
 		var spec = editorToChance(editor);
-		if (spec) {
-			args = spec.args
-				? toSource(spec.args)
+		var specObj = {};
+		if (Array.isArray(spec))
+			for (var j = 0, jj = spec.length; j < jj; j++)
+				specObj[editor.name + "-" + j] = spec[j];
+		else specObj[editor.name] = spec;
+
+		for (var key in specObj) {
+			var { name, args } = specObj[key];
+			args = args
+				? toSource(args)
 						.replace(/^\[\s*/, "")
 						.replace(/\s*\]$/, "")
 				: "";
-			_.set(objSpec, editor.name, raw(`chance.${spec.name}(${args})`));
-		}
-		var extraSpecs = extraEditorToChance(editor);
-		for (var key in extraSpecs) {
-			spec = extraSpecs[key];
-			args = spec.args
-				? toSource(spec.args)
-						.replace(/^\[\s*/, "")
-						.replace(/\s*\]$/, "")
-				: "";
-			_.set(objSpec, key, raw(`chance.${spec.name}(${args})`));
+			_.set(ans, key, raw(`chance.${name}(${args})`));
 		}
 	}
 	return `()=>{const ans=[]; for(let i=0;i<${count};i++)ans.push(${showRaw(
-		JSON.stringify(objSpec)
+		JSON.stringify(ans)
 	)}); return ans;}`;
 };
 
@@ -47,14 +43,15 @@ export const randomData = (editors, count, seed) => {
 		var newValue = {};
 		for (var editor of editors) {
 			var spec = editorToChance(editor);
-			if (spec) {
-				newRandom = chance[spec.name].apply(chance, spec.args || []);
-				_.set(newValue, editor.name, newRandom);
-			}
-			var extraSpecs = extraEditorToChance(editor);
-			for (var key in extraSpecs) {
-				spec = extraSpecs[key];
-				newRandom = chance[spec.name].apply(chance, spec.args || []);
+			var specObj = {};
+			if (Array.isArray(spec))
+				for (var j = 0, jj = spec.length; j < jj; j++)
+					specObj[editor.name + "-" + j] = spec[j];
+			else specObj[editor.name] = spec;
+
+			for (var key in specObj) {
+				var { name, args } = specObj[key];
+				newRandom = chance[name].apply(chance, args || []);
 				_.set(newValue, key, newRandom);
 			}
 		}
@@ -63,39 +60,26 @@ export const randomData = (editors, count, seed) => {
 	return ans;
 };
 
-const extraEditorToChance = (editor) => {
-	if (!/^hierarchical dropdown|/.test(editor.fieldType)) return {};
-
-	const { fieldType, name } = editor;
-	switch (fieldType) {
-		case "hierarchical dropdown|static option, allow modify":
-			return {
-				[name + "-0"]: {
-					name: "pickone",
-					args: [["Hardware Business", "Software Business"]],
-				},
-				[name + "-1"]: {
-					name: "pickone",
-					args: [["Apple"]],
-				},
-			};
-		case "hierarchical dropdown|static option, no modify":
-			return {
-				[name + "-1"]: {
-					name: "pickone",
-					args: [["G001", "G002", "G003", "G004"]],
-				},
-			};
-		default:
-			return {};
-	}
-};
-
 const editorToChance = (editor) => {
 	switch (editor.fieldType) {
 		case "hierarchical dropdown|static option, allow modify":
+			return [
+				{
+					name: "pickone",
+					args: [["Hardware Business", "Software Business"]],
+				},
+				{
+					name: "pickone",
+					args: [["Apple"]],
+				},
+			];
 		case "hierarchical dropdown|static option, no modify":
-			return null;
+			return [
+				{
+					name: "pickone",
+					args: [["G001", "G002", "G003", "G004"]],
+				},
+			];
 		case "format|url":
 		case "upload|single file":
 			return { name: "avatar", args: [{ protocol: "https" }] };
