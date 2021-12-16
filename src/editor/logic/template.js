@@ -99,7 +99,8 @@ export const renderImport = (editors) => {
 			reactImport.add("useState");
 			formikAntdImport.add("Select");
 		} else if (
-			fieldType === "hierarchical dropdown|static option, allow modify"
+			fieldType === "hierarchical dropdown|static option, allow modify" ||
+			fieldType === '"hierarchical dropdown|static option, no modify"'
 		) {
 			reactImport.add("useEffect");
 			reactImport.add("useState");
@@ -142,7 +143,8 @@ return storage;
 		else if (fieldType === "custom component|async searchable dropdown")
 			ans.add("\n" + AsyncDropdown.str);
 		else if (
-			fieldType === "hierarchical dropdown|static option, allow modify"
+			fieldType === "hierarchical dropdown|static option, allow modify" ||
+			fieldType === "hierarchical dropdown|static option, no modify"
 		)
 			ans.add("\n" + CascaderStatic.str);
 	}

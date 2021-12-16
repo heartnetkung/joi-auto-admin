@@ -76,6 +76,39 @@ export const makeJoiLine = (editor, settings, isObj) => {
 			};
 			type = "object";
 			break;
+		case "hierarchical dropdown|static option, no modify":
+			editor = {
+				...editor,
+				onFieldRender: isObj
+					? CascaderStatic
+					: raw("CascaderStatic", isObj),
+				options: [
+					{
+						l: "Vegetable",
+						v: "Vegetable",
+						c: [
+							{ l: "Tomato (G001)", v: "G001" },
+							{ l: "Carrot (G002)", v: "G002" },
+						],
+					},
+					{
+						l: "Fruit",
+						v: "Fruit",
+						c: [
+							{ l: "Apple (G003)", v: "G003" },
+							{ l: "Banana (G004)", v: "G004" },
+						],
+					},
+				],
+				names: [null, editor.name + "-1"],
+				fieldNames: { label: "l", value: "v", children: "c" },
+				cellHide: true,
+				notFound: false,
+				notFoundText: "อื่นๆ",
+				defaultValue: {},
+			};
+			type = "object";
+			break;
 		case "format|url":
 			newFieldType = "InputURL";
 			break;
@@ -298,7 +331,13 @@ export const makeExtraJoiLines = (editor, settings, isObj) => {
 				),
 			};
 		case "hierarchical dropdown|static option, no modify":
-			return {};
+			return {
+				[name + "-1"]: makeJoiLine(
+					{ ...obj, label: "product code" },
+					settings,
+					isObj
+				),
+			};
 		case "hierarchical dropdown|async option, no modify":
 			return {};
 		case "hierarchical dropdown|thai province":

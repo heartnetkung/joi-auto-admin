@@ -133,21 +133,39 @@ export const CascaderStatic = (props) => {
 		setOptions2(traverse(options));
 	}, [notFound, options, l, c, v, notFoundText]);
 	useEffect(() => {
-		const ans = [];
-		names.forEach((name, i) => {
-			const theValue = _.get(values, name);
-			if (!name || !theValue) return;
-			ans[i] = theValue === notFoundText ? "" : theValue;
-		});
-		setValue(ans);
-
 		let notFound = false;
 		let node = options;
-		names.forEach((name, i) => {
-			var newNode = node.find((a) => a[v] === _.get(values, name));
-			if (!newNode) notFound = true;
-			else if (newNode[c]) node = newNode[c];
-		});
+		let ans = [];
+		if (names.filter((a) => !!a).length === names.length) {
+			names.forEach((name, i) => {
+				var newNode = node.find((a) => a[v] === _.get(values, name));
+				if (!newNode) notFound = true;
+				else if (newNode[c]) node = newNode[c];
+			});
+			names.forEach((name, i) => {
+				const theValue = _.get(values, name);
+				if (!name || !theValue) return;
+				ans[i] = theValue === notFoundText ? "" : theValue;
+			});
+		} else {
+			const lastName = names.filter((a) => !!a).pop();
+			const lastValue = _.get(values, lastName);
+			const traverse = (nodeArray, path) => {
+				for (var node of nodeArray) {
+					if (node[v] === lastValue) {
+						ans = [...path, node[v]];
+						return false;
+					}
+					if (node[c]) {
+						var ret = traverse(node[c], [...path, node[v]]);
+						if (!ret) return false;
+					}
+				}
+				return true;
+			};
+			notFound = traverse(options, []);
+		}
+		setValue(ans);
 		if (notFound && ans.length)
 			setFieldValue(name + ".$notFound", true, false);
 		/* eslint-disable react-hooks/exhaustive-deps */
@@ -172,8 +190,7 @@ export const CascaderStatic = (props) => {
 		/>
 	);
 };
-CascaderStatic.str = `
-const CascaderStatic = (props) => {
+CascaderStatic.str = `const CascaderStatic = (props) => {
 const { options, names, fieldNames, name, notFound, notFoundText } = props;
 const { setFieldValue, values } = useFormikContext();
 const [options2, setOptions2] = useState([]);
@@ -214,21 +231,39 @@ return ans;
 setOptions2(traverse(options));
 }, [notFound, options, l, c, v, notFoundText]);
 useEffect(() => {
-const ans = [];
-names.forEach((name, i) => {
-const theValue = _.get(values, name);
-if (!name || !theValue) return;
-ans[i] = theValue === notFoundText ? "" : theValue;
-});
-setValue(ans);
-
 let notFound = false;
 let node = options;
+let ans = [];
+if (names.filter((a) => !!a).length === names.length) {
 names.forEach((name, i) => {
 var newNode = node.find((a) => a[v] === _.get(values, name));
 if (!newNode) notFound = true;
 else if (newNode[c]) node = newNode[c];
 });
+names.forEach((name, i) => {
+const theValue = _.get(values, name);
+if (!name || !theValue) return;
+ans[i] = theValue === notFoundText ? "" : theValue;
+});
+} else {
+const lastName = names.filter((a) => !!a).pop();
+const lastValue = _.get(values, lastName);
+const traverse = (nodeArray, path) => {
+for (var node of nodeArray) {
+if (node[v] === lastValue) {
+ans = [...path, node[v]];
+return false;
+}
+if (node[c]) {
+var ret = traverse(node[c], [...path, node[v]]);
+if (!ret) return false;
+}
+}
+return true;
+};
+notFound = traverse(options, []);
+}
+setValue(ans);
 if (notFound && ans.length)
 setFieldValue(name + ".$notFound", true, false);
 /* eslint-disable react-hooks/exhaustive-deps */
@@ -252,4 +287,4 @@ value={value}
 name={name + ".$value"}
 />
 );
-}`;
+};`;

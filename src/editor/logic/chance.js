@@ -12,14 +12,27 @@ const getChance = (seed) => {
 
 export const genChanceString = (editors, count) => {
 	var objSpec = {};
+	var args;
 	for (var editor of editors) {
 		var spec = editorToChance(editor);
-		var args = spec.args
-			? toSource(spec.args)
-					.replace(/^\[\s*/, "")
-					.replace(/\s*\]$/, "")
-			: "";
-		_.set(objSpec, editor.name, raw(`chance.${spec.name}(${args})`));
+		if (spec) {
+			args = spec.args
+				? toSource(spec.args)
+						.replace(/^\[\s*/, "")
+						.replace(/\s*\]$/, "")
+				: "";
+			_.set(objSpec, editor.name, raw(`chance.${spec.name}(${args})`));
+		}
+		var extraSpecs = extraEditorToChance(editor);
+		for (var key in extraSpecs) {
+			spec = extraSpecs[key];
+			args = spec.args
+				? toSource(spec.args)
+						.replace(/^\[\s*/, "")
+						.replace(/\s*\]$/, "")
+				: "";
+			_.set(objSpec, key, raw(`chance.${spec.name}(${args})`));
+		}
 	}
 	return `()=>{const ans=[]; for(let i=0;i<${count};i++)ans.push(${showRaw(
 		JSON.stringify(objSpec)
@@ -28,14 +41,16 @@ export const genChanceString = (editors, count) => {
 
 export const randomData = (editors, count, seed) => {
 	var ans = [];
+	var newRandom;
 	var chance = getChance(seed);
 	for (var i = 0; i < count; i++) {
 		var newValue = {};
 		for (var editor of editors) {
 			var spec = editorToChance(editor);
-			var newRandom = chance[spec.name].apply(chance, spec.args || []);
-			_.set(newValue, editor.name, newRandom);
-
+			if (spec) {
+				newRandom = chance[spec.name].apply(chance, spec.args || []);
+				_.set(newValue, editor.name, newRandom);
+			}
 			var extraSpecs = extraEditorToChance(editor);
 			for (var key in extraSpecs) {
 				spec = extraSpecs[key];
@@ -64,6 +79,13 @@ const extraEditorToChance = (editor) => {
 					args: [["Apple"]],
 				},
 			};
+		case "hierarchical dropdown|static option, no modify":
+			return {
+				[name + "-1"]: {
+					name: "pickone",
+					args: [["G001", "G002", "G003", "G004"]],
+				},
+			};
 		default:
 			return {};
 	}
@@ -71,6 +93,9 @@ const extraEditorToChance = (editor) => {
 
 const editorToChance = (editor) => {
 	switch (editor.fieldType) {
+		case "hierarchical dropdown|static option, allow modify":
+		case "hierarchical dropdown|static option, no modify":
+			return null;
 		case "format|url":
 		case "upload|single file":
 			return { name: "avatar", args: [{ protocol: "https" }] };
