@@ -78,9 +78,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 				name: "custom",
 				args: [
 					func(
-						`(a)=>{
-if (!/^changeme$/.test(a)) throw new Error("changeme error");
-return a;}`,
+						`(a)=>{if (!/^changeme$/.test(a)) throw new Error("changeme error");return a;}`,
 						isObj
 					),
 				],
