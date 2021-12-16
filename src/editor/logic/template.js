@@ -25,7 +25,8 @@ export const renderJoi = (editors, settings, isComp) => {
 	for (var editor of editors) {
 		_.set(ans, editor.name, makeJoiLine(editor, settings));
 		var extraJoiLines = makeExtraJoiLines(editor, settings);
-		for (var key in extraJoiLines) _.set(ans, key, extraJoiLines[key]);
+		for (var i = 0, ii = extraJoiLines.length; i < ii; i++)
+			_.set(ans, editor.name + "-" + i, extraJoiLines[i]);
 	}
 	return showRaw(traverse(ans));
 };

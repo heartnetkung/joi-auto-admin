@@ -92,7 +92,8 @@ export const makeJoiObj = (editors, settings) => {
 	for (var editor of editors) {
 		_.set(ans, editor.name, makeJoiLine(editor, settings, true));
 		var extraJoiLines = makeExtraJoiLines(editor, settings, true);
-		for (var key in extraJoiLines) _.set(ans, key, extraJoiLines[key]);
+		for (var i = 0, ii = extraJoiLines.length; i < ii; i++)
+			_.set(ans, editor.name + "-" + i, extraJoiLines[i]);
 	}
 	return traverse(ans);
 };

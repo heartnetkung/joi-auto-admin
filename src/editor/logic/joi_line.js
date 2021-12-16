@@ -298,7 +298,7 @@ return "https://www.gravatar.com/avatar/1"}`,
 };
 
 export const makeExtraJoiLines = (editor, settings, isObj) => {
-	if (!/^hierarchical dropdown|/.test(editor.fieldType)) return {};
+	if (!/^hierarchical dropdown|/.test(editor.fieldType)) return [];
 
 	const { name, fieldType } = editor;
 	const extend = _.pick(editor, [
@@ -318,31 +318,19 @@ export const makeExtraJoiLines = (editor, settings, isObj) => {
 
 	switch (fieldType) {
 		case "hierarchical dropdown|static option, allow modify":
-			return {
-				[name + "-0"]: makeJoiLine(
-					{ ...obj, label: "category" },
-					settings,
-					isObj
-				),
-				[name + "-1"]: makeJoiLine(
-					{ ...obj, label: "brand" },
-					settings,
-					isObj
-				),
-			};
+			return [
+				makeJoiLine({ ...obj, label: "category" }, settings, isObj),
+				makeJoiLine({ ...obj, label: "brand" }, settings, isObj),
+			];
 		case "hierarchical dropdown|static option, no modify":
-			return {
-				[name + "-0"]: makeJoiLine(
-					{ ...obj, label: "product code" },
-					settings,
-					isObj
-				),
-			};
+			return [
+				makeJoiLine({ ...obj, label: "product code" }, settings, isObj),
+			];
 		case "hierarchical dropdown|async option, no modify":
-			return {};
+			return [];
 		case "hierarchical dropdown|thai province":
-			return {};
+			return [];
 		default:
-			return {};
+			return [];
 	}
 };
