@@ -101,7 +101,7 @@ export const renderImport = (editors) => {
 			formikAntdImport.add("Select");
 		} else if (
 			fieldType === "hierarchical dropdown|static option, allow modify" ||
-			fieldType === '"hierarchical dropdown|static option, no modify"'
+			fieldType === "hierarchical dropdown|static option, no modify"
 		) {
 			reactImport.add("useEffect");
 			reactImport.add("useState");
