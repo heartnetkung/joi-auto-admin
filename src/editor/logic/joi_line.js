@@ -67,7 +67,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 						c: [{ l: "Apple" }, { l: "Google" }],
 					},
 				],
-				names: [editor.name + "-category", editor.name + "-brand"],
+				names: [editor.name + "-0", editor.name + "-1"],
 				fieldNames: { label: "l", value: "l", children: "c" },
 				cellHide: true,
 				notFound: true,
@@ -286,12 +286,12 @@ export const makeExtraJoiLines = (editor, settings, isObj) => {
 	switch (fieldType) {
 		case "hierarchical dropdown|static option, allow modify":
 			return {
-				[name + "-category"]: makeJoiLine(
+				[name + "-0"]: makeJoiLine(
 					{ ...obj, label: "category" },
 					settings,
 					isObj
 				),
-				[name + "-brand"]: makeJoiLine(
+				[name + "-1"]: makeJoiLine(
 					{ ...obj, label: "brand" },
 					settings,
 					isObj

@@ -55,11 +55,11 @@ const extraEditorToChance = (editor) => {
 	switch (fieldType) {
 		case "hierarchical dropdown|static option, allow modify":
 			return {
-				[name + "-category"]: {
+				[name + "-0"]: {
 					name: "pickone",
 					args: [["Hardware Business", "Software Business"]],
 				},
-				[name + "-brand"]: {
+				[name + "-1"]: {
 					name: "pickone",
 					args: [["Apple"]],
 				},
