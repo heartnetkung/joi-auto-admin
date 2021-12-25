@@ -8,7 +8,6 @@ import {
 	Select,
 	Switch,
 } from "formik-antd";
-import Cascader from "./components/cascader";
 import Barcode from "./components/barcode";
 import FileUpload from "./components/file_upload";
 import moment from "moment";
@@ -48,7 +47,6 @@ const Field = (props) => {
 							{...props2}
 						/>
 					)}
-					{fieldType === "Cascader" && <Cascader {...props2} />}
 					{fieldType === "Checkbox" && <Checkbox {...props2} />}
 					{fieldType === "DatePicker" && (
 						<DatePicker
@@ -119,7 +117,6 @@ const Field = (props) => {
 Field.propTypes = {
 	fieldType: PropTypes.oneOf([
 		"Barcode",
-		"Cascader",
 		"Checkbox",
 		"DatePicker",
 		"WeekPicker",

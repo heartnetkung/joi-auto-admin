@@ -1,7 +1,5 @@
-import _ from "lodash";
 import { useState } from "react";
 import { setNestedObjectValues } from "formik";
-import React from "react";
 
 export const calculateSpan = (formSpec, isInline) => {
 	if (isInline)
@@ -42,97 +40,6 @@ export const calculateSpan = (formSpec, isInline) => {
 		}
 	}
 	return ans;
-};
-
-const filter = function (inputValue, path) {
-	return path.some(
-		(option) =>
-			option[this._labelField]
-				.toLowerCase()
-				.indexOf(inputValue.toLowerCase()) > -1
-	);
-};
-
-const lookupOptionsEnum = (cascader, isSmall, allTargets) => {
-	if (cascader?.options?.[0]?.c?.[0]?.c?.[0]?.l === "คลองต้นไทร 10600") {
-		var ans = {
-			...cascader,
-			fieldNames: { label: "l", value: "l", children: "c" },
-			onSubmitHook: (a) => {
-				var thirdNames = allTargets.value[cascader.compLabels[1]].name;
-				var forthNames = allTargets.value[cascader.compLabels[2]].name;
-				var thirdValue = _.get(a, thirdNames);
-				if (!thirdValue) return a;
-
-				var ans = { ...a };
-				_.set(ans, thirdNames, thirdValue.split(" ")[0]);
-				_.set(ans, forthNames, thirdValue.split(" ")[1]);
-				return ans;
-			},
-		};
-		if (isSmall) {
-			ans.className = "hnk-small";
-			ans.dropdownRender = (Menu) => (
-				<div className="hnk-small">{Menu}</div>
-			);
-		}
-		return ans;
-	}
-	return cascader;
-};
-
-export const handleCascader = (formSpec, isSmall) => {
-	var ans = [];
-	var allCascader = {};
-	var allSpecs = _.keyBy(formSpec, "label");
-	var allTargetsHolder = {};
-
-	for (var spec of formSpec) {
-		ans.push(spec);
-
-		var { cascader } = spec.meta;
-		if (!cascader) continue;
-
-		if (!allCascader[cascader.label]) {
-			cascader = lookupOptionsEnum(cascader, isSmall, allTargetsHolder);
-			var newCascader = (allCascader[cascader.label] = {
-				fieldType: "Cascader",
-				_labelField: cascader.fieldNames?.label || "label",
-				meta: { ...cascader, showSearch: {} },
-				name: cascader.label,
-				label: cascader.label,
-				targets: [spec, ...cascader.compLabels.map((a) => allSpecs[a])],
-				required: !!cascader.required,
-				validate: _.noop,
-				fieldHide: cascader.fieldHide,
-				step: cascader.step,
-			});
-			newCascader.meta.showSearch.filter = filter.bind(newCascader);
-			ans.push(newCascader);
-		}
-	}
-
-	var allTargets = (allTargetsHolder.value = _.chain(allCascader)
-		.map("targets")
-		.flatten()
-		.keyBy("label")
-		.value());
-	ans = ans.filter((a) => !allTargets[a.label]);
-
-	var cascaderHook = (data) => {
-		var result = { ...data };
-		for (var label in data) {
-			if (!allCascader[label]) continue;
-
-			var { targets } = allCascader[label];
-			for (var i = 0, ii = targets.length; i < ii; i++)
-				_.set(result, targets[i].name, data[label][i]);
-			delete result[label];
-		}
-		return result;
-	};
-
-	return { formSpec: ans, cascaderHook };
 };
 
 export const useSteps = (steps) => {

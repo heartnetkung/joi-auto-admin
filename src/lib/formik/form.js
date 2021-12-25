@@ -2,42 +2,28 @@ import { Form, SubmitButton } from "formik-antd";
 import { Formik } from "formik";
 import PropTypes from "prop-types";
 import { Row, Col, Divider, Steps } from "antd";
-import { handleCascader, useSteps } from "./logic";
-import React, { useMemo } from "react";
+import { useSteps } from "./logic";
+import React from "react";
 import SubmitLine from "./submit_line";
-import { useMaxWidth } from "../shared/hook";
 import _ from "lodash";
 import InnerForm from "./inner-form";
+import { usePersistFn } from "../shared/hook";
 
 const { Step } = Steps;
 
 const CombinedForm = (props) => {
 	const { onSubmit, inline, initialValues, steps } = props;
 	const { resetButtonLabel, submitButtonLabel, schema } = props;
-	const isSmall = useMaxWidth(575);
-
-	const { formSpec, onSubmit2 } = useMemo(() => {
-		const { formSpec, cascaderHook } = handleCascader(
-			schema.formSpec,
-			isSmall
-		);
-		const onSubmitHooks = [cascaderHook].concat(
-			formSpec.map((a) => a?.meta?.onSubmitHook).filter((a) => !!a)
-		);
-		const onSubmit2 = async (postData, actions) => {
-			postData = _.cloneDeep(postData);
-			for (var hook of onSubmitHooks) postData = hook(postData);
-			var names = schema.formSpec.map((a) => a.name);
-			var ans = _.pick(
-				postData,
-				names.filter((a) => !/^\$|\.\$/.test(a))
-			);
-			await onSubmit(ans, actions, postData);
-		};
-		return { formSpec, onSubmit2 };
-	}, [schema, onSubmit, isSmall]);
-
 	const { nextStep, prevStep, currentStep } = useSteps(steps);
+
+	const onSubmit2 = usePersistFn(async (postData, actions) => {
+		var names = schema.formSpec.map((a) => a.name);
+		var ans = _.pick(
+			postData,
+			names.filter((a) => !/^\$|\.\$/.test(a))
+		);
+		await onSubmit(ans, actions, postData);
+	});
 
 	return (
 		<Formik
@@ -64,7 +50,7 @@ const CombinedForm = (props) => {
 
 					<Row gutter={8} justify={inline ? "center" : undefined}>
 						<InnerForm
-							formSpec={formSpec}
+							formSpec={schema.formSpec}
 							currentStep={currentStep}
 							inline={inline}
 						/>
