@@ -28,11 +28,7 @@ const ColImage = (props) => {
 };
 
 ColImage.propTypes = {
-  src: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object,
-    PropTypes.array,
-  ]),
+  src: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   width: PropTypes.number,
 };
 
