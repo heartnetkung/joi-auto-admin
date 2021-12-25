@@ -1,2 +1,0 @@
-(this["webpackJsonpjoi-auto-admin"]=this["webpackJsonpjoi-auto-admin"]||[]).push([[54],{545:function(a,t,e){"use strict";function i(a){a.languages.hpkp={directive:{pattern:/\b(?:(?:includeSubDomains|preload|strict)(?: |;)|pin-sha256="[a-zA-Z\d+=/]+"|(?:max-age|report-uri)=|report-to )/,alias:"keyword"},safe:{pattern:/\d{7,}/,alias:"selector"},unsafe:{pattern:/\d{1,6}/,alias:"function"}}}a.exports=i,i.displayName="hpkp",i.aliases=[]}}]);
-//# sourceMappingURL=react-syntax-highlighter_languages_refractor_hpkp.58ac8a04.chunk.js.map
