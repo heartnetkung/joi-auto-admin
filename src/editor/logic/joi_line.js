@@ -216,7 +216,12 @@ await wait(500);
 return "https://www.gravatar.com/avatar/1"}`,
 					isObj
 				),
-				uploadFileInit: func(`() => getFirebase()`, isObj),
+				uploadFileInit: func(
+					`() => {
+//getFirebase();
+}`,
+					isObj
+				),
 				uploadFileType: "image",
 				accept: ".png,.jpeg,.jpg,.gif",
 			};
