@@ -2,6 +2,7 @@ import _ from "lodash";
 import { Input, Select } from "formik-antd";
 import React, { useEffect, useState } from "react";
 import { useFormikContext } from "formik";
+import CascaderStatic from "../../lib/formik/components/cascader_static";
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -89,4 +90,51 @@ option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
 ></Select>
 );
 }
+`;
+
+export const THAddress = (props) => {
+	useEffect(() => {
+		const listener = () => {
+			const columns = document.querySelectorAll(".xx .ant-cascader-menu");
+			const length = columns.length;
+			for (let i = 0; i < length; i++)
+				columns[i].classList.add("th-address-small");
+			if (length > 1)
+				columns[length - 2].classList.remove("th-address-small");
+			if (length > 0)
+				columns[length - 1].classList.remove("th-address-small");
+		};
+		document.addEventListener("click", listener);
+		return () => document.removeEventListener("click", listener);
+	}, []);
+	return (
+		<CascaderStatic
+			{...props}
+			dropdownRender={(a) => <div className="xx">{a}</div>}
+		></CascaderStatic>
+	);
+};
+
+THAddress.str = `const THAddress = (props) => {
+useEffect(() => {
+const listener = () => {
+const columns = document.querySelectorAll(".xx .ant-cascader-menu");
+const length = columns.length;
+for (let i = 0; i < length; i++)
+columns[i].classList.add("th-address-small");
+if (length > 1)
+columns[length - 2].classList.remove("th-address-small");
+if (length > 0)
+columns[length - 1].classList.remove("th-address-small");
+};
+document.addEventListener("click", listener);
+return () => document.removeEventListener("click", listener);
+}, []);
+return (
+<CascaderStatic
+{...props}
+dropdownRender={(a) => <div className="xx">{a}</div>}
+></CascaderStatic>
+);
+};
 `;

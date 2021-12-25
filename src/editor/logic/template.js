@@ -4,7 +4,7 @@ import parserBabel from "prettier/parser-babel";
 import { makeJoiLine, makeExtraJoiLines } from "./joi_line";
 import { raw, showRaw, func } from "./util";
 import { randomData, genChanceString } from "./chance";
-import { DependentComp, AsyncDropdown } from "./custom_component";
+import { DependentComp, AsyncDropdown, THAddress } from "./custom_component";
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -95,14 +95,14 @@ export const renderImport = (editors) => {
 			reactImport.add("useEffect");
 			reactImport.add("useState");
 			formikAntdImport.add("Select");
-		} else if (
-			fieldType === "hierarchical dropdown|static option, allow modify" ||
-			fieldType === "hierarchical dropdown|static option, no modify"
-		) {
+		} else if (fieldType === "hierarchical dropdown|thai province") {
+			ans.add(
+				'import CascaderStatic from "joi-auto-admin/dist/formik/components/cascader_static";'
+			);
+			ans.add(
+				'import thAddressData from "joi-auto-admin/dist/assets/th_address"'
+			);
 			reactImport.add("useEffect");
-			reactImport.add("useState");
-			ans.add("import { Cascader } from 'antd';");
-			ans.add("import {useFormikContext} from 'formik';");
 		}
 	}
 
@@ -139,6 +139,8 @@ return storage;
 			ans.add("\n" + DependentComp.str);
 		else if (fieldType === "custom component|async searchable dropdown")
 			ans.add("\n" + AsyncDropdown.str);
+		else if (fieldType === "hierarchical dropdown|thai province")
+			ans.add("\n" + THAddress.str);
 	}
 	if (!ans.size) return "";
 	return "\n" + [...ans].join("\n");

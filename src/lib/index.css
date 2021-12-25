@@ -39,3 +39,7 @@ h1,h2,h3,h4,h5,h6{
 .right-column-label .ant-form-item-control{
   z-index: 11;
 }
+
+.th-address-small{
+  width: 40px !important;
+}

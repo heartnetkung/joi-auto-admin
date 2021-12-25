@@ -80,6 +80,13 @@ const editorToChance = (editor) => {
 					args: [["G001", "G002", "G003", "G004"]],
 				},
 			];
+		case "hierarchical dropdown|thai province":
+			return [
+				{ name: "pickone", args: [["กรุงเทพมหานคร"]] },
+				{ name: "pickone", args: [["จตุจักร"]] },
+				{ name: "pickone", args: [["จตุจักร"]] },
+				{ name: "pickone", args: [["10900"]] },
+			];
 		case "format|url":
 		case "upload|single file":
 			return { name: "avatar", args: [{ protocol: "https" }] };

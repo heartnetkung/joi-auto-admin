@@ -2,7 +2,8 @@ import { Joi } from "../../lib";
 import _ from "lodash";
 import { raw, softEval, func, regex } from "./util";
 import toSource from "tosource";
-import { DependentComp, AsyncDropdown } from "./custom_component";
+import { DependentComp, AsyncDropdown, THAddress } from "./custom_component";
+import thAddress from "../../lib/assets/th_address";
 
 const makeObject = (joiList) => {
 	var ans = Joi;
@@ -91,6 +92,25 @@ export const makeJoiLine = (editor, settings, isObj) => {
 				names: editor.name + "-0",
 				fieldNames: { label: "l", value: "v", children: "c" },
 				cellHide: true,
+			};
+			type = "object";
+			break;
+		case "hierarchical dropdown|thai province":
+			editor = {
+				...editor,
+				cascaderOptions: isObj
+					? thAddress
+					: raw("thAddressData", isObj),
+				onFieldRender: isObj ? THAddress : raw("THAddress", isObj),
+				names: [
+					editor.name + "-0",
+					editor.name + "-1",
+					editor.name + "-2",
+					editor.name + "-3",
+				],
+				fieldNames: { label: "l", value: "l", children: "c" },
+				cellHide: true,
+				notFound: true,
 			};
 			type = "object";
 			break;
@@ -319,7 +339,36 @@ export const makeExtraJoiLines = (editor, settings, isObj) => {
 		case "hierarchical dropdown|async option, no modify":
 			return [];
 		case "hierarchical dropdown|thai province":
-			return [];
+			return [
+				makeJoiLine(
+					{
+						...obj,
+						label: "จังหวัด",
+						placeholder: "เช่น กรุงเทพมหานคร",
+					},
+					settings,
+					isObj
+				),
+				makeJoiLine(
+					{ ...obj, label: "เขต/อำเภอ", placeholder: "เช่น จตุจักร" },
+					settings,
+					isObj
+				),
+				makeJoiLine(
+					{ ...obj, label: "แขวง/ตำบล", placeholder: "เช่น จตุจักร" },
+					settings,
+					isObj
+				),
+				makeJoiLine(
+					{
+						...obj,
+						label: "รหัสไปรษณีย์",
+						fieldType: "format|thai zipcode",
+					},
+					settings,
+					isObj
+				),
+			];
 		default:
 			return [];
 	}

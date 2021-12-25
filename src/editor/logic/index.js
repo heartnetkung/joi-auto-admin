@@ -28,6 +28,7 @@ const editorSchemaInner = Joi.object({
 			"format|custom validation example",
 			"custom component|dependent input example",
 			"custom component|async searchable dropdown",
+			"hierarchical dropdown|thai province",
 			"hierarchical dropdown|static option, allow modify",
 			"hierarchical dropdown|static option, no modify",
 			"checkbox",
