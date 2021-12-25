@@ -51,10 +51,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "babel src/lib --out-dir dist --copy-files",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "react-scripts build",
+    "prepublishOnly":"babel src/lib --out-dir dist --copy-files",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
