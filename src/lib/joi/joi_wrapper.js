@@ -214,6 +214,7 @@ class JoiField {
 		if (meta.loadBarcodeName) return "Barcode";
 		if (meta.getUploadUrl || meta.firebaseConfig || meta.uploadFile)
 			return "FileUpload";
+		if (Array.isArray(meta.cascaderOptions)) return "CascaderStatic";
 		if (field.type === "boolean") return "Checkbox";
 		if (field.type === "date") return "DatePicker";
 		if (field.type === "number") return "InputNumber";

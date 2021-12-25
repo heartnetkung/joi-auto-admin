@@ -4,11 +4,7 @@ import parserBabel from "prettier/parser-babel";
 import { makeJoiLine, makeExtraJoiLines } from "./joi_line";
 import { raw, showRaw, func } from "./util";
 import { randomData, genChanceString } from "./chance";
-import {
-	DependentComp,
-	AsyncDropdown,
-	CascaderStatic,
-} from "./custom_component";
+import { DependentComp, AsyncDropdown } from "./custom_component";
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -143,11 +139,6 @@ return storage;
 			ans.add("\n" + DependentComp.str);
 		else if (fieldType === "custom component|async searchable dropdown")
 			ans.add("\n" + AsyncDropdown.str);
-		else if (
-			fieldType === "hierarchical dropdown|static option, allow modify" ||
-			fieldType === "hierarchical dropdown|static option, no modify"
-		)
-			ans.add("\n" + CascaderStatic.str);
 	}
 	if (!ans.size) return "";
 	return "\n" + [...ans].join("\n");

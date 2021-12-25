@@ -9,6 +9,7 @@ import {
 	Switch,
 } from "formik-antd";
 import Barcode from "./components/barcode";
+import CascaderStatic from "./components/cascader_static";
 import FileUpload from "./components/file_upload";
 import moment from "moment";
 import React from "react";
@@ -46,6 +47,9 @@ const Field = (props) => {
 							placeholder="พิมพ์แล้วกด Enter เช่น a001"
 							{...props2}
 						/>
+					)}
+					{fieldType === "CascaderStatic" && (
+						<CascaderStatic {...props2} />
 					)}
 					{fieldType === "Checkbox" && <Checkbox {...props2} />}
 					{fieldType === "DatePicker" && (
@@ -132,6 +136,7 @@ Field.propTypes = {
 		"Switch",
 		"FileUpload",
 		"Custom",
+		"CascaderStatic",
 	]).isRequired,
 	name: PropTypes.string.isRequired,
 	validate: PropTypes.func.isRequired,

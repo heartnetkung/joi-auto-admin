@@ -2,11 +2,7 @@ import { Joi } from "../../lib";
 import _ from "lodash";
 import { raw, softEval, func, regex } from "./util";
 import toSource from "tosource";
-import {
-	DependentComp,
-	AsyncDropdown,
-	CascaderStatic,
-} from "./custom_component";
+import { DependentComp, AsyncDropdown } from "./custom_component";
 
 const makeObject = (joiList) => {
 	var ans = Joi;
@@ -54,10 +50,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 		case "hierarchical dropdown|static option, allow modify":
 			editor = {
 				...editor,
-				onFieldRender: isObj
-					? CascaderStatic
-					: raw("CascaderStatic", isObj),
-				options: [
+				cascaderOptions: [
 					{
 						l: "Hardware Business",
 						c: [{ l: "Apple" }, { l: "Intel" }],
@@ -71,18 +64,13 @@ export const makeJoiLine = (editor, settings, isObj) => {
 				fieldNames: { label: "l", value: "l", children: "c" },
 				cellHide: true,
 				notFound: true,
-				notFoundText: "อื่นๆ",
-				defaultValue: {},
 			};
 			type = "object";
 			break;
 		case "hierarchical dropdown|static option, no modify":
 			editor = {
 				...editor,
-				onFieldRender: isObj
-					? CascaderStatic
-					: raw("CascaderStatic", isObj),
-				options: [
+				cascaderOptions: [
 					{
 						l: "Vegetable",
 						v: "Vegetable",
@@ -100,12 +88,9 @@ export const makeJoiLine = (editor, settings, isObj) => {
 						],
 					},
 				],
-				names: [null, editor.name + "-0"],
+				names: editor.name + "-0",
 				fieldNames: { label: "l", value: "v", children: "c" },
 				cellHide: true,
-				notFound: false,
-				notFoundText: "อื่นๆ",
-				defaultValue: {},
 			};
 			type = "object";
 			break;
