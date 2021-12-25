@@ -58,6 +58,10 @@ The idea is to provide a `react component` called `AutoAdmin` which take minimal
 
 - `.label(str)`
   - Required. Label is used as table header, excel header, and form label.
+- `.valid([ any ])`
+  - For making `<Select>` input.
+- `.required()`
+- `.default(value | ()=>value )`
 - `.meta(obj)`
 
   - The meta function allows you to customize each data field.
@@ -109,11 +113,6 @@ The idea is to provide a `react component` called `AutoAdmin` which take minimal
       - If multiple, user can upload multiple file and joi type should be array. Otherwise user can only upload a single file and joi type can be array or string.
     - `.meta({ uploadFileType: 'image' | 'file' })`
       - If image, the table and the form would show preview of the given file.
-
-- `.valid([ any ])`
-  - For making `<Select>` input.
-- `.required()`
-- `.default(value | ()=>value )`
 
 ## AutoAdmin Props API
 
