@@ -6,7 +6,7 @@ import { useSteps } from "./logic";
 import React from "react";
 import SubmitLine from "./submit_line";
 import _ from "lodash";
-import InnerForm from "./inner-form";
+import InnerForm from "./inner_form";
 import { usePersistFn } from "../shared/hook";
 
 const { Step } = Steps;
