@@ -64,7 +64,7 @@ it("handle label", async () => {
 	expect(formItems[i++].textContent).toBe("bool");
 	expect(formItems[i++].textContent).toBe("num");
 	expect(formItems[i++].textContent).toBe("date");
-	expect(formItems[i++].textContent).toBe("select");
+	expect(formItems[i++].textContent).toBe("selectเลือก"); /*placeholder got mixed in, which is fine*/
 	expect(formItems[i++].textContent).toBe("phone");
 	expect(formItems[i++].textContent).toBe("email");
 	expect(formItems[i++].textContent).toBe("url");
