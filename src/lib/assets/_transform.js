@@ -22,7 +22,8 @@ const makeObjectBased = (data) => {
 		for (var s of zipCode.subDistrictList)
 			if (!ans[s.provinceId].c[s.districtId].c[s.subDistrictId])
 				ans[s.provinceId].c[s.districtId].c[s.subDistrictId] = {
-					l: s.subDistrictName + " " + zipCode.zipCode,
+					l: s.subDistrictName,
+					c: { [zipCode.zipCode]: zipCode.zipCode },
 				};
 	}
 	return ans;
@@ -40,7 +41,11 @@ const makeListBased = (data) => {
 	var ans = mapSort(data, (a) => {
 		if (a.c)
 			a.c = mapSort(a.c, (a) => {
-				if (a.c) a.c = mapSort(a.c, _.identity);
+				if (a.c)
+					a.c = mapSort(a.c, (a) => {
+						if (a.c) a.c = mapSort(a.c, (a) => ({ l: a }));
+						return a;
+					});
 				return a;
 			});
 		return a;
