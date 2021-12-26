@@ -187,9 +187,11 @@ return id;}`,
 		case "checkbox":
 			type = "boolean";
 			break;
-		case "number":
-		case "date":
-			type = editor.fieldType;
+		case "common|number":
+			type = "number";
+			break;
+		case "common|date":
+			type = "date";
 			break;
 		case "common|barcode scanner":
 			type = "array";

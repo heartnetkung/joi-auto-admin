@@ -127,14 +127,14 @@ const editorToChance = (editor) => {
 			};
 		case "checkbox":
 			return { name: "bool" };
-		case "number":
+		case "dropdown":
+			return { name: "pickone", args: [["m", "f"]] };
+		case "common|number":
 			return { name: "natural", args: [{ max: 30 }] };
-		case "date":
+		case "common|date":
 			return { name: "date", args: [] };
 		case "common|barcode scanner":
 			return { name: "pickone", args: [[["a001"], ["a002"]]] };
-		case "dropdown":
-			return { name: "pickone", args: [["m", "f"]] };
 		case "common|text area":
 			return { name: "paragraph" };
 		case "common|password":

@@ -87,13 +87,13 @@ export const disabledDefaultList = [
 
 export const placeholderDefault = {
   checkbox: "true/false",
-  date: "YYYY-MM-DD",
+  "common|date": "YYYY-MM-DD",
   "format|url": "http://www.google.com/...",
   "format|thai tel": "0811111111",
   "format|email": "abc@example.com",
   "format|thai citizen id": "0139499973311",
   "format|thai zipcode": "10210",
-  number: "0/1/2/...",
+  "common|number": "0/1/2/...",
 };
 
 export const fieldOptions = [
@@ -115,11 +115,15 @@ export const fieldTree = [
   { l: "input" },
   { l: "dropdown" },
   { l: "checkbox" },
-  { l: "number" },
-  { l: "date" },
   {
     l: "common",
-    c: [{ l: "text area" }, { l: "password" }, { l: "barcode scanner" }],
+    c: [
+      { l: "number" },
+      { l: "date" },
+      { l: "text area" },
+      { l: "password" },
+      { l: "barcode scanner" },
+    ],
   },
   {
     l: "format",

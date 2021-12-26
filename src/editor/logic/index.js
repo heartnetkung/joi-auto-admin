@@ -33,8 +33,8 @@ const editorSchemaInner = Joi.object({
 			"hierarchical dropdown|static option, no modify",
 			"hierarchical dropdown|async option",
 			"checkbox",
-			"number",
-			"date",
+			"common|number",
+			"common|date",
 			"common|text area",
 			"common|password",
 			"common|barcode scanner"

@@ -3,12 +3,12 @@ import { randomData, genChanceString } from "./chance";
 describe("randomData()", () => {
 	it("basic case", () => {
 		var editors = [
-			{ name: "a", fieldType: "number" },
+			{ name: "a", fieldType: "common|number" },
 			{ name: "b", fieldType: "format|url" },
 			{ name: "c", fieldType: "format|thai tel" },
 			{ name: "d", fieldType: "format|email" },
 			{ name: "e", fieldType: "checkbox" },
-			{ name: "f", fieldType: "date" },
+			{ name: "f", fieldType: "common|date" },
 			{ name: "g", fieldType: "common|barcode scanner" },
 			{ name: "h", fieldType: "dropdown" },
 			{ name: "i.j", fieldType: "input" },
@@ -35,12 +35,12 @@ describe("randomData()", () => {
 describe("genChanceString()", () => {
 	it("basic case", () => {
 		var editors = [
-			{ name: "a", fieldType: "number" },
+			{ name: "a", fieldType: "common|number" },
 			{ name: "b", fieldType: "format|url" },
 			{ name: "c", fieldType: "format|thai tel" },
 			{ name: "d", fieldType: "format|email" },
 			{ name: "e", fieldType: "checkbox" },
-			{ name: "f", fieldType: "date" },
+			{ name: "f", fieldType: "common|date" },
 			{ name: "g", fieldType: "common|barcode scanner" },
 			{ name: "h", fieldType: "dropdown" },
 			{ name: "i.j", fieldType: "input" },
