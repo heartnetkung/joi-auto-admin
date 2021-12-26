@@ -26,23 +26,23 @@ Here is how you might use it:
 
 1. **Awesome code generator**.
 2. Build your form however you want with 20+ prebuilt components, including:
-  1. Firebase File Upload
-  2. Hierarchical Dropdown
-  3. Barcode Scanner
-  4. Validated input on popular format like email, phone number, address
-  5. Other common inputs like password, textarea, input, date, number
+    1. Firebase File Upload
+    2. Hierarchical Dropdown
+    3. Barcode Scanner
+    4. Validated input on popular format like email, phone number, address
+    5. Other common inputs like password, textarea, input, date, number
 3. Automatically mock all your fields for easy testing with [Chance.js](https://chancejs.com/).
 4. Bulk upload/download with Excel format.
 5. Built with the best user experience in mind.
 6. Customize anything.
-  1. Customize all table and form input components by sending props directly to [Ant Design's component](https://ant.design/).
-  2. Customize form interactive logic with [Formik](https://formik.org/)
-  3. Customize validation logic with [Joi library](https://joi.dev/)
-  4. Add custom action for you data.
-  5. Support multiple form types, including conditional form and multi-step form.
-  6. Customize theme/size/color using Antd theme.
-  7. If that's not enough, you can implement your own component using normal React component.
-  8. We provide examples for all customizations above in our code generator.
+    1. Customize all table and form input components by sending props directly to [Ant Design's component](https://ant.design/).
+    2. Customize form interactive logic with [Formik](https://formik.org/)
+    3. Customize validation logic with [Joi library](https://joi.dev/)
+    4. Add custom action for you data.
+    5. Support multiple form types, including conditional form and multi-step form.
+    6. Customize theme/size/color using Antd theme.
+    7. If that's not enough, you can implement your own component using normal React component.
+    8. We provide examples for all customizations above in our code generator.
 
 ## FAQ
 
