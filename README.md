@@ -58,10 +58,6 @@ The idea is to provide a `react component` called `AutoAdmin` which take minimal
 
 - `.label(str)`
   - Required. Label is used as table header, excel header, and form label.
-- `.valid([ any ])`
-  - For making `<Select>` input.
-- `.required()`
-- `.default(value | ()=>value )`
 - `.meta(obj)`
   - The meta function allows you to customize each data field.
   - Object are parsed directly as a prop to input. Some of the most popular ones inlcude:
@@ -78,10 +74,6 @@ The idea is to provide a `react component` called `AutoAdmin` which take minimal
       - Show the form input in half size, so you can stack 2 fields in the same line.
     - `.meta({ step: number })`
       - When you use multi-step form, this field specify which page the field is in.
-    - `.meta({ validLabel: [string] })`
-      - Required for `<Select>` type. The array length must be equal to input of `.valid([ any ])` as they will be rendered as key and value of `<Option>`
-    - `.meta({ loadBarcodeName: async(barcode)=> string })`
-      - Required for `<Barcode>` type. Used to fetch human-readable data of the barcode.
     - `.meta({ containerStyle: styleObj })`
       - Customize style of the field container, useful for adding margins or padding.
     - `.meta({ onFieldRender: (props)=>ReactDomNode })`
@@ -108,6 +100,27 @@ The idea is to provide a `react component` called `AutoAdmin` which take minimal
       - If multiple, user can upload multiple file and joi type should be array. Otherwise user can only upload a single file and joi type can be array or string.
     - `.meta({ uploadFileType: 'image' | 'file' })`
       - If image, the table and the form would show preview of the given file.
+  - To customize **heirarchical dropdown** input use the following fields:
+    - `.meta({ cascaderOptions: [{node}] })`
+      - Required for `<CascaderStatic>` type. Used to specify all possible options.
+    - `.meta({ names: [str] | str })`
+      - Required for `<CascaderStatic>` type. Used to specify related fields for each option.
+      - If the type is array, all options are transfered to each fields.
+      - If the type is string, only the rightmost choice is transfered to the specified field.
+    - `.meta({ notFound: true })`
+      - For `<CascaderStatic>` type. Allow users to specify choices not listed in options.
+    - `.meta({ notFoundText: str })`
+      - For `<CascaderStatic>` type. The text that would be shown when the given choices aren't listed in the options. It is also used when editing data and the initial data doesn't match options.
+    - `.meta({ cascaderFetchData: async(selected)=> [{node}] })`
+      - Required for `<CascaderAsync>` type. Used to fetch options from server.
+    - Other props are forwarded to `<Cascader>` component from [Antd library](https://ant.design/components/cascader/#API).
+  - **ETC**
+    - `.valid([ any ])`
+      - Required for `<Select>` type. Used to specify the options.
+    - `.meta({ validLabel: [string] })`
+      - For `<Select>` type. Used to specify label for each option. The array length must be equal to input of `.valid([ any ])`.
+    - `.meta({ loadBarcodeName: async(barcode)=> string })`
+      - Required for `<Barcode>` type. Used to fetch human-readable data of the barcode.
 
 ## AutoAdmin Props API
 
