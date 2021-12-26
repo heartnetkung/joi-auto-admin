@@ -94,10 +94,12 @@ option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
 
 export const THAddress = (props) => {
 	const [options, setOptions] = useState([]);
+	const className = "thAddress" + props.name.replace(/[^a-z0-9]/gi, "");
 
 	useEffect(() => {
 		const listener = () => {
-			const columns = document.querySelectorAll(".xx .ant-cascader-menu");
+			const selector = "." + className + " .ant-cascader-menu";
+			const columns = document.querySelectorAll(selector);
 			const length = columns.length;
 			for (let i = 0; i < length; i++)
 				columns[i].classList.add("th-address-small");
@@ -121,17 +123,19 @@ export const THAddress = (props) => {
 		<CascaderStatic
 			{...props}
 			cascaderOptions={options}
-			dropdownRender={(a) => <div className="xx">{a}</div>}
+			dropdownRender={(a) => <div className={className}>{a}</div>}
 		></CascaderStatic>
 	);
 };
 
 // WARNING string version and functional version are different
 THAddress.str = `const THAddress = (props) => {
+const className = "thAddress" + props.name.replace(/[^a-z0-9]/gi, "");
 //responsive dropdown for small screens
 useEffect(() => {
 const listener = () => {
-const columns = document.querySelectorAll(".xx .ant-cascader-menu");
+const selector = "." + className + " .ant-cascader-menu";
+const columns = document.querySelectorAll(selector);
 const length = columns.length;
 for (let i = 0; i < length; i++)
 columns[i].classList.add("th-address-small");
@@ -146,7 +150,7 @@ return () => document.removeEventListener("click", listener);
 return (
 <CascaderStatic
 {...props}
-dropdownRender={(a) => <div className="xx">{a}</div>}
+dropdownRender={(a) => <div className={className}>{a}</div>}
 ></CascaderStatic>
 );
 };
