@@ -63,15 +63,13 @@ The idea is to provide a `react component` called `AutoAdmin` which take minimal
 - `.required()`
 - `.default(value | ()=>value )`
 - `.meta(obj)`
-
   - The meta function allows you to customize each data field.
   - Object are parsed directly as a prop to input. Some of the most popular ones inlcude:
     - `.meta({ placeholder })`
     - `.meta({ disabled })`
     - `.meta({ style })`
     - The rest of the props can be found [here.](https://reactjs.org/docs/dom-elements.html)
-  - To customize `AutoAdmin` _form_, use the following fields:
-
+  - To customize **form**, use the following fields:
     - `.meta({ fieldType: string })`
       - Useful ones are `InputPhone`, `InputEmail`, `InputURL`. The rest are automatic depending on other parameters, for example, boolean would be checkbox.
     - `.meta({ fieldHide: boolean | (formValue, currentStep)=>boolean })`
@@ -88,9 +86,7 @@ The idea is to provide a `react component` called `AutoAdmin` which take minimal
       - Customize style of the field container, useful for adding margins or padding.
     - `.meta({ onFieldRender: (props)=>ReactDomNode })`
       - \[Advanced\] fully customize the form component. The function usually implements with `import { useFormikContext } from "formik";` to get/set internal value of the form. See the example for more information.
-
-  - To customize `AutoAdmin` _table_, use the following fields:
-
+  - To customize **table**, use the following fields:
     - `.meta({ cellEllipsis: true })`
     - `.meta({ cellFormat: (cellData)=> string | ReactDomNode })`
       - For formating number, date, etc. on the table.
@@ -101,8 +97,7 @@ The idea is to provide a `react component` called `AutoAdmin` which take minimal
       - For disabling column sorting
     - `.meta({ disableFilter: true })`
       - For disabling column filter
-
-  - To add file upload input, use the following fields:
+  - To customize **file upload** input, use the following fields:
     - `.meta({ uploadFile: async (fileObj)=> urlString })`
       - Boilerplate code for uploading your file. The UI automatically generate this.
     - `.meta({ accept: string })`
