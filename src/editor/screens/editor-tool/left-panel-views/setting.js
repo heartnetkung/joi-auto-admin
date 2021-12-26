@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import lodash from "lodash";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import {
   Input,
   Form,
@@ -13,6 +13,7 @@ import {
   Select,
   Divider,
   Button,
+  Tooltip,
 } from "antd";
 import { SETTINGS } from "../constants";
 import {
@@ -143,7 +144,14 @@ const RenderSetting = (props) => {
           ))}
         <Divider />
         <div>
-          <Typography.Title level={5}>Multi-step Form</Typography.Title>
+          <Typography.Title level={5}>
+            Multi-step Form
+            <Tooltip title='For complex form, you can divide your form into multiple steps. After you specify all step names, go back to your "Fields" panel to specify each respective step.'>
+              <QuestionCircleOutlined
+                style={{ marginLeft: 10, color: "#ccc" }}
+              />
+            </Tooltip>
+          </Typography.Title>
           <Row>
             <Typography.Text style={{ padding: "0.25rem 0.5rem 0 0" }}>
               Form Steps
@@ -184,7 +192,14 @@ const RenderSetting = (props) => {
         </div>
         <Divider />
         <div>
-          <Typography.Title level={5}>Table Query</Typography.Title>
+          <Typography.Title level={5}>
+            Table Query
+            <Tooltip title="You can specify the query used for table data. The query won't take effect here, rather you would use it when you implement 'getMany' function.">
+              <QuestionCircleOutlined
+                style={{ marginLeft: 10, color: "#ccc" }}
+              />
+            </Tooltip>
+          </Typography.Title>
           <Checkbox
             checked={settingState.querySchema?.query || false}
             onChange={() => onChangCheckboxQuery()}

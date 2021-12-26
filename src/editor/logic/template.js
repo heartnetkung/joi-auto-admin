@@ -40,8 +40,11 @@ export const renderProps = (editors, settings, isComp) => {
 		}, isComp);
 	} else {
 		ans.schema = raw("schema", false);
-		if (querySchema) ans.querySchema = raw(renderJoi(querySchema, {}));
-		ans.getMany = raw("async ()=>{await wait(500);return mockData();}");
+		if (querySchema) {
+			ans.querySchema = raw(renderJoi(querySchema, {}));
+			ans.getMany = raw("async (tableQuery)=>{await wait(500);return mockData();}");
+		} else
+			ans.getMany = raw("async ()=>{await wait(500);return mockData();}");
 	}
 
 	if (canCreate)
