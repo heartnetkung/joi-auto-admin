@@ -10,6 +10,7 @@ import {
 } from "formik-antd";
 import Barcode from "./components/barcode";
 import CascaderStatic from "./components/cascader_static";
+import CascaderAsync from "./components/cascader_async";
 import FileUpload from "./components/file_upload";
 import moment from "moment";
 import React from "react";
@@ -48,6 +49,7 @@ const Field = (props) => {
 							{...props2}
 						/>
 					)}
+					{fieldType === "CascaderAsync" && <CascaderAsync {...props2} />}
 					{fieldType === "CascaderStatic" && (
 						<CascaderStatic {...props2} />
 					)}
@@ -137,6 +139,7 @@ Field.propTypes = {
 		"FileUpload",
 		"Custom",
 		"CascaderStatic",
+		"CascaderAsync",
 	]).isRequired,
 	name: PropTypes.string.isRequired,
 	validate: PropTypes.func.isRequired,

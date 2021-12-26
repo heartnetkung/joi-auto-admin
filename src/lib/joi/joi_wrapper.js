@@ -168,6 +168,8 @@ class JoiField {
 				meta.uploadFileType === "image"
 			)
 				ans.render = (a) => <ColImage src={a} />;
+			else if (fieldType === "CascaderAsync")
+				ans.render = (a) => (Array.isArray(a) ? a.join(" / ") : "");
 			else if (type === "number")
 				ans.render = (a) => (a == null ? "" : numeral(a).format("0,0"));
 			else if (type === "boolean")
@@ -214,7 +216,8 @@ class JoiField {
 		if (meta.loadBarcodeName) return "Barcode";
 		if (meta.getUploadUrl || meta.firebaseConfig || meta.uploadFile)
 			return "FileUpload";
-		if (Array.isArray(meta.cascaderOptions)) return "CascaderStatic";
+		if (meta.cascaderFetchData) return "CascaderAsync";
+		if (meta.cascaderOptions) return "CascaderStatic";
 		if (field.type === "boolean") return "Checkbox";
 		if (field.type === "date") return "DatePicker";
 		if (field.type === "number") return "InputNumber";

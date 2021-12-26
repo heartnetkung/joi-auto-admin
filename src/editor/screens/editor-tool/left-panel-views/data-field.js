@@ -147,7 +147,7 @@ export const fieldTree = [
     c: [
       { l: "static option, allow modify" },
       { l: "static option, no modify" },
-      { l: "async option, no modify" },
+      { l: "async option" },
       { l: "thai province" },
     ],
   },

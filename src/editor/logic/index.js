@@ -31,6 +31,7 @@ const editorSchemaInner = Joi.object({
 			"hierarchical dropdown|thai province",
 			"hierarchical dropdown|static option, allow modify",
 			"hierarchical dropdown|static option, no modify",
+			"hierarchical dropdown|async option",
 			"checkbox",
 			"number",
 			"date",

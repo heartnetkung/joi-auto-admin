@@ -111,6 +111,22 @@ export const makeJoiLine = (editor, settings, isObj) => {
 			if (isObj) editor.cascaderOptions = raw("thAddressData", isObj);
 			type = "object";
 			break;
+		case "hierarchical dropdown|async option":
+			editor = {
+				...editor,
+				cascaderFetchData: func(
+					`async (selected)=>{
+await wait(500);
+if(!selected.length) return [{l:"Hardware Business",isLeaf:false},{l:"Software Business",isLeaf:false}];
+if(selected[0] === 'Hardware Business') return [{l:"Apple"},{l:"Intel"}];
+if(selected[0] === 'Software Business') return [{l:"Apple"},{l:"Google"}];
+}`,
+					isObj
+				),
+				fieldNames: { label: "l", value: "l", children: "c" },
+			};
+			type = "array";
+			break;
 		case "format|url":
 			newFieldType = "InputURL";
 			break;
@@ -333,8 +349,6 @@ export const makeExtraJoiLines = (editor, settings, isObj) => {
 			return [
 				makeJoiLine({ ...obj, label: "product code" }, settings, isObj),
 			];
-		case "hierarchical dropdown|async option, no modify":
-			return [];
 		case "hierarchical dropdown|thai province":
 			return [
 				makeJoiLine(

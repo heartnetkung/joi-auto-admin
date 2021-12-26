@@ -80,6 +80,16 @@ const editorToChance = (editor) => {
 					args: [["G001", "G002", "G003", "G004"]],
 				},
 			];
+		case "hierarchical dropdown|async option":
+			return {
+				name: "pickone",
+				args: [
+					[
+						["Hardware Business", "Intel"],
+						["Software Business", "Google"],
+					],
+				],
+			};
 		case "hierarchical dropdown|thai province":
 			return [
 				{ name: "pickone", args: [["กรุงเทพมหานคร"]] },
