@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Cascader } from "formik-antd";
 import PropTypes from "prop-types";
 import { Spin } from "antd";
@@ -23,12 +23,12 @@ const CascaderAsync = (props) => {
 				if (!Array.isArray(initValue)) initValue = [];
 
 				var queues = [fetchData([])];
-				for (var i = 0, ii = initValue.length - 1; i < ii; i++)
+				for (let i = 0, ii = initValue.length - 1; i < ii; i++)
 					queues.push(fetchData(initValue.slice(0, i + 1)));
 				var results = await Promise.all(queues);
 				ans = results[0];
 
-				for (var i = 0, ii = initValue.length - 1; i < ii; i++) {
+				for (let i = 0, ii = initValue.length - 1; i < ii; i++) {
 					var currentValue = initValue[i];
 					var currentResult = results[i];
 					var node = null;
