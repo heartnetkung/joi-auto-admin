@@ -206,8 +206,23 @@ return id;}`,
 			};
 			break;
 		case "dropdown":
-			suffix.push({ name: "valid", args: ["m", "f"] });
-			editor = { ...editor, validLabel: ["ชาย", "หญิง"] };
+			suffix.push({ name: "valid", args: [
+					"pizza",
+					"steak",
+					"sushi",
+					"hamburger",
+					"noodles",
+				] });
+			editor = {
+				...editor,
+				validLabel: [
+					"Pizza",
+					"Steak",
+					"Sushi",
+					"Hamburger",
+					"Noodles",
+				],
+			};
 			break;
 		case "upload|multiple images":
 			editor = {

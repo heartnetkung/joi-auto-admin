@@ -128,7 +128,10 @@ const editorToChance = (editor) => {
 		case "checkbox":
 			return { name: "bool" };
 		case "dropdown":
-			return { name: "pickone", args: [["m", "f"]] };
+			return {
+				name: "pickone",
+				args: [["pizza", "steak", "sushi", "hamburger", "noodles"]],
+			};
 		case "common|number":
 			return { name: "natural", args: [{ max: 30 }] };
 		case "common|date":
