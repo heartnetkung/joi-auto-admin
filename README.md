@@ -18,18 +18,20 @@ As a developer in a company, we spend a lot of time writing web-based tools for 
 
 Here is how you might use it:
 1. Use our website to specify each field of you data.
-2. See how it looks and interact with it immediately.
+2. See how it looks and interact with it immediately. Tweak the settings to match your preference.
 3. Generate React source code and copy it to your codebase. This code is designed to be concise and fully customizable.
 4. Connect to your backend by implementing CRUD functions we left blank for you.
+
+Once you are familiar with our tool, the process of writing your admin site should be done in 1 hour instead of days with added benefit of clean high-quality UI, and virtually no bug.
 
 ## Features
 
 1. **Awesome code generator**.
-2. Build your form however you want with 20+ prebuilt components, including:
+2. Build your form efficiently with 20+ prebuilt components, including:
     1. Firebase File Upload
     2. Hierarchical Dropdown
     3. Barcode Scanner
-    4. Validated input on popular format like email, phone number, address
+    4. Validate input on popular format like email, phone number, address
     5. Other common inputs like password, textarea, input, date, number
 3. Automatically mock all your fields for easy testing with [Chance.js](https://chancejs.com/).
 4. Bulk upload/download with Excel format.
