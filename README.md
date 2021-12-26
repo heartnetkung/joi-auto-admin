@@ -14,27 +14,35 @@ npm install joi-auto-admin
 
 ## Overview
 
-As a developer in a company, we spend a lot of time writing web-based tools for our staffs and back office usage. This package aims to automate such work completely on the front-end side.
+As a developer in a company, we spend a lot of time writing web-based tools for our staffs and back office usage. This package aims to automate such work completely by making a code generator website in a WYSIWYG style for making your CRUD website. 
 
-The idea is to provide a `react component` called `AutoAdmin` which take minimal output and automatically render a complete UI. It's mainly composed of 2 components:
+Here is how you might use it:
+1. Use our website to specify each field of you data.
+2. See how it looks and interact with it immediately.
+3. Generate React source code and copy it to your codebase. This code is designed to be concise and fully customizable.
+4. Connect to your backend by implementing CRUD functions we left blank for you.
 
-1\. A table for GET operation with the following features:
+## Features
 
-- sort, filter, pagination
-- export data to excel format
-- select rows for DELETE operation
-- responsive
-- support customizable button for each row
-- ~~expandable row~~
-
-2\. A form for CREATE and UPDATE operation with the following features:
-
-- render automatically from specified `Joi Object`.
-- import excel data
-- automatically validate form data and excel data before sending it to server
-  - all errors are pre-translated into Thai language
-- support multiple pre-configured inputs such as image uploader, address input, heirarchical dropdown, ajax dropdown, and date picker
-- support custom react input
+1. **Awesome code generator**.
+2. Build your form however you want with 20+ prebuilt components, including:
+  1. Firebase File Upload
+  2. Hierarchical Dropdown
+  3. Barcode Scanner
+  4. Validated input on popular format like email, phone number, address
+  5. Other common inputs like password, textarea, input, date, number
+3. Automatically mock all your fields for easy testing with [Chance.js](https://chancejs.com/).
+4. Bulk upload/download with Excel format.
+5. Built with the best user experience in mind.
+6. Customize anything.
+  1. Customize all table and form input components by sending props directly to [Ant Design's component](https://ant.design/).
+  2. Customize form interactive logic with [Formik](https://formik.org/)
+  3. Customize validation logic with [Joi library](https://joi.dev/)
+  4. Add custom action for you data.
+  5. Support multiple form types, including conditional form and multi-step form.
+  6. Customize theme/size/color using Antd theme.
+  7. If that's not enough, you can implement your own component using normal React component.
+  8. We provide examples for all customizations above in our code generator.
 
 ## FAQ
 
@@ -100,7 +108,7 @@ The idea is to provide a `react component` called `AutoAdmin` which take minimal
       - If multiple, user can upload multiple file and joi type should be array. Otherwise user can only upload a single file and joi type can be array or string.
     - `.meta({ uploadFileType: 'image' | 'file' })`
       - If image, the table and the form would show preview of the given file.
-  - To customize **heirarchical dropdown** input use the following fields:
+  - To customize **hierarchical dropdown** input use the following fields:
     - `.meta({ cascaderOptions: [{node}] })`
       - Required for `<CascaderStatic>` type. Used to specify all possible options.
     - `.meta({ names: [str] | str })`
