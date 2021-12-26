@@ -49,7 +49,9 @@ const Field = (props) => {
 							{...props2}
 						/>
 					)}
-					{fieldType === "CascaderAsync" && <CascaderAsync {...props2} />}
+					{fieldType === "CascaderAsync" && (
+						<CascaderAsync {...props2} />
+					)}
 					{fieldType === "CascaderStatic" && (
 						<CascaderStatic {...props2} />
 					)}
@@ -113,7 +115,7 @@ const Field = (props) => {
 			</Col>
 			{appendDivider && (
 				<Col span={20} offset={2}>
-					<Divider style={{ marginBottom: 48 }} />{" "}
+					<Divider style={{ marginBottom: 40, marginTop: 14 }} />{" "}
 				</Col>
 			)}
 		</>
