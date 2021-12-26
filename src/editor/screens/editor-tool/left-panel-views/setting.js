@@ -73,7 +73,7 @@ const RenderSetting = (props) => {
     setSettingState(newSettings);
   };
 
-  const onChangCheckboxQuery = () => {
+  const onChangeCheckboxQuery = () => {
     const newSettings = _.cloneDeep(settingState);
     if (newSettings.querySchema.query) {
       newSettings.querySchema.schema = [...getInitRowQuerySchema()];
@@ -219,7 +219,7 @@ const RenderSetting = (props) => {
           </Typography.Title>
           <Checkbox
             checked={settingState.querySchema?.query || false}
-            onChange={() => onChangCheckboxQuery()}
+            onChange={() => onChangeCheckboxQuery()}
           >
             enable table query
           </Checkbox>
