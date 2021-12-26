@@ -3,7 +3,6 @@ import _ from "lodash";
 import { raw, softEval, func, regex } from "./util";
 import toSource from "tosource";
 import { DependentComp, AsyncDropdown, THAddress } from "./custom_component";
-import thAddress from "../../lib/assets/th_address";
 
 const makeObject = (joiList) => {
 	var ans = Joi;
@@ -98,9 +97,6 @@ export const makeJoiLine = (editor, settings, isObj) => {
 		case "hierarchical dropdown|thai province":
 			editor = {
 				...editor,
-				cascaderOptions: isObj
-					? thAddress
-					: raw("thAddressData", isObj),
 				onFieldRender: isObj ? THAddress : raw("THAddress", isObj),
 				names: [
 					editor.name + "-0",
@@ -112,6 +108,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 				cellHide: true,
 				notFound: true,
 			};
+			if (isObj) editor.cascaderOptions = raw("thAddressData", isObj);
 			type = "object";
 			break;
 		case "format|url":

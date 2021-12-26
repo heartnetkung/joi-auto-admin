@@ -93,6 +93,8 @@ option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
 `;
 
 export const THAddress = (props) => {
+	const [options, setOptions] = useState([]);
+
 	useEffect(() => {
 		const listener = () => {
 			const columns = document.querySelectorAll(".xx .ant-cascader-menu");
@@ -107,15 +109,26 @@ export const THAddress = (props) => {
 		document.addEventListener("click", listener);
 		return () => document.removeEventListener("click", listener);
 	}, []);
+
+	useEffect(() => {
+		(async () => {
+			const data = await import("../../lib/assets/th_address");
+			setOptions(data.default);
+		})();
+	}, []);
+
 	return (
 		<CascaderStatic
 			{...props}
+			cascaderOptions={options}
 			dropdownRender={(a) => <div className="xx">{a}</div>}
 		></CascaderStatic>
 	);
 };
 
+// WARNING string version and functional version are different
 THAddress.str = `const THAddress = (props) => {
+//responsive dropdown for small screens
 useEffect(() => {
 const listener = () => {
 const columns = document.querySelectorAll(".xx .ant-cascader-menu");
