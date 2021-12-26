@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import lodash from "lodash";
-import { PlusOutlined, QuestionCircleOutlined } from "@ant-design/icons";
+import _ from "lodash";
+import {
+  PlusOutlined,
+  QuestionCircleOutlined,
+  UpOutlined,
+  DownOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 import {
   Input,
   Form,
@@ -28,13 +34,8 @@ const RenderSetting = (props) => {
   const { settingState, setSettingState } = props;
   const [optionsStep] = useState(() => logic.createStepOptions());
 
-  const cloneState = () => {
-    const newSettings = { ...settingState };
-    return newSettings;
-  };
-
   const onChangeCheckbox = (type) => {
-    const newSettings = cloneState();
+    const newSettings = { ...settingState };
     if (newSettings[type]) {
       delete newSettings[type];
     } else {
@@ -44,7 +45,7 @@ const RenderSetting = (props) => {
   };
 
   const onChangeField = (key, value) => {
-    const newSettings = cloneState();
+    const newSettings = { ...settingState };
     newSettings[key] = value;
     if (key === "step") {
       onChangeSteps(newSettings, value);
@@ -67,13 +68,13 @@ const RenderSetting = (props) => {
   };
 
   const onChangeInputSteps = (index, value) => {
-    const newSettings = cloneState();
+    const newSettings = { ...settingState };
     newSettings.steps[index].value = value;
     setSettingState(newSettings);
   };
 
   const onChangCheckboxQuery = () => {
-    const newSettings = cloneState();
+    const newSettings = _.cloneDeep(settingState);
     if (newSettings.querySchema.query) {
       newSettings.querySchema.schema = [...getInitRowQuerySchema()];
     }
@@ -85,7 +86,7 @@ const RenderSetting = (props) => {
     if (!key) {
       return;
     }
-    const newSettings = cloneState();
+    const newSettings = _.cloneDeep(settingState);
     if (!newSettings.querySchema.schema[index]) {
       return;
     }
@@ -94,7 +95,7 @@ const RenderSetting = (props) => {
   };
 
   const onAddQuerySchema = () => {
-    const newSettings = cloneState();
+    const newSettings = _.cloneDeep(settingState);
     newSettings.querySchema.schema = [
       ...newSettings.querySchema.schema,
       { ...getSingleRowQuerySchema() },
@@ -103,13 +104,29 @@ const RenderSetting = (props) => {
   };
 
   const onDeleteQuerySchema = (index) => {
-    const newSettings = cloneState();
-    if (!lodash.get(newSettings.querySchema?.schema, "[1]")) {
+    const newSettings = _.cloneDeep(settingState);
+    if (!_.get(newSettings.querySchema?.schema, "[1]")) {
       newSettings.querySchema.query = false;
       newSettings.querySchema.schema = [...getInitRowQuerySchema()];
     } else {
       newSettings.querySchema.schema.splice(index, 1);
     }
+    setSettingState(newSettings);
+  };
+
+  const onMoveUp = (index) => {
+    if (index === 0) return;
+    const newSettings = _.cloneDeep(settingState);
+    const { schema } = newSettings.querySchema;
+    schema.splice(index - 1, 2, schema[index], schema[index - 1]);
+    setSettingState(newSettings);
+  };
+
+  const onMoveDown = (index) => {
+    if (index === settingState.querySchema.schema.length - 1) return;
+    const newSettings = _.cloneDeep(settingState);
+    const { schema } = newSettings.querySchema;
+    schema.splice(index, 2, schema[index + 1], schema[index]);
     setSettingState(newSettings);
   };
 
@@ -209,23 +226,39 @@ const RenderSetting = (props) => {
           {settingState.querySchema?.query && (
             <>
               <div style={{ padding: "1rem 0 0 0" }}>
-                {lodash.get(settingState.querySchema?.schema, "[0]") && (
+                {_.get(settingState.querySchema?.schema, "[0]") && (
                   <Collapse defaultActiveKey={["0"]} accordion>
                     {settingState.querySchema.schema.map((qs, qi) => (
                       <Collapse.Panel
                         key={qi.toString()}
                         header={qs.name}
                         extra={
-                          <Button
-                            type="dashed"
-                            danger
-                            onClick={(event) => {
-                              onDeleteQuerySchema(qi);
-                              event.stopPropagation();
-                            }}
-                          >
-                            Delete
-                          </Button>
+                          <>
+                            <Button
+                              icon={<UpOutlined style={styles.gray} />}
+                              type="text"
+                              onClick={(event) => {
+                                onMoveUp(qi);
+                                event.stopPropagation();
+                              }}
+                            />
+                            <Button
+                              icon={<DownOutlined style={styles.gray} />}
+                              type="text"
+                              onClick={(event) => {
+                                onMoveDown(qi);
+                                event.stopPropagation();
+                              }}
+                            />
+                            <Button
+                              icon={<DeleteOutlined style={styles.gray} />}
+                              type="text"
+                              onClick={(event) => {
+                                onDeleteQuerySchema(qi);
+                                event.stopPropagation();
+                              }}
+                            />
+                          </>
                         }
                       >
                         <Row style={styles.rowInput}>
@@ -268,6 +301,7 @@ const RenderSetting = (props) => {
                               {Array.isArray(queryFieldTree) && (
                                 <Select
                                   defaultValue={queryFieldTree[0]}
+                                  value={qs.fieldType}
                                   style={{ flex: 1 }}
                                   onChange={(value) =>
                                     onChangeFieldQuerySchema(
