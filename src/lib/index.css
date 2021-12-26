@@ -43,3 +43,7 @@ h1,h2,h3,h4,h5,h6{
 .th-address-small{
   width: 40px !important;
 }
+
+.large-field-type .ant-cascader-menu{
+  height: 250px !important;
+}

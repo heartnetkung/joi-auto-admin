@@ -187,6 +187,7 @@ const FormFields = (props) => {
                         fieldNames={{ label: "l", value: "l", children: "c" }}
                         options={fieldTree}
                         value={item._fieldType}
+                        dropdownRender={(a) => <div className="large-field-type">{a}</div>}
                         onChange={(value) => {
                           onChangeField(index, "_fieldType", value);
                           onChangeField(index, "fieldType", value.join("|"));
