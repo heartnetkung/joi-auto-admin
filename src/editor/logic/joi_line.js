@@ -28,7 +28,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 	var newFieldType = "";
 	var suffix = [];
 	switch (editor.fieldType) {
-		case "common|text area":
+		case "common|paragraph":
 			newFieldType = "TextArea";
 			break;
 		case "custom component|dependent input example":

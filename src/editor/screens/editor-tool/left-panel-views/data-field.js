@@ -120,7 +120,7 @@ export const fieldTree = [
     c: [
       { l: "number" },
       { l: "date" },
-      { l: "text area" },
+      { l: "paragraph" },
       { l: "password" },
       { l: "barcode scanner" },
     ],
