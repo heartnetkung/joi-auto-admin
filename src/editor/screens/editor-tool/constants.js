@@ -15,4 +15,5 @@ export const SETTINGS = [
   "disableExcelDownload",
   "disableExcelUpload",
   "largeComponent",
+  "rowButton",
 ];

@@ -14,9 +14,10 @@ npm install joi-auto-admin
 
 ## Overview
 
-As a developer in a company, we spend a lot of time writing web-based tools for our staffs and back office usage. This package aims to automate such work completely by making a code generator website in a WYSIWYG style for making your CRUD website. 
+As a developer in a company, we spend a lot of time writing web-based tools for our staffs and back office usage. This package aims to automate such work completely by making a code generator website in a WYSIWYG style for making your CRUD website.
 
 Here is how you might use it:
+
 1. Use our website to specify each field of you data.
 2. See how it looks and interact with it immediately. Tweak the settings to match your preference.
 3. Generate React source code and copy it to your codebase. This code is designed to be concise and fully customizable.
@@ -28,23 +29,23 @@ Once you are familiar with our tool, the process of writing your admin site shou
 
 1. **Awesome code generator**.
 2. Build your form efficiently with 20+ prebuilt components, including:
-    1. Firebase File Upload
-    2. Hierarchical Dropdown
-    3. Barcode Scanner
-    4. Validate input on popular format like email, phone number, address
-    5. Other common inputs like password, textarea, input, date, number
+   1. Firebase File Upload
+   2. Hierarchical Dropdown
+   3. Barcode Scanner
+   4. Validate input on popular format like email, phone number, address
+   5. Other common inputs like password, textarea, input, date, number
 3. Automatically mock all your fields for easy testing with [Chance.js](https://chancejs.com/).
 4. Bulk upload/download with Excel format.
 5. Built with the best user experience in mind.
 6. Customize anything.
-    1. Customize all table and form input components by sending props directly to [Ant Design's component](https://ant.design/).
-    2. Customize form interactive logic with [Formik](https://formik.org/)
-    3. Customize validation logic with [Joi library](https://joi.dev/)
-    4. Add custom action for you data.
-    5. Support multiple form types, including conditional form and multi-step form.
-    6. Customize theme/size/color using Antd theme.
-    7. If that's not enough, you can implement your own component using normal React component.
-    8. We provide examples for all customizations above in our code generator.
+   1. Customize all table and form input components by sending props directly to [Ant Design's component](https://ant.design/).
+   2. Customize form interactive logic with [Formik](https://formik.org/)
+   3. Customize validation logic with [Joi library](https://joi.dev/)
+   4. Add custom action for you data.
+   5. Support multiple form types, including conditional form and multi-step form.
+   6. Customize theme/size/color using Antd theme.
+   7. If that's not enough, you can implement your own component using normal React component.
+   8. We provide examples for all customizations above in our code generator.
 
 ## FAQ
 
@@ -134,24 +135,24 @@ Once you are familiar with our tool, the process of writing your admin site shou
 
 ## AutoAdmin Props API
 
-| Name                 | Description                                                                                                                                                          | Type                                                                | DefaultValue |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------ |
-| schema               | specification on how the UI will render                                                                                                                              | {Joi Object}                                                        | `required`   |
-| name                 | name of this data                                                                                                                                                    | string                                                              | `required`   |
-| getMany              | the function connecting to back-end API. If `querySchema` is provided, query object will be derived from user input                                                  | async (query)=> [{rowData}]                                         | `required`   |
-| createMany           | if not provided, the createButton will not show. The return value should be mostly the same as the argument except that it has primary key generated from the server | async ([formData])=> [rowData]                                      | null         |
-| updateOne            | if not provided, the updateButton will not show                                                                                                                      | async (formData, rowData)=> null                                    | null         |
-| deleteMany           | if not provided, the rows can't be selected                                                                                                                          | async ([formData])=> null                                           | null         |
-| rowButtons           | custom buttons for each row                                                                                                                                          | [{onClick: (rowData)=> null,<br> icon: AntIcon,<br> label: string}] | []           |
-| querySchema          | specification of query for getMany operation                                                                                                                         | {Joi Object}                                                        | null         |
-| tableScroll          | viewport size for scrolling                                                                                                                                          | object                                                              | { y: 600 }   |
-| disableExcelDownload | disable downloading all the data in this table to excel                                                                                                              | boolean                                                             | false        |
-| disableExcelUpload   | Hide both the uploadButton and the uploadPreviewButton                                                                                                               | boolean                                                             | false        |
-| uploadPreviewUrl     | if specified, the uploadPreviewButton will download file from this path instead of the first 3 rows of this table                                                    | string                                                              | null         |
-| description          | description of this table, displayed under title                                                                                                                     | string                                                              | ''           |
-| steps                | break form into multi steps using `<Steps>` component from antd.                                                                                                     | [string]                                                            | []           |
-| largeComponent       | enlarge all antd components                                                                                                                                          | boolean                                                             | false        |
-| devMode              | remove `required` from all fields for easy testing                                                                                                                   | boolean                                                             | false        |
+| Name                 | Description                                                                                                                                                          | Type                                                                                 | DefaultValue |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------------ |
+| schema               | specification on how the UI will render                                                                                                                              | {Joi Object}                                                                         | `required`   |
+| name                 | name of this data                                                                                                                                                    | string                                                                               | `required`   |
+| getMany              | the function connecting to back-end API. If `querySchema` is provided, query object will be derived from user input                                                  | async (query)=> [{rowData}]                                                          | `required`   |
+| createMany           | if not provided, the createButton will not show. The return value should be mostly the same as the argument except that it has primary key generated from the server | async ([formData])=> [rowData]                                                       | null         |
+| updateOne            | if not provided, the updateButton will not show                                                                                                                      | async (formData, rowData)=> null                                                     | null         |
+| deleteMany           | if not provided, the rows can't be selected                                                                                                                          | async ([formData])=> null                                                            | null         |
+| rowButtons           | custom buttons for each row. updateDataAtRow can be used to update row data, if required.                                                                            | [{onClick: (rowData, updateDataAtRow)=> null,<br> icon: AntIcon,<br> label: string}] | []           |
+| querySchema          | specification of query for getMany operation                                                                                                                         | {Joi Object}                                                                         | null         |
+| tableScroll          | viewport size for scrolling                                                                                                                                          | object                                                                               | { y: 600 }   |
+| disableExcelDownload | disable downloading all the data in this table to excel                                                                                                              | boolean                                                                              | false        |
+| disableExcelUpload   | Hide both the uploadButton and the uploadPreviewButton                                                                                                               | boolean                                                                              | false        |
+| uploadPreviewUrl     | if specified, the uploadPreviewButton will download file from this path instead of the first 3 rows of this table                                                    | string                                                                               | null         |
+| description          | description of this table, displayed under title                                                                                                                     | string                                                                               | ''           |
+| steps                | break form into multi steps using `<Steps>` component from antd.                                                                                                     | [string]                                                                             | []           |
+| largeComponent       | enlarge all antd components                                                                                                                                          | boolean                                                                              | false        |
+| devMode              | remove `required` from all fields for easy testing                                                                                                                   | boolean                                                                              | false        |
 
 ## FormModal Props API
 

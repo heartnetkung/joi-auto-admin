@@ -5,6 +5,8 @@ import { makeJoiLine, makeExtraJoiLines } from "./joi_line";
 import { raw, showRaw, func } from "./util";
 import { randomData, genChanceString } from "./chance";
 import { DependentComp, AsyncDropdown, THAddress } from "./custom_component";
+import { SmileOutlined } from "@ant-design/icons";
+import React from "react";
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -29,9 +31,10 @@ export const renderJoi = (editors, settings, isComp) => {
 
 export const renderProps = (editors, settings, isComp) => {
 	const { canCreate, canUpdate, canDelete, querySchema, devMode } = settings;
+	const { rowButton, name } = settings;
 
 	// required
-	var ans = { name: settings.name || "{tableName}" };
+	var ans = { name: name || "{tableName}" };
 
 	if (isComp) {
 		ans.getMany = raw(async () => {
@@ -42,7 +45,9 @@ export const renderProps = (editors, settings, isComp) => {
 		ans.schema = raw("schema", false);
 		if (querySchema) {
 			ans.querySchema = raw(renderJoi(querySchema, {}));
-			ans.getMany = raw("async (tableQuery)=>{await wait(500);return mockData();}");
+			ans.getMany = raw(
+				"async (tableQuery)=>{await wait(500);return mockData();}"
+			);
 		} else
 			ans.getMany = raw("async ()=>{await wait(500);return mockData();}");
 	}
@@ -52,6 +57,25 @@ export const renderProps = (editors, settings, isComp) => {
 	if (canDelete)
 		ans.deleteMany = func("async ()=>{await wait(500);}", isComp);
 	if (canUpdate) ans.updateOne = func("async ()=>{await wait(500);}", isComp);
+	if (rowButton) {
+		ans.rowButtons = [
+			{
+				label: "hello",
+				icon: isComp ? (
+					<SmileOutlined />
+				) : (
+					raw("<SmileOutlined />", isComp)
+				),
+				onClick: func(
+					`(rowData, updateData)=>{
+alert(JSON.stringify(rowData));
+// updateData(newRowData);
+}`,
+					isComp
+				),
+			},
+		];
+	}
 
 	// literal
 	var extras = _.pick(settings, [
@@ -75,7 +99,7 @@ export const format = (a, isJson) => {
 	return prettier.format(a, { parser: "babel", plugins: [parserBabel] });
 };
 
-export const renderImport = (editors) => {
+export const renderImport = (editors, settings) => {
 	const ans = new Set();
 	const reactImport = new Set();
 	const formikAntdImport = new Set();
@@ -103,11 +127,14 @@ export const renderImport = (editors) => {
 				'import CascaderStatic from "joi-auto-admin/dist/formik/components/cascader_static";'
 			);
 			ans.add(
-				'import thAddressData from "joi-auto-admin/dist/assets/th_address"'
+				'import thAddressData from "joi-auto-admin/dist/assets/th_address";'
 			);
 			reactImport.add("useEffect");
 		}
 	}
+
+	if (settings.rowButton)
+		ans.add('import { SmileOutlined } from "@ant-design/icons";');
 
 	const reactString = reactImport.size
 		? ",{" + [...reactImport].join(",") + "}"
@@ -151,7 +178,7 @@ return storage;
 
 export const renderTemplate = (editors, settings) => {
 	return format(`import { Joi, AutoAdmin, Chance } from 'joi_auto_admin';
-${renderImport(editors)}
+${renderImport(editors, settings)}
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 const chance = new Chance(0);${renderFunction(editors)}
