@@ -1,4 +1,4 @@
-import lodash from "lodash";
+import _ from "lodash";
 import { validateEditor } from "../../logic";
 
 const OMIT_SETTING = ["step"];
@@ -39,12 +39,12 @@ export const cleanTableSettingBeforeTrans = (setting) => {
   }
   const newSetting = { ...setting };
   const omitSetting = [...OMIT_SETTING];
-  if (lodash.get(newSetting.steps, "[0]")) {
+  if (_.get(newSetting.steps, "[0]")) {
     newSetting.steps = newSetting.steps
       .map((item, index) => item.value || `label step ${index + 1}`)
       .join(",");
   }
-  if (!newSetting.steps || !lodash.get(newSetting.steps, "[0]")) {
+  if (!newSetting.steps || !_.get(newSetting.steps, "[0]")) {
     omitSetting.push("steps");
   }
   if (!newSetting.querySchema?.query) {
@@ -54,7 +54,7 @@ export const cleanTableSettingBeforeTrans = (setting) => {
     const schema = [...newSetting.querySchema.schema];
     newSetting.querySchema = schema;
   }
-  return lodash.omit(newSetting, omitSetting);
+  return _.omit(newSetting, omitSetting);
 };
 
 export const cleanFormBeforeTrans = (editor, settingSteps) => {
@@ -80,12 +80,24 @@ export const cleanFormBeforeTrans = (editor, settingSteps) => {
 
 export const validateSchema = (editor) => {
   const validateSchema = validateEditor(editor);
-  const error = lodash.get(validateSchema, "error.details");
-  if (!lodash.get(error, "[0].message")) {
+  const error = _.get(validateSchema, "error.details");
+  if (!_.get(error, "[0].message")) {
     return [true, ""];
   }
   const message = error.map((item) => {
     return `- ${item.message}\n`;
   });
   return [false, message.join(" ")];
+};
+
+export const handleCfLines = (editors, settings) => {
+  if (!settings?.cfLine?.length) return editors;
+  var ans = _.cloneDeep(editors);
+  var editorKey = _.keyBy(ans, "_id");
+  for (var line of settings.cfLine) {
+    var field = editorKey[line.field];
+    var dropdown = editorKey[line.dropdown];
+    if (field && dropdown) field.conditional = [dropdown.name, line.equal];
+  }
+  return ans;
 };

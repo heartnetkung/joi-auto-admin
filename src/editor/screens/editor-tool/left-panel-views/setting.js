@@ -29,6 +29,7 @@ import {
 } from "./data-field";
 import * as styles from "./styles";
 import * as logic from "./logic";
+import ConditionalField from "./conditional_field";
 
 const RenderSetting = (props) => {
   const { settingState, setSettingState } = props;
@@ -79,6 +80,12 @@ const RenderSetting = (props) => {
       newSettings.querySchema.schema = [...getInitRowQuerySchema()];
     }
     newSettings.querySchema.query = !newSettings.querySchema.query;
+    setSettingState(newSettings);
+  };
+
+  const onChangeConditionalField = () => {
+    const newSettings = { ...settingState };
+    newSettings.conditionalField = !settingState.conditionalField;
     setSettingState(newSettings);
   };
 
@@ -163,7 +170,10 @@ const RenderSetting = (props) => {
         <div>
           <Typography.Title level={5}>
             Multi-step Form
-            <Tooltip title='For complex form, you can divide your form into multiple steps. After you specify all step names, go back to your "Fields" panel to specify each respective step.'>
+            <Tooltip
+              overlayInnerStyle={{ width: 400 }}
+              title='For complex form, you can divide your form into multiple steps. After you specify all step names, go to "Fields" panel to specify each respective step.'
+            >
               <QuestionCircleOutlined
                 style={{ marginLeft: 10, color: "#ccc" }}
               />
@@ -210,8 +220,32 @@ const RenderSetting = (props) => {
         <Divider />
         <div>
           <Typography.Title level={5}>
+            Conditional Fields
+            <Tooltip
+              overlayInnerStyle={{ width: 400 }}
+              title="Some forms contain subsection that should be filled only when certain conditions are met. For example, the form may ask about the number of your children. This field should only show when your marriage status is 'married' or 'divorced' but not 'single'."
+            >
+              <QuestionCircleOutlined
+                style={{ marginLeft: 10, color: "#ccc" }}
+              />
+            </Tooltip>
+          </Typography.Title>
+          <Checkbox
+            checked={settingState.conditionalField || false}
+            onChange={() => onChangeConditionalField()}
+          >
+            enable conditional fields
+          </Checkbox>
+          {settingState.conditionalField && <ConditionalField {...props} />}
+        </div>
+        <Divider />
+        <div>
+          <Typography.Title level={5}>
             Table Query
-            <Tooltip title="You can specify the query used for table data. The query won't take effect here, rather you would use it when you implement 'getMany' function.">
+            <Tooltip
+              overlayInnerStyle={{ width: 400 }}
+              title="You can specify the query used for table data. The query won't take effect here, rather you would use it when you implement 'getMany' function."
+            >
               <QuestionCircleOutlined
                 style={{ marginLeft: 10, color: "#ccc" }}
               />

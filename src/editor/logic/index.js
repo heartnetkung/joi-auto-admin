@@ -8,6 +8,7 @@ import _ from "lodash";
 import { Spin } from "antd";
 
 const editorSchemaInner = Joi.object({
+	_id: Joi.any(),
 	name: Joi.string().required().min(1),
 	label: Joi.string().required().min(1),
 	fieldType: Joi.string()
@@ -53,6 +54,7 @@ const editorSchemaInner = Joi.object({
 	disableSorting: Joi.boolean(),
 	disableFilter: Joi.boolean(),
 	appendDivider: Joi.boolean(),
+	conditional: Joi.array(),
 });
 
 const editorSchema1 = Joi.array()

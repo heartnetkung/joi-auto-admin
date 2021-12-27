@@ -1,6 +1,6 @@
 import { Joi } from "../../lib";
 import _ from "lodash";
-import { raw, softEval, func, regex } from "./util";
+import { raw, softEval, func, regex, showRaw } from "./util";
 import toSource from "tosource";
 import { DependentComp, AsyncDropdown, THAddress } from "./custom_component";
 
@@ -206,22 +206,13 @@ return id;}`,
 			};
 			break;
 		case "dropdown":
-			suffix.push({ name: "valid", args: [
-					"pizza",
-					"steak",
-					"sushi",
-					"hamburger",
-					"noodles",
-				] });
+			suffix.push({
+				name: "valid",
+				args: ["pizza", "steak", "sushi", "hamburger", "noodles"],
+			});
 			editor = {
 				...editor,
-				validLabel: [
-					"Pizza",
-					"Steak",
-					"Sushi",
-					"Hamburger",
-					"Noodles",
-				],
+				validLabel: ["Pizza", "Steak", "Sushi", "Hamburger", "Noodles"],
 			};
 			break;
 		case "upload|multiple images":
@@ -316,6 +307,8 @@ return "https://www.gravatar.com/avatar/1"}`,
 		"extraMargin",
 		"name",
 		"columnWidth",
+		"_id",
+		"conditional",
 	]);
 	if (editor.extraMargin)
 		meta.containerStyle = _.assign(meta.containerStyle, {
@@ -324,6 +317,25 @@ return "https://www.gravatar.com/avatar/1"}`,
 	if (editor.columnWidth) meta.cellWidth = editor.columnWidth;
 	if (newFieldType) meta.fieldType = newFieldType;
 	if (!meta.placeholder) delete meta.placeholder;
+	if (editor.conditional) {
+		if (!editor.fieldHide)
+			meta.fieldHide = func(
+				`(a)=>a["${editor.conditional[0]}"]!=="${editor.conditional[1]}"`,
+				isObj
+			);
+		else if (isObj) {
+			const original = meta.fieldHide;
+			meta.fieldHide = (a) =>
+				original(a) ||
+				a[editor.conditional[0]] !== editor.conditional[1];
+		} else {
+			meta.fieldHide = func(
+				showRaw(meta.fieldHide, isObj) +
+					`||(a["${editor.conditional[0]}"]!=="${editor.conditional[1]}")`,
+				isObj
+			);
+		}
+	}
 	if (settings.steps) meta.step = meta.step || 0;
 	else delete meta.step;
 
@@ -347,11 +359,12 @@ export const makeExtraJoiLines = (editor, settings, isObj) => {
 		"columnWidth",
 		"disableSorting",
 		"disableFilter",
+		"conditional",
 	]);
 	const obj = {
 		...extend,
 		fieldHide: !isObj
-			? raw(`a=>a['${name}']?!a['${name}'].$notFound:true`, isObj)
+			? raw(`a=>(a['${name}']?!a['${name}'].$notFound:true)`, isObj)
 			: (a) => (a[name] ? !a[name].$notFound : true),
 		twoColumn: true,
 	};

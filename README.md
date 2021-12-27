@@ -79,8 +79,8 @@ Once you are familiar with our tool, the process of writing your admin site shou
   - To customize **form**, use the following fields:
     - `.meta({ fieldType: string })`
       - Useful ones are `InputPhone`, `InputEmail`, `InputURL`. The rest are automatic depending on other parameters, for example, boolean would be checkbox.
-    - `.meta({ fieldHide: boolean | (formValue, currentStep)=>boolean })`
-      - Hide the current field. Useful for making interactive or multi-step form.
+    - `.meta({ fieldHide: boolean | (formValue)=>boolean })`
+      - Hide the current field.
     - `.meta({ twoColumn: boolean })`
       - Show the form input in half size, so you can stack 2 fields in the same line.
     - `.meta({ step: number })`

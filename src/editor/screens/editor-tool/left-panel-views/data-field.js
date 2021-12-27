@@ -7,23 +7,26 @@ const generateId = () => {
 export const getInitRowField = () => {
   const initRows = [{ ...rowField }, { ...rowField }, { ...rowField }];
   return initRows.map((item) => {
-    const id = generateId();
+    const _id = generateId();
     return {
       ...item,
-      name: "name-" + id,
-      label: "label-" + id,
+      _id: `not-found-${_id}`,
+      name: `name-${_id}`,
+      label: `label-${_id}`,
     };
   });
 };
 
 export const getSingleRow = (stepOptions) => {
-  const row = { ...rowField };
-  const id = generateId();
-  row.name = rowField.name + `-${id}`;
-  row.label = rowField.label + `-${id}`;
-  if (lodash.get(stepOptions, "[0]")) {
+  const _id = generateId();
+  const row = {
+    ...rowField,
+    _id: `not-found-${_id}`,
+    name: `name-${_id}`,
+    label: `label-${_id}`,
+  };
+  if (lodash.get(stepOptions, "[0]"))
     row.step = lodash.get(stepOptions, "[0].value");
-  }
   return row;
 };
 
