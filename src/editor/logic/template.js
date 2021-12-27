@@ -31,7 +31,7 @@ export const renderJoi = (editors, settings, isComp) => {
 
 export const renderProps = (editors, settings, isComp) => {
 	const { canCreate, canUpdate, canDelete, querySchema, devMode } = settings;
-	const { rowButton, name } = settings;
+	const { rowButtonExample, name } = settings;
 
 	// required
 	var ans = { name: name || "{tableName}" };
@@ -57,7 +57,7 @@ export const renderProps = (editors, settings, isComp) => {
 	if (canDelete)
 		ans.deleteMany = func("async ()=>{await wait(500);}", isComp);
 	if (canUpdate) ans.updateOne = func("async ()=>{await wait(500);}", isComp);
-	if (rowButton) {
+	if (rowButtonExample) {
 		ans.rowButtons = [
 			{
 				label: "hello",
@@ -133,7 +133,7 @@ export const renderImport = (editors, settings) => {
 		}
 	}
 
-	if (settings.rowButton)
+	if (settings.rowButtonExample)
 		ans.add('import { SmileOutlined } from "@ant-design/icons";');
 
 	const reactString = reactImport.size

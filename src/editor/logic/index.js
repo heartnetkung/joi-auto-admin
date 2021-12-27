@@ -71,7 +71,7 @@ const settingsSchema = Joi.object({
 	disableExcelUpload: Joi.boolean(),
 	uploadPreviewUrl: Joi.string(),
 	largeComponent: Joi.boolean(),
-	rowButton: Joi.boolean(),
+	rowButtonExample: Joi.boolean(),
 	steps: Joi.string(),
 });
 
