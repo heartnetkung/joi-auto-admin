@@ -23,7 +23,7 @@ describe("randomData()", () => {
 				e: false,
 				f: new Date("2101-06-25T04:31:46.678Z"),
 				g: ['a001'],
-				h: "f",
+				h: "hamburger",
 				i: { j: "fizrak" },
 			},
 		];
@@ -47,8 +47,11 @@ describe("genChanceString()", () => {
 		];
 		var output = `()=>{const ans=[]; for(let i=0;i<5;i++)ans.push({"a":chance.natural({ max:30 }),"b":chance.avatar({ protocol:"https" }),"c":chance.pickone([ "0812345678",
     "021111111" ]),"d":chance.email(),"e":chance.bool(),"f":chance.date(),"g":chance.pickone([ [ "a001" ],
-    [ "a002" ] ]),"h":chance.pickone([ "m",
-    "f" ]),"i":{"j":chance.word()}}); return ans;}`;
+    [ "a002" ] ]),"h":chance.pickone([ "pizza",
+    "steak",
+    "sushi",
+    "hamburger",
+    "noodles" ]),"i":{"j":chance.word()}}); return ans;}`;
 		expect(genChanceString(editors, 5)).toEqual(output);
 	});
 });
