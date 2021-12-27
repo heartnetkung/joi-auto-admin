@@ -23,7 +23,7 @@ Here is how you might use it:
 3. Generate React source code and copy it to your codebase. This code is designed to be concise and fully customizable.
 4. Connect to your backend by implementing CRUD functions we left blank for you.
 
-Once you are familiar with our tool, the process of writing your admin site should be done in 1 hour instead of days with added benefit of clean high-quality UI, and virtually no bug.
+Once you are familiar with our tool, the process of writing your admin site should be done in 1 hour instead of days with added benefit of clean high-quality UI, Excel functionality, and virtually no bug.
 
 ## Features
 
