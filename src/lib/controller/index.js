@@ -13,13 +13,12 @@ import Form from "../formik/form";
 import Joi from "joi/lib/index";
 import React from "react";
 import _ from "lodash";
-import { ConfigProvider } from "antd";
 
 const INITIAL_FORM_STATUS = { isEdit: false, initialValue: null, error: null };
 
 const Controller = (props) => {
 	const { getMany, createMany, updateOne, deleteMany, devMode } = props;
-	const { name, description, uploadPreviewUrl, largeComponent } = props;
+	const { name, description, uploadPreviewUrl } = props;
 	const { schema, querySchema, rowButtons, tableScroll, steps } = props;
 	const { disableExcelDownload, disableExcelUpload } = props;
 
@@ -141,7 +140,7 @@ const Controller = (props) => {
 	});
 
 	return (
-		<ConfigProvider componentSize={largeComponent ? "large" : undefined}>
+		<>
 			<Header name={name} description={description} />
 			{querySchema && (
 				<Form
@@ -186,7 +185,7 @@ const Controller = (props) => {
 				steps={steps}
 			/>
 			<ExcelErrorModal {...excelModalControl} errors={excelError} />
-		</ConfigProvider>
+		</>
 	);
 };
 
@@ -202,7 +201,6 @@ Controller.propTypes = {
 	description: PropTypes.string,
 	tableScroll: PropTypes.object,
 	rowButtons: PropTypes.array,
-	largeComponent: PropTypes.bool,
 
 	// form
 	schema: PropTypes.object.isRequired,
@@ -230,7 +228,6 @@ Controller.defaultProps = {
 	uploadPreviewUrl: null,
 	steps: [],
 	devMode: false,
-	largeComponent: false,
 };
 
 export default Controller;

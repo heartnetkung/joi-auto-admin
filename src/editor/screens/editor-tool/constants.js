@@ -14,6 +14,5 @@ export const SETTINGS = [
   "canDelete",
   "disableExcelDownload",
   "disableExcelUpload",
-  "largeComponent",
   "rowButtonExample",
 ];

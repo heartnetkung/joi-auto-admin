@@ -6,7 +6,6 @@ import ReactDOM from "react-dom";
 import Joi from "joi/lib/index";
 import { JoiWrapper } from "../joi/joi_wrapper";
 import { alert } from "./util";
-import { ConfigProvider } from "antd";
 
 export const openFormModal = (props) => {
 	if (!props.schema) throw new Error("schema required");
@@ -27,7 +26,7 @@ export const openFormModal = (props) => {
 };
 
 const FormModal = (props) => {
-	const { onClose, schema, title, onSubmit, steps, largeComponent } = props;
+	const { onClose, schema, title, onSubmit, steps } = props;
 	const [error, setError] = useState(null);
 
 	const onSubmit2 = async (data, actions, originalData) => {
@@ -44,18 +43,16 @@ const FormModal = (props) => {
 	};
 
 	return (
-		<ConfigProvider componentSize={largeComponent ? "large" : undefined}>
-			<EditModal
-				isEdit={false}
-				visible={true}
-				onClose={onClose}
-				schema={schema}
-				steps={steps}
-				createHeader={title}
-				error={error}
-				onSubmit={onSubmit2}
-			/>
-		</ConfigProvider>
+		<EditModal
+			isEdit={false}
+			visible={true}
+			onClose={onClose}
+			schema={schema}
+			steps={steps}
+			createHeader={title}
+			error={error}
+			onSubmit={onSubmit2}
+		/>
 	);
 };
 
@@ -65,11 +62,9 @@ FormModal.propTypes = {
 	onSubmit: PropTypes.func.isRequired,
 	title: PropTypes.string,
 	steps: PropTypes.array,
-	largeComponent: PropTypes.bool,
 };
 
 FormModal.defaultProps = {
 	steps: [],
 	title: null,
-	largeComponent: false,
 };

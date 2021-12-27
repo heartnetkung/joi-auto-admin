@@ -151,7 +151,6 @@ Once you are familiar with our tool, the process of writing your admin site shou
 | uploadPreviewUrl     | if specified, the uploadPreviewButton will download file from this path instead of the first 3 rows of this table                                                    | string                                                                               | null         |
 | description          | description of this table, displayed under title                                                                                                                     | string                                                                               | ''           |
 | steps                | break form into multi steps using `<Steps>` component from antd.                                                                                                     | [string]                                                                             | []           |
-| largeComponent       | enlarge all antd components                                                                                                                                          | boolean                                                                              | false        |
 | devMode              | remove `required` from all fields for easy testing                                                                                                                   | boolean                                                                              | false        |
 
 ## FormModal Props API
@@ -189,5 +188,4 @@ export default App;
 | onSubmit       | form handler                                                     | async(formData)=>any                        | `required`    |
 | title          | title of this form                                               | string                                      | "เพิ่มข้อมูล" |
 | steps          | break form into multi steps using `<Steps>` component from antd. | [string]                                    | []            |
-| largeComponent | enlarge all antd components                                      | boolean                                     | false         |
 | devMode        | remove `required` from all fields for easy testing               | boolean                                     | false         |
