@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   Form,
@@ -32,7 +32,6 @@ const FormFields = (props) => {
   const [dataColumnOptions] = useState(() =>
     logic.createOptions(columnOptions)
   );
-  const ref = useRef();
 
   useEffect(() => {
     if (_.get(settingState?.steps, "[0]")) {
@@ -119,198 +118,193 @@ const FormFields = (props) => {
   };
 
   return (
-    <div ref={ref}>
-      <Form>
-        {formState.length && (
-          <Collapse defaultActiveKey={formState[0].name} accordion>
-            {formState.map((item, index) => (
-              <Collapse.Panel
-                key={item.name}
-                header={logic.getHeader(item)}
-                extra={
-                  <>
-                    <Button
-                      icon={<UpOutlined style={styles.gray} />}
-                      type="text"
-                      onClick={(event) => {
-                        onMoveUp(index);
-                        event.stopPropagation();
-                      }}
-                    />
-                    <Button
-                      icon={<DownOutlined style={styles.gray} />}
-                      type="text"
-                      onClick={(event) => {
-                        onMoveDown(index);
-                        event.stopPropagation();
-                      }}
-                    />
-                    <Button
-                      icon={<DeleteOutlined style={styles.gray} />}
-                      type="text"
-                      onClick={(event) => {
-                        onDeleteField(index);
-                        event.stopPropagation();
-                      }}
-                    />
-                  </>
-                }
-              >
-                <Row style={styles.rowInput}>
-                  <Col flex="90px">
-                    <Typography.Text
-                      style={{
-                        height: 32,
-                        lineHeight: "32px",
-                      }}
-                    >
-                      FieldType
-                    </Typography.Text>
-                  </Col>
-                  <Col flex="auto">
-                    <Cascader
-                      showSearch
-                      allowClear={false}
-                      fieldNames={{ label: "l", value: "l", children: "c" }}
-                      options={fieldTree}
-                      value={item._fieldType}
-                      style={{ width: "100%" }}
-                      dropdownRender={(a) => (
-                        <div className="large-field-type">{a}</div>
-                      )}
-                      onChange={(value) => {
-                        onChangeField(index, "_fieldType", value);
-                        onChangeField(index, "fieldType", value.join("|"));
-                      }}
-                    />
-                  </Col>
-                </Row>
+    <Form>
+      {formState.length && (
+        <Collapse defaultActiveKey={formState[0].name} accordion>
+          {formState.map((item, index) => (
+            <Collapse.Panel
+              key={item.name}
+              header={logic.getHeader(item)}
+              extra={
+                <>
+                  <Button
+                    icon={<UpOutlined style={styles.gray} />}
+                    type="text"
+                    onClick={(event) => {
+                      onMoveUp(index);
+                      event.stopPropagation();
+                    }}
+                  />
+                  <Button
+                    icon={<DownOutlined style={styles.gray} />}
+                    type="text"
+                    onClick={(event) => {
+                      onMoveDown(index);
+                      event.stopPropagation();
+                    }}
+                  />
+                  <Button
+                    icon={<DeleteOutlined style={styles.gray} />}
+                    type="text"
+                    onClick={(event) => {
+                      onDeleteField(index);
+                      event.stopPropagation();
+                    }}
+                  />
+                </>
+              }
+            >
+              <Row style={styles.rowInput}>
+                <Col flex="90px">
+                  <Typography.Text
+                    style={{
+                      height: 32,
+                      lineHeight: "32px",
+                    }}
+                  >
+                    FieldType
+                  </Typography.Text>
+                </Col>
+                <Col flex="auto">
+                  <Cascader
+                    showSearch
+                    allowClear={false}
+                    fieldNames={{ label: "l", value: "l", children: "c" }}
+                    options={fieldTree}
+                    value={item._fieldType}
+                    style={{ width: "100%" }}
+                    dropdownRender={(a) => (
+                      <div className="large-field-type">{a}</div>
+                    )}
+                    onChange={(value) => {
+                      onChangeField(index, "_fieldType", value);
+                      onChangeField(index, "fieldType", value.join("|"));
+                    }}
+                  />
+                </Col>
+              </Row>
+              <Row style={styles.rowInput}>
+                <Col flex="1">
+                  <Input
+                    placeholder="label"
+                    value={item.label}
+                    onChange={(event) =>
+                      onChangeField(index, "label", event.target.value)
+                    }
+                  />
+                </Col>
+                <Col span="1" />
+                <Col flex="1">
+                  <Input
+                    placeholder="name"
+                    value={item.name}
+                    onChange={(event) =>
+                      onChangeField(index, "name", event.target.value)
+                    }
+                  />
+                </Col>
+              </Row>
+              <Row style={styles.rowInput}>
+                <Col flex="1">
+                  <Input
+                    placeholder="placeholder"
+                    value={item.placeholder}
+                    disabled={item.fieldType === "checkbox"}
+                    onChange={(event) =>
+                      onChangeField(index, "placeholder", event.target.value)
+                    }
+                  />
+                </Col>
+                <Col span="1" />
+                <Col flex="1">
+                  <Input
+                    placeholder={
+                      "defaultValue " +
+                      (placeholderDefault[item.fieldType]
+                        ? "ex. " + placeholderDefault[item.fieldType]
+                        : "")
+                    }
+                    disabled={logic.checkIsDisabledDefault(item.fieldType)}
+                    value={item.defaultValue}
+                    onChange={(event) =>
+                      onChangeField(index, "defaultValue", event.target.value)
+                    }
+                  />
+                </Col>
+              </Row>
+              {_.get(settingState?.steps, "[0]") && (
                 <Row style={styles.rowInput}>
                   <Col flex="1">
-                    <Input
-                      placeholder="label"
-                      value={item.label}
-                      onChange={(event) =>
-                        onChangeField(index, "label", event.target.value)
-                      }
-                    />
+                    <Row>
+                      <Col flex="45px">
+                        <Typography.Text
+                          style={{
+                            height: 32,
+                            lineHeight: "32px",
+                          }}
+                        >
+                          Step
+                        </Typography.Text>
+                      </Col>
+                      <Col flex="auto">
+                        <Select
+                          defaultValue={
+                            !_.isNil(item.step)
+                              ? item.step
+                              : settingState.steps[0].value
+                          }
+                          style={{ width: "100%" }}
+                          value={item.step || settingState.steps[0].value}
+                          onChange={(value) =>
+                            onChangeField(index, "step", value)
+                          }
+                        >
+                          {settingState.steps.map((st, si) => (
+                            <Select.Option key={si.toString()} value={st.value}>
+                              {st.value || `step ${si}`}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </Col>
+                    </Row>
                   </Col>
                   <Col span="1" />
-                  <Col flex="1">
-                    <Input
-                      placeholder="name"
-                      value={item.name}
-                      onChange={(event) =>
-                        onChangeField(index, "name", event.target.value)
-                      }
-                    />
-                  </Col>
+                  <Col flex="1"></Col>
                 </Row>
-                <Row style={styles.rowInput}>
-                  <Col flex="1">
-                    <Input
-                      placeholder="placeholder"
-                      value={item.placeholder}
-                      disabled={item.fieldType === "checkbox"}
-                      onChange={(event) =>
-                        onChangeField(index, "placeholder", event.target.value)
-                      }
-                    />
-                  </Col>
-                  <Col span="1" />
-                  <Col flex="1">
-                    <Input
-                      placeholder={
-                        "defaultValue " +
-                        (placeholderDefault[item.fieldType]
-                          ? "ex. " + placeholderDefault[item.fieldType]
-                          : "")
-                      }
-                      disabled={logic.checkIsDisabledDefault(item.fieldType)}
-                      value={item.defaultValue}
-                      onChange={(event) =>
-                        onChangeField(index, "defaultValue", event.target.value)
-                      }
-                    />
-                  </Col>
-                </Row>
-                {_.get(settingState?.steps, "[0]") && (
-                  <Row style={styles.rowInput}>
-                    <Col flex="1">
-                      <Row>
-                        <Col flex="45px">
-                          <Typography.Text
-                            style={{
-                              height: 32,
-                              lineHeight: "32px",
-                            }}
-                          >
-                            Step
-                          </Typography.Text>
-                        </Col>
-                        <Col flex="auto">
-                          <Select
-                            defaultValue={
-                              !_.isNil(item.step)
-                                ? item.step
-                                : settingState.steps[0].value
-                            }
-                            style={{ width: "100%" }}
-                            value={item.step || settingState.steps[0].value}
-                            onChange={(value) =>
-                              onChangeField(index, "step", value)
-                            }
-                          >
-                            {settingState.steps.map((st, si) => (
-                              <Select.Option
-                                key={si.toString()}
-                                value={st.value}
-                              >
-                                {st.value || `step ${si}`}
-                              </Select.Option>
-                            ))}
-                          </Select>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col span="1" />
-                    <Col flex="1"></Col>
-                  </Row>
-                )}
-                <Checkbox.Group
-                  options={dataFieldOptions || []}
-                  onChange={(option) => onChangeConfig("field", index, option)}
-                  style={{ marginTop: 10 }}
-                />
-                <Divider type="horizontal" />
-                <Row>
-                  <Col span="15">
-                    <Checkbox.Group
-                      options={dataColumnOptions || []}
-                      onChange={(option) =>
-                        onChangeConfig("column", index, option)
-                      }
-                      style={{ marginBottom: "1rem", lineHeight: "32px" }}
-                    />
-                  </Col>
-                  <Col span="1" />
-                  <Col span="8">
-                    <Input
-                      type="number"
-                      placeholder="columnWidth"
-                      value={item.columnWidth}
-                      onChange={(event) =>
-                        onChangeField(index, "columnWidth", event.target.value)
-                      }
-                    />
-                  </Col>
-                </Row>
-              </Collapse.Panel>
-            ))}
-          </Collapse>
-        )}
-      </Form>
-    </div>
+              )}
+              <Checkbox.Group
+                options={dataFieldOptions || []}
+                onChange={(option) => onChangeConfig("field", index, option)}
+                style={{ marginTop: 10 }}
+              />
+              <Divider type="horizontal" />
+              <Row>
+                <Col span="15">
+                  <Checkbox.Group
+                    options={dataColumnOptions || []}
+                    onChange={(option) =>
+                      onChangeConfig("column", index, option)
+                    }
+                    style={{ marginBottom: "1rem", lineHeight: "32px" }}
+                  />
+                </Col>
+                <Col span="1" />
+                <Col span="8">
+                  <Input
+                    type="number"
+                    placeholder="columnWidth"
+                    value={item.columnWidth}
+                    onChange={(event) =>
+                      onChangeField(index, "columnWidth", event.target.value)
+                    }
+                  />
+                </Col>
+              </Row>
+            </Collapse.Panel>
+          ))}
+        </Collapse>
+      )}
+    </Form>
   );
 };
 

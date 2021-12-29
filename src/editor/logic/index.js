@@ -124,18 +124,9 @@ export const App = (props) => {
 	return <AutoAdmin {...props2} />;
 };
 App.propTypes = {
-	editors: PropTypes.array,
+	editors: PropTypes.array.isRequired,
 	settings: PropTypes.object,
 };
 App.defaultProps = {
-	editors: [
-		{
-			name: "hello.abc",
-			label: "helloName",
-			require: true,
-			defaultValue: "a",
-			extraMargin: true,
-		},
-	],
 	settings: null,
 };

@@ -8,7 +8,7 @@ import _ from "lodash";
 
 const LeftPanelView = (props) => {
   const { view } = props;
-  const otherProps = _.omit({ ...(props && props) }, ["view"]) || {};
+  const otherProps = _.omit(props, ["view"]) || {};
 
   if (view === MENU_FORM.setting) {
     return (
