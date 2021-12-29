@@ -3,6 +3,7 @@ import _ from "lodash";
 import { raw, softEval, func, regex, showRaw } from "./util";
 import toSource from "tosource";
 import { DependentComp, AsyncDropdown, THAddress } from "./custom_component";
+import { lookupLabel } from "./lookup_label";
 
 const makeObject = (joiList) => {
 	var ans = Joi;
@@ -288,7 +289,7 @@ return "https://www.gravatar.com/avatar/1"}`,
 		default:
 			break;
 	}
-	ans.push({ name: type }, { name: "label", args: [editor.label] });
+	ans.push({ name: type }, { name: "label", args: [lookupLabel(editor)] });
 
 	if (editor.require) ans.push({ name: "required" });
 	if (editor.defaultValue)

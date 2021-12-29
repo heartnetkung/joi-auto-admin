@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { disabledDefaultList } from "./data-field";
+import { lookupLabel } from "../../../logic/lookup_label";
 
 export const checkIsDisabledDefault = (type) => {
   const findDisabledIndex = disabledDefaultList.findIndex((v) => v === type);
@@ -36,25 +37,23 @@ export const createConfig = (index, options, newForm, dataOptions) => {
   return newForm;
 };
 
-
 export const createStepOptions = () => {
-  const options = [{ label: 'No step', value: 'No step' }];
+  const options = [{ label: "No step", value: "No step" }];
   for (let i = 2; i <= 20; i++) {
-    options.push({ label: i + ' step', value: i })
+    options.push({ label: i + " step", value: i });
   }
   return options;
-}
+};
 
 export const getDefaultBooleanConfig = (options) => {
   if (!Array.isArray(options)) {
     return options;
   }
-  return options.find(item => item.label === 'extraMargin')
-}
+  return options.find((item) => item.label === "extraMargin");
+};
 
-export const getHeader = (name, step) => {
-  if (!step && step !== 0) {
-    return name;
-  }
-  return `${name} (${step})`
-}
+export const getHeader = (item) => {
+  var name = lookupLabel(item);
+  if (!item.step && item.step !== 0) return name;
+  return `${name} (${item.step})`;
+};

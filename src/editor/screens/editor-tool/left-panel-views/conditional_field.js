@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { PlusOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { Row, Col, Select, Button } from "antd";
+import { lookupLabel } from "../../../logic/lookup_label";
 
 const ConditionalField = (props) => {
 	const { formState, setSettingState, settingState } = props;
@@ -26,8 +27,11 @@ const ConditionalField = (props) => {
 		() => ({
 			dropdowns: formState
 				.filter((a) => a.fieldType === "dropdown")
-				.map((a) => ({ label: a.label, value: a._id })),
-			fields: formState.map((a) => ({ label: a.label, value: a._id })),
+				.map((a) => ({ label: lookupLabel(a), value: a._id })),
+			fields: formState.map((a) => ({
+				label: lookupLabel(a),
+				value: a._id,
+			})),
 		}),
 		[formState]
 	);

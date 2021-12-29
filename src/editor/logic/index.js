@@ -8,9 +8,9 @@ import _ from "lodash";
 import { Spin } from "antd";
 
 const editorSchemaInner = Joi.object({
-	_id: Joi.any(),
+	_id: Joi.string().required(),
 	name: Joi.string().required().min(1),
-	label: Joi.string().required().min(1),
+	label: Joi.string(),
 	fieldType: Joi.string()
 		.required()
 		.valid(

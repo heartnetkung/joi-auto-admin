@@ -64,11 +64,8 @@ export const cleanFormBeforeTrans = (editor, settingSteps) => {
   const schema = editor.map((item, index) => {
     let row = { ...item };
     row.step = findStep(settingSteps, item.step);
-    if (!item.label) {
-      row.label = `label_${index}`;
-    }
     if (!item.name) {
-      row.name = `name_${index}`;
+      row.name = `name-${index}`;
     }
     if (item.columnWidth) {
       row.columnWidth = cleanColWidth(item.columnWidth);

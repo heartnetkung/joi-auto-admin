@@ -126,7 +126,7 @@ const FormFields = (props) => {
             {formState.map((item, index) => (
               <Collapse.Panel
                 key={item.name}
-                header={logic.getHeader(item.label, item.step)}
+                header={logic.getHeader(item)}
                 extra={
                   <>
                     <Button

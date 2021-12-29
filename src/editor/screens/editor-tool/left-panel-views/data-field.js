@@ -1,30 +1,20 @@
 import lodash from "lodash";
 
 const generateId = () => {
-  return Math.floor(Math.random() * 90000) + 10000;
+  return Math.floor(Math.random() * 90000) + 10000 + "";
 };
 
 export const getInitRowField = () => {
   const initRows = [{ ...rowField }, { ...rowField }, { ...rowField }];
   return initRows.map((item) => {
     const _id = generateId();
-    return {
-      ...item,
-      _id: `not-found-${_id}`,
-      name: `name-${_id}`,
-      label: `label-${_id}`,
-    };
+    return { ...item, _id, name: `name-${_id}` };
   });
 };
 
 export const getSingleRow = (stepOptions) => {
   const _id = generateId();
-  const row = {
-    ...rowField,
-    _id: `not-found-${_id}`,
-    name: `name-${_id}`,
-    label: `label-${_id}`,
-  };
+  const row = { ...rowField, _id, name: `name-${_id}` };
   if (lodash.get(stepOptions, "[0]"))
     row.step = lodash.get(stepOptions, "[0].value");
   return row;
@@ -33,26 +23,18 @@ export const getSingleRow = (stepOptions) => {
 export const getInitRowQuerySchema = () => {
   const initRows = [{ ...rowQuerySchema }];
   return initRows.map((item) => {
-    const id = generateId();
-    return {
-      ...item,
-      name: "name-" + id,
-      label: "label-" + id,
-    };
+    const _id = generateId();
+    return { ...item, _id, name: `name-${_id}` };
   });
 };
 
 export const getSingleRowQuerySchema = () => {
-  const row = { ...rowQuerySchema };
-  const id = generateId();
-  row.name = rowQuerySchema.name + `-${id}`;
-  row.label = rowQuerySchema.label + `-${id}`;
-  return row;
+  const _id = generateId();
+  return { ...rowQuerySchema, _id, name: `name-${_id}` };
 };
 
 export const rowField = {
   name: "name",
-  label: "label",
   fieldType: "input",
   _fieldType: ["input"],
   placeholder: "",
@@ -70,7 +52,6 @@ export const rowField = {
 
 export const rowQuerySchema = {
   name: "name",
-  label: "label",
   fieldType: "input",
   placeholder: "",
 };
@@ -106,11 +87,7 @@ export const fieldOptions = [
   "appendDivider",
 ];
 
-export const columnOptions = [
-  "columnHide",
-  "disableSorting",
-  "disableFilter",
-];
+export const columnOptions = ["columnHide", "disableSorting", "disableFilter"];
 
 export const fieldTree = [
   { l: "input" },
