@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { Row, Col, Typography, Button } from "antd";
-import lodash from "lodash";
+import _ from "lodash";
 import { PlusOutlined } from "@ant-design/icons";
 import MenuView from "./views/menu";
 import MenuFormView from "./views/menu-form";
@@ -47,13 +47,13 @@ const EditorScreen = () => {
   });
 
   useEffect(() => {
-    if (lodash.get(settingState, "name")) {
+    if (_.get(settingState, "name")) {
       debounceTableTrans();
     }
   }, [settingState]);
 
   useEffect(() => {
-    if (lodash.get(formState, "[0]")) {
+    if (_.get(formState, "[0]")) {
       debounceSchemaTrans();
     }
   }, [formState]);
@@ -79,8 +79,8 @@ const EditorScreen = () => {
     setFormState(newForm);
   };
 
-  const debounceTableTrans = lodash.debounce(onSettingChange, DELAY_TIMER);
-  const debounceSchemaTrans = lodash.debounce(onFormSchemaChange, DELAY_TIMER);
+  const debounceTableTrans = _.debounce(onSettingChange, DELAY_TIMER);
+  const debounceSchemaTrans = _.debounce(onFormSchemaChange, DELAY_TIMER);
 
   const onEventResetForm = () => {
     setSettingState({

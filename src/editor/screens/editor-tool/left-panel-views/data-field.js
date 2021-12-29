@@ -1,4 +1,4 @@
-import lodash from "lodash";
+import _ from "lodash";
 
 const generateId = () => {
   return Math.floor(Math.random() * 90000) + 10000 + "";
@@ -15,8 +15,8 @@ export const getInitRowField = () => {
 export const getSingleRow = (stepOptions) => {
   const _id = generateId();
   const row = { ...rowField, _id, name: `name-${_id}` };
-  if (lodash.get(stepOptions, "[0]"))
-    row.step = lodash.get(stepOptions, "[0].value");
+  if (_.get(stepOptions, "[0]"))
+    row.step = _.get(stepOptions, "[0].value");
   return row;
 };
 
