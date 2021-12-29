@@ -157,30 +157,7 @@ const FormFields = (props) => {
                 }
               >
                 <Row style={styles.rowInput}>
-                  <Col flex="1">
-                    <Input
-                      placeholder="label"
-                      value={item.label}
-                      onChange={(event) =>
-                        onChangeField(index, "label", event.target.value)
-                      }
-                    />
-                  </Col>
-                  <Col span="1" />
-                  <Col flex="1">
-                    <Input
-                      placeholder="name"
-                      value={item.name}
-                      onChange={(event) =>
-                        onChangeField(index, "name", event.target.value)
-                      }
-                    />
-                  </Col>
-                </Row>
-                <Row style={styles.rowInput}>
-                  <Col flex="1">
-                    <Row>
-                      <Col flex="75px">
+                  <Col flex="90px">
                         <Typography.Text
                           style={{
                             height: 32,
@@ -207,7 +184,38 @@ const FormFields = (props) => {
                           }}
                         />
                       </Col>
-                    </Row>
+                </Row>
+                <Row style={styles.rowInput}>
+                  <Col flex="1">
+                    <Input
+                      placeholder="label"
+                      value={item.label}
+                      onChange={(event) =>
+                        onChangeField(index, "label", event.target.value)
+                      }
+                    />
+                  </Col>
+                  <Col span="1" />
+                  <Col flex="1">
+                    <Input
+                      placeholder="name"
+                      value={item.name}
+                      onChange={(event) =>
+                        onChangeField(index, "name", event.target.value)
+                      }
+                    />
+                  </Col>
+                </Row>
+                <Row style={styles.rowInput}>
+                  <Col flex="1">
+                  <Input
+                      placeholder="placeholder"
+                      value={item.placeholder}
+                      disabled={item.fieldType === "checkbox"}
+                      onChange={(event) =>
+                        onChangeField(index, "placeholder", event.target.value)
+                      }
+                    />
                   </Col>
                   <Col span="1" />
                   <Col flex="1">
@@ -227,17 +235,6 @@ const FormFields = (props) => {
                   </Col>
                 </Row>
                 <Row style={styles.rowInput}>
-                  <Col flex="1">
-                    <Input
-                      placeholder="placeholder"
-                      value={item.placeholder}
-                      disabled={item.fieldType === "checkbox"}
-                      onChange={(event) =>
-                        onChangeField(index, "placeholder", event.target.value)
-                      }
-                    />
-                  </Col>
-                  <Col span="1" />
                   <Col flex="1">
                     {_.get(settingState?.steps, "[0]") && (
                       <Row>
@@ -276,6 +273,9 @@ const FormFields = (props) => {
                         </Col>
                       </Row>
                     )}
+                  </Col>
+                  <Col span="1" />
+                  <Col flex="1">
                   </Col>
                 </Row>
                 <Checkbox.Group
