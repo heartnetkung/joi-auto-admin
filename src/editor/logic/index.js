@@ -49,7 +49,6 @@ const editorSchemaInner = Joi.object({
 	twoColumn: Joi.boolean(),
 	extraMargin: Joi.boolean(),
 	columnWidth: Joi.number(),
-	cellEllipsis: Joi.boolean(),
 	columnHide: Joi.boolean(),
 	disableSorting: Joi.boolean(),
 	disableFilter: Joi.boolean(),

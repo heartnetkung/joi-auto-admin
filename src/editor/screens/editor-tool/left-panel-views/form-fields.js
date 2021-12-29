@@ -158,32 +158,32 @@ const FormFields = (props) => {
               >
                 <Row style={styles.rowInput}>
                   <Col flex="90px">
-                        <Typography.Text
-                          style={{
-                            height: 32,
-                            lineHeight: "32px",
-                          }}
-                        >
-                          FieldType
-                        </Typography.Text>
-                      </Col>
-                      <Col flex="auto">
-                        <Cascader
-                          showSearch
-                          allowClear={false}
-                          fieldNames={{ label: "l", value: "l", children: "c" }}
-                          options={fieldTree}
-                          value={item._fieldType}
-                          style={{ width: "100%" }}
-                          dropdownRender={(a) => (
-                            <div className="large-field-type">{a}</div>
-                          )}
-                          onChange={(value) => {
-                            onChangeField(index, "_fieldType", value);
-                            onChangeField(index, "fieldType", value.join("|"));
-                          }}
-                        />
-                      </Col>
+                    <Typography.Text
+                      style={{
+                        height: 32,
+                        lineHeight: "32px",
+                      }}
+                    >
+                      FieldType
+                    </Typography.Text>
+                  </Col>
+                  <Col flex="auto">
+                    <Cascader
+                      showSearch
+                      allowClear={false}
+                      fieldNames={{ label: "l", value: "l", children: "c" }}
+                      options={fieldTree}
+                      value={item._fieldType}
+                      style={{ width: "100%" }}
+                      dropdownRender={(a) => (
+                        <div className="large-field-type">{a}</div>
+                      )}
+                      onChange={(value) => {
+                        onChangeField(index, "_fieldType", value);
+                        onChangeField(index, "fieldType", value.join("|"));
+                      }}
+                    />
+                  </Col>
                 </Row>
                 <Row style={styles.rowInput}>
                   <Col flex="1">
@@ -208,7 +208,7 @@ const FormFields = (props) => {
                 </Row>
                 <Row style={styles.rowInput}>
                   <Col flex="1">
-                  <Input
+                    <Input
                       placeholder="placeholder"
                       value={item.placeholder}
                       disabled={item.fieldType === "checkbox"}
@@ -234,9 +234,9 @@ const FormFields = (props) => {
                     />
                   </Col>
                 </Row>
-                <Row style={styles.rowInput}>
-                  <Col flex="1">
-                    {_.get(settingState?.steps, "[0]") && (
+                {_.get(settingState?.steps, "[0]") && (
+                  <Row style={styles.rowInput}>
+                    <Col flex="1">
                       <Row>
                         <Col flex="45px">
                           <Typography.Text
@@ -272,19 +272,29 @@ const FormFields = (props) => {
                           </Select>
                         </Col>
                       </Row>
-                    )}
-                  </Col>
-                  <Col span="1" />
-                  <Col flex="1">
-                  </Col>
-                </Row>
+                    </Col>
+                    <Col span="1" />
+                    <Col flex="1"></Col>
+                  </Row>
+                )}
                 <Checkbox.Group
                   options={dataFieldOptions || []}
                   onChange={(option) => onChangeConfig("field", index, option)}
+                  style={{ marginTop: 10 }}
                 />
                 <Divider type="horizontal" />
-                <Row style={{ marginBottom: "1rem" }}>
-                  <Col span="12">
+                <Row>
+                  <Col span="15">
+                    <Checkbox.Group
+                      options={dataColumnOptions || []}
+                      onChange={(option) =>
+                        onChangeConfig("column", index, option)
+                      }
+                      style={{ marginBottom: "1rem", lineHeight: "32px" }}
+                    />
+                  </Col>
+                  <Col span="1" />
+                  <Col span="8">
                     <Input
                       type="number"
                       placeholder="columnWidth"
@@ -295,10 +305,6 @@ const FormFields = (props) => {
                     />
                   </Col>
                 </Row>
-                <Checkbox.Group
-                  options={dataColumnOptions || []}
-                  onChange={(option) => onChangeConfig("column", index, option)}
-                />
               </Collapse.Panel>
             ))}
           </Collapse>

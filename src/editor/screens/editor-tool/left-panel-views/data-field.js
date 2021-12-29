@@ -63,7 +63,6 @@ export const rowField = {
   twoColumn: false,
   extraMargin: false,
   columnWidth: "",
-  cellEllipsis: false,
   columnHide: false,
   disabledSorting: false,
   disableFilter: false,
@@ -108,7 +107,6 @@ export const fieldOptions = [
 ];
 
 export const columnOptions = [
-  "cellEllipsis",
   "columnHide",
   "disableSorting",
   "disableFilter",
