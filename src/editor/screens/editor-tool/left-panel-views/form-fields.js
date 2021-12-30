@@ -102,7 +102,7 @@ const FormFields = (props) => {
       return;
     }
     let newForm = [...formState];
-    if (!newForm[index] || !newForm[index]?.hasOwnProperty(key)) {
+    if (!newForm[index]) {
       return;
     }
     newForm[index][key] = value;
