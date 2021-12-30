@@ -2,13 +2,7 @@ import { useState } from "react";
 import { setNestedObjectValues } from "formik";
 
 export const calculateSpan = (formSpec, isInline) => {
-	if (isInline)
-		return formSpec.map((a) => ({
-			...a,
-			colSpan: 8,
-			labelCol: { span: 10 },
-			wrapperCol: { span: 14 },
-		}));
+	if (isInline) return formSpec.map((a) => ({ ...a, colSpan: -1 }));
 
 	var ans = [];
 	var isPreviousLeft = false;

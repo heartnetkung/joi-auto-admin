@@ -25,17 +25,17 @@ const CombinedForm = (props) => {
 		await onSubmit(ans, actions, postData);
 	});
 
+	const formProp = inline
+		? {}
+		: { labelCol: { span: 4 }, wrapperCol: { span: 18 }, colon: true };
+
 	return (
 		<Formik
 			initialValues={initialValues || schema.toDefaultValues()}
 			onSubmit={onSubmit2}
 		>
 			{() => (
-				<Form
-					labelCol={{ span: 4 }}
-					wrapperCol={{ span: 18 }}
-					colon={!inline}
-				>
+				<Form {...formProp}>
 					{steps.length ? (
 						<Row style={{ marginBottom: 40, marginTop: 20 }}>
 							<Col offset={2} span={20}>
@@ -48,14 +48,17 @@ const CombinedForm = (props) => {
 						</Row>
 					) : null}
 
-					<Row gutter={8} justify={inline ? "center" : undefined}>
+					<Row
+						gutter={inline ? 20 : 8}
+						justify={inline ? "center" : undefined}
+					>
 						<InnerForm
 							formSpec={schema.formSpec}
 							currentStep={currentStep}
 							inline={inline}
 						/>
 						{inline && (
-							<Col span={4}>
+							<Col span={3}>
 								<SubmitButton
 									type="primary"
 									style={{ marginBottom: 24 }}
