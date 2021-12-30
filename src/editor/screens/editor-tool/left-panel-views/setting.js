@@ -244,7 +244,7 @@ const RenderSetting = (props) => {
             Table Query
             <Tooltip
               overlayInnerStyle={{ width: 400 }}
-              title="You can specify the query used for table data. The query won't take effect here, rather you would use it when you implement 'getMany' function."
+              title="You can specify the query used for table data. First, design your UI below. Then, implement the query logic in 'getMany' function later on."
             >
               <QuestionCircleOutlined
                 style={{ marginLeft: 10, color: "#ccc" }}
