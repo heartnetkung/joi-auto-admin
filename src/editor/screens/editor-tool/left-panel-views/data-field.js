@@ -15,8 +15,7 @@ export const getInitRowField = () => {
 export const getSingleRow = (stepOptions) => {
   const _id = generateId();
   const row = { ...rowField, _id, name: `name-${_id}` };
-  if (_.get(stepOptions, "[0]"))
-    row.step = _.get(stepOptions, "[0].value");
+  if (_.get(stepOptions, "[0]")) row.step = _.get(stepOptions, "[0].value");
   return row;
 };
 
@@ -56,7 +55,7 @@ export const rowQuerySchema = {
   placeholder: "",
 };
 
-export const disabledDefaultList = [
+export const disabledDefaultSet = new Set([
   "common|barcode scanner",
   "upload|single file",
   "upload|multiple images",
@@ -66,7 +65,18 @@ export const disabledDefaultList = [
   "custom component|dependent input example",
   "custom component|async searchable dropdown",
   "common|password",
-];
+  "hierarchical dropdown|static option, allow modify",
+  "hierarchical dropdown|static option, no modify",
+  "hierarchical dropdown|async option",
+]);
+
+export const disabledPlaceholderSet = new Set([
+  "checkbox",
+  "upload|single file",
+  "upload|multiple images",
+  "upload|firebase",
+  "upload|google cloud storage",
+]);
 
 export const placeholderDefault = {
   checkbox: "true/false",

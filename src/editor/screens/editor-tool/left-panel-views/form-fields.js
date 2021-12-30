@@ -20,6 +20,8 @@ import {
   getSingleRow,
   placeholderDefault,
   fieldTree,
+  disabledDefaultSet,
+  disabledPlaceholderSet,
 } from "./data-field";
 import * as styles from "./styles";
 import * as logic from "./logic";
@@ -104,7 +106,7 @@ const FormFields = (props) => {
       return;
     }
     newForm[index][key] = value;
-    if (key === "fieldType" && logic.checkIsDisabledDefault(value)) {
+    if (key === "fieldType" && disabledDefaultSet.has(value)) {
       newForm[index].defaultValue = "";
     }
     setFormState([...newForm]);
@@ -209,7 +211,7 @@ const FormFields = (props) => {
                   <Input
                     placeholder="placeholder"
                     value={item.placeholder}
-                    disabled={item.fieldType === "checkbox"}
+                    disabled={disabledPlaceholderSet.has(item.fieldType)}
                     onChange={(event) =>
                       onChangeField(index, "placeholder", event.target.value)
                     }
@@ -224,7 +226,7 @@ const FormFields = (props) => {
                         ? "ex. " + placeholderDefault[item.fieldType]
                         : "")
                     }
-                    disabled={logic.checkIsDisabledDefault(item.fieldType)}
+                    disabled={disabledDefaultSet.has(item.fieldType)}
                     value={item.defaultValue}
                     onChange={(event) =>
                       onChangeField(index, "defaultValue", event.target.value)

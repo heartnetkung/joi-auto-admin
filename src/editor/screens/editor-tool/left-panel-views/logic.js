@@ -1,11 +1,5 @@
 import _ from "lodash";
-import { disabledDefaultList } from "./data-field";
 import { lookupLabel } from "../../../logic/lookup_label";
-
-export const checkIsDisabledDefault = (type) => {
-  const findDisabledIndex = disabledDefaultList.findIndex((v) => v === type);
-  return findDisabledIndex > -1;
-};
 
 export const createOptions = (options) => {
   if (!Array.isArray(options)) {
