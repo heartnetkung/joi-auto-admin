@@ -47,7 +47,7 @@
     "prettier": "^2.5.0",
     "prop-types": "^15.7.2",
     "react": "16.13.1",
-    "react-code-blocks": "^0.0.9-0",
+    "react-code-blocks": "heartnetkung/react-code-blocks",
     "react-dom": "16.13.1",
     "react-scripts": "4.0.3",
     "tosource": "^2.0.0-alpha.3"
