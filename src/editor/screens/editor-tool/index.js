@@ -105,7 +105,7 @@ const EditorScreen = () => {
             level={3}
             style={{ position: "absolute", left: "1rem", top: 6 }}
           >
-            joi-auto-admin Generator
+            Joi-auto-admin Generator
           </Typography.Title>
         </Col>
         <Col flex="1">
