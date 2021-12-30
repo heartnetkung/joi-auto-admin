@@ -172,7 +172,7 @@ const RenderSetting = (props) => {
             Multi-step Form
             <Tooltip
               overlayInnerStyle={{ width: 400 }}
-              title='For complex form, you can divide your form into multiple steps. After you specify all step names, go to "Fields" panel to specify each respective step.'
+              title='For complex form, you can divide your form into multiple steps. First, specify all the step names below. Then, go to "Fields" panel to assign each field to their respective step.'
             >
               <QuestionCircleOutlined
                 style={{ marginLeft: 10, color: "#ccc" }}
@@ -223,7 +223,7 @@ const RenderSetting = (props) => {
             Conditional Fields
             <Tooltip
               overlayInnerStyle={{ width: 400 }}
-              title="Some forms contain subsection that should be filled only when certain conditions are met. For example, the form may ask about the number of your children. This field should only show when your marriage status is 'married' or 'divorced' but not 'single'."
+              title="Some fields should be visible only when certain conditions are met. For example, the form may ask about the number of your children. This field should only show when your marriage status is 'married' or 'divorced' but not 'single'."
             >
               <QuestionCircleOutlined
                 style={{ marginLeft: 10, color: "#ccc" }}
