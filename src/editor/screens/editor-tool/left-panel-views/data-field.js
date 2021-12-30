@@ -150,8 +150,8 @@ export const fieldTree = [
 ];
 
 export const queryFieldTree = [
-  "input",
-  "dropdown",
-  "number",
-  "date",
+  { label: "input", value: "input" },
+  { label: "dropdown", value: "dropdown" },
+  { label: "number", value: "common|number" },
+  { label: "date", value: "common|date" },
 ];

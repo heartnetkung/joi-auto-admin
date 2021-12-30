@@ -304,29 +304,19 @@ const RenderSetting = (props) => {
                               >
                                 FieldType
                               </Typography.Text>
-                              {Array.isArray(queryFieldTree) && (
-                                <Select
-                                  defaultValue={queryFieldTree[0]}
-                                  value={qs.fieldType}
-                                  style={{ flex: 1 }}
-                                  onChange={(value) =>
-                                    onChangeFieldQuerySchema(
-                                      qi,
-                                      "fieldType",
-                                      value
-                                    )
-                                  }
-                                >
-                                  {queryFieldTree.map((ft, fi) => (
-                                    <Select.Option
-                                      key={fi.toString()}
-                                      value={ft}
-                                    >
-                                      {ft}
-                                    </Select.Option>
-                                  ))}
-                                </Select>
-                              )}
+                              <Select
+                                defaultValue={queryFieldTree[0]}
+                                value={qs.fieldType}
+                                style={{ flex: 1 }}
+                                onChange={(value) =>
+                                  onChangeFieldQuerySchema(
+                                    qi,
+                                    "fieldType",
+                                    value
+                                  )
+                                }
+                                options={queryFieldTree}
+                              />
                             </Row>
                           </Col>
                           <Col span="1" />
