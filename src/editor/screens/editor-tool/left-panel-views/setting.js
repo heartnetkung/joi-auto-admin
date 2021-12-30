@@ -142,9 +142,9 @@ const RenderSetting = (props) => {
       <Typography.Title level={5}>Table Settings</Typography.Title>
       <Input
         style={styles.input}
-        placeholder="name"
-        value={settingState?.name}
-        onChange={(event) => onChangeField("name", event.target.value)}
+        placeholder="title"
+        value={settingState?.title}
+        onChange={(event) => onChangeField("title", event.target.value)}
       />
       <Input
         style={styles.input}

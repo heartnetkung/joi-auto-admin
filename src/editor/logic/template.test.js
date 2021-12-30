@@ -3,7 +3,7 @@ import { renderProps, format, renderTemplate, renderJoi } from "./template";
 describe("renderProps()", () => {
 	it("render empty object", () => {
 		var output = `({
-  name: "{tableName}",
+  title: "{tableName}",
   schema: schema,
   getMany: async () => {
     await wait(500);
@@ -18,7 +18,7 @@ describe("renderProps()", () => {
 
 	it("render basic object", () => {
 		var output = `({
-  name: "hello",
+  title: "hello",
   schema: schema,
   getMany: async () => {
     await wait(500);
@@ -30,7 +30,7 @@ describe("renderProps()", () => {
   devMode: false,
 });
 `;
-		var input = { name: "hello", canUpdate: true };
+		var input = { title: "hello", canUpdate: true };
 		expect(format(renderProps([], input), true)).toEqual(output);
 	});
 });
@@ -60,7 +60,7 @@ const mockData = () => {
 
 const App = () => {
   const props = {
-    name: "{tableName}",
+    title: "{tableName}",
     schema: schema,
     getMany: async () => {
       await wait(500);

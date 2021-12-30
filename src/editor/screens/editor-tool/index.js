@@ -29,7 +29,7 @@ const EditorScreen = () => {
   });
   const [formState, setFormState] = useState(() => getInitRowField());
   const [settingState, setSettingState] = useState(() => ({
-    name: "example-tb-name",
+    title: "Table Header",
     canCreate: true,
     canUpdate: true,
     canDelete: true,
@@ -47,7 +47,7 @@ const EditorScreen = () => {
   });
 
   useEffect(() => {
-    if (_.get(settingState, "name")) {
+    if (_.get(settingState, "title")) {
       debounceTableTrans();
     }
   }, [settingState]);
@@ -84,7 +84,7 @@ const EditorScreen = () => {
 
   const onEventResetForm = () => {
     setSettingState({
-      name: "example-tb-name",
+      title: "Table Header",
       canCreate: true,
       canUpdate: true,
       canDelete: true,

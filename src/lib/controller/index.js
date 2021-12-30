@@ -18,7 +18,7 @@ const INITIAL_FORM_STATUS = { isEdit: false, initialValue: null, error: null };
 
 const Controller = (props) => {
 	const { getMany, createMany, updateOne, deleteMany, devMode } = props;
-	const { name, description, uploadPreviewUrl } = props;
+	const { title, description, uploadPreviewUrl } = props;
 	const { schema, querySchema, rowButtons, tableScroll, steps } = props;
 	const { disableExcelDownload, disableExcelUpload } = props;
 
@@ -141,7 +141,7 @@ const Controller = (props) => {
 
 	return (
 		<>
-			<Header name={name} description={description} />
+			<Header title={title} description={description} />
 			{querySchema && (
 				<Form
 					schema={querySchema2}
@@ -197,7 +197,7 @@ Controller.propTypes = {
 	deleteMany: PropTypes.func,
 
 	// modifier
-	name: PropTypes.string.isRequired,
+	title: PropTypes.string.isRequired,
 	description: PropTypes.string,
 	tableScroll: PropTypes.object,
 	rowButtons: PropTypes.array,

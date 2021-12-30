@@ -7,7 +7,7 @@ it("basic case", async () => {
 	render(<AutoAdmin {...prop1} />);
 	await screen.findByText(/bar/);
 	await screen.findByText(/fooName/);
-	await screen.findByText(/ข้อมูล dataName/);
+	await screen.findByText(/dataName/);
 	var menu = await screen.findByText(/เมนูอื่นๆ/);
 	fireEvent.mouseEnter(menu);
 	await screen.findByText(/ดาวน์โหลด Excel/);
@@ -26,9 +26,9 @@ it("require getMany", async () => {
 	);
 });
 
-it("require name", async () => {
-	act(() => render(<AutoAdmin {...prop1} name={undefined} />));
+it("require title", async () => {
+	act(() => render(<AutoAdmin {...prop1} title={undefined} />));
 	expect(console.error.mock.calls[0][0]).toMatch(
-		/`name` is marked as required/
+		/`title` is marked as required/
 	);
 });

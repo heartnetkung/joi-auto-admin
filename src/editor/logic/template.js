@@ -31,10 +31,10 @@ export const renderJoi = (editors, settings, isComp) => {
 
 export const renderProps = (editors, settings, isComp) => {
 	const { canCreate, canUpdate, canDelete, querySchema, devMode } = settings;
-	const { rowButtonExample, name } = settings;
+	const { rowButtonExample, title } = settings;
 
 	// required
-	var ans = { name: name || "{tableName}" };
+	var ans = { title: title || "{tableName}" };
 
 	if (isComp) {
 		ans.getMany = raw(async () => {

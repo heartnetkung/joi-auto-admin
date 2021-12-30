@@ -62,7 +62,7 @@ const editorSchema1 = Joi.array()
 const editorSchema2 = Joi.array().items(editorSchemaInner).unique("name");
 
 const settingsSchema = Joi.object({
-	name: Joi.string(),
+	title: Joi.string(),
 	description: Joi.string(),
 	canCreate: Joi.boolean(),
 	canUpdate: Joi.boolean(),
