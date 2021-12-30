@@ -158,7 +158,7 @@ class JoiField {
 							wordBreak: "break-word",
 							maxWidth: 250,
 						}}
-						title={a}
+						title={a + ""}
 					>
 						{a}
 					</div>
