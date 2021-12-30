@@ -17,7 +17,6 @@ import _ from "lodash";
 import {
   fieldOptions,
   columnOptions,
-  getSingleRow,
   placeholderDefault,
   fieldTree,
   disabledDefaultSet,
@@ -67,13 +66,7 @@ const FormFields = (props) => {
   };
 
   const onDeleteField = (index) => {
-    if (!Array.isArray(formState)) {
-      return;
-    }
-    if (!_.get(formState, "[1]")) {
-      setFormState([{ ...getSingleRow(settingState?.steps) }]);
-      return;
-    }
+    if (!Array.isArray(formState) || formState.length === 1) return;
     const newForm = [...formState];
     newForm.splice(index, 1);
     setFormState(newForm);
