@@ -43,3 +43,18 @@ export const rightPanelContainer2 = {
 export const LeftContent = {
   height: "100%",
 };
+
+export const brandingText = {
+  marginLeft: "1rem",
+  top: 6,
+  display: "inline",
+  position: "relative",
+};
+
+export const githubStar = {
+  marginLeft: 20,
+  marginTop: 3,
+  verticalAlign: "middle",
+};
+
+export const githubText = { top: 2, position: "relative" };

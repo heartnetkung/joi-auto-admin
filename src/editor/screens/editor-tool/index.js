@@ -100,13 +100,22 @@ const EditorScreen = () => {
   return (
     <div style={styles.LayoutContainer}>
       <Row>
-        <Col flex="1">
-          <Typography.Title
-            level={3}
-            style={{ position: "absolute", left: "1rem", top: 6 }}
-          >
+        <Col flex="10">
+          <Typography.Title level={3} style={styles.brandingText}>
             Joi-auto-admin Generator
           </Typography.Title>
+          <iframe
+            src="https://ghbtns.com/github-btn.html?user=heartnetkung&repo=joi-auto-admin&type=star&count=true"
+            frameBorder="0"
+            scrolling="0"
+            width="90"
+            height="20"
+            title="GitHub"
+            style={styles.githubStar}
+          />
+          <Typography.Text style={styles.githubText}>
+            Please star my project if you like it. :D
+          </Typography.Text>
         </Col>
         <Col flex="1">
           <MenuView
