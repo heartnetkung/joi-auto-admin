@@ -26,6 +26,7 @@ import {
   queryFieldTree,
   getInitRowQuerySchema,
   getSingleRowQuerySchema,
+  disabledPlaceholderSet,
 } from "./data-field";
 import * as styles from "./styles";
 import * as logic from "./logic";
@@ -265,7 +266,7 @@ const RenderSetting = (props) => {
                     {settingState.querySchema.schema.map((qs, qi) => (
                       <Collapse.Panel
                         key={qi.toString()}
-                        header={qs.name}
+                        header={logic.getHeader(qs)}
                         extra={
                           <>
                             <Button
@@ -295,35 +296,6 @@ const RenderSetting = (props) => {
                           </>
                         }
                       >
-                        <Row style={styles.rowInput}>
-                          <Col flex="1">
-                            <Input
-                              placeholder="name"
-                              value={qs.name}
-                              onChange={(event) =>
-                                onChangeFieldQuerySchema(
-                                  qi,
-                                  "name",
-                                  event.target.value
-                                )
-                              }
-                            />
-                          </Col>
-                          <Col span="1" />
-                          <Col flex="1">
-                            <Input
-                              placeholder="label"
-                              value={qs.label}
-                              onChange={(event) =>
-                                onChangeFieldQuerySchema(
-                                  qi,
-                                  "label",
-                                  event.target.value
-                                )
-                              }
-                            />
-                          </Col>
-                        </Row>
                         <Row style={styles.rowInput}>
                           <Col flex="1">
                             <Row>
@@ -360,8 +332,40 @@ const RenderSetting = (props) => {
                           <Col span="1" />
                           <Col flex="1">
                             <Input
+                              placeholder="label"
+                              value={qs.label}
+                              onChange={(event) =>
+                                onChangeFieldQuerySchema(
+                                  qi,
+                                  "label",
+                                  event.target.value
+                                )
+                              }
+                            />
+                          </Col>
+                        </Row>
+                        <Row style={styles.rowInput}>
+                          <Col flex="1">
+                            <Input
+                              placeholder="name"
+                              value={qs.name}
+                              onChange={(event) =>
+                                onChangeFieldQuerySchema(
+                                  qi,
+                                  "name",
+                                  event.target.value
+                                )
+                              }
+                            />
+                          </Col>
+                          <Col span="1" />
+                          <Col flex="1">
+                            <Input
                               placeholder="placeholder"
                               value={qs.placeholder}
+                              disabled={disabledPlaceholderSet.has(
+                                qs.fieldType
+                              )}
                               onChange={(event) => {
                                 onChangeFieldQuerySchema(
                                   qi,

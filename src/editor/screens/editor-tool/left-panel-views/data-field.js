@@ -153,6 +153,5 @@ export const queryFieldTree = [
   "input",
   "dropdown",
   "number",
-  "checkbox",
   "date",
 ];
