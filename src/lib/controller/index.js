@@ -229,7 +229,7 @@ Controller.defaultProps = {
 	uploadPreviewUrl: null,
 	steps: [],
 	devMode: false,
-	disableSuccessModal: true,
+	disableSuccessModal: false,
 };
 
 export default Controller;
