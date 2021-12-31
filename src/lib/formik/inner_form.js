@@ -5,7 +5,7 @@ import Field from "./field";
 import { calculateSpan } from "./logic";
 
 const InnerForm = (props) => {
-	const { formSpec, inline, currentStep, meta } = props;
+	const { formSpec, inline, currentStep } = props;
 	const { values } = useFormikContext();
 
 	const formSpec2 = useMemo(() => {
@@ -22,18 +22,21 @@ const InnerForm = (props) => {
 		);
 	}, [formSpec, values, inline, currentStep]);
 
-	return formSpec2.map((props) => (
-		<Field
-			{...props}
-			key={props.name}
-			currentStep={currentStep}
-			meta={
-				inline
-					? { ...meta, style: { ...meta.style, ...inlineStyle } }
-					: meta
-			}
-		/>
-	));
+	return formSpec2.map((props) => {
+		const meta = props.meta || {};
+		return (
+			<Field
+				{...props}
+				key={props.name}
+				currentStep={currentStep}
+				meta={
+					inline
+						? { ...meta, style: { ...meta.style, ...inlineStyle } }
+						: meta
+				}
+			/>
+		);
+	});
 };
 
 const inlineStyle = { width: 150 };
@@ -42,11 +45,6 @@ InnerForm.propTypes = {
 	formSpec: PropTypes.array.isRequired,
 	inline: PropTypes.bool.isRequired,
 	currentStep: PropTypes.number.isRequired,
-	meta: PropTypes.object,
-};
-
-InnerForm.defaultProps = {
-	meta: {},
 };
 
 export default InnerForm;
