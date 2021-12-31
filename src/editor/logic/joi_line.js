@@ -194,7 +194,7 @@ return id;}`,
 		case "common|date":
 			type = "date";
 			break;
-		case "common|barcode scanner":
+		case "common|barcode scanner hardware":
 			type = "array";
 			suffix.push({ name: "min", args: [1] });
 			editor = {

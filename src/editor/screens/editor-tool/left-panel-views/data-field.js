@@ -56,7 +56,7 @@ export const rowQuerySchema = {
 };
 
 export const disabledDefaultSet = new Set([
-  "common|barcode scanner",
+  "common|barcode scanner hardware",
   "upload|single file",
   "upload|multiple images",
   "upload|firebase",
@@ -110,7 +110,7 @@ export const fieldTree = [
       { l: "date" },
       { l: "paragraph" },
       { l: "password" },
-      { l: "barcode scanner" },
+      { l: "barcode scanner hardware" },
     ],
   },
   {

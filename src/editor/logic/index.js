@@ -38,7 +38,7 @@ const editorSchemaInner = Joi.object({
 			"common|date",
 			"common|paragraph",
 			"common|password",
-			"common|barcode scanner"
+			"common|barcode scanner hardware"
 		),
 	_fieldType: Joi.any(),
 	step: Joi.number(),
