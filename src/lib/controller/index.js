@@ -18,7 +18,7 @@ const INITIAL_FORM_STATUS = { isEdit: false, initialValue: null, error: null };
 
 const Controller = (props) => {
 	const { getMany, createMany, updateOne, deleteMany, devMode } = props;
-	const { title, description, uploadPreviewUrl } = props;
+	const { title, description, uploadPreviewUrl, disableSuccessModal } = props;
 	const { schema, querySchema, rowButtons, tableScroll, steps } = props;
 	const { disableExcelDownload, disableExcelUpload } = props;
 
@@ -64,7 +64,7 @@ const Controller = (props) => {
 			if (editModalData.isEdit) {
 				await updateOne(data, originalData);
 				updateDataAtRow(originalData);
-				alert.success("แก้ไขข้อมูลเรียบร้อย");
+				if (!disableSuccessModal) alert.success("แก้ไขข้อมูลเรียบร้อย");
 				editModalControl.setVisible(false);
 			} else {
 				var returnData = await createMany([data]);
@@ -72,7 +72,7 @@ const Controller = (props) => {
 					return alert.error("ข้อมูลจากเซิฟเวอร์ไม่ถูกต้อง");
 				data = appendId(returnData[0]);
 				setData([data, ...getManyStatus.data]);
-				alert.success("สร้างข้อมูลเรียบร้อย");
+				if (!disableSuccessModal) alert.success("สร้างข้อมูลเรียบร้อย");
 				editModalControl.setVisible(false);
 			}
 		} catch (e) {
@@ -131,7 +131,7 @@ const Controller = (props) => {
 				return alert.error("ข้อมูลจากเซิฟเวอร์ไม่ถูกต้อง");
 
 			setData([...newData.map(appendId), ...getManyStatus.data]);
-			alert.success("อัพโหลดเรียบร้อย");
+			if (!disableSuccessModal) alert.success("อัพโหลดเรียบร้อย");
 		} catch (e) {
 			if (e.name !== "SerializeError") return alert.error(e);
 			setExcelError(e.errors);
@@ -201,6 +201,7 @@ Controller.propTypes = {
 	description: PropTypes.string,
 	tableScroll: PropTypes.object,
 	rowButtons: PropTypes.array,
+	disableSuccessModal: PropTypes.bool,
 
 	// form
 	schema: PropTypes.object.isRequired,
@@ -228,6 +229,7 @@ Controller.defaultProps = {
 	uploadPreviewUrl: null,
 	steps: [],
 	devMode: false,
+	disableSuccessModal: true,
 };
 
 export default Controller;

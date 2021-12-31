@@ -151,6 +151,7 @@ Once you are familiar with our tool, the process of writing your admin site shou
 | uploadPreviewUrl     | if specified, the uploadPreviewButton will download file from this path instead of the first 3 rows of this table                                                    | string                                                                               | null         |
 | description          | description of this table, displayed under title                                                                                                                     | string                                                                               | ''           |
 | steps                | break form into multi steps using `<Steps>` component from antd.                                                                                                     | [string]                                                                             | []           |
+| disableSuccessModal  | disable modal shown after create/edit/upload operations succeed so you can implement your own                                                                        | boolean                                                                              | false        |
 | devMode              | remove `required` from all fields for easy testing                                                                                                                   | boolean                                                                              | false        |
 
 ## FormModal Props API
@@ -182,10 +183,11 @@ const App = () => {
 export default App;
 ```
 
-| Name     | Description                                                      | Type                                        | DefaultValue  |
-| -------- | ---------------------------------------------------------------- | ------------------------------------------- | ------------- |
-| schema   | specification on how the UI will render                          | {Joi Object} or<br> async ()=> {Joi Object} | `required`    |
-| onSubmit | form handler                                                     | async(formData)=>any                        | `required`    |
-| title    | title of this form                                               | string                                      | "เพิ่มข้อมูล" |
-| steps    | break form into multi steps using `<Steps>` component from antd. | [string]                                    | []            |
-| devMode  | remove `required` from all fields for easy testing               | boolean                                     | false         |
+| Name                | Description                                                                                   | Type                                        | DefaultValue  |
+| ------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------- | ------------- |
+| schema              | specification on how the UI will render                                                       | {Joi Object} or<br> async ()=> {Joi Object} | `required`    |
+| onSubmit            | form handler                                                                                  | async(formData)=>any                        | `required`    |
+| title               | title of this form                                                                            | string                                      | "เพิ่มข้อมูล" |
+| steps               | break form into multi steps using `<Steps>` component from antd.                              | [string]                                    | []            |
+| disableSuccessModal | disable modal shown after create/edit/upload operations succeed so you can implement your own | boolean                                     | false         |
+| devMode             | remove `required` from all fields for easy testing                                            | boolean                                     | false         |

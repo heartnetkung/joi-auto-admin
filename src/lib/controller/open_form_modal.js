@@ -27,6 +27,7 @@ export const openFormModal = (props) => {
 
 const FormModal = (props) => {
 	const { onClose, schema, title, onSubmit, steps } = props;
+	const { disableSuccessModal } = props;
 	const [error, setError] = useState(null);
 
 	const onSubmit2 = async (data, actions, originalData) => {
@@ -34,7 +35,7 @@ const FormModal = (props) => {
 		try {
 			data = Joi.attempt(data, schema.joiObj);
 			await onSubmit(data, originalData);
-			alert.success("บันทึกข้อมูลเรียบร้อย");
+			if (!disableSuccessModal) alert.success("บันทึกข้อมูลเรียบร้อย");
 			onClose();
 		} catch (e) {
 			setError(e);
@@ -62,9 +63,11 @@ FormModal.propTypes = {
 	onSubmit: PropTypes.func.isRequired,
 	title: PropTypes.string,
 	steps: PropTypes.array,
+	disableSuccessModal: PropTypes.bool,
 };
 
 FormModal.defaultProps = {
 	steps: [],
 	title: null,
+	disableSuccessModal: false,
 };
