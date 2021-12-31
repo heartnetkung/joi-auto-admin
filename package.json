@@ -58,7 +58,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "test": "react-scripts test",
+    "test": "DEBUG_PRINT_LIMIT=200 react-scripts test --watchAll",
     "eject": "react-scripts eject",
     "predeploy": "react-scripts build",
     "prepublishOnly": "babel src/lib --out-dir dist --copy-files",
