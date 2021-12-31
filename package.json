@@ -25,6 +25,7 @@
     "formik-antd": "^2.0.1",
     "joi": "^17.4.2",
     "lodash": "^4.17.21",
+    "memoizee": "^0.4.15",
     "moment": "^2.29.1",
     "nanoid": "^3.1.30",
     "numeral": "^2.0.6",

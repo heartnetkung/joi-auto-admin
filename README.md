@@ -123,7 +123,7 @@ Once you are familiar with our tool, the process of writing your admin site shou
     - `.meta({ notFoundText: str })`
       - For `<CascaderStatic>` type. The text that would be shown when the given choices aren't listed in the options. It is also used when editing data and the initial data doesn't match options.
     - `.meta({ cascaderFetchData: async(selected)=> [{node}] })`
-      - Required for `<CascaderAsync>` type. Used to fetch options from server.
+      - Required for `<CascaderAsync>` type. Used to fetch options from server. The return values is automatically cached.
     - Other props are forwarded to `<Cascader>` component from [Antd library](https://ant.design/components/cascader/#API).
   - **ETC**
     - `.valid([ any ])`
@@ -131,7 +131,7 @@ Once you are familiar with our tool, the process of writing your admin site shou
     - `.meta({ validLabel: [string] })`
       - For `<Select>` type. Used to specify label for each option. The array length must be equal to input of `.valid([ any ])`.
     - `.meta({ loadBarcodeName: async(barcode)=> string })`
-      - Required for `<Barcode>` type. Used to fetch human-readable data of the barcode.
+      - Required for `<Barcode>` type. Used to fetch human-readable data of the barcode. The return values is automatically cached.
 
 ## AutoAdmin Props API
 

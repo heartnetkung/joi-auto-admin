@@ -6,6 +6,7 @@ import moment from "moment";
 import { prepare } from "./prepare_joi";
 import React from "react";
 import ColImage from "../formik/components/col_image";
+import memo from "memoizee";
 
 const OMIT_META = [
 	"twoColumn",
@@ -24,6 +25,8 @@ const OMIT_META = [
 	"onFieldRender",
 	"appendDivider",
 ];
+
+const MEMO_OPTION = { promise: true, primitive: true };
 
 class JoiWrapper {
 	constructor(joiObj, devMode) {
@@ -206,6 +209,11 @@ class JoiField {
 			for (var i = 0, ii = allow.length; i < ii; i++)
 				valid[allow[i]] = validLabel[i];
 		}
+
+		if (ans.loadBarcodeName)
+			ans.loadBarcodeName = memo(ans.loadBarcodeName, MEMO_OPTION);
+		if (ans.cascaderFetchData)
+			ans.cascaderFetchData = memo(ans.cascaderFetchData, MEMO_OPTION);
 
 		return ans;
 	}
