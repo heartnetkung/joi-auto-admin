@@ -23,7 +23,7 @@ const Barcode = (props) => {
     setFieldValue(name, [...barcodes, inputValue], false);
     setInputValue("");
     event.preventDefault();
-    if (itemNames[inputValue]) return;
+    if (itemNames?.[inputValue]) return;
 
     var temp;
     try {
