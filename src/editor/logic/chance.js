@@ -134,10 +134,10 @@ const editorToChance = (editor) => {
 			};
 		case "common|number":
 			return { name: "natural", args: [{ max: 30 }] };
-		case "common|date":
-		case "common|date-time":
-		case "common|month":
-		case "common|time":
+		case "date|date":
+		case "date|date-time":
+		case "date|month":
+		case "date|time":
 			return { name: "date", args: [] };
 		case "common|barcode scanner hardware":
 			return { name: "pickone", args: [[["a001"], ["a002"]]] };

@@ -32,7 +32,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 		case "common|paragraph":
 			newFieldType = "TextArea";
 			break;
-		case "common|time":
+		case "date|time":
 			newFieldType = "TimePicker";
 			type = "date";
 			if (editor.defaultValue)
@@ -200,15 +200,15 @@ return id;}`,
 		case "common|number":
 			type = "number";
 			break;
-		case "common|month":
+		case "date|month":
 			newFieldType = "MonthPicker";
 			type = "date";
 			break;
-		case "common|date-time":
+		case "date|date-time":
 			editor = { ...editor, showTime: true };
 			type = "date";
 			break;
-		case "common|date":
+		case "date|date":
 			type = "date";
 			break;
 		case "common|barcode scanner hardware":

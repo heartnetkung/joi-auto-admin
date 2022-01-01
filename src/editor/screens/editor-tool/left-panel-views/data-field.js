@@ -80,10 +80,10 @@ export const disabledPlaceholderSet = new Set([
 
 export const placeholderDefault = {
   checkbox: "true/false",
-  "common|date": "2021-12-30",
-  "common|date-time": "2021-12-30 20:50",
-  "common|time": "20:50",
-  "common|month": "2021-12",
+  "date|date": "2021-12-30",
+  "date|date-time": "2021-12-30 20:50",
+  "date|time": "20:50",
+  "date|month": "2021-12",
   "format|url": "http://www.google.com/...",
   "format|thai tel": "0811111111",
   "format|email": "abc@example.com",
@@ -110,14 +110,14 @@ export const fieldTree = [
     l: "common",
     c: [
       { l: "number" },
-      { l: "date" },
-      { l: "time" },
-      { l: "date-time" },
-      { l: "month" },
       { l: "paragraph" },
       { l: "password" },
       { l: "barcode scanner hardware" },
     ],
+  },
+  {
+    l: "date",
+    c: [{ l: "date" }, { l: "time" }, { l: "date-time" }, { l: "month" }],
   },
   {
     l: "format",
@@ -159,5 +159,5 @@ export const queryFieldTree = [
   { label: "input", value: "input" },
   { label: "dropdown", value: "dropdown" },
   { label: "number", value: "common|number" },
-  { label: "date", value: "common|date" },
+  { label: "date", value: "date|date" },
 ];

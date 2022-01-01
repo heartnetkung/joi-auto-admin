@@ -24,12 +24,12 @@ export const lookupLabel = (item) => {
 			return `checkbox-${_id}`;
 		case "common|number":
 			return `number-${_id}`;
-		case "common|date":
-		case "common|date-time":
+		case "date|date":
+		case "date|date-time":
 			return "วันที่";
-		case "common|month":
+		case "date|month":
 			return "เดือน";
-		case "common|time":
+		case "date|time":
 			return "เวลา";
 		case "common|barcode scanner hardware":
 			return "บาร์โค้ด";
