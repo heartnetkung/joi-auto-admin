@@ -200,12 +200,16 @@ return id;}`,
 		case "common|number":
 			type = "number";
 			break;
-		case "common|date":
+		case "common|month":
+			newFieldType = "MonthPicker";
 			type = "date";
 			break;
 		case "common|date-time":
-			type = "date";
 			editor = { ...editor, showTime: true };
+			type = "date";
+			break;
+		case "common|date":
+			type = "date";
 			break;
 		case "common|barcode scanner hardware":
 			type = "array";

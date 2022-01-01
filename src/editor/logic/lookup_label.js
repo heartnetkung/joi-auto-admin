@@ -27,6 +27,8 @@ export const lookupLabel = (item) => {
 		case "common|date":
 		case "common|date-time":
 			return "วันที่";
+		case "common|month":
+			return "เดือน";
 		case "common|time":
 			return "เวลา";
 		case "common|barcode scanner hardware":

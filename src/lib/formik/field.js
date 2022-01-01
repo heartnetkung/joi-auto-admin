@@ -8,7 +8,7 @@ import moment from "moment";
 import React from "react";
 import { Col, Divider } from "antd";
 
-const { WeekPicker, MonthPicker } = Raw.DatePicker;
+const { MonthPicker } = Raw.DatePicker;
 
 const Field = (props) => {
 	const { fieldType, label, required, name, validate, meta } = props;
@@ -50,17 +50,22 @@ const Field = (props) => {
 					{fieldType === "Checkbox" && <Raw.Checkbox {...props2} />}
 					{fieldType === "DatePicker" && (
 						<Raw.DatePicker
-							placeholder="เลือกวันที่"
-							{...props2}
-							defaultValue={
-								props2.defaultValue &&
-								moment(props2.defaultValue)
+							placeholder={
+								meta.showTime
+									? "เลือกวันที่และเวลา"
+									: "เลือกวันที่"
 							}
+							{...props2}
 							style={{ ...props2.style, width: "100%" }}
 						/>
 					)}
-					{fieldType === "WeekPicker" && <WeekPicker {...props2} />}
-					{fieldType === "MonthPicker" && <MonthPicker {...props2} />}
+					{fieldType === "MonthPicker" && (
+						<MonthPicker
+							placeholder="เลือกเดือน"
+							{...props2}
+							style={{ ...props2.style, width: "100%" }}
+						/>
+					)}
 					{fieldType === "Input" && <Raw.Input {...props2} />}
 					{fieldType === "InputEmail" && (
 						<Raw.Input {...props2} type="email" />
@@ -133,7 +138,6 @@ Field.propTypes = {
 		"Barcode",
 		"Checkbox",
 		"DatePicker",
-		"WeekPicker",
 		"MonthPicker",
 		"Input",
 		"InputNumber",

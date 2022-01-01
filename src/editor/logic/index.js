@@ -38,6 +38,7 @@ const editorSchemaInner = Joi.object({
 			"common|date",
 			"common|date-time",
 			"common|time",
+			"common|month",
 			"common|paragraph",
 			"common|password",
 			"common|barcode scanner hardware"

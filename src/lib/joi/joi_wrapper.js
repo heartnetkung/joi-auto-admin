@@ -129,7 +129,7 @@ class JoiField {
 
 		if (!ans.width) {
 			if (type === "number") ans.width = 80;
-			else if (type === "date") ans.width = 130;
+			else if (type === "date" && !meta.showTime) ans.width = 130;
 			else if (fieldType === "FileUpload") ans.width = 150;
 			else if (fieldType === "InputURL") ans.width = 250;
 			else if (fieldType === "TextArea") ans.width = 250;
@@ -173,25 +173,21 @@ class JoiField {
 				ans.render = (a) => <ColImage src={a} />;
 			else if (fieldType === "CascaderAsync")
 				ans.render = (a) => (Array.isArray(a) ? a.join(" / ") : "");
-			else if (fieldType === "TimePicker")
-				ans.render = (a) =>
-					a == null
-						? ""
-						: a instanceof Date
-						? moment(a).format("HH:mm")
-						: a;
 			else if (type === "number")
 				ans.render = (a) => (a == null ? "" : numeral(a).format("0,0"));
 			else if (type === "boolean")
 				ans.render = (a) => (a == null ? "" : a ? "ใช่" : "ไม่ใช่");
-			else if (type === "date")
+			else if (type === "date") {
+				var format = meta.showTime ? "YYYY-MM-DD HH:mm" : "YYYY-MM-DD";
+				if (fieldType === "TimePicker") format = "HH:mm";
+				if (fieldType === "MonthPicker") format = "YYYY-MM";
 				ans.render = (a) =>
 					a == null
 						? ""
 						: a instanceof Date
-						? moment(a).format("YYYY-MM-DD")
+						? moment(a).format(format)
 						: a;
-			else if (type === "array")
+			} else if (type === "array")
 				ans.render = (a) =>
 					a == null ? "" : Array.isArray(a) ? a.join(", ") : a;
 		}
