@@ -34,7 +34,7 @@ const Field = (props) => {
 				>
 					{fieldType === "Custom" &&
 						onFieldRender &&
-						onFieldRender({ ...props, compProps: props2 })}
+						onFieldRender(props2)}
 					{fieldType === "Barcode" && (
 						<Barcode
 							placeholder="พิมพ์แล้วกด Enter เช่น a001"
