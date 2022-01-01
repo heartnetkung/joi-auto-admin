@@ -7,25 +7,28 @@ import CascaderStatic from "../../lib/formik/components/cascader_static";
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
 export const DependentComp = (props) => {
+	const { compProps, name } = props;
 	const { values, setFieldValue } = useFormikContext();
-	const values2 = JSON.stringify(_.set({ ...values }, props.name, null));
+	const values2 = JSON.stringify(_.set({ ...values }, name, null));
 	useEffect(() => {
-		setFieldValue(props.name, values2, false);
+		setFieldValue(name, values2, false);
 		/* eslint-disable react-hooks/exhaustive-deps */
-	}, [values2, props.name]);
-	return <Input disabled {...props} />;
+	}, [values2, name]);
+	return <Input disabled {...compProps} />;
 };
 
 DependentComp.str = `const DependentComp = (props)=>{
+const { compProps, name } = props;
 const {values,setFieldValue} = useFormikContext();
-const values2 = JSON.stringify(_.set({ ...values }, props.name, null));
+const values2 = JSON.stringify(_.set({ ...values }, name, null));
 useEffect(()=>{
 // you can also use setFieldValue to mutate other fields
-setFieldValue(props.name,values2,false);},[values2,props.name])
-return <Input disabled {...props}/>;
+setFieldValue(name,values2,false);},[values2,name])
+return <Input disabled {...compProps}/>;
 }`;
 
 export const AsyncDropdown = (props) => {
+	const { compProps } = props;
 	const [choices, setChoices] = useState([]);
 	const fetchChoices = async () => {
 		await wait(500);
@@ -47,7 +50,7 @@ export const AsyncDropdown = (props) => {
 	}, []);
 	return (
 		<Select
-			{...props}
+			{...compProps}
 			showSearch
 			optionFilterProp="label"
 			options={choices}
@@ -59,6 +62,7 @@ export const AsyncDropdown = (props) => {
 };
 
 AsyncDropdown.str = `const AsyncDropdown = (props) => {
+const { compProps } = props;
 const [choices, setChoices] = useState([]);
 const fetchChoices = async () => {
 await wait(500);
@@ -80,7 +84,7 @@ setChoices(data2);
 }, []);
 return (
 <Select
-{...props}
+{...compProps}
 showSearch
 optionFilterProp="label"
 options={choices}
@@ -93,8 +97,9 @@ option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
 `;
 
 export const THAddress = (props) => {
+	const {name, compProps} = props;
 	const [options, setOptions] = useState([]);
-	const className = "thAddress" + props.name.replace(/[^a-z0-9]/gi, "");
+	const className = "thAddress" + name.replace(/[^a-z0-9]/gi, "");
 
 	useEffect(() => {
 		const listener = () => {
@@ -121,7 +126,7 @@ export const THAddress = (props) => {
 
 	return (
 		<CascaderStatic
-			{...props}
+			{...compProps}
 			cascaderOptions={options}
 			dropdownRender={(a) => <div className={className}>{a}</div>}
 		></CascaderStatic>
@@ -130,7 +135,8 @@ export const THAddress = (props) => {
 
 // WARNING string version and functional version are different
 THAddress.str = `const THAddress = (props) => {
-const className = "thAddress" + props.name.replace(/[^a-z0-9]/gi, "");
+const {name, compProps} = props;
+const className = "thAddress" + name.replace(/[^a-z0-9]/gi, "");
 //responsive dropdown for small screens
 useEffect(() => {
 const listener = () => {
@@ -149,7 +155,7 @@ return () => document.removeEventListener("click", listener);
 }, []);
 return (
 <CascaderStatic
-{...props}
+{...compProps}
 dropdownRender={(a) => <div className={className}>{a}</div>}
 ></CascaderStatic>
 );

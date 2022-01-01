@@ -88,7 +88,7 @@ Once you are familiar with our tool, the process of writing your admin site shou
     - `.meta({ containerStyle: styleObj })`
       - Customize style of the field container, useful for adding margins or padding.
     - `.meta({ onFieldRender: (props)=>ReactDomNode })`
-      - \[Advanced\] fully customize the form component. The function usually implements with `import { useFormikContext } from "formik";` to get/set internal value of the form. See the example for more information.
+      - \[Advanced\] fully customize the form component. The function usually implements with `import { useFormikContext } from "formik";` to get/set internal value of the form. See the examples for more information.
   - To customize **table**, use the following fields:
     - `.meta({ cellEllipsis: true })`
     - `.meta({ cellFormat: (cellData)=> string | ReactDomNode })`
