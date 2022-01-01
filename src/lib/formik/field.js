@@ -1,13 +1,5 @@
 import PropTypes from "prop-types";
-import {
-	Input,
-	InputNumber,
-	Checkbox,
-	DatePicker,
-	Form,
-	Select,
-	Switch,
-} from "formik-antd";
+import * as Raw from "formik-antd";
 import Barcode from "./components/barcode";
 import CascaderStatic from "./components/cascader_static";
 import CascaderAsync from "./components/cascader_async";
@@ -16,7 +8,7 @@ import moment from "moment";
 import React from "react";
 import { Col, Divider } from "antd";
 
-const { WeekPicker, MonthPicker } = DatePicker;
+const { WeekPicker, MonthPicker } = Raw.DatePicker;
 
 const Field = (props) => {
 	const { fieldType, label, required, name, validate, meta } = props;
@@ -32,7 +24,7 @@ const Field = (props) => {
 				className={className}
 				style={containerStyle}
 			>
-				<Form.Item
+				<Raw.Form.Item
 					label={label}
 					required={required}
 					name={name}
@@ -55,9 +47,9 @@ const Field = (props) => {
 					{fieldType === "CascaderStatic" && (
 						<CascaderStatic {...props2} />
 					)}
-					{fieldType === "Checkbox" && <Checkbox {...props2} />}
+					{fieldType === "Checkbox" && <Raw.Checkbox {...props2} />}
 					{fieldType === "DatePicker" && (
-						<DatePicker
+						<Raw.DatePicker
 							placeholder="เลือกวันที่"
 							{...props2}
 							defaultValue={
@@ -69,49 +61,51 @@ const Field = (props) => {
 					)}
 					{fieldType === "WeekPicker" && <WeekPicker {...props2} />}
 					{fieldType === "MonthPicker" && <MonthPicker {...props2} />}
-					{fieldType === "Input" && <Input {...props2} />}
+					{fieldType === "Input" && <Raw.Input {...props2} />}
 					{fieldType === "InputEmail" && (
-						<Input {...props2} type="email" />
+						<Raw.Input {...props2} type="email" />
 					)}
 					{fieldType === "InputNumber" && (
-						<InputNumber
+						<Raw.InputNumber
 							{...props2}
 							style={{ ...props2.style, width: "100%" }}
 						/>
 					)}
 					{fieldType === "InputURL" && (
-						<Input {...props2} type="url" />
+						<Raw.Input {...props2} type="url" />
 					)}
 					{fieldType === "InputPhone" && (
-						<Input
+						<Raw.Input
 							placeholder="เช่น 0811111111"
 							{...props2}
 							type="tel"
 						/>
 					)}
 					{fieldType === "InputPassword" && (
-						<Input.Password {...props2} />
+						<Raw.Input.Password {...props2} />
 					)}
-					{fieldType === "TextArea" && <Input.TextArea {...props2} />}
+					{fieldType === "TextArea" && (
+						<Raw.Input.TextArea {...props2} />
+					)}
 					{fieldType === "Select" && (
-						<Select
+						<Raw.Select
 							placeholder="เลือก"
 							{...props2}
 							style={{ ...props2.style, textAlign: "left" }}
 						>
 							{props2.valid &&
 								Object.entries(props2.valid).map(([k, v]) => (
-									<Select.Option key={k} value={k}>
+									<Raw.Select.Option key={k} value={k}>
 										{v}
-									</Select.Option>
+									</Raw.Select.Option>
 								))}
-						</Select>
+						</Raw.Select>
 					)}
-					{fieldType === "Switch" && <Switch {...props2} />}
+					{fieldType === "Switch" && <Raw.Switch {...props2} />}
 					{fieldType === "FileUpload" && (
 						<FileUpload {...props2} dataType={type} />
 					)}
-				</Form.Item>
+				</Raw.Form.Item>
 			</Col>
 			{appendDivider && (
 				<Col span={20} offset={2}>
