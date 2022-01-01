@@ -36,6 +36,7 @@ const editorSchemaInner = Joi.object({
 			"checkbox",
 			"common|number",
 			"common|date",
+			"common|date-time",
 			"common|time",
 			"common|paragraph",
 			"common|password",

@@ -203,6 +203,10 @@ return id;}`,
 		case "common|date":
 			type = "date";
 			break;
+		case "common|date-time":
+			type = "date";
+			editor = { ...editor, showTime: true };
+			break;
 		case "common|barcode scanner hardware":
 			type = "array";
 			suffix.push({ name: "min", args: [1] });

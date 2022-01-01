@@ -25,6 +25,7 @@ export const lookupLabel = (item) => {
 		case "common|number":
 			return `number-${_id}`;
 		case "common|date":
+		case "common|date-time":
 			return "วันที่";
 		case "common|time":
 			return "เวลา";

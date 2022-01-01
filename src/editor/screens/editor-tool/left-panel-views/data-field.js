@@ -80,7 +80,8 @@ export const disabledPlaceholderSet = new Set([
 
 export const placeholderDefault = {
   checkbox: "true/false",
-  "common|date": "YYYY-MM-DD",
+  "common|date": "2021-12-30",
+  "common|date-time": "2021-12-30 20:50",
   "common|time": "20:50",
   "format|url": "http://www.google.com/...",
   "format|thai tel": "0811111111",
@@ -110,6 +111,7 @@ export const fieldTree = [
       { l: "number" },
       { l: "date" },
       { l: "time" },
+      { l: "date-time" },
       { l: "paragraph" },
       { l: "password" },
       { l: "barcode scanner hardware" },
