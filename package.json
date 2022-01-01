@@ -51,6 +51,7 @@
     "react-code-blocks": "heartnetkung/react-code-blocks",
     "react-dom": "16.13.1",
     "react-scripts": "4.0.3",
+    "rimraf": "^3.0.2",
     "tosource": "^2.0.0-alpha.3"
   },
   "peerDependencies": {
@@ -60,9 +61,11 @@
     "start": "react-scripts start",
     "test": "DEBUG_PRINT_LIMIT=200 react-scripts test --watchAll",
     "eject": "react-scripts eject",
-    "predeploy": "react-scripts build",
     "prepublishOnly": "babel src/lib --out-dir dist --copy-files",
-    "deploy": "gh-pages -d build"
+    "postpublish": "rimraf build",
+    "predeploy": "react-scripts build",
+    "deploy": "gh-pages -d build",
+    "postdeploy": "rimraf build"
   },
   "eslintConfig": {
     "extends": [
