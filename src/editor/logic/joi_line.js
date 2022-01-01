@@ -48,6 +48,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 					: raw("DependentComp", isObj),
 				...editor,
 			};
+			type = "any";
 			break;
 		case "custom component|async searchable dropdown":
 			editor = {
@@ -75,7 +76,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 				cellHide: true,
 				notFound: true,
 			};
-			type = "object";
+			type = "any";
 			break;
 		case "hierarchical dropdown|static option, no modify":
 			editor = {
@@ -102,7 +103,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 				fieldNames: { label: "l", value: "v", children: "c" },
 				cellHide: true,
 			};
-			type = "object";
+			type = "any";
 			break;
 		case "hierarchical dropdown|thai province":
 			editor = {
@@ -119,7 +120,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 				notFound: true,
 			};
 			if (isObj) editor.cascaderOptions = raw("thAddressData", isObj);
-			type = "object";
+			type = "any";
 			break;
 		case "hierarchical dropdown|async option":
 			editor = {
@@ -136,6 +137,7 @@ if(selected[0] === 'Software Business') return [{l:"Apple"},{l:"Google"}];
 				fieldNames: { label: "l", value: "l", children: "c" },
 			};
 			type = "array";
+			suffix.push({ name: "items", args: [raw("Joi.string()", isObj)] });
 			break;
 		case "format|url":
 			newFieldType = "InputURL";
@@ -213,6 +215,7 @@ return id;}`,
 			break;
 		case "common|barcode scanner hardware":
 			type = "array";
+			suffix.push({ name: "items", args: [raw("Joi.string()", isObj)] });
 			suffix.push({ name: "min", args: [1] });
 			editor = {
 				...editor,
@@ -245,6 +248,7 @@ return id;}`,
 				accept: ".png,.jpeg,.jpg,.gif",
 			};
 			type = "array";
+			suffix.push({ name: "items", args: [raw("Joi.string().uri()", isObj)] });
 			break;
 		case "upload|firebase":
 			editor = {
@@ -270,6 +274,7 @@ return "https://www.gravatar.com/avatar/1"}`,
 				accept: ".png,.jpeg,.jpg,.gif",
 			};
 			type = "array";
+			suffix.push({ name: "items", args: [raw("Joi.string().uri()", isObj)] });
 			break;
 		case "upload|google cloud storage":
 			editor = {
@@ -290,6 +295,7 @@ return "https://www.gravatar.com/avatar/1"}`,
 				accept: ".png,.jpeg,.jpg,.gif",
 			};
 			type = "array";
+			suffix.push({ name: "items", args: [raw("Joi.string().uri()", isObj)] });
 			break;
 		case "upload|single file":
 			editor = {
