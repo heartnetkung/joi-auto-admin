@@ -21,7 +21,7 @@ import {
   Button,
   Tooltip,
 } from "antd";
-import { SETTINGS } from "../constants";
+import { SETTINGS, SETTINGS2 } from "../constants";
 import {
   queryFieldTree,
   getInitRowQuerySchema,
@@ -35,16 +35,6 @@ import ConditionalField from "./conditional_field";
 const RenderSetting = (props) => {
   const { settingState, setSettingState } = props;
   const [optionsStep] = useState(() => logic.createStepOptions());
-
-  const onChangeCheckbox = (type) => {
-    const newSettings = { ...settingState };
-    if (newSettings[type]) {
-      delete newSettings[type];
-    } else {
-      newSettings[type] = true;
-    }
-    setSettingState(newSettings);
-  };
 
   const onChangeField = (key, value) => {
     const newSettings = { ...settingState };
@@ -138,6 +128,20 @@ const RenderSetting = (props) => {
     setSettingState(newSettings);
   };
 
+  const makeCheckboxValue = (allChoices) =>
+    _.chain(settingState)
+      .pick(allChoices)
+      .keys()
+      .filter((a) => settingState[a])
+      .value();
+
+  const onCheckboxChange = (trueChoices, allChoices) => {
+    var newState = { ...settingState };
+    for (var allChoice of allChoices) delete newState[allChoice];
+    for (var trueChoice of trueChoices) newState[trueChoice] = true;
+    setSettingState(newState);
+  };
+
   return (
     <Form>
       <Typography.Title level={5}>Table Settings</Typography.Title>
@@ -154,19 +158,17 @@ const RenderSetting = (props) => {
         onChange={(event) => onChangeField("description", event.target.value)}
       />
       <div style={styles.layoutMargin}>
-        {Array.isArray(SETTINGS) &&
-          SETTINGS.map((item, index) => (
-            <Checkbox
-              key={index.toString()}
-              style={{
-                margin: index === 0 ? "0.2rem 0 0.5rem 0" : "0 0 0.5rem 0",
-              }}
-              checked={settingState[item]}
-              onChange={() => onChangeCheckbox(item)}
-            >
-              {item}
-            </Checkbox>
-          ))}
+        <Checkbox.Group
+          style={{ marginBottom: 15, marginTop: 5 }}
+          options={SETTINGS}
+          value={makeCheckboxValue(SETTINGS)}
+          onChange={(a) => onCheckboxChange(a, SETTINGS)}
+        />
+        <Checkbox.Group
+          options={SETTINGS2}
+          value={makeCheckboxValue(SETTINGS2)}
+          onChange={(a) => onCheckboxChange(a, SETTINGS2)}
+        />
         <Divider />
         <div>
           <Typography.Title level={5}>

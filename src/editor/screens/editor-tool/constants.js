@@ -12,6 +12,9 @@ export const SETTINGS = [
   "canCreate",
   "canUpdate",
   "canDelete",
+];
+
+export const SETTINGS2 = [
   "disableExcelDownload",
   "disableExcelUpload",
   "rowButtonExample",
