@@ -26,6 +26,8 @@ export const lookupLabel = (item) => {
 			return `number-${_id}`;
 		case "common|date":
 			return "วันที่";
+		case "common|time":
+			return "เวลา";
 		case "common|barcode scanner hardware":
 			return "บาร์โค้ด";
 		case "hierarchical dropdown|thai province":

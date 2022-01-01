@@ -105,6 +105,18 @@ const Field = (props) => {
 					{fieldType === "FileUpload" && (
 						<FileUpload {...props2} dataType={type} />
 					)}
+					{fieldType === "TimePicker" && (
+						<Raw.TimePicker
+							format="HH:mm"
+							{...props2}
+							defaultValue={
+								typeof props2.defaultValue === "string"
+									? moment(props2.defaultValue, "HH:mm")
+									: props2.defaultValue
+							}
+							style={{ ...props2.style, width: "100%" }}
+						/>
+					)}
 				</Raw.Form.Item>
 			</Col>
 			{appendDivider && (
@@ -136,6 +148,7 @@ Field.propTypes = {
 		"Custom",
 		"CascaderStatic",
 		"CascaderAsync",
+		"TimePicker",
 	]).isRequired,
 	name: PropTypes.string.isRequired,
 	validate: PropTypes.func.isRequired,
