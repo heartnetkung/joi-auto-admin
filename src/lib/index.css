@@ -83,4 +83,14 @@ h6 {
   display: inline-block;
   margin-right: 20px;
   vertical-align: bottom;
+  border: #aaa solid 1px;
+}
+
+.color-picker-box-small {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: bottom;
+  border: #aaa solid 1px;
 }

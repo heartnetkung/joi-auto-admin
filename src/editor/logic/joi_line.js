@@ -4,6 +4,7 @@ import { raw, softEval, func, regex, showRaw } from "./util";
 import toSource from "tosource";
 import * as Comp from "./custom_component";
 import { lookupLabel } from "./lookup_label";
+import React from "react";
 
 const makeObject = (joiList) => {
 	var ans = Joi;
@@ -73,6 +74,19 @@ return [
 				onFieldRender: isObj
 					? Comp.ColorPicker
 					: raw("ColorPicker", isObj),
+				cellFormat: isObj
+					? (a) =>
+							typeof a === "string" ? (
+								<>
+									<div
+										className="color-picker-box-small"
+										style={{ background: a }}
+									/>
+									{a}
+								</>
+							) : null
+					: `(a)=>typeof a==="string"?<><div className="color-picker-box-small" style={{background:a}}/>{a}</>:null`,
+				cellWidth: 130,
 				...editor,
 			};
 			suffix.push(

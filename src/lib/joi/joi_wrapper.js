@@ -189,7 +189,6 @@ class JoiField {
 				fieldType === "FileUpload" &&
 				meta.uploadFileType === "image"
 			)
-				//TODO
 				ans.render = (a) => <ColImage src={a} />;
 			else if (fieldType === "CascaderAsync")
 				ans.render = (a) => (Array.isArray(a) ? a.join(" / ") : null);
