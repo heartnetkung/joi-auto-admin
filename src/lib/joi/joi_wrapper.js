@@ -149,17 +149,14 @@ class JoiField {
 						(m, p1, p2, p3) => [p1, p2, p3].join("-")
 					);
 				};
-			else if (
-				fieldType === "InputURL" ||
-				fieldType === "TextArea" ||
-				(fieldType === "FileUpload" && meta.uploadFileType !== "image")
-			)
+			else if (fieldType === "TextArea")
 				ans.render = (a) => (
 					<div
 						style={{
-							wordWrap: "break-word",
-							wordBreak: "break-word",
 							maxWidth: 250,
+							overflow: "hidden",
+							whiteSpace: "nowrap",
+							textOverflow: "ellipsis",
 						}}
 						title={a + ""}
 					>
@@ -167,14 +164,36 @@ class JoiField {
 					</div>
 				);
 			else if (
+				fieldType === "InputURL" ||
+				(fieldType === "FileUpload" && meta.uploadFileType !== "image")
+			) {
+				ans.render = (a) => (
+					<a
+						style={{
+							maxWidth: 200,
+							display: "block",
+							overflow: "hidden",
+							whiteSpace: "nowrap",
+							textOverflow: "ellipsis",
+						}}
+						title={a + ""}
+						href={a}
+						target="_blank"
+						rel="noreferrer"
+					>
+						{a}
+					</a>
+				);
+			} else if (
 				fieldType === "FileUpload" &&
 				meta.uploadFileType === "image"
 			)
 				ans.render = (a) => <ColImage src={a} />;
 			else if (fieldType === "CascaderAsync")
 				ans.render = (a) => (Array.isArray(a) ? a.join(" / ") : "");
-			else if (fieldType==='FieldArray')
-				ans.render=(a)=>(Array.isArray(a) ? `${a.length} รายการ` : "");
+			else if (fieldType === "FieldArray")
+				ans.render = (a) =>
+					Array.isArray(a) ? `${a.length} รายการ` : "";
 			else if (type === "number")
 				ans.render = (a) => (a == null ? "" : numeral(a).format("0,0"));
 			else if (type === "boolean")
