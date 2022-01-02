@@ -79,7 +79,6 @@ note: Joi.string().required().min(3).label("note").default("ไม่ใส่�
 						.default("ไม่ใส่มะเขือเทศ"),
 				});
 			suffix.push(
-				{ name: "required" },
 				{ name: "min", args: [1] },
 				{ name: "max", args: [5] },
 				{ name: "default", args: [[{}, {}]] },
@@ -375,7 +374,7 @@ return "https://www.gravatar.com/avatar/1"}`,
 	]);
 	if (editor.extraMargin)
 		meta.containerStyle = _.assign(meta.containerStyle, {
-			marginBottom: 20,
+			marginBottom: newFieldType === "FieldArray" ? 40 : 20,
 		});
 	if (editor.columnWidth) meta.cellWidth = editor.columnWidth;
 	if (newFieldType) meta.fieldType = newFieldType;
