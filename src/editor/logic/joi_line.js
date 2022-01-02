@@ -58,6 +58,36 @@ export const makeJoiLine = (editor, settings, isObj) => {
 				...editor,
 			};
 			break;
+		case "custom component|array of fields example":
+			var formSpec = raw(
+				`Joi.object({
+item:Joi.string().label("อาหาร").required().valid("Pizza","Hamburger"),
+note: Joi.string().required().min(3).label("note").default("ไม่ใส่มะเขือเทศ")
+})`,
+				isObj
+			);
+			if (isObj)
+				formSpec = Joi.object({
+					item: Joi.string()
+						.label("อาหาร")
+						.required()
+						.valid("Pizza", "Hamburger"),
+					note: Joi.string()
+						.required()
+						.min(3)
+						.label("note")
+						.default("ไม่ใส่มะเขือเทศ"),
+				});
+			suffix.push(
+				{ name: "required" },
+				{ name: "min", args: [1] },
+				{ name: "max", args: [5] },
+				{ name: "default", args: [[{}, {}]] },
+				{ name: "items", args: [formSpec] }
+			);
+			newFieldType = "FieldArray";
+			type = "array";
+			break;
 		case "hierarchical dropdown|static option, allow modify":
 			editor = {
 				...editor,
@@ -248,7 +278,10 @@ return id;}`,
 				accept: ".png,.jpeg,.jpg,.gif",
 			};
 			type = "array";
-			suffix.push({ name: "items", args: [raw("Joi.string().uri()", isObj)] });
+			suffix.push({
+				name: "items",
+				args: [raw("Joi.string().uri()", isObj)],
+			});
 			break;
 		case "upload|firebase":
 			editor = {
@@ -274,7 +307,10 @@ return "https://www.gravatar.com/avatar/1"}`,
 				accept: ".png,.jpeg,.jpg,.gif",
 			};
 			type = "array";
-			suffix.push({ name: "items", args: [raw("Joi.string().uri()", isObj)] });
+			suffix.push({
+				name: "items",
+				args: [raw("Joi.string().uri()", isObj)],
+			});
 			break;
 		case "upload|google cloud storage":
 			editor = {
@@ -295,7 +331,10 @@ return "https://www.gravatar.com/avatar/1"}`,
 				accept: ".png,.jpeg,.jpg,.gif",
 			};
 			type = "array";
-			suffix.push({ name: "items", args: [raw("Joi.string().uri()", isObj)] });
+			suffix.push({
+				name: "items",
+				args: [raw("Joi.string().uri()", isObj)],
+			});
 			break;
 		case "upload|single file":
 			editor = {

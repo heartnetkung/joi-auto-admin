@@ -149,6 +149,15 @@ const editorToChance = (editor) => {
 			return { name: "pickone", args: [["{}"]] };
 		case "custom component|async searchable dropdown":
 			return { name: "pickone", args: [["a01", "a02"]] };
+		case "custom component|array of fields example":
+			var data = [
+				[{ item: "Pizza", note: "ไม่ใส่ผัก" }],
+				[
+					{ item: "Pizza", note: "ไม่ใส่ผัก" },
+					{ item: "Hamburger", note: "ซอสเยอะๆ" },
+				],
+			];
+			return { name: "pickone", args: [data] };
 		default:
 			return { name: "word" };
 	}

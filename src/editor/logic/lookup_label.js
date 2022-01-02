@@ -18,6 +18,8 @@ export const lookupLabel = (item) => {
 		case "format|regex validation example":
 		case "format|custom validation example":
 			return `example-${_id}`;
+		case "custom component|array of fields example":
+			return `array-${_id}`;
 		case "format|thai citizen id":
 			return "เลขบัตรปชช";
 		case "checkbox":

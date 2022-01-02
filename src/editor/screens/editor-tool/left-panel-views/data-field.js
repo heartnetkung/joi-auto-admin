@@ -76,6 +76,7 @@ export const disabledPlaceholderSet = new Set([
   "upload|multiple images",
   "upload|firebase",
   "upload|google cloud storage",
+  "custom component|array of fields example",
 ]);
 
 export const placeholderDefault = {
@@ -90,6 +91,7 @@ export const placeholderDefault = {
   "format|thai citizen id": "0139499973311",
   "format|thai zipcode": "10210",
   "common|number": "0/1/2/...",
+  "custom component|array of fields example": "[{}, {}]",
 };
 
 export const fieldOptions = [
@@ -151,7 +153,11 @@ export const fieldTree = [
   },
   {
     l: "custom component",
-    c: [{ l: "async searchable dropdown" }, { l: "dependent input example" }],
+    c: [
+      { l: "async searchable dropdown" },
+      { l: "dependent input example" },
+      { l: "array of fields example" },
+    ],
   },
 ];
 
