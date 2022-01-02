@@ -138,74 +138,84 @@ class JoiField {
 			if (fieldType === "Select") ans.render = (a) => meta.valid[a];
 			else if (fieldType === "InputPhone")
 				ans.render = (a) => {
-					if (typeof a !== "string") return a;
+					if (typeof a !== "string") return null;
 					return a.replace(
 						/(\d{2,3})(\d{3})(\d{4})/,
 						(m, p1, p2, p3) => [p1, p2, p3].join("-")
 					);
 				};
 			else if (fieldType === "TextArea")
-				ans.render = (a) => (
-					<div
-						style={{
-							maxWidth: 250,
-							overflow: "hidden",
-							whiteSpace: "nowrap",
-							textOverflow: "ellipsis",
-						}}
-						title={a + ""}
-					>
-						{a}
-					</div>
-				);
+				ans.render = (a) => {
+					if (typeof a !== "string") return null;
+					return (
+						<div
+							style={{
+								maxWidth: 250,
+								overflow: "hidden",
+								whiteSpace: "nowrap",
+								textOverflow: "ellipsis",
+							}}
+							title={a + ""}
+						>
+							{a}
+						</div>
+					);
+				};
 			else if (
 				fieldType === "InputURL" ||
 				(fieldType === "FileUpload" && meta.uploadFileType !== "image")
 			) {
-				ans.render = (a) => (
-					<a
-						style={{
-							maxWidth: 200,
-							display: "block",
-							overflow: "hidden",
-							whiteSpace: "nowrap",
-							textOverflow: "ellipsis",
-						}}
-						title={a + ""}
-						href={a}
-						target="_blank"
-						rel="noreferrer"
-					>
-						{a}
-					</a>
-				);
+				ans.render = (a) => {
+					if (typeof a !== "string") return null;
+					return (
+						<a
+							style={{
+								maxWidth: 200,
+								display: "block",
+								overflow: "hidden",
+								whiteSpace: "nowrap",
+								textOverflow: "ellipsis",
+							}}
+							title={a + ""}
+							href={a}
+							target="_blank"
+							rel="noreferrer"
+						>
+							{a}
+						</a>
+					);
+				};
 			} else if (
 				fieldType === "FileUpload" &&
 				meta.uploadFileType === "image"
 			)
+				//TODO
 				ans.render = (a) => <ColImage src={a} />;
 			else if (fieldType === "CascaderAsync")
-				ans.render = (a) => (Array.isArray(a) ? a.join(" / ") : "");
+				ans.render = (a) => (Array.isArray(a) ? a.join(" / ") : null);
 			else if (fieldType === "FieldArray")
 				ans.render = (a) =>
-					Array.isArray(a) ? `${a.length} รายการ` : "";
+					Array.isArray(a) ? `${a.length} รายการ` : null;
 			else if (type === "number")
-				ans.render = (a) => (a == null ? "" : numeral(a).format("0,0"));
+				ans.render = (a) =>
+					typeof a === "number" ? numeral(a).format("0,0") : null;
 			else if (type === "boolean")
-				ans.render = (a) => (a == null ? "" : a ? "ใช่" : "ไม่ใช่");
+				ans.render = (a) =>
+					typeof a !== "boolean" ? null : a ? "ใช่" : "ไม่ใช่";
 			else if (type === "date") {
 				var format = meta.showTime ? "YYYY-MM-DD HH:mm" : "YYYY-MM-DD";
 				if (fieldType === "TimePicker") format = "HH:mm";
 				if (fieldType === "MonthPicker") format = "YYYY-MM";
 				ans.render = (a) =>
-					a == null
-						? ""
-						: a instanceof Date
-						? moment(a).format(format)
-						: a;
+					a instanceof Date ? moment(a).format(format) : null;
 			} else if (type === "array")
-				ans.render = (a) =>
-					a == null ? "" : Array.isArray(a) ? a.join(", ") : a;
+				ans.render = (a) => (Array.isArray(a) ? a.join(", ") : null);
+			else
+				ans.render = (a) => {
+					var ans = a + "";
+					if (ans === "[object Object]") return null;
+					return ans;
+				};
 		}
 
 		return ans;
