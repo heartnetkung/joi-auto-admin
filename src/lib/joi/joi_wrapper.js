@@ -114,7 +114,6 @@ class JoiField {
 	getColumn(meta, $this) {
 		var { fieldType, type, label, name } = $this;
 		var ans = {
-			ellipsis: meta.cellEllipsis,
 			render: meta.cellFormat,
 			width: meta.cellWidth,
 			cellHide: meta.cellHide,
@@ -133,10 +132,6 @@ class JoiField {
 			else if (fieldType === "FileUpload") ans.width = 150;
 			else if (fieldType === "InputURL") ans.width = 250;
 			else if (fieldType === "TextArea") ans.width = 250;
-		}
-
-		if (!ans.ellipsis) {
-			if (fieldType === "TextArea") ans.ellipsis = true;
 		}
 
 		if (!ans.render) {
