@@ -55,6 +55,16 @@ export const makeJoiLine = (editor, settings, isObj) => {
 				onFieldRender: isObj
 					? Comp.AsyncDropdown
 					: raw("AsyncDropdown", isObj),
+				fetchChoices: func(
+					`async () => {
+await wait(500);
+return [
+{ label: "Toyota", value: "a01" },
+{ label: "Hyundai", value: "a02" },
+];
+}`,
+					isObj
+				),
 				...editor,
 			};
 			break;

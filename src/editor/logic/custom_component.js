@@ -6,8 +6,6 @@ import CascaderStatic from "../../lib/formik/components/cascader_static";
 import { SketchPicker } from "react-color";
 import { Button, Dropdown } from "antd";
 
-const wait = (ms) => new Promise((res) => setTimeout(res, ms));
-
 export const DependentComp = (props) => {
 	const { values, setFieldValue } = useFormikContext();
 	const values2 = JSON.stringify(_.set({ ...values }, props.name, null));
@@ -28,23 +26,16 @@ return <Input disabled {...props}/>;
 }`;
 
 export const AsyncDropdown = (props) => {
+	const { fetchChoices } = props;
 	const [choices, setChoices] = useState([]);
-	const fetchChoices = async () => {
-		await wait(500);
-		return [
-			{ label: "Toyota", value: "a01" },
-			{ label: "Hyundai", value: "a02" },
-		];
-	};
 	useEffect(() => {
 		(async () => {
 			const data = await fetchChoices();
 			// remap value so that value is also searchable
-			const data2 = data.map(({ label, value }) => ({
-				label: label + " " + value,
-				value,
-			}));
-			setChoices(data2);
+			const remap = ({ label, value }) => {
+				return { label: label + " " + value, value };
+			};
+			setChoices(data.map(remap));
 		})();
 	}, []);
 	return (
@@ -61,23 +52,16 @@ export const AsyncDropdown = (props) => {
 };
 
 AsyncDropdown.str = `const AsyncDropdown = (props) => {
+const { fetchChoices } = props;
 const [choices, setChoices] = useState([]);
-const fetchChoices = async () => {
-await wait(500);
-return [
-{ label: "Toyota", value: "a01" },
-{ label: "Hyundai", value: "a02" },
-];
-};
 useEffect(() => {
 (async () => {
 const data = await fetchChoices();
 // remap value so that value is also searchable
-const data2 = data.map(({ label, value }) => ({
-label: label + " " + value,
-value,
-}));
-setChoices(data2);
+const remap = ({ label, value }) => {
+return { label: label + " " + value, value };
+};
+setChoices(data.map(remap));
 })();
 }, []);
 return (
@@ -91,7 +75,7 @@ option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
 }
 ></Select>
 );
-}
+};
 `;
 
 export const THAddress = (props) => {
@@ -191,7 +175,7 @@ export const ColorPicker = (props) => {
 		</>
 	);
 };
-ColorPicker.str=`const ColorPicker = (props) => {
+ColorPicker.str = `const ColorPicker = (props) => {
 const { name } = props;
 const { values, setFieldValue } = useFormikContext();
 const color = _.get(values, name) || "#bbcccc";
@@ -223,4 +207,4 @@ trigger={["click"]}
 </>
 );
 };
-`
+`;
