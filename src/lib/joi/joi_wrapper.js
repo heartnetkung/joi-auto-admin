@@ -173,6 +173,8 @@ class JoiField {
 				ans.render = (a) => <ColImage src={a} />;
 			else if (fieldType === "CascaderAsync")
 				ans.render = (a) => (Array.isArray(a) ? a.join(" / ") : "");
+			else if (fieldType==='FieldArray')
+				ans.render=(a)=>(Array.isArray(a) ? `${a.length} รายการ` : "");
 			else if (type === "number")
 				ans.render = (a) => (a == null ? "" : numeral(a).format("0,0"));
 			else if (type === "boolean")

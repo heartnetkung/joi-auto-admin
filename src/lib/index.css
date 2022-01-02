@@ -1,49 +1,78 @@
 body {
-  font-family: 'Prompt Regular';
+  font-family: "Prompt Regular";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1,h2,h3,h4,h5,h6{
-  font-family: 'Prompt Light';
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Prompt Light";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-@font-face{
-  font-family: 'Prompt Regular';
+@font-face {
+  font-family: "Prompt Regular";
   src: url(./assets/Prompt-Regular.ttf);
 }
 
-@font-face{
-  font-family: 'Prompt Light';
+@font-face {
+  font-family: "Prompt Light";
   src: url(./assets/Prompt-Light.ttf);
 }
 
-@media (max-width: 575px){
+@media (max-width: 575px) {
   .ant-form-item-label > label {
     height: 20px;
   }
 }
 
-.right-column-label .ant-form-item-label{
+.right-column-label .ant-form-item-label {
   overflow: visible;
 }
 
-.right-column-label .ant-form-item-label > label{
+.right-column-label .ant-form-item-label > label {
   z-index: 10;
   margin-left: -30px;
   max-width: none;
 }
 
-.right-column-label .ant-form-item-control{
+.right-column-label .ant-form-item-control {
   z-index: 11;
 }
 
-.th-address-small{
+.th-address-small {
   width: 40px !important;
 }
 
-.large-field-type .ant-cascader-menu{
+.large-field-type .ant-cascader-menu {
   height: 250px !important;
+}
+
+.field-array-span-required::before {
+  display: inline-block;
+  margin-right: 4px;
+  color: #ff4d4f;
+  font-size: 14px;
+  font-family: SimSun, sans-serif;
+  line-height: 1;
+  content: "*";
+}
+
+.field-array-span {
+  display: inline-flex;
+  height: 32px;
+  align-items: center;
+  margin-right: -8px;
+}
+
+.field-array-span::after {
+  content: ":";
+  position: relative;
+  top: -0.5px;
+  margin: 0 8px 0 2px;
 }

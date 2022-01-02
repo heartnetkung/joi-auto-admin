@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React, { useMemo } from "react";
 import { useFormikContext } from "formik";
 import Field from "./field";
+import FieldArray from "./field_array";
 import { calculateSpan } from "./logic";
 
 const InnerForm = (props) => {
@@ -23,12 +24,14 @@ const InnerForm = (props) => {
 	}, [formSpec, values, inline, currentStep]);
 
 	return formSpec2.map((props) => {
+		if (props.fieldType === "FieldArray")
+			return <FieldArray {...props} key={props.name} />;
+
 		const meta = props.meta || {};
 		return (
 			<Field
 				{...props}
 				key={props.name}
-				currentStep={currentStep}
 				meta={
 					inline
 						? { ...meta, style: { ...meta.style, ...inlineStyle } }
