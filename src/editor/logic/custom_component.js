@@ -150,16 +150,7 @@ export const ColorPicker = (props) => {
 
 	return (
 		<>
-			<div
-				style={{
-					width: 32,
-					height: 32,
-					background: color,
-					display: "inline-block",
-					marginRight: 20,
-					verticalAlign: "bottom",
-				}}
-			/>
+			<div className="color-picker-box" style={{ background: color }} />
 			<Dropdown
 				overlay={
 					<SketchPicker
@@ -182,16 +173,7 @@ const color = _.get(values, name) || "#bbcccc";
 const setColor = ({ hex }) => setFieldValue(name, hex, false);
 return (
 <>
-<div
-style={{
-width: 32,
-height: 32,
-background: color,
-display: "inline-block",
-marginRight: 20,
-verticalAlign: "bottom",
-}}
-/>
+<div className="color-picker-box" style={{ background: color }} />
 <Dropdown
 overlay={
 <SketchPicker

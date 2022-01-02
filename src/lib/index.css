@@ -76,3 +76,11 @@ h6 {
   top: -0.5px;
   margin: 0 8px 0 2px;
 }
+
+.color-picker-box {
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  margin-right: 20px;
+  vertical-align: bottom;
+}
