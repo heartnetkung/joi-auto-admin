@@ -4,7 +4,7 @@ import parserBabel from "prettier/parser-babel";
 import { makeJoiLine, makeExtraJoiLines } from "./joi_line";
 import { raw, showRaw, func } from "./util";
 import { randomData, genChanceString } from "./chance";
-import { DependentComp, AsyncDropdown, THAddress } from "./custom_component";
+import * as Comp from "./custom_component";
 import { SmileOutlined } from "@ant-design/icons";
 import React from "react";
 
@@ -129,6 +129,11 @@ export const renderImport = (editors, settings) => {
 				'import thAddressData from "joi-auto-admin/dist/assets/th_address";'
 			);
 			reactImport.add("useEffect");
+		} else if (fieldType === "custom component|color picker example") {
+			ans.add("import {useFormikContext} from 'formik';");
+			ans.add("import _ from 'lodash';");
+			ans.add("import {Button, Dropdown} from 'antd';");
+			ans.add("import { SketchPicker } from 'react-color';")
 		}
 	}
 
@@ -165,11 +170,13 @@ measurementId: "",
 return storage;
 };`);
 		else if (fieldType === "custom component|dependent input example")
-			ans.add("\n" + DependentComp.str);
+			ans.add("\n" + Comp.DependentComp.str);
 		else if (fieldType === "custom component|async searchable dropdown")
-			ans.add("\n" + AsyncDropdown.str);
+			ans.add("\n" + Comp.AsyncDropdown.str);
 		else if (fieldType === "hierarchical dropdown|thai province")
-			ans.add("\n" + THAddress.str);
+			ans.add("\n" + Comp.THAddress.str);
+		else if (fieldType === "custom component|color picker example")
+			ans.add("\n" + Comp.ColorPicker.str);
 	}
 	if (!ans.size) return "";
 	return "\n" + [...ans].join("\n");

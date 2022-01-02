@@ -77,6 +77,7 @@ export const disabledPlaceholderSet = new Set([
   "upload|firebase",
   "upload|google cloud storage",
   "custom component|array of fields example",
+  "custom component|color picker example",
 ]);
 
 export const placeholderDefault = {
@@ -92,6 +93,7 @@ export const placeholderDefault = {
   "format|thai zipcode": "10210",
   "common|number": "0/1/2/...",
   "custom component|array of fields example": "[{}, {}]",
+  "custom component|color picker example": "#ff0000",
 };
 
 export const fieldOptions = [
@@ -156,6 +158,7 @@ export const fieldTree = [
     c: [
       { l: "async searchable dropdown" },
       { l: "dependent input example" },
+      { l: "color picker example" },
       { l: "array of fields example" },
     ],
   },

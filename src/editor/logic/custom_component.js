@@ -3,6 +3,8 @@ import { Input, Select } from "formik-antd";
 import React, { useEffect, useState } from "react";
 import { useFormikContext } from "formik";
 import CascaderStatic from "../../lib/formik/components/cascader_static";
+import { SketchPicker } from "react-color";
+import { Button, Dropdown } from "antd";
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -155,3 +157,70 @@ dropdownRender={(a) => <div className={className}>{a}</div>}
 );
 };
 `;
+
+export const ColorPicker = (props) => {
+	const { name } = props;
+	const { values, setFieldValue } = useFormikContext();
+	const color = _.get(values, name) || "#bbcccc";
+	const setColor = ({ hex }) => setFieldValue(name, hex, false);
+
+	return (
+		<>
+			<div
+				style={{
+					width: 32,
+					height: 32,
+					background: color,
+					display: "inline-block",
+					marginRight: 20,
+					verticalAlign: "bottom",
+				}}
+			/>
+			<Dropdown
+				overlay={
+					<SketchPicker
+						color={color}
+						onChangeComplete={setColor}
+						disableAlpha
+					/>
+				}
+				trigger={["click"]}
+			>
+				<Button {...props}>เปลี่ยนสี</Button>
+			</Dropdown>
+		</>
+	);
+};
+ColorPicker.str=`const ColorPicker = (props) => {
+const { name } = props;
+const { values, setFieldValue } = useFormikContext();
+const color = _.get(values, name) || "#bbcccc";
+const setColor = ({ hex }) => setFieldValue(name, hex, false);
+return (
+<>
+<div
+style={{
+width: 32,
+height: 32,
+background: color,
+display: "inline-block",
+marginRight: 20,
+verticalAlign: "bottom",
+}}
+/>
+<Dropdown
+overlay={
+<SketchPicker
+color={color}
+onChangeComplete={setColor}
+disableAlpha
+/>
+}
+trigger={["click"]}
+>
+<Button {...props}>เปลี่ยนสี</Button>
+</Dropdown>
+</>
+);
+};
+`

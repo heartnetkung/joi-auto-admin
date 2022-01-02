@@ -2,7 +2,7 @@ import { Joi } from "../../lib";
 import _ from "lodash";
 import { raw, softEval, func, regex, showRaw } from "./util";
 import toSource from "tosource";
-import { DependentComp, AsyncDropdown, THAddress } from "./custom_component";
+import * as Comp from "./custom_component";
 import { lookupLabel } from "./lookup_label";
 
 const makeObject = (joiList) => {
@@ -44,7 +44,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 		case "custom component|dependent input example":
 			editor = {
 				onFieldRender: isObj
-					? DependentComp
+					? Comp.DependentComp
 					: raw("DependentComp", isObj),
 				...editor,
 			};
@@ -53,10 +53,22 @@ export const makeJoiLine = (editor, settings, isObj) => {
 		case "custom component|async searchable dropdown":
 			editor = {
 				onFieldRender: isObj
-					? AsyncDropdown
+					? Comp.AsyncDropdown
 					: raw("AsyncDropdown", isObj),
 				...editor,
 			};
+			break;
+		case "custom component|color picker example":
+			editor = {
+				onFieldRender: isObj
+					? Comp.ColorPicker
+					: raw("ColorPicker", isObj),
+				...editor,
+			};
+			suffix.push(
+				{ name: "pattern", args: [regex(/^#[0-9a-f]{6}$/i, isObj)] },
+				{ name: "message", args: ["สีไม่ถูกต้อง (ตัวอย่าง #ff0000)"] }
+			);
 			break;
 		case "custom component|array of fields example":
 			var formSpec = raw(
@@ -137,7 +149,7 @@ note: Joi.string().required().min(3).label("note").default("ไม่ใส่�
 		case "hierarchical dropdown|thai province":
 			editor = {
 				...editor,
-				onFieldRender: isObj ? THAddress : raw("THAddress", isObj),
+				onFieldRender: isObj ? Comp.THAddress : raw("THAddress", isObj),
 				names: [
 					editor.name + "-0",
 					editor.name + "-1",
