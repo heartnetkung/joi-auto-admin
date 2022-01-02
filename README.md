@@ -28,12 +28,13 @@ Once you are familiar with our tool, the process of writing your admin site shou
 ## Features
 
 1. **Awesome code generator**.
-2. Build your form efficiently with 20+ prebuilt components, including:
+2. Build your form efficiently with 30+ prebuilt components, including:
    1. Firebase File Upload
    2. Hierarchical Dropdown
    3. Barcode Scanner
-   4. Validate input on popular format like email, phone number, address
-   5. Other common inputs like password, textarea, input, date, number
+   4. Color Picker
+   5. Validate input on popular format like email, phone number, address
+   6. Other common inputs like password, textarea, input, date, number
 3. Automatically mock all your fields for easy testing with [Chance.js](https://chancejs.com/).
 4. Bulk upload/download with Excel format.
 5. Built with the best user experience in mind.
