@@ -30,7 +30,7 @@ const editorSchemaInner = Joi.object({
 			"custom component|dependent input example",
 			"custom component|async searchable dropdown",
 			"custom component|array of fields example",
-			"custom component|color picker example",
+			"custom component|color picker",
 			"hierarchical dropdown|thai province",
 			"hierarchical dropdown|static option, allow modify",
 			"hierarchical dropdown|static option, no modify",

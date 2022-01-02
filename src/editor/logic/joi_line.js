@@ -58,7 +58,7 @@ export const makeJoiLine = (editor, settings, isObj) => {
 				...editor,
 			};
 			break;
-		case "custom component|color picker example":
+		case "custom component|color picker":
 			editor = {
 				onFieldRender: isObj
 					? Comp.ColorPicker

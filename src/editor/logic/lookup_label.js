@@ -33,7 +33,7 @@ export const lookupLabel = (item) => {
 			return "เดือน";
 		case "date|time":
 			return "เวลา";
-		case "custom component|color picker example":
+		case "custom component|color picker":
 			return "สี";
 		case "common|barcode scanner hardware":
 			return "บาร์โค้ด";

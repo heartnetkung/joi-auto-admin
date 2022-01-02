@@ -158,7 +158,7 @@ const editorToChance = (editor) => {
 				],
 			];
 			return { name: "pickone", args: [data] };
-		case "custom component|color picker example":
+		case "custom component|color picker":
 			return { name: "color", args: [{ format: "hex" }] };
 		default:
 			return { name: "word" };

@@ -129,7 +129,7 @@ export const renderImport = (editors, settings) => {
 				'import thAddressData from "joi-auto-admin/dist/assets/th_address";'
 			);
 			reactImport.add("useEffect");
-		} else if (fieldType === "custom component|color picker example") {
+		} else if (fieldType === "custom component|color picker") {
 			ans.add("import {useFormikContext} from 'formik';");
 			ans.add("import _ from 'lodash';");
 			ans.add("import {Button, Dropdown} from 'antd';");
@@ -175,7 +175,7 @@ return storage;
 			ans.add("\n" + Comp.AsyncDropdown.str);
 		else if (fieldType === "hierarchical dropdown|thai province")
 			ans.add("\n" + Comp.THAddress.str);
-		else if (fieldType === "custom component|color picker example")
+		else if (fieldType === "custom component|color picker")
 			ans.add("\n" + Comp.ColorPicker.str);
 	}
 	if (!ans.size) return "";
