@@ -98,7 +98,7 @@ return [
 			var formSpec = raw(
 				`Joi.object({
 item:Joi.string().label("อาหาร").required().valid("Pizza","Hamburger"),
-note: Joi.string().required().min(3).label("note").default("ไม่ใส่มะเขือเทศ")
+note: Joi.string().required().min(3).label("หมายเหตุ").default("ไม่ใส่มะเขือเทศ")
 })`,
 				isObj
 			);
@@ -111,7 +111,7 @@ note: Joi.string().required().min(3).label("note").default("ไม่ใส่�
 					note: Joi.string()
 						.required()
 						.min(3)
-						.label("note")
+						.label("หมายเหตุ")
 						.default("ไม่ใส่มะเขือเทศ"),
 				});
 			suffix.push(
