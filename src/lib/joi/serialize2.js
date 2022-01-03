@@ -69,7 +69,7 @@ const makeHeader = (formSpec, table, columns, prefix) => {
 		if (!subSpec || !ALLOWED_TYPES.has(subSpec.type)) continue;
 
 		if (subSpec.type !== "object") {
-			for (var i = 0, ii = column || 1; i < ii; i++) {
+			for (let i = 0, ii = column || 1; i < ii; i++) {
 				var key = prefix + spec.name + `[${i}]`;
 				ans[key] = spec.label + `[${i + 1}]`;
 				var meta = subSpec?.$_terms?.metas?.[0] || {};
@@ -85,9 +85,10 @@ const makeHeader = (formSpec, table, columns, prefix) => {
 
 		var formSpec2 = new JoiWrapper(subSpec).formSpec;
 		var table2 = _.map(table, spec.name);
-		for (var i = 0, ii = column || 1; i < ii; i++) {
+		for (let i = 0, ii = column || 1; i < ii; i++) {
 			var prefix2 = spec.name + `[${i}].`;
 			var ans2 = makeHeader(formSpec2, table2, columns, prefix2);
+			// eslint-disable-next-line
 			ans2 = _.mapValues(ans2, (a) => `${spec.label} ${a}[${i + 1}]`);
 			_.assign(ans, ans2);
 		}
