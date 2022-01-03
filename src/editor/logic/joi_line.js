@@ -70,22 +70,22 @@ return [
 			};
 			break;
 		case "custom component|color picker":
+			var cellFormatStr = `(a)=>typeof a==="string"?<><div className="color-picker-box-small" style={{background:a}}/>{a}</>:null`;
+			var cellFormatFunc = (a) =>
+				typeof a === "string" ? (
+					<>
+						<div
+							className="color-picker-box-small"
+							style={{ background: a }}
+						/>
+						{a}
+					</>
+				) : null;
 			editor = {
 				onFieldRender: isObj
 					? Comp.ColorPicker
 					: raw("ColorPicker", isObj),
-				cellFormat: isObj
-					? (a) =>
-							typeof a === "string" ? (
-								<>
-									<div
-										className="color-picker-box-small"
-										style={{ background: a }}
-									/>
-									{a}
-								</>
-							) : null
-					: `(a)=>typeof a==="string"?<><div className="color-picker-box-small" style={{background:a}}/>{a}</>:null`,
+				cellFormat: isObj ? cellFormatFunc : raw(cellFormatStr, isObj),
 				cellWidth: 130,
 				...editor,
 			};
