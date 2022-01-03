@@ -83,7 +83,7 @@ class JoiField {
 		this.required = field?.flags?.presence === "required";
 		this.label = field?.flags?.label;
 		this.name = path.join(".");
-		this.fieldType = this.guessFieldType(field, meta);
+		this.fieldType = guessFieldType(field, meta);
 		this._extractedSchema = this.getExtractedSchema(joiObj, path);
 		this.validate = this.validate.bind(this);
 		this.type = field.type;
@@ -253,21 +253,6 @@ class JoiField {
 		return ans;
 	}
 
-	guessFieldType(field, meta) {
-		if (meta.fieldType) return meta.fieldType;
-		if (meta.onFieldRender) return "Custom";
-		if (meta.loadBarcodeName) return "Barcode";
-		if (meta.getUploadUrl || meta.firebaseConfig || meta.uploadFile)
-			return "FileUpload";
-		if (meta.cascaderFetchData) return "CascaderAsync";
-		if (meta.cascaderOptions) return "CascaderStatic";
-		if (field.type === "boolean") return "Checkbox";
-		if (field.type === "date") return "DatePicker";
-		if (field.type === "number") return "InputNumber";
-		if (meta.valid) return "Select";
-		return "Input";
-	}
-
 	validate(value) {
 		var rawError = this._extractedSchema.validate(value);
 		if (this.required && !value)
@@ -286,4 +271,19 @@ class JoiField {
 	}
 }
 
-export { JoiField, JoiWrapper };
+const guessFieldType = (field, meta) => {
+	if (meta.fieldType) return meta.fieldType;
+	if (meta.onFieldRender) return "Custom";
+	if (meta.loadBarcodeName) return "Barcode";
+	if (meta.getUploadUrl || meta.firebaseConfig || meta.uploadFile)
+		return "FileUpload";
+	if (meta.cascaderFetchData) return "CascaderAsync";
+	if (meta.cascaderOptions) return "CascaderStatic";
+	if (field.type === "boolean") return "Checkbox";
+	if (field.type === "date") return "DatePicker";
+	if (field.type === "number") return "InputNumber";
+	if (meta.valid) return "Select";
+	return "Input";
+};
+
+export { guessFieldType, JoiWrapper };
