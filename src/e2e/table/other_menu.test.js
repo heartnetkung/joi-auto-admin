@@ -14,7 +14,10 @@ it("basic download excel", async () => {
 	fireEvent.click(download);
 
 	expect(tableToExcel.mock.calls.length).toBe(1);
-	expect(tableToExcel.mock.calls[0][0]).toEqual([{ fooName: "bar" }]);
+	expect(tableToExcel.mock.calls[0][0]).toEqual([
+		{ foo: "fooName" },
+		{ foo: "bar" },
+	]);
 	expect(tableToExcel.mock.calls[0][1]).toEqual("export.xlsx");
 	expect(console.error.mock.calls.length).toBe(0);
 });

@@ -29,12 +29,8 @@ const makeBodyRow = (rowData, header, columns) => {
 	for (var fullName in header) {
 		var current = _.get(rowData, fullName);
 		var { type, meta, fieldType } = columns[fullName];
-		if (type === "date") {
-			var format = meta.showTime ? "YYYY-MM-DD HH:mm" : "YYYY-MM-DD";
-			if (fieldType === "TimePicker") format = "HH:mm";
-			if (fieldType === "MonthPicker") format = "YYYY-MM";
-			current = moment(current).format(format);
-		}
+		if (type === "date")
+			current = moment(current).format(getTimeFormat(fieldType, meta));
 		ans[fullName] = current;
 	}
 	return ans;
@@ -47,6 +43,12 @@ const makeFormSpec = (schema) =>
 			ALLOWED_TYPES.has(a.type) &&
 			!/^\$|\.\$/.test(a.name)
 	);
+
+const getTimeFormat = (fieldType, meta) => {
+	if (fieldType === "TimePicker") return "HH:mm";
+	if (fieldType === "MonthPicker") return "YYYY-MM";
+	return meta.showTime ? "YYYY-MM-DD HH:mm" : "YYYY-MM-DD";
+};
 
 const makeHeader = (formSpec, table, columns, prefix) => {
 	var ans = {};
@@ -92,3 +94,86 @@ const makeHeader = (formSpec, table, columns, prefix) => {
 	}
 	return ans;
 };
+
+var tzOffset = null;
+const getTzOffset = () => {
+	if (!tzOffset) tzOffset = new Date().getTimezoneOffset() / 60;
+	return tzOffset;
+};
+
+export const deserializeTable = (table, schema) => {
+	var columns = {};
+	var formSpec = makeFormSpec(schema, table);
+	makeHeader(formSpec, table, columns, "");
+	table = table.slice(1);
+
+	var errors = [];
+	var ans = [];
+	for (var i = 0, ii = table.length; i < ii; i++) {
+		try {
+			ans.push(deserializeRow(table[i], columns, schema));
+		} catch (error) {
+			if (error.details)
+				errors = [...errors, ...error.details.map(mapError(i))];
+			else errors = [...errors, mapError(i)(error)];
+		}
+	}
+
+	if (errors.length) throw new SerializeError(errors);
+	return ans;
+};
+
+const deserializeRow = (excelRow, columns, schema) => {
+	var ans = {};
+	for (var key in excelRow) {
+		var value = excelRow[key];
+		var keyWithoutArray = key.replace(/\[.+\]/g, "[0]");
+		var column = columns[keyWithoutArray];
+		if (!column) continue;
+
+		if (typeof value !== "string") {
+			_.set(ans, key, value);
+			continue;
+		}
+
+		var { type, fieldType, meta } = column;
+		value = value.trim();
+		if (type === "number") value = parseFloat(value);
+		else if (type === "boolean") value = /true/i.test(value);
+		else if (type === "date") {
+			value = moment(value, getTimeFormat(fieldType, meta)).toDate();
+			if (fieldType === "TimePicker") {
+				value.setFullYear(1900);
+				value.setDate(1);
+				value.setMonth(0);
+			} else if (!meta.showTime) {
+				var newHours = value.getHours() - getTzOffset();
+				if (newHours < 0) {
+					newHours += 24;
+					value.setDate(value.getDate() - 1);
+				}
+				value.setHours(newHours);
+			}
+		}
+		_.set(ans, key, value);
+	}
+	return Joi.attempt(ans, schema.joiObj, { abortEarly: false });
+};
+
+const mapError = (i) => {
+	return (a) => ({
+		line: i + 3,
+		label: a.context?.label || "",
+		message: a.context ? getErrorMessage(a) : a.message,
+		type: a.type || "error",
+	});
+};
+
+export class SerializeError extends Error {
+	constructor(errors) {
+		super("SerializeError");
+		this.name = "SerializeError";
+		this.errors = errors;
+		Error.captureStackTrace(this, this.constructor);
+	}
+}

@@ -7,7 +7,7 @@ import EditModal from "./edit_modal";
 import Header from "./header";
 import { JoiWrapper } from "../joi/joi_wrapper";
 import { tableToExcel, excelToTable } from "../shared/xlsx";
-import { deserializeTable, serializeTable } from "../joi/serialize";
+import { deserializeTable, serializeTable } from "../joi/serialize2";
 import ExcelErrorModal from "./excel_error_modal";
 import Form from "../formik/form";
 import Joi from "joi/lib/index";

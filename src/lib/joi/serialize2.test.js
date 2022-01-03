@@ -35,7 +35,7 @@ const schema = Joi.object({
 });
 
 describe("serialize", () => {
-	describe.only("serializeTable()", () => {
+	describe("serializeTable()", () => {
 		it("empty case", () => {
 			var input = [];
 			var output = [
@@ -64,10 +64,10 @@ describe("serialize", () => {
 					create_date: new Date("2000-01-02"),
 					dateTime: new Date("2000-01-02 00:00"),
 					time: new Date("2000-01-02 17:05"),
-					month: new Date('2000-01-02'),
+					month: new Date("2000-01-02"),
 					array: [
-						{ a1: "a11", a2: "a21" },
-						{ a1: "a12", a2: "a22" },
+						{ a1: "a11", a2: 21 },
+						{ a1: "a12", a2: 22 },
 					],
 				},
 			];
@@ -96,13 +96,154 @@ describe("serialize", () => {
 					time: "17:05",
 					month: "2000-01",
 					"array[0].a1": "a11",
-					"array[0].a2": "a21",
+					"array[0].a2": 21,
 					"array[1].a1": "a12",
-					"array[1].a2": "a22",
+					"array[1].a2": 22,
 				},
 			];
 			var ret = lib.serializeTable(input, new JoiWrapper(schema));
 			expect(ret).toEqual(output);
+		});
+	});
+	describe("deserializeTable()", () => {
+		it("empty case", () => {
+			var input = [
+				{
+					"name.first": "ชื่อ",
+					purchased_value: "เงิน",
+					"barcode[0]": "บาร์โค้ด[1]",
+					create_date: "วันสมัคร",
+					dateTime: "dateTime",
+					time: "time",
+					month: "month",
+					"array[0].a1": "_array _a1[1]",
+					"array[0].a2": "_array _a2[1]",
+				},
+			];
+			var output = [];
+			var ret = lib.deserializeTable(input, new JoiWrapper(schema));
+			expect(ret).toEqual(output);
+		});
+		var input = [
+			{
+				"name.first": "ชื่อ",
+				purchased_value: "เงิน",
+				"barcode[0]": "บาร์โค้ด[1]",
+				"barcode[1]": "บาร์โค้ด[2]",
+				create_date: "วันสมัคร",
+				dateTime: "dateTime",
+				time: "time",
+				month: "month",
+				"array[0].a1": "_array _a1[1]",
+				"array[0].a2": "_array _a2[1]",
+				"array[1].a1": "_array _a1[2]",
+				"array[1].a2": "_array _a2[2]",
+			},
+			{
+				"name.first": "abc",
+				purchased_value: 1,
+				"barcode[0]": "a",
+				"barcode[1]": "b",
+				create_date: "2000-01-02",
+				dateTime: "2000-01-02 00:00",
+				time: "17:05",
+				month: "2000-01",
+				"array[0].a1": "a11",
+				"array[0].a2": 21,
+				"array[1].a1": "a12",
+				"array[1].a2": 22,
+			},
+		];
+		var output = [
+			{
+				name: { first: "abc" },
+				purchased_value: 1,
+				barcode: ["a", "b"],
+				create_date: new Date("2000-01-02"),
+				dateTime: new Date("2000-01-02 00:00"),
+				time: new Date("1900-01-01 17:05"),
+				month: new Date("2000-01-01"),
+				array: [
+					{ a1: "a11", a2: 21 },
+					{ a1: "a12", a2: 22 },
+				],
+			},
+		];
+		it("basic case", () => {
+			var ret = lib.deserializeTable(input, new JoiWrapper(schema));
+			expect(ret).toEqual(output);
+		});
+		it("string case", () => {
+			var input2 = [
+				input[0],
+				{
+					"name.first": "abc",
+					purchased_value: 1,
+					"barcode[0]": "a",
+					"barcode[1]": "b",
+					create_date: "2000-01-02",
+					dateTime: "2000-01-02 00:00",
+					time: "17:05",
+					month: "2000-01",
+					"array[0].a1": "a11",
+					"array[0].a2": "21",
+					"array[1].a1": "a12",
+					"array[1].a2": "22",
+				},
+			];
+			var ret = lib.deserializeTable(input2, new JoiWrapper(schema));
+			expect(ret).toEqual(output);
+		});
+		it("extra column case", () => {
+			var input2 = [
+				{ ...input[0], temp: 0 },
+				{ ...input[1], temp: 0 },
+			];
+			var ret = lib.deserializeTable(input2, new JoiWrapper(schema));
+			expect(ret).toEqual(output);
+		});
+		it("error case", () => {
+			var input2 = [
+				input[0],
+				{
+					"name.first": "a",
+					purchased_value: "a",
+					"barcode[0]": "a",
+					"barcode[1]": "b",
+					create_date: "2000-01-0",
+					dateTime: "2000-01-02 00:00",
+					time: "17:05",
+					month: "2000-01",
+					"array[0].a1": "a11",
+					"array[0].a2": "21",
+					"array[1].a1": "a12",
+					"array[1].a2": "22",
+				},
+			];
+			try {
+				lib.deserializeTable(input2, new JoiWrapper(schema));
+			} catch (e) {
+				expect(e.errors).toEqual([
+					{
+						line: 3,
+						label: "ชื่อ",
+						message: "ต้องกรอกไม่ต่ำกว่า 3 ตัวอักษร",
+						type: "string.min",
+					},
+					{
+						line: 3,
+						label: "เงิน",
+						message: "ต้องเป็นตัวเลข",
+						type: "number.base",
+					},
+					{
+						line: 3,
+						label: "วันสมัคร",
+						message: "ต้องเป็นวันที่",
+						type: "date.base",
+					},
+				]);
+			}
 		});
 	});
 });

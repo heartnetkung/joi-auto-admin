@@ -8,6 +8,7 @@ const errorTranslation = {
 		`ต้องกรอกไม่เกิน ${errorObj.context.limit} ตัวอักษร`,
 	"string.email": "อีเมลไม่ถูกต้อง",
 	"number.base": "ต้องเป็นตัวเลข",
+	"date.base": "ต้องเป็นวันที่",
 };
 
 export const getErrorMessage = (errorObj, label) => {
