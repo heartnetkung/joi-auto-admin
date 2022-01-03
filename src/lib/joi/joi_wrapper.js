@@ -211,6 +211,7 @@ class JoiField {
 				ans.render = (a) => (Array.isArray(a) ? a.join(", ") : null);
 			else
 				ans.render = (a) => {
+					if (a == null) return null;
 					var ans = a + "";
 					if (ans === "[object Object]") return null;
 					return ans;
