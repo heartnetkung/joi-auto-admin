@@ -87,7 +87,7 @@ class JoiField {
 		this._extractedSchema = this.getExtractedSchema(joiObj, path);
 		this.validate = this.validate.bind(this);
 		this.type = field.type;
-		this.defaultValue = field?.flags?.default;
+		this.defaultValue = this.getDefaultValue(field, this.fieldType);
 		this.column = this.getColumn(meta, this);
 
 		//remove excess data from meta
@@ -98,6 +98,12 @@ class JoiField {
 		this.onFieldRender = meta.onFieldRender;
 		this.appendDivider = meta.appendDivider;
 		this.meta = _.omit(meta, OMIT_META);
+	}
+
+	getDefaultValue(field, fieldType) {
+		var ans = field?.flags?.default;
+		if (fieldType === "TimePicker") return moment(ans, "HH:mm");
+		return ans;
 	}
 
 	getExtractedSchema(joiObj, path) {

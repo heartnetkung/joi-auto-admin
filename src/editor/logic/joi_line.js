@@ -36,11 +36,6 @@ export const makeJoiLine = (editor, settings, isObj) => {
 		case "date|time":
 			newFieldType = "TimePicker";
 			type = "date";
-			if (editor.defaultValue)
-				editor = {
-					...editor,
-					defaultValue: "1900-01-01 " + editor.defaultValue,
-				};
 			break;
 		case "custom component|dependent input example":
 			editor = {
