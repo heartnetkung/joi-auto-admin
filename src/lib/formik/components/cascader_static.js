@@ -36,7 +36,8 @@ const CascaderStatic = (props) => {
 	}, [notFound, options, l, c, v, nft]);
 
 	useEffect(() => {
-		var data = syncFromOtherFields(values, names, options, l, c, v, nft);
+		var params = [value, values, names, options, l, c, v, nft];
+		var data = syncFromOtherFields(...params);
 		setValue(data.ans);
 		if (data.notFound && data.ans.length)
 			setFieldValue(name + ".$notFound", true, false);
@@ -91,9 +92,10 @@ const appendNotFoundText = (nodeArray, l, c, v, nft) => {
 	return ans;
 };
 
-const syncFromOtherFields = (values, names, node, l, c, v, nft) => {
+const syncFromOtherFields = (value, values, names, node, l, c, v, nft) => {
 	var notFound = false;
 	var ans = [];
+
 	if (Array.isArray(names)) {
 		names.forEach((name, i) => {
 			var newNode = node.find((a) => a[v] === _.get(values, name));
@@ -105,6 +107,7 @@ const syncFromOtherFields = (values, names, node, l, c, v, nft) => {
 			if (!name || !theValue) return;
 			ans[i] = theValue === nft ? "" : theValue;
 		});
+		if (notFound && (!ans.length || ans[0] === undefined)) notFound = false;
 	} else {
 		var lastValue = _.get(values, names);
 		var traverse = (nodeArray, path) => {
