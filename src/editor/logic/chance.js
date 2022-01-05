@@ -103,9 +103,6 @@ const editorToChance = (editor) => {
 			return { name: "avatar", args: [{ protocol: "https" }] };
 		case "upload|firebase":
 		case "upload|google cloud storage":
-			temp =
-				"https://www.gravatar.com/avatar/407cedb085e93b2253656ce07a52a898";
-			return { name: "pickone", args: [[temp]] };
 		case "upload|multiple images":
 			temp =
 				"https://www.gravatar.com/avatar/407cedb085e93b2253656ce07a52a898";
