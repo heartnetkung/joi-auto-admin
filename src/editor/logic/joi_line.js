@@ -82,6 +82,7 @@ return [
 					: raw("ColorPicker", isObj),
 				cellFormat: isObj ? cellFormatFunc : raw(cellFormatStr, isObj),
 				cellWidth: 130,
+				allowClear: true,
 				...editor,
 			};
 			suffix.push(
@@ -135,6 +136,7 @@ note: Joi.string().required().min(3).label("หมายเหตุ").default("
 				fieldNames: { label: "l", value: "l", children: "c" },
 				cellHide: true,
 				notFound: true,
+				allowClear: true,
 			};
 			type = "any";
 			break;
@@ -162,6 +164,7 @@ note: Joi.string().required().min(3).label("หมายเหตุ").default("
 				names: editor.name + "-0",
 				fieldNames: { label: "l", value: "v", children: "c" },
 				cellHide: true,
+				allowClear: true,
 			};
 			type = "any";
 			break;
@@ -178,6 +181,7 @@ note: Joi.string().required().min(3).label("หมายเหตุ").default("
 				fieldNames: { label: "l", value: "l", children: "c" },
 				cellHide: true,
 				notFound: true,
+				allowClear: true,
 			};
 			if (isObj) editor.cascaderOptions = raw("thAddressData", isObj);
 			type = "any";
@@ -194,10 +198,14 @@ if(selected[0] === 'Software Business') return [{l:"Apple"},{l:"Google"}];
 }`,
 					isObj
 				),
+				allowClear: true,
 				fieldNames: { label: "l", value: "l", children: "c" },
 			};
 			type = "array";
-			suffix.push({ name: "items", args: [raw("Joi.string()", isObj)] });
+			suffix.push({
+				name: "items",
+				args: isObj ? [Joi.string()] : [raw("Joi.string()", isObj)],
+			});
 			break;
 		case "format|url":
 			newFieldType = "InputURL";
@@ -275,7 +283,10 @@ return id;}`,
 			break;
 		case "common|barcode scanner hardware":
 			type = "array";
-			suffix.push({ name: "items", args: [raw("Joi.string()", isObj)] });
+			suffix.push({
+				name: "items",
+				args: isObj ? Joi.string() : [raw("Joi.string()", isObj)],
+			});
 			suffix.push({ name: "min", args: [1] });
 			editor = {
 				...editor,
@@ -293,6 +304,7 @@ return id;}`,
 			});
 			editor = {
 				...editor,
+				allowClear: true,
 				validLabel: ["Pizza", "Steak", "Sushi", "Hamburger", "Noodles"],
 			};
 			break;
@@ -310,7 +322,9 @@ return id;}`,
 			type = "array";
 			suffix.push({
 				name: "items",
-				args: [raw("Joi.string().uri()", isObj)],
+				args: isObj
+					? [Joi.string().uri()]
+					: [raw("Joi.string().uri()", isObj)],
 			});
 			break;
 		case "upload|firebase":
@@ -339,7 +353,9 @@ return "https://www.gravatar.com/avatar/1"}`,
 			type = "array";
 			suffix.push({
 				name: "items",
-				args: [raw("Joi.string().uri()", isObj)],
+				args: isObj
+					? [Joi.string().uri()]
+					: [raw("Joi.string().uri()", isObj)],
 			});
 			break;
 		case "upload|google cloud storage":
@@ -363,7 +379,9 @@ return "https://www.gravatar.com/avatar/1"}`,
 			type = "array";
 			suffix.push({
 				name: "items",
-				args: [raw("Joi.string().uri()", isObj)],
+				args: isObj
+					? [Joi.string().uri()]
+					: [raw("Joi.string().uri()", isObj)],
 			});
 			break;
 		case "upload|single file":
