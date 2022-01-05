@@ -20,7 +20,7 @@ const Controller = (props) => {
 	const { getMany, createMany, updateOne, deleteMany, devMode } = props;
 	const { title, description, uploadPreviewUrl, disableSuccessModal } = props;
 	const { schema, querySchema, rowButtons, tableScroll, steps } = props;
-	const { disableExcelDownload, disableExcelUpload } = props;
+	const { disableExcelDownload, disableExcelUpload, tableButtons } = props;
 
 	const [editModalData, setEditModalData] = useState(INITIAL_FORM_STATUS);
 	const [excelError, setExcelError] = useState([]);
@@ -49,7 +49,9 @@ const Controller = (props) => {
 
 	const updateDataAtRow = usePersistFn((rowData) => {
 		var tableData = getManyStatus.data;
-		setData(tableData.map((a) => (a._id === rowData._id ? rowData : a)));
+		if (!Array.isArray(rowData)) rowData = [rowData];
+		var ids = new Set(rowData.map((a) => a._id));
+		setData(tableData.map((a) => (ids.has(a._id) ? rowData : a)));
 	});
 
 	const onSubmit = usePersistFn(async (data, actions, originalData) => {
@@ -176,6 +178,7 @@ const Controller = (props) => {
 				}
 				tableScroll={tableScroll}
 				updateDataAtRow={updateDataAtRow}
+				tableButtons={tableButtons}
 			/>
 			<EditModal
 				{...editModalControl}
@@ -201,6 +204,7 @@ Controller.propTypes = {
 	description: PropTypes.string,
 	tableScroll: PropTypes.object,
 	rowButtons: PropTypes.array,
+	tableButtons: PropTypes.array,
 	disableSuccessModal: PropTypes.bool,
 
 	// form
@@ -223,6 +227,7 @@ Controller.defaultProps = {
 	description: "",
 	tableScroll: undefined,
 	rowButtons: [],
+	tableButtons: [],
 	querySchema: null,
 	disableExcelDownload: false,
 	disableExcelUpload: false,

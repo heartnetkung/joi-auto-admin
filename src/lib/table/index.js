@@ -13,6 +13,7 @@ const TableComp = (props) => {
   const { data, schema, rowButtons, onEdit, paginationSize } = props;
   const { onDelete, onCreate, tableScroll, updateDataAtRow } = props;
   const { loading, onDownloadExcel, onUploadExcel, onExampleExcel } = props;
+  const { tableButtons } = props;
 
   const [selectedRows, setSelectedRows] = useState([]);
 
@@ -40,7 +41,7 @@ const TableComp = (props) => {
     return ans;
   }, [schema, data, rowButtons, onEdit, updateDataAtRow]);
 
-  const rowSelection = !!onDelete && {
+  const rowSelection = (onDelete || tableButtons.length) && {
     selectedRowKeys: selectedRows,
     onChange: setSelectedRows,
   };
@@ -59,6 +60,9 @@ const TableComp = (props) => {
           setSelectedRows={setSelectedRows}
           onDelete={onDelete}
           onCreate={onCreate}
+          tableButtons={tableButtons}
+          updateDataAtRow={updateDataAtRow}
+          data={data}
           otherMenu={
             !onDownloadExcel && !onUploadExcel && !onExampleExcel ? null : (
               <OtherMenu
@@ -88,6 +92,7 @@ const TableComp = (props) => {
 
 TableComp.propTypes = {
   rowButtons: PropTypes.array,
+  tableButtons: PropTypes.array,
   onCreate: PropTypes.func,
   onDelete: PropTypes.func,
   onEdit: PropTypes.func,
@@ -103,6 +108,7 @@ TableComp.propTypes = {
 
 TableComp.defaultProps = {
   rowButtons: [],
+  tableButtons: [],
   onDelete: null,
   onCreate: null,
   onEdit: null,

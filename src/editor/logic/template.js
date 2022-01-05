@@ -75,6 +75,23 @@ alert(JSON.stringify(rowData));
 				),
 			},
 		];
+		ans.tableButtons = [
+			{
+				label: "hello",
+				icon: isComp ? (
+					<SmileOutlined />
+				) : (
+					raw("<SmileOutlined />", isComp)
+				),
+				onClick: func(
+					`(rowDataArray, updateData)=>{
+alert(JSON.stringify(rowDataArray));
+// updateData(newRowDataArray);
+}`,
+					isComp
+				),
+			},
+		];
 	}
 
 	// literal
@@ -133,7 +150,7 @@ export const renderImport = (editors, settings) => {
 			ans.add("import {useFormikContext} from 'formik';");
 			ans.add("import _ from 'lodash';");
 			ans.add("import {Button, Dropdown} from 'antd';");
-			ans.add("import { SketchPicker } from 'react-color';")
+			ans.add("import { SketchPicker } from 'react-color';");
 		}
 	}
 
