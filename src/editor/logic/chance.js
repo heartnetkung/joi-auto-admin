@@ -61,6 +61,7 @@ export const randomData = (editors, count, seed) => {
 };
 
 const editorToChance = (editor) => {
+	var temp;
 	switch (editor.fieldType) {
 		case "hierarchical dropdown|static option, allow modify":
 			return [
@@ -100,16 +101,17 @@ const editorToChance = (editor) => {
 		case "format|url":
 		case "upload|single file":
 			return { name: "avatar", args: [{ protocol: "https" }] };
-		case "upload|multiple images":
 		case "upload|firebase":
 		case "upload|google cloud storage":
+			temp =
+				"https://www.gravatar.com/avatar/407cedb085e93b2253656ce07a52a898";
+			return { name: "pickone", args: [[temp]] };
+		case "upload|multiple images":
+			temp =
+				"https://www.gravatar.com/avatar/407cedb085e93b2253656ce07a52a898";
 			return {
 				name: "pickone",
-				args: [
-					[
-						"https://www.gravatar.com/avatar/407cedb085e93b2253656ce07a52a898",
-					],
-				],
+				args: [[[temp]]],
 			};
 		case "format|regex validation example":
 		case "format|custom validation example":
