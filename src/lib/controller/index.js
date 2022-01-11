@@ -51,7 +51,7 @@ const Controller = (props) => {
 		var tableData = getManyStatus.data;
 		if (!Array.isArray(rowData)) rowData = [rowData];
 		var ids = new Set(rowData.map((a) => a._id));
-		setData(tableData.map((a) => (ids.has(a._id) ? rowData : a)));
+		setData(tableData.map((a, i) => (ids.has(a._id) ? rowData[i] : a)));
 	});
 
 	const onSubmit = usePersistFn(async (data, actions, originalData) => {
