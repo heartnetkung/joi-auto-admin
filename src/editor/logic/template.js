@@ -86,6 +86,7 @@ alert(JSON.stringify(rowData));
 				onClick: func(
 					`(rowDataArray, updateData)=>{
 alert(JSON.stringify(rowDataArray));
+// update data rows used for table rendering (matched by _id field)
 // updateData(newRowDataArray);
 }`,
 					isComp
