@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/joi-auto-admin/static/css/main.657082eb.chunk.css",
-    "main.js": "/joi-auto-admin/static/js/main.88a8c026.chunk.js",
-    "main.js.map": "/joi-auto-admin/static/js/main.88a8c026.chunk.js.map",
+    "main.js": "/joi-auto-admin/static/js/main.8f037e4a.chunk.js",
+    "main.js.map": "/joi-auto-admin/static/js/main.8f037e4a.chunk.js.map",
     "react-syntax-highlighter_languages_refractor_javascript.js": "/joi-auto-admin/static/js/react-syntax-highlighter_languages_refractor_javascript.dd904d4d.chunk.js",
     "react-syntax-highlighter_languages_refractor_javascript.js.map": "/joi-auto-admin/static/js/react-syntax-highlighter_languages_refractor_javascript.dd904d4d.chunk.js.map",
     "react-syntax-highlighter_languages_refractor_json.js": "/joi-auto-admin/static/js/react-syntax-highlighter_languages_refractor_json.eba78bb4.chunk.js",
@@ -29,6 +29,6 @@
     "static/css/5.a95be28f.chunk.css",
     "static/js/5.031dde51.chunk.js",
     "static/css/main.657082eb.chunk.css",
-    "static/js/main.88a8c026.chunk.js"
+    "static/js/main.8f037e4a.chunk.js"
   ]
 }
