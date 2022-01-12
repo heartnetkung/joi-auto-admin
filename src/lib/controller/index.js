@@ -50,8 +50,8 @@ const Controller = (props) => {
 	const updateDataAtRow = usePersistFn((rowData) => {
 		var tableData = getManyStatus.data;
 		if (!Array.isArray(rowData)) rowData = [rowData];
-		var ids = new Set(rowData.map((a) => a._id));
-		setData(tableData.map((a, i) => (ids.has(a._id) ? rowData[i] : a)));
+		var ids = _.keyBy(rowData,'_id');
+    	setData(tableData.map((a,i) => (ids[a._id] || a)));
 	});
 
 	const onSubmit = usePersistFn(async (data, actions, originalData) => {
